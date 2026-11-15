@@ -17,11 +17,12 @@ const puertas = [
     {titulo && <h2 class="puertas__titulo" data-titulo-lineas set:html={acento(titulo)} />}
     <div class="puertas__grilla">
       {puertas.map((p) => (
-        <a href={p.href} class:list={['puerta', `puerta--${p.nivel}`]} data-revelar>
+        <a href={p.href} class:list={['puerta', `puerta--${p.nivel}`]} data-revelar data-inclinar='{"amplitude":7,"scale":1.02}'>
           <div class="puerta__foto">
             <Foto id={p.foto} ratio="4/3" sizes="(min-width: 48em) 40vw, 94vw" />
           </div>
           <div class="puerta__velo" aria-hidden="true"></div>
+          <div class="puerta__brillo" aria-hidden="true"></div>
           <div class="puerta__texto">
             <Trazo nombre={p.trazo} color="arena" class="puerta__trazo" grosor={2.2} />
             <span class="puerta__nivel">{p.nombre}</span>
@@ -37,6 +38,11 @@ const puertas = [
   </div>
 </section>
 
+<script>
+  import { iniciarInclinaciones } from '../scripts/reactbits/inclinacion';
+  iniciarInclinaciones();
+</script>
+
 <style>
   .puertas__titulo { margin-bottom: 1.7rem; max-width: 18ch; }
   .puertas__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.25rem; gap: 1.25rem; }
@@ -47,6 +53,8 @@ const puertas = [
     color: var(--papel); text-decoration: none;
     isolation: isolate;
   }
+  .puerta { transform-style: preserve-3d; will-change: transform; }
+  .puerta__brillo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; opacity: var(--tc-glare, 0); background: radial-gradient(circle at var(--tc-gx, 50%) var(--tc-gy, 50%), rgba(255, 250, 240, 0.55), rgba(255, 250, 240, 0) 55%); mix-blend-mode: soft-light; }
   .puerta__foto :global(img) { transition: transform 1.6s var(--ease-out), opacity 0.7s var(--ease-suave); }
   .puerta__velo {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;

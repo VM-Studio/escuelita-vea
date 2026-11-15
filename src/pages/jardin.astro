@@ -11,7 +11,7 @@ import Acordeon from '../components/Acordeon.astro';
 import Desplegable from '../components/Desplegable.astro';
 import Interludio from '../components/Interludio.astro';
 import Galeria from '../components/Galeria.astro';
-import Marquesina from '../components/Marquesina.astro';
+import CurvaTexto from '../components/CurvaTexto.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import { jardin as j } from '../content/jardin';
 import { inicio } from '../content/inicio';
@@ -60,7 +60,7 @@ const subnav = [
       </div>
       <Carrusel etiqueta="Lo que priorizamos" soloMovil class="diferencias">
         {j.diferencias.items.map((d, i) => (
-          <article class="tarjeta-dif" data-revelar>
+          <article class="tarjeta-dif" data-revelar data-inclinar='{"amplitude":6,"scale":1.02}'>
             <div class="tarjeta-dif__foto">
               <Foto id={d.foto} ratio="4/3" sizes="(min-width: 64em) 30vw, (min-width: 40em) 46vw, 82vw" />
             </div>
@@ -102,7 +102,7 @@ const subnav = [
       </div>
     </div>
   </section>
-  <Marquesina items={inicio.materiales} />
+  <CurvaTexto items={inicio.materiales} curva={-140} etiqueta="Materiales del taller: crayones, masa, témpera, arcilla, tinta china, anilinas y collage" />
 
   <Interludio foto={j.interludioSocial.foto} frase={j.interludioSocial.frase} />
 
@@ -266,6 +266,11 @@ const subnav = [
 
   <LlamadoEntrevista nivel="jardin" foto="sala2-tunel-arena" titulo="Vení a conocer el Jardín" />
 </Base>
+
+<script>
+  import { iniciarInclinaciones } from '../scripts/reactbits/inclinacion';
+  iniciarInclinaciones();
+</script>
 
 <style>
   .portada-cita__texto { font-size: 1.093rem; font-size: clamp(1.093rem, 0.779rem + 0.84vw, 1.47rem); max-width: 36ch; color: #f6efe3; }

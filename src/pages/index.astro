@@ -6,13 +6,15 @@ import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
 import Logo from '../components/Logo.astro';
 import Boton from '../components/Boton.astro';
-import Interludio from '../components/Interludio.astro';
 import Puertas from '../components/Puertas.astro';
-import Marquesina from '../components/Marquesina.astro';
+import CurvaTexto from '../components/CurvaTexto.astro';
+import TarjetasRebote from '../components/TarjetasRebote.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import Sello from '../components/Sello.astro';
 import Mancha from '../components/Mancha.astro';
 import Paleta from '../components/Paleta.astro';
+import CarruselCircular from '../components/CarruselCircular.astro';
+import RastroImagenes from '../components/RastroImagenes.astro';
 import { inicio } from '../content/inicio';
 import { comunidad } from '../content/comunidad';
 import { parrafos, acento } from '../lib/texto';
@@ -45,6 +47,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
       </div>
     </div>
     <div class="hero__velo" aria-hidden="true"></div>
+    <RastroImagenes ids={['plastica-tinta-pez', 'taller-pintura-mesa', 'juego-dramatico-capas', 'patio-sonrisa-arena', 'plastica-hojas-cenital', 'musica-instrumentos', 'sala4-dibujo-propio', 'historica-dibujo-pared', 'primaria-stop-motion', 'jardin-risas-patio']} size={150} />
     <div class="hero__contenido contenedor">
       <h1 class="hero__titular" data-hero-titular>{p.portada.titular}</h1>
       <div class="hero__trazo" data-hero-trazo aria-hidden="true">
@@ -113,7 +116,14 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   </section>
 
   {/* ============ INTERLUDIO ============ */}
-  <Interludio foto={p.interludio.foto} frase={p.interludio.frase} />
+  <section class="juego-arte seccion" aria-label="El juego y el arte">
+    <div class="contenedor juego-arte__cabeza">
+      <Paleta class="juego-arte__paleta" />
+      <p class="t-frase juego-arte__frase" data-frase>{p.interludio.frase}</p>
+    </div>
+    <CarruselCircular ids={p.interludio.fotos} etiqueta="Juego y arte en La Escuelita" cardWidth={200} aspectRatio={0.78} gap={22} />
+    <p class="juego-arte__ayuda" aria-hidden="true">Arrastrá para girar</p>
+  </section>
 
   {/* ============ LÍNEA DE TIEMPO ============ */}
   <section class="tiempo seccion" aria-labelledby="tiempo-titulo" data-linea-tiempo>
@@ -182,7 +192,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   <Puertas />
 
   {/* ============ MARQUESINA DE MATERIALES ============ */}
-  <Marquesina items={p.materiales} />
+  <CurvaTexto items={p.materiales} etiqueta="Materiales del taller: crayones, masa, témpera, arcilla, tinta china, anilinas y collage" />
 
   {/* ============ COMUNIDAD (ADELANTO) ============ */}
   <section class="adelanto seccion" aria-labelledby="adelanto-titulo">
@@ -194,11 +204,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
       </div>
       <div class="adelanto__fotos con-mancha">
         <Mancha forma="d" color="verde" class="adelanto__mancha" opacidad={0.7} />
-        {p.comunidadFotos.map((f, i) => (
-          <div class:list={['pegada', 'adelanto__foto', `adelanto__foto--${i}`]} style={`--rot:${[-2, 1.5, -1, 2.2][i]}deg`} data-revelar>
-            <Foto id={f} ratio={i % 2 ? '4/5' : '4/3'} sizes="(min-width: 56em) 26vw, 46vw" />
-          </div>
-        ))}
+        <TarjetasRebote ids={p.comunidadFotos} ancho={540} alto={300} tamano={190} spread={95} />
       </div>
     </div>
   </section>
@@ -229,7 +235,9 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
       linear-gradient(to top, rgba(18, 14, 10, 0.82) 0%, rgba(18, 14, 10, 0.5) 30%, rgba(18, 14, 10, 0.12) 58%, rgba(18, 14, 10, 0) 72%),
       linear-gradient(to bottom, rgba(18, 14, 10, 0.45) 0%, rgba(18, 14, 10, 0) 20%);
   }
-  .hero__contenido { position: relative; padding-top: calc(var(--header-h) + 2.72rem); padding-bottom: 3.06rem; padding-bottom: clamp(2.72rem, 10vh, 5.44rem); }
+  .hero__contenido { position: relative; z-index: 2; pointer-events: none; }
+  .hero__contenido > * { pointer-events: auto; }
+  .hero__contenido { padding-top: calc(var(--header-h) + 2.72rem); padding-bottom: 3.06rem; padding-bottom: clamp(2.72rem, 10vh, 5.44rem); }
   .hero__titular {
     max-width: 15ch;
     font-size: 2.236rem;
@@ -305,6 +313,16 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .bienvenida__parrafo { font-family: var(--f-titulo); font-size: 1.265rem; font-size: clamp(1.265rem, 0.861rem + 1.092vw, 1.785rem); line-height: 1.35; letter-spacing: -0.01em; font-weight: 350; max-width: 28ch; }
   @media (min-width: 56em) { .bienvenida__grilla { grid-template-columns: 6fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 
+  /* ---------- JUEGO Y ARTE (carrusel circular) ---------- */
+  .juego-arte { overflow: hidden; padding-bottom: 2.5rem; }
+  .juego-arte__cabeza { text-align: center; }
+  .juego-arte__paleta { margin: 0 auto 1.25rem; }
+  .juego-arte__frase { margin: 0 auto; max-width: 20ch; font-size: 1.9rem; font-size: clamp(1.9rem, 1.1rem + 3vw, 3.5rem); line-height: 1.08; }
+  .juego-arte__ayuda { margin: 0.5rem auto 0; text-align: center; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tinta-tenue); }
+  :global(html:not(.js)) .juego-arte__ayuda, :global(html.liviano) .juego-arte__ayuda { display: none; }
+  .juego-arte :global(.cc-envoltura) { margin-top: 1rem; }
+  .juego-arte :global(.cc-simple) { max-width: 76rem; margin: 2rem auto 0; padding: 0 var(--gutter); }
+
   /* ---------- LÍNEA DE TIEMPO ---------- */
   .tiempo { overflow: hidden; }
   .tiempo__cabeza { display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; align-items: end; margin-bottom: 2.72rem; }
@@ -371,7 +389,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .adelanto { overflow: hidden; }
   .adelanto__cabeza { max-width: 36rem; }
   .adelanto__cabeza > * + * { margin-top: 1.25rem; }
-  .adelanto__fotos { max-width: 30rem; justify-self: end; width: 100%; display: grid; align-items: start; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem 1rem; gap: 1.25rem 1rem; margin-top: 2.04rem; }
+  .adelanto__fotos { max-width: 36rem; justify-self: end; width: 100%; display: block; align-items: start; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem 1rem; gap: 1.25rem 1rem; margin-top: 2.04rem; }
   .adelanto__foto--1, .adelanto__foto--3 { margin-top: 1.7rem; }
   @media (min-width: 56em) {
     .adelanto .contenedor { display: grid; grid-template-columns: 4fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; align-items: center; }

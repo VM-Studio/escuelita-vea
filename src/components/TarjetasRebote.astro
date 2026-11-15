@@ -1,0 +1,50 @@
+---
+// Fotos apiladas que rebotan y se abren al pasar el mouse — "BounceCards" de React Bits (MIT + Commons Clause).
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { fotos as registro } from '../data/fotos.mjs';
+interface Props { ids: string[]; ancho?: number; alto?: number; tamano?: number; spread?: number; rotation?: number; class?: string }
+const { ids, ancho = 520, alto = 300, tamano = 190, spread = 92, rotation = 9, class: clase = '' } = Astro.props;
+const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
+const cards = await Promise.all(ids.map(async (id) => {
+  const src = masters[`../assets/fotos/${id}.jpg`]?.default;
+  const img = src ? await getImage({ src, width: tamano * 2, height: tamano * 2, fit: 'cover', format: 'webp' }) : null;
+  return { src: img?.src ?? '', alt: registro.find((f) => f.id === id)?.alt ?? '' };
+}));
+const config = { containerWidth: ancho, cardSize: tamano, spread, rotation, arc: 0, animationDelay: 0.25, animationStagger: 0.07, bounciness: 0.6, enableHover: true, pushDistance: 120, hoverScale: 1.08 };
+---
+<div class:list={['bounce-cards', clase]} data-rebote data-config={JSON.stringify(config)} style={`--bc-ancho:${ancho}px;--bc-pt:${(alto / ancho * 100).toFixed(2)}%;--bounce-cards-size:${tamano}px`}>
+  {cards.map((c, i) => (
+    <div class="bounce-cards__card" data-rebote-card style={`z-index:${i + 1}`}>
+      <img src={c.src} alt={c.alt} loading="lazy" decoding="async" draggable="false" width={tamano} height={tamano} />
+    </div>
+  ))}
+</div>
+<script>
+  import { iniciarRebote } from '../scripts/reactbits/tarjetas-rebote';
+  document.querySelectorAll<HTMLElement>('[data-rebote]').forEach((r) => iniciarRebote(r));
+</script>
+<style>
+  .bounce-cards { position: relative; width: 100%; max-width: var(--bc-ancho); margin: 0 auto; touch-action: pan-y; -webkit-tap-highlight-color: transparent; }
+  .bounce-cards::before { content: ''; display: block; padding-top: var(--bc-pt, 58%); }
+  .bounce-cards__card {
+    position: absolute; top: 50%; left: 50%;
+    width: var(--bounce-cards-size); height: var(--bounce-cards-size);
+    overflow: hidden;
+    border: 5px solid #fffdf8;
+    border-radius: 10px;
+    background: #fffdf8;
+    box-shadow: 0 1px 2px rgba(60, 40, 20, 0.12), 0 10px 28px -6px rgba(60, 40, 20, 0.32);
+    transform: translate(-50%, -50%) scale(0);
+    transition: box-shadow 0.3s ease;
+    will-change: transform;
+  }
+  .bounce-cards__card[data-active] { box-shadow: 0 2px 4px rgba(60, 40, 20, 0.14), 0 22px 44px -10px rgba(60, 40, 20, 0.42); }
+  .bounce-cards__card img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; user-select: none; }
+  /* Sin JS: abanico estático */
+  :global(html:not(.js)) .bounce-cards__card { transform: translate(-50%, -50%); }
+  :global(html:not(.js)) .bounce-cards__card:nth-child(1) { margin-left: -36%; transform: translate(-50%, -50%) rotate(-8deg); }
+  :global(html:not(.js)) .bounce-cards__card:nth-child(2) { margin-left: -12%; transform: translate(-50%, -50%) rotate(4deg); }
+  :global(html:not(.js)) .bounce-cards__card:nth-child(3) { margin-left: 12%; transform: translate(-50%, -50%) rotate(-3deg); }
+  :global(html:not(.js)) .bounce-cards__card:nth-child(4) { margin-left: 36%; transform: translate(-50%, -50%) rotate(8deg); }
+</style>

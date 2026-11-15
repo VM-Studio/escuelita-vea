@@ -19,7 +19,15 @@ export const inicio = {
       'La escuela es un espacio donde las personas transcurren buena parte de sus vidas. Allí se despliegan modos de aprendizaje y de interacción que dejan huellas y marcas entrañables. Para nosotros, educar es una profunda responsabilidad social y humana. Este es nuestro compromiso.',
     foto: 'mural-la-escuelita',
   },
-  interludio: { frase: 'El juego y el arte son su lenguaje natural.', foto: 'patio-ronda-arena-sombra' },
+  interludio: {
+    frase: 'El juego y el arte son su lenguaje natural.',
+    // Carrusel circular (juego y arte): fotos del Jardín, ubicadas en el Inicio
+    fotos: [
+      'patio-ronda-arena-sombra', 'plastica-masa-muchas-manos', 'juego-paracaidas', 'musica-instrumentos',
+      'plastica-tinta-pez', 'patio-tobogan-cenital', 'juego-tela-azul', 'sala3-espiral-tierra',
+      'patio-baldes-cenital', 'plastica-arcilla-manos', 'edfisica-pelota-palmeras', 'sala2-tunel-arena',
+    ],
+  },
   lineaDeTiempo: {
     titulo: '67 años en la educación por el arte',
     frase: 'Un espacio donde “los sentidos” cobran sentido.',

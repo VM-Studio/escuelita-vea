@@ -94,3 +94,16 @@ Primera versión completa. Lo de abajo está abierto: cada punto tiene el supues
   - Manchas de pintura orgánicas detrás de algunas fotos y fotos con recorte en arco.
   - "Paleta" de pinceladas de color como separador (presentación, Jardín, Primaria, Equipo, Contacto, footer).
   - Marquesina de materiales sobre fondo tinta con palabras de colores.
+
+## 7. Componentes de React Bits (tercera pasada)
+
+Portados de React Bits (https://reactbits.dev, licencia MIT + Commons Clause, con atribución en
+`THIRD-PARTY-NOTICES.md`), reescritos sin React para mantener el sitio estático y liviano:
+
+- **Circular Carousel** (cilindro 3D con CSS) en "El juego y el arte son su lenguaje natural." (Inicio): 12 fotos de juego y taller, gira solo, se arrastra, se maneja con flechas del teclado. Sin JS o en modo liviano: tira de 6 fotos.
+- **Image Trail** en el hero del Inicio: al mover el mouse aparece un rastro de fotos del taller (solo desktop, no con movimiento reducido).
+- **Curved Loop**: los materiales del taller corren sobre una curva, se pueden arrastrar y aceleran con el scroll (Inicio y Jardín). Reemplaza la marquesina recta.
+- **Bounce Cards**: fotos de la comunidad que entran con rebote y se abren al pasar el mouse (Inicio).
+- **Tilted Card** (inclinación 3D con brillo): puertas Jardín/Primaria, tarjetas "¿Qué nos diferencia?" y proyectos de Primaria (solo desktop).
+
+Microcopy nuevo: "Arrastrá para girar" (debajo del carrusel circular).
