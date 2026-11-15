@@ -1,0 +1,108 @@
+---
+import { NIVELES } from '../config/sitio';
+const mensaje = encodeURIComponent('Hola, quería hacer una consulta.');
+---
+<div class="wa-flotante" data-wa>
+  <div class="wa-flotante__panel" id="wa-panel" data-wa-panel hidden>
+    <p class="wa-flotante__titulo">¿Con quién querés hablar?</p>
+    <a class="wa-flotante__opcion" href={`${NIVELES.jardin.whatsapp}?text=${mensaje}`} target="_blank" rel="noopener">
+      <span class="wa-flotante__nivel wa-flotante__nivel--jardin">Jardín</span>
+      <span class="wa-flotante__tel">{NIVELES.jardin.telefono}</span>
+    </a>
+    <a class="wa-flotante__opcion" href={`${NIVELES.primaria.whatsapp}?text=${mensaje}`} target="_blank" rel="noopener">
+      <span class="wa-flotante__nivel wa-flotante__nivel--primaria">Primaria</span>
+      <span class="wa-flotante__tel">{NIVELES.primaria.telefono}</span>
+    </a>
+  </div>
+  <!-- Sin JS: enlace a la página de contacto con ambos números -->
+  <a href="/contacto/" class="wa-flotante__boton" aria-expanded="false" aria-controls="wa-panel" data-wa-boton role="button">
+    <span class="sr-only">Escribinos por WhatsApp</span>
+    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+      <path fill="currentColor" d="M16 3.2C9 3.2 3.3 8.8 3.3 15.8c0 2.4.7 4.7 1.9 6.7L3.2 28.8l6.5-2c1.9 1.1 4.1 1.6 6.3 1.6 7 0 12.7-5.6 12.7-12.6S23 3.2 16 3.2Zm0 22.9c-2 0-3.9-.5-5.6-1.6l-.4-.2-3.9 1.2 1.2-3.8-.3-.4c-1.2-1.7-1.8-3.7-1.8-5.7 0-5.7 4.7-10.4 10.6-10.4s10.6 4.7 10.6 10.4c0 5.8-4.7 10.5-10.4 10.5Zm5.8-7.8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.6-1.6-1-.8-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7 0 1.6 1.2 3.1 1.3 3.3.2.2 2.3 3.5 5.5 4.9.8.3 1.4.5 1.8.7.8.2 1.5.2 2 .1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.3Z" />
+    </svg>
+    <span class="wa-flotante__x" aria-hidden="true"></span>
+  </a>
+</div>
+
+<style>
+  .wa-flotante {
+    position: fixed;
+    right: 1rem; bottom: 1rem;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: flex; flex-direction: column; align-items: flex-end;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 1rem, 0);
+    transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), visibility 0s 0.5s;
+  }
+  html:not(.js) .wa-flotante, .wa-flotante.is-visible {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), visibility 0s;
+  }
+  .wa-flotante__boton {
+    position: relative;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 3.5rem; height: 3.5rem;
+    border-radius: 50%;
+    background: #1f8f4e; /* verde WhatsApp oscurecido: contraste AA con el blanco */
+    color: #fff;
+    box-shadow: 0 6px 18px -6px rgba(20, 60, 30, 0.55);
+    transition: transform 0.3s var(--ease-out);
+  }
+  .wa-flotante__boton::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    border: 2px solid #1f8f4e;
+    opacity: 0;
+  }
+  .wa-flotante.is-pulso .wa-flotante__boton::after { animation: wa-pulso 2.4s var(--ease-suave) 1; }
+  @keyframes wa-pulso {
+    0% { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.6); }
+  }
+  @media (hover: hover) { .wa-flotante__boton:hover { transform: scale(1.06); } }
+  .wa-flotante__boton[aria-expanded='true'] svg { opacity: 0; transform: scale(0.6); }
+  .wa-flotante__boton svg { transition: opacity 0.25s, transform 0.3s var(--ease-out); }
+  .wa-flotante__x {
+    position: absolute; width: 18px; height: 18px; opacity: 0; transition: opacity 0.25s;
+  }
+  .wa-flotante__x::before, .wa-flotante__x::after {
+    content: ''; position: absolute; left: 0; top: 8px; width: 18px; height: 2px; background: #fff; border-radius: 2px;
+  }
+  .wa-flotante__x::before { transform: rotate(45deg); }
+  .wa-flotante__x::after { transform: rotate(-45deg); }
+  .wa-flotante__boton[aria-expanded='true'] .wa-flotante__x { opacity: 1; }
+
+  .wa-flotante__panel {
+    width: 16.5rem;
+    margin-bottom: 0.75rem;
+    padding: 1rem;
+    background: var(--papel);
+    background-image: url('/textura-papel.png');
+    border-radius: var(--radio-lg);
+    box-shadow: var(--sombra-papel-alta);
+    transform-origin: 100% 100%;
+    animation: wa-panel 0.35s var(--ease-out);
+  }
+  @keyframes wa-panel { from { opacity: 0; transform: translate3d(0, 8px, 0) scale(0.96); } to { opacity: 1; transform: none; } }
+  .wa-flotante__titulo { font-family: var(--f-titulo); font-size: 1.125rem; margin-bottom: 0.6rem; }
+  .wa-flotante__opcion {
+    display: flex; justify-content: space-between; align-items: center;
+    min-height: 48px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid rgba(35, 32, 28, 0.14);
+    border-radius: var(--radio);
+    text-decoration: none;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .wa-flotante__opcion + .wa-flotante__opcion { margin-top: 0.5rem; }
+  .wa-flotante__opcion:hover { background: var(--papel-oscuro); border-color: rgba(35, 32, 28, 0.3); }
+  .wa-flotante__nivel { font-weight: 700; }
+  .wa-flotante__nivel--jardin { color: var(--ocre-texto); }
+  .wa-flotante__nivel--primaria { color: var(--verde-texto); }
+  .wa-flotante__tel { font-size: 0.8125rem; color: var(--tinta-suave); margin-left: 0.75rem; }
+  @media print { .wa-flotante { display: none; } }
+</style>

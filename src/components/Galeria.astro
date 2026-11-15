@@ -1,0 +1,82 @@
+---
+// Galería con lightbox (PhotoSwipe, cargado solo al usarse). Sin JS: cada foto enlaza a su versión grande.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Foto from './Foto.astro';
+import { fotos as registro } from '../data/fotos.mjs';
+interface Props { ids: string[]; variante?: 'mosaico' | 'tira' | 'pegadas'; ratio?: string; class?: string; sizes?: string }
+const { ids, variante = 'mosaico', ratio, class: clase = '', sizes = '(min-width: 64em) 33vw, 50vw' } = Astro.props;
+const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
+const items = await Promise.all(
+  ids.map(async (id, i) => {
+    const src = masters[`../assets/fotos/${id}.jpg`]?.default;
+    if (!src) return { id, ok: false as const };
+    const grande = await getImage({ src, width: Math.min(1800, src.width), format: 'webp' });
+    const alt = registro.find((f) => f.id === id)?.alt ?? '';
+    return { id, ok: true as const, href: grande.src, w: grande.attributes.width, h: grande.attributes.height, alt, rot: [-1.6, 1.2, -0.8, 1.8, -1.2, 0.9][i % 6] };
+  }),
+);
+---
+<div class:list={['galeria', `galeria--${variante}`, clase]} data-galeria>
+  {items.map((it) =>
+    it.ok ? (
+      <a
+        class:list={['galeria__item', { pegada: variante === 'pegadas' }]}
+        href={it.href}
+        data-pswp-width={it.w}
+        data-pswp-height={it.h}
+        data-revelar
+        style={variante === 'pegadas' ? `--rot:${it.rot}deg` : undefined}
+        aria-label={`Ampliar foto: ${it.alt}`}
+      >
+        <Foto id={it.id} ratio={ratio ?? (variante === 'tira' ? '4/5' : undefined)} sizes={sizes} />
+        <span class="galeria__lupa" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M10.5 4.5a6 6 0 1 1 0 12 6 6 0 0 1 0-12Zm4.3 10.3 4.7 4.7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+        </span>
+      </a>
+    ) : (
+      <Foto id={it.id} ratio="4/5" />
+    ),
+  )}
+</div>
+
+<script>
+  import { cargarLightbox } from '../scripts/lightbox';
+  cargarLightbox();
+</script>
+
+<style>
+  .galeria__item { position: relative; display: block; overflow: hidden; border-radius: 2px; }
+  .galeria__item :global(img) { transition: transform 1.4s var(--ease-out), opacity 0.7s var(--ease-suave); }
+  @media (hover: hover) { .galeria__item:hover :global(img) { transform: scale(1.04); } }
+  .galeria__lupa {
+    position: absolute; right: 0.6rem; bottom: 0.6rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.25rem; height: 2.25rem; border-radius: 50%;
+    background: rgba(250, 246, 238, 0.92); color: var(--tinta);
+    opacity: 0; transform: scale(0.8);
+    transition: opacity 0.3s, transform 0.4s var(--ease-out);
+  }
+  .galeria__item:hover .galeria__lupa, .galeria__item:focus-visible .galeria__lupa { opacity: 1; transform: none; }
+  @media (hover: none) { .galeria__lupa { opacity: 0.9; transform: none; } }
+
+  /* Mosaico: columnas tipo "muro" (CSS columns: soporte amplio) */
+  .galeria--mosaico { column-count: 2; column-gap: 0.75rem; }
+  .galeria--mosaico .galeria__item { margin-bottom: 0.75rem; break-inside: avoid; -webkit-column-break-inside: avoid; page-break-inside: avoid; }
+  @media (min-width: 48em) { .galeria--mosaico { column-count: 3; column-gap: 1rem; } .galeria--mosaico .galeria__item { margin-bottom: 1rem; } }
+
+  /* Tira con scroll horizontal y snap */
+  .galeria--tira {
+    display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory; padding-bottom: 1rem;
+    scrollbar-width: thin;
+  }
+  .galeria--tira .galeria__item { flex: 0 0 72%; margin-right: 0.9rem; scroll-snap-align: start; }
+  @media (min-width: 48em) { .galeria--tira .galeria__item { flex-basis: 36%; } }
+  @media (min-width: 64em) { .galeria--tira .galeria__item { flex-basis: 26%; } }
+
+  /* Pegadas: como trabajos colgados en el taller */
+  .galeria--pegadas { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1.5rem 1rem; gap: 1.5rem 1rem; }
+  .galeria--pegadas .galeria__item { overflow: visible; }
+  @media (min-width: 48em) { .galeria--pegadas { grid-template-columns: repeat(3, 1fr); grid-gap: 2.5rem 2rem; gap: 2.5rem 2rem; } }
+</style>

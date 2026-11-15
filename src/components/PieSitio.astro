@@ -1,0 +1,140 @@
+---
+import { NAV, NIVELES, REDES, SITIO } from '../config/sitio';
+import Logo from './Logo.astro';
+import Trazo from './Trazo.astro';
+import IconoRed from './IconoRed.astro';
+const redes = REDES.filter((r) => r.url);
+const anio = new Date().getFullYear();
+---
+<footer class="pie-sitio">
+  <div class="pie-sitio__frase contenedor">
+    <Trazo nombre="sol" class="pie-sitio__sol" grosor={2.4} />
+    <!-- Frase de cierre: titular institucional del sitio -->
+    <p class="t-frase pie-sitio__cita">El niño es cuerpo que siente y al sentir, piensa.</p>
+  </div>
+
+  <div class="contenedor pie-sitio__grilla">
+    <div class="pie-sitio__logos">
+      <a href="/jardin/" class="pie-sitio__logo" aria-label="Jardín"><Logo nivel="jardin" alto={72} decorativo /></a>
+      <a href="/primaria/" class="pie-sitio__logo" aria-label="Primaria"><Logo nivel="primaria" alto={72} decorativo /></a>
+      <a href="/la-escuelita/#vea" class="pie-sitio__logo" aria-label="V.E.A."><Logo nivel="vea" alto={64} decorativo /></a>
+    </div>
+
+    <div class="pie-sitio__col">
+      <h2 class="pie-sitio__titulo">Jardín</h2>
+      <ul class="pie-sitio__lista">
+        <li><a href={NIVELES.jardin.whatsapp} target="_blank" rel="noopener"><span class="pie-sitio__etq">WhatsApp</span> <span class="nowrap">{NIVELES.jardin.telefono}</span></a></li>
+        <li><a href={`mailto:${NIVELES.jardin.mail}`} set:html={NIVELES.jardin.mail.replace('@', '@<wbr>')} /></li>
+      </ul>
+    </div>
+    <div class="pie-sitio__col">
+      <h2 class="pie-sitio__titulo">Primaria</h2>
+      <ul class="pie-sitio__lista">
+        <li><a href={NIVELES.primaria.whatsapp} target="_blank" rel="noopener"><span class="pie-sitio__etq">WhatsApp</span> <span class="nowrap">{NIVELES.primaria.telefono}</span></a></li>
+        <li><a href={`mailto:${NIVELES.primaria.mail}`} set:html={NIVELES.primaria.mail.replace('@', '@<wbr>')} /></li>
+      </ul>
+    </div>
+    <div class="pie-sitio__col">
+      <h2 class="pie-sitio__titulo">Dirección</h2>
+      <address class="pie-sitio__direccion">
+        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITIO.direccion.mapsQuery)}`} target="_blank" rel="noopener">{SITIO.direccion.texto}</a>
+      </address>
+      {redes.length > 0 && (
+        <ul class="pie-sitio__redes" aria-label="Redes sociales">
+          {redes.map((r) => (
+            <li><a href={r.url} target="_blank" rel="noopener" aria-label={r.nombre}><IconoRed red={r.nombre} /></a></li>
+          ))}
+        </ul>
+      )}
+    </div>
+    <nav class="pie-sitio__col pie-sitio__mapa" aria-label="Mapa del sitio">
+      <h2 class="pie-sitio__titulo">El sitio</h2>
+      <ul class="pie-sitio__lista">
+        <li><a href="/">Inicio</a></li>
+        {NAV.map((i) => (
+          <>
+            <li><a href={i.href}>{i.texto}</a></li>
+            {'hijos' in i && <li><a href="/la-escuelita/equipo/">Nuestro equipo</a></li>}
+          </>
+        ))}
+        <li><a href="/comunidad/#talleres">Talleres extracurriculares</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="contenedor pie-sitio__base">
+    <p>© {anio} La Escuelita · Asociación Civil V.E.A. (Visión Educacional Antropológica)</p>
+    <a href="#top" class="pie-sitio__arriba" data-volver-arriba>Volver arriba ↑</a>
+  </div>
+</footer>
+
+<style>
+  .pie-sitio {
+    position: relative;
+    background-color: var(--tinta);
+    color: #e9e1d3;
+    padding-top: 5rem;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    font-size: 0.9375rem;
+    overflow: hidden;
+  }
+  .pie-sitio a { color: inherit; text-decoration: none; }
+  .pie-sitio a:hover { color: #fff; text-decoration: underline; text-decoration-color: var(--rojo-vivo); text-underline-offset: 0.2em; }
+  .pie-sitio__frase { position: relative; padding-bottom: 3.5rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(250, 246, 238, 0.14); }
+  .pie-sitio__cita {
+    max-width: 22ch;
+    color: var(--papel);
+    font-size: 2rem;
+    font-size: clamp(1.75rem, 1rem + 3.4vw, 3.6rem);
+  }
+  .pie-sitio__sol { width: 4.5rem; height: 4.5rem; margin-bottom: 1.25rem; }
+  .pie-sitio__grilla {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2.25rem 2rem;
+    gap: 2.25rem 2rem;
+  }
+  .pie-sitio__logos {
+    display: flex; align-items: center; flex-wrap: wrap;
+    padding: 1.25rem 1.25rem 1rem;
+    background: var(--papel);
+    border-radius: var(--radio-lg);
+    justify-self: start;
+  }
+  .pie-sitio__logo { display: block; margin: 0.25rem 1.25rem 0.25rem 0; }
+  .pie-sitio__logo:last-child { margin-right: 0; }
+  .pie-sitio__titulo {
+    font-family: var(--f-texto);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--arena);
+    margin-bottom: 0.9rem;
+  }
+  .pie-sitio__lista li + li { margin-top: 0.45rem; }
+  .pie-sitio__lista a { display: inline-block; padding: 0.15rem 0; }
+  .nowrap { white-space: nowrap; }
+  .pie-sitio__etq { display: block; font-size: 0.75rem; color: #b9b0a2; }
+  .pie-sitio__direccion { font-style: normal; }
+  .pie-sitio__redes { display: flex; margin-top: 1rem; }
+  .pie-sitio__redes li + li { margin-left: 0.5rem; }
+  .pie-sitio__redes a { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid rgba(250, 246, 238, 0.25); border-radius: 50%; }
+  .pie-sitio__base {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    margin-top: 3.5rem; padding-top: 1.5rem;
+    border-top: 1px solid rgba(250, 246, 238, 0.14);
+    font-size: 0.8125rem; color: #b9b0a2;
+  }
+  .pie-sitio__base p { margin-right: 1rem; }
+  .pie-sitio__arriba { display: inline-block; padding: 0.6rem 0; }
+  @media (min-width: 40em) {
+    .pie-sitio__grilla { grid-template-columns: 1fr 1fr; }
+    .pie-sitio__logos { grid-column: 1 / -1; }
+  }
+  @media (min-width: 64em) {
+    .pie-sitio__grilla { grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr; }
+    .pie-sitio__logos { grid-column: auto; flex-direction: column; align-items: flex-start; }
+    .pie-sitio__logo { margin: 0 0 1rem; }
+  }
+</style>

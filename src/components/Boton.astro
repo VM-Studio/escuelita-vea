@@ -1,0 +1,27 @@
+---
+// Botón/enlace con relleno de pincelada y flecha que avanza.
+interface Props {
+  href?: string;
+  variante?: 'base' | 'rojo' | 'claro';
+  tamano?: 'chico' | 'normal' | 'grande';
+  flecha?: boolean;
+  externo?: boolean;
+  class?: string;
+  type?: 'button' | 'submit';
+  [k: string]: unknown;
+}
+const { href, variante = 'base', tamano = 'normal', flecha = true, externo = false, class: clase = '', type = 'button', ...resto } = Astro.props;
+const clases = ['boton', variante !== 'base' && `boton--${variante}`, tamano !== 'normal' && `boton--${tamano}`, clase];
+---
+{href ? (
+  <a href={href} class:list={clases} target={externo ? '_blank' : undefined} rel={externo ? 'noopener' : undefined} {...resto}>
+    <span><slot /></span>
+    {flecha && <svg class="boton__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 C 9 12, 14 12.2, 19 12 M14 6.5 C 16 9, 18 11, 19.5 12 C 18 13.2, 16 15, 14 17.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>}
+    {externo && <span class="sr-only"> (se abre en una pestaña nueva)</span>}
+  </a>
+) : (
+  <button type={type} class:list={clases} {...resto}>
+    <span><slot /></span>
+    {flecha && <svg class="boton__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 C 9 12, 14 12.2, 19 12 M14 6.5 C 16 9, 18 11, 19.5 12 C 18 13.2, 16 15, 14 17.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>}
+  </button>
+)}

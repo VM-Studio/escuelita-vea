@@ -1,0 +1,69 @@
+---
+// Foto optimizada: <picture> con AVIF + WebP + JPEG de respaldo, srcset 480–2000,
+// width/height siempre, LQIP (desenfoque que se aclara al cargar), recorte opcional.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { fotos } from '../data/fotos.mjs';
+import lqipData from '../data/fotos-lqip.json';
+
+interface Props {
+  id: string;
+  /** Proporción del recorte, ej. "4/5", "16/9". Sin valor: proporción natural. */
+  ratio?: string;
+  sizes?: string;
+  alt?: string;
+  prioridad?: boolean;
+  class?: string;
+  foco?: string;
+  revelar?: boolean;
+  anchoMax?: number;
+  pie?: string;
+}
+
+const { id, ratio, sizes = '100vw', alt, prioridad = false, class: clase = '', foco, revelar = false, anchoMax = 2000, pie } = Astro.props;
+const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
+const img = masters[`../assets/fotos/${id}.jpg`]?.default;
+const meta = fotos.find((f) => f.id === id);
+const lqip = (lqipData as Record<string, { lqip: string }>)[id]?.lqip;
+const esDev = import.meta.env.DEV;
+
+if (!meta && esDev) console.warn(`[Foto] id no registrado: ${id}`);
+
+const widths = [480, 720, 960, 1280, 1600, 2000].filter((w) => w <= Math.min(anchoMax, img?.width ?? 2000));
+if (img && !widths.includes(Math.min(img.width, anchoMax)) && img.width < anchoMax) widths.push(img.width);
+
+let pt: string | undefined;
+if (ratio) {
+  const [a, b] = ratio.split('/').map(Number);
+  pt = `${((b / a) * 100).toFixed(3)}%`;
+}
+const posicion = foco ?? meta?.foco ?? '50% 50%';
+const textoAlt = alt ?? meta?.alt ?? '';
+---
+{img ? (
+  <figure
+    class:list={['foto', ratio ? 'foto--recorte' : 'foto--natural', clase]}
+    style={pt ? `--pt:${pt}` : undefined}
+    data-revelar-img={revelar ? '' : undefined}
+  >
+    {lqip && <span class="foto__lqip" style={`background-image:url(${lqip})`} aria-hidden="true"></span>}
+    <Picture
+      src={img}
+      alt={textoAlt}
+      formats={['avif', 'webp']}
+      fallbackFormat="jpg"
+      widths={widths}
+      sizes={sizes}
+      loading={prioridad ? 'eager' : 'lazy'}
+      decoding={prioridad ? 'sync' : 'async'}
+      fetchpriority={prioridad ? 'high' : 'auto'}
+      style={`object-position:${posicion}`}
+      draggable="false"
+    />
+    {pie && <figcaption>{pie}</figcaption>}
+  </figure>
+) : (
+  <div class:list={['foto foto-pendiente', ratio ? 'foto--recorte' : '', clase]} style={pt ? `--pt:${pt}` : 'min-height:14rem'} aria-hidden="true">
+    {esDev && <span class="foto-pendiente__rotulo" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">Foto pendiente · {id}</span>}
+  </div>
+)}

@@ -1,0 +1,68 @@
+---
+// Loader: un trazo de crayón rojo dibuja un círculo y después sus rayos (un sol),
+// aparece el logo y la pantalla se levanta como una hoja de papel.
+// · Solo en la primera visita de la sesión (sessionStorage) — lo decide el script del <head>.
+// · Sin JS no existe (display:none salvo html.con-cargador).
+// · Si el JS de animación falla o tarda: la animación CSS de respaldo lo retira sola a los 3 s.
+import Logo from './Logo.astro';
+---
+<div class="cargador" data-cargador aria-hidden="true">
+  <div class="cargador__hoja" data-cargador-hoja>
+    <svg class="cargador__sol" viewBox="0 0 120 120" data-cargador-sol>
+      <g filter="url(#crayon)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path class="cargador__circulo" d="M62 37 C 77 36, 86 48, 85 61 C 84 76, 72 86, 58 85 C 44 84, 35 73, 36 59 C 37 46, 47 37, 63 38" stroke-width="3.4" />
+        <g class="cargador__rayos" stroke-width="3">
+          <path d="M60 8 L 61 24" /><path d="M96 22 L 86 33" /><path d="M112 60 L 97 61" /><path d="M96 98 L 86 88" />
+          <path d="M60 112 L 60 97" /><path d="M24 98 L 34 87" /><path d="M8 60 L 23 60" /><path d="M24 22 L 34 33" />
+        </g>
+      </g>
+    </svg>
+    <div class="cargador__logo" data-cargador-logo>
+      <Logo nivel="marca" alto={64} decorativo />
+    </div>
+  </div>
+</div>
+
+<style>
+  .cargador { display: none; }
+  :global(html.con-cargador) .cargador {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1000;
+    pointer-events: none;
+    /* respaldo: si nada lo retira, se va solo */
+    animation: cargador-respaldo 0.6s ease 3s forwards;
+  }
+  :global(html.con-cargador.cargador-js) .cargador { animation: none; }
+  .cargador__hoja {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background-color: var(--papel);
+    background-image: url('/textura-papel.png');
+    box-shadow: 0 30px 60px -20px rgba(60, 40, 20, 0.35);
+    will-change: transform;
+  }
+  .cargador__sol { width: 7.5rem; height: 7.5rem; color: var(--rojo-vivo); overflow: visible; }
+  .cargador__logo { margin-top: 1.25rem; opacity: 0; }
+  /* Respaldo CSS del dibujo del sol (por si el JS tarda): */
+  .cargador__circulo { stroke-dasharray: 160; stroke-dashoffset: 160; animation: cargador-trazo 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards; }
+  .cargador__rayos path { stroke-dasharray: 20; stroke-dashoffset: 20; animation: cargador-trazo 0.35s ease-out forwards; }
+  .cargador__rayos path:nth-child(1) { animation-delay: 0.95s; }
+  .cargador__rayos path:nth-child(2) { animation-delay: 1.02s; }
+  .cargador__rayos path:nth-child(3) { animation-delay: 1.09s; }
+  .cargador__rayos path:nth-child(4) { animation-delay: 1.16s; }
+  .cargador__rayos path:nth-child(5) { animation-delay: 1.23s; }
+  .cargador__rayos path:nth-child(6) { animation-delay: 1.3s; }
+  .cargador__rayos path:nth-child(7) { animation-delay: 1.37s; }
+  .cargador__rayos path:nth-child(8) { animation-delay: 1.44s; }
+  :global(html.con-cargador.cargador-js) .cargador__circulo,
+  :global(html.con-cargador.cargador-js) .cargador__rayos path { animation: none; }
+  @keyframes cargador-trazo { to { stroke-dashoffset: 0; } }
+  @keyframes cargador-respaldo { to { opacity: 0; visibility: hidden; } }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.con-cargador) .cargador { animation: cargador-respaldo 0.4s ease 0.5s forwards; }
+    .cargador__circulo, .cargador__rayos path { animation: none; stroke-dashoffset: 0; }
+    .cargador__logo { opacity: 1; }
+  }
+</style>

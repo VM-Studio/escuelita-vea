@@ -1,0 +1,34 @@
+---
+// Desplegable con gran botón central (carta de Marta Calvo, detalle de adaptación, Cómo aprendemos).
+// <details> nativo: sin JS se abre igual. Cerrado por defecto.
+interface Props { id: string; boton: string; botonCerrar?: string; class?: string; centrado?: boolean }
+const { id, boton, botonCerrar = 'Cerrar', class: clase = '', centrado = true } = Astro.props;
+---
+<details class:list={['desplegable', { 'desplegable--centro': centrado }, clase]} id={id} data-acordeon="">
+  <summary class="desplegable__boton boton boton--grande">
+    <span class="desplegable__abrir">{boton}</span>
+    <span class="desplegable__cerrar" aria-hidden="true">{botonCerrar}</span>
+    <span class="desplegable__signo" aria-hidden="true"></span>
+  </summary>
+  <div class="desplegable__cuerpo" data-acordeon-cuerpo>
+    <div class="desplegable__interior"><slot /></div>
+  </div>
+</details>
+
+<style>
+  .desplegable--centro > summary { margin-left: auto; margin-right: auto; }
+  .desplegable--centro { text-align: center; }
+  .desplegable--centro .desplegable__interior { text-align: left; }
+  .desplegable__boton { list-style: none; display: inline-flex; max-width: 100%; text-align: center; }
+  .desplegable__boton::-webkit-details-marker { display: none; }
+  .desplegable__boton::marker { content: ''; }
+  .desplegable__cerrar { display: none; }
+  .desplegable[open]:not(.is-cerrando) .desplegable__abrir { display: none; }
+  .desplegable[open]:not(.is-cerrando) .desplegable__cerrar { display: inline; }
+  .desplegable__signo { position: relative; width: 1rem; height: 1rem; flex: none; margin-left: 0.75rem; transition: transform 0.5s var(--ease-out); }
+  .desplegable__signo::before, .desplegable__signo::after { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1.75px; margin-top: -1px; background: currentColor; border-radius: 2px; }
+  .desplegable__signo::after { transform: rotate(90deg); }
+  .desplegable[open]:not(.is-cerrando) .desplegable__signo { transform: rotate(135deg); }
+  .desplegable__cuerpo { overflow: hidden; }
+  .desplegable__interior { padding-top: 2.5rem; }
+</style>

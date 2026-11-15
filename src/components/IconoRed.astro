@@ -1,0 +1,10 @@
+---
+// Íconos mínimos de redes (SVG propios, sin librerías). Solo se muestran si hay URL en config.
+interface Props { red: 'Instagram' | 'Facebook' | 'YouTube' }
+const { red } = Astro.props;
+---
+<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  {red === 'Instagram' && (<><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" /></>)}
+  {red === 'Facebook' && <path d="M14 8.5h2.5V5H14c-2.2 0-3.5 1.5-3.5 3.6V11H8v3.4h2.5V21H14v-6.6h2.4l.6-3.4H14V9.2c0-.4.3-.7.7-.7Z" />}
+  {red === 'YouTube' && (<><rect x="2.5" y="5.5" width="19" height="13" rx="4" /><path d="m10 9.2 5 2.8-5 2.8Z" fill="currentColor" /></>)}
+</svg>

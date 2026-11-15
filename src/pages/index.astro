@@ -1,0 +1,358 @@
+---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import Trazo from '../components/Trazo.astro';
+import Logo from '../components/Logo.astro';
+import Boton from '../components/Boton.astro';
+import Interludio from '../components/Interludio.astro';
+import Puertas from '../components/Puertas.astro';
+import Marquesina from '../components/Marquesina.astro';
+import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
+import { inicio } from '../content/inicio';
+import { comunidad } from '../content/comunidad';
+import { parrafos } from '../lib/texto';
+
+const p = inicio;
+// Precarga de la foto del hero (mismos parámetros que <Foto prioridad>)
+const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
+const primera = masters[`../assets/fotos/${p.portada.fotos[0]}.jpg`].default;
+const anchos = [480, 720, 960, 1280, 1600, 2000].filter((w) => w <= primera.width);
+const pre = await getImage({ src: primera, widths: anchos, format: 'avif' });
+const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/avif' }];
+---
+<Base
+  titulo="Inicio"
+  descripcion="La Escuelita: Primer Jardín Argentino de Educación por el Arte (1959) e Instituto La Escuelita, Escuela Primaria de Educación a través del Arte (1997). Fundada por la profesora Marta Calvo. Colegiales, CABA."
+  heroOscuro
+  precargar={precargar}
+>
+  <!-- ============ HERO ============ -->
+  <section class="hero" data-hero aria-label="Portada">
+    <div class="hero__fondo" data-hero-fondo>
+      <div class="hero__parallax" data-hero-parallax>
+        <div class="hero__secuencia" data-hero-secuencia>
+          {p.portada.fotos.map((id, i) => (
+            <div class:list={['hero__capa', { 'is-activa': i === 0 }]} data-hero-capa>
+              <Foto id={id} ratio="16/9" sizes="100vw" prioridad={i === 0} alt={i === 0 ? undefined : ''} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="hero__velo" aria-hidden="true"></div>
+    <div class="hero__contenido contenedor">
+      <h1 class="hero__titular" data-hero-titular>{p.portada.titular}</h1>
+      <div class="hero__trazo" data-hero-trazo aria-hidden="true">
+        <Trazo nombre="subrayado-doble" color="rojo" grosor={3.2} dibujar={false} />
+      </div>
+      <p class="hero__bajada" data-hero-resto>{p.portada.bajada}</p>
+      <div class="hero__acciones" data-hero-resto>
+        <Boton href="/proyecto-pedagogico/" variante="claro">Conocé nuestra mirada</Boton>
+        <a href="/contacto/#entrevista" class="hero__enlace enlace-trazo">Pedí una entrevista</a>
+      </div>
+    </div>
+    <a href="#presentacion" class="hero__scroll" aria-label="Bajar a la presentación" data-hero-trazo>
+      <Trazo nombre="scroll" color="actual" grosor={2} dibujar={false} crayon={false} />
+    </a>
+  </section>
+
+  <!-- ============ PRESENTACIÓN CON LOGOS ============ -->
+  <section class="presentacion seccion" id="presentacion" aria-labelledby="presentacion-titulo">
+    <div class="contenedor">
+      <div class="presentacion__cabeza">
+        <Trazo nombre="sol" class="presentacion__sol" grosor={2.6} />
+        <h2 id="presentacion-titulo" class="presentacion__nombre" data-titulo-lineas>{p.presentacion.nombre}</h2>
+        <p class="presentacion__fundada" data-revelar>{p.presentacion.fundada}</p>
+        <p class="presentacion__trayectoria" data-revelar>
+          <span class="subrayable">{p.presentacion.trayectoria}<Trazo nombre="subrayado" grosor={3} /></span>
+        </p>
+        <p class="presentacion__descripcion" data-revelar>{p.presentacion.descripcion}</p>
+      </div>
+
+      <!-- Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha, VEA abajo. -->
+      <div class="presentacion__niveles">
+        <a href="/jardin/" class="nivel nivel--jardin" data-revelar>
+          <Logo nivel="jardin" alto={112} decorativo />
+          <span class="nivel__texto">{p.presentacion.jardin.texto}</span>
+          <span class="nivel__anio t-cifra" data-contador={p.presentacion.jardin.anio} data-desde="1900">{p.presentacion.jardin.anio}</span>
+          <span class="nivel__ir">Conocé el Jardín <span aria-hidden="true">→</span></span>
+        </a>
+        <span class="presentacion__division" aria-hidden="true"><Trazo nombre="ola" color="arena" grosor={2} /></span>
+        <a href="/primaria/" class="nivel nivel--primaria" data-revelar>
+          <Logo nivel="primaria" alto={112} decorativo />
+          <span class="nivel__texto">{p.presentacion.primaria.texto}</span>
+          <span class="nivel__anio t-cifra" data-contador={p.presentacion.primaria.anio} data-desde="1940">{p.presentacion.primaria.anio}</span>
+          <span class="nivel__ir">Conocé la Primaria <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+      <a href="/la-escuelita/#vea" class="presentacion__vea" data-revelar>
+        <Logo nivel="vea" alto={92} />
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ BIENVENIDA ============ -->
+  <section class="bienvenida seccion seccion--papel-oscuro" aria-label="Bienvenida">
+    <div class="contenedor bienvenida__grilla">
+      <div class="bienvenida__foto">
+        <Foto id={p.bienvenida.foto} ratio="4/3" sizes="(min-width: 56em) 55vw, 100vw" revelar />
+      </div>
+      <div class="bienvenida__texto">
+        <Trazo nombre="espiral" class="bienvenida__espiral" grosor={2.2} color="ocre" />
+        <p class="bienvenida__parrafo" data-revelar>{p.bienvenida.texto}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTERLUDIO ============ -->
+  <Interludio foto={p.interludio.foto} frase={p.interludio.frase} />
+
+  <!-- ============ LÍNEA DE TIEMPO ============ -->
+  <section class="tiempo seccion" aria-labelledby="tiempo-titulo" data-linea-tiempo>
+    <div class="contenedor">
+      <div class="tiempo__cabeza">
+        <p class="tiempo__cifra t-cifra" aria-hidden="true"><span data-contador="67" data-desde="0">67</span></p>
+        <div>
+          <h2 id="tiempo-titulo" class="tiempo__titulo" data-titulo-lineas>{p.lineaDeTiempo.titulo}</h2>
+          <p class="tiempo__frase t-frase" data-revelar>{p.lineaDeTiempo.frase}</p>
+          <p class="tiempo__bajada" data-revelar>{p.lineaDeTiempo.bajada}</p>
+        </div>
+      </div>
+
+      <div class="tiempo__cuerpo">
+      <span class="tiempo__linea" data-linea aria-hidden="true"></span>
+      <ol class="tiempo__hitos">
+        {p.lineaDeTiempo.hitos.map((h, i) => (
+          <li class:list={['hito', `hito--${i === 0 ? 'a' : 'b'}`]}>
+            <span class="hito__punto" aria-hidden="true"></span>
+            <div class="hito__texto" data-revelar>
+              <p class="hito__anio t-cifra"><span data-contador={h.anio} data-desde={i === 0 ? '1900' : '1959'}>{h.anio}</span></p>
+              <p class="hito__desc">{h.texto}</p>
+            </div>
+            <div class="hito__fotos">
+              {h.fotos.map((f, j) => (
+                <div class:list={['pegada', 'hito__foto', `hito__foto--${j}`]} style={`--rot:${j ? 2.4 : -1.8}deg`} data-revelar>
+                  <span class="cinta" aria-hidden="true"></span>
+                  <Foto id={f} ratio={j ? '4/3' : '4/5'} sizes="(min-width: 56em) 26vw, 70vw" />
+                </div>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EJES PEDAGÓGICOS ============ -->
+  <section class="ejes seccion seccion--papel-oscuro" aria-labelledby="ejes-titulo">
+    <div class="contenedor">
+      <div class="ejes__cabeza">
+        <h2 id="ejes-titulo" data-titulo-lineas>{p.ejes.titulo}</h2>
+        <Trazo nombre="flecha-curva" class="ejes__flecha" grosor={2.4} />
+      </div>
+      {p.ejes.items.map((e, i) => (
+        <article class:list={['eje', { 'eje--invertido': i % 2 === 1 }]}>
+          <div class="eje__foto">
+            <Foto id={e.foto} ratio={i % 2 ? '4/5' : '5/4'} sizes="(min-width: 56em) 48vw, 100vw" revelar />
+          </div>
+          <div class="eje__texto">
+            <span class="eje__marca" aria-hidden="true"><Trazo nombre={(['sol', 'lazos', 'espiral', 'hoja'] as const)[i]} grosor={2.4} color={i % 2 ? 'verde' : 'ocre'} /></span>
+            <h3 class="eje__titulo" data-titulo-lineas>{e.titulo}</h3>
+            <div class="prosa eje__prosa" data-revelar set:html={parrafos(e.texto)} />
+          </div>
+        </article>
+      ))}
+      <div class="ejes__mas" data-revelar>
+        <Boton href="/proyecto-pedagogico/">Conocé el proyecto pedagógico</Boton>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOS PUERTAS ============ -->
+  <Puertas />
+
+  <!-- ============ MARQUESINA DE MATERIALES ============ -->
+  <Marquesina items={p.materiales} />
+
+  <!-- ============ COMUNIDAD (ADELANTO) ============ -->
+  <section class="adelanto seccion" aria-labelledby="adelanto-titulo">
+    <div class="contenedor">
+      <div class="adelanto__cabeza">
+        <h2 id="adelanto-titulo" data-titulo-lineas>{comunidad.portada.titulo}</h2>
+        <p class="t-lead" data-revelar>{comunidad.portada.bajada}</p>
+        <div data-revelar><Boton href="/comunidad/">Conocé nuestra comunidad</Boton></div>
+      </div>
+      <div class="adelanto__fotos">
+        {p.comunidadFotos.map((f, i) => (
+          <div class:list={['pegada', 'adelanto__foto', `adelanto__foto--${i}`]} style={`--rot:${[-2, 1.5, -1, 2.2][i]}deg`} data-revelar>
+            <Foto id={f} ratio={i % 2 ? '4/5' : '4/3'} sizes="(min-width: 56em) 26vw, 46vw" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <LlamadoEntrevista foto={p.cierreFoto} />
+</Base>
+
+<style>
+  /* ---------- HERO ---------- */
+  .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; background: var(--tinta); color: var(--papel); }
+  @supports (height: 100dvh) { .hero { min-height: 100dvh; } }
+  .hero__fondo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
+  .hero__parallax { position: absolute; top: 0; left: 0; right: 0; bottom: -10%; }
+  .hero__secuencia { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+  .hero__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: opacity 2.4s var(--ease-suave); }
+  .hero__capa.is-activa { opacity: 1; }
+  .hero__capa + .hero__capa { display: none; }
+  .hero.is-secuencia .hero__capa { display: block; }
+  .hero__capa :global(.foto) { height: 100%; }
+  .hero__capa :global(.foto--recorte::before) { display: none; }
+  /* Ken Burns muy suave */
+  .hero__capa :global(img) { transform: scale(1.02); transition: transform 9s linear, opacity 0.7s var(--ease-suave); }
+  .hero__capa.is-activa :global(img) { transform: scale(1.1); }
+  :global(html.reducido) .hero__capa :global(img), :global(html.liviano) .hero__capa :global(img) { transform: none; transition: opacity 0.4s; }
+  .hero__velo {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      linear-gradient(to top, rgba(18, 14, 10, 0.82) 0%, rgba(18, 14, 10, 0.5) 30%, rgba(18, 14, 10, 0.12) 58%, rgba(18, 14, 10, 0) 72%),
+      linear-gradient(to bottom, rgba(18, 14, 10, 0.45) 0%, rgba(18, 14, 10, 0) 20%);
+  }
+  .hero__contenido { position: relative; padding-top: calc(var(--header-h) + 4rem); padding-bottom: 4.5rem; padding-bottom: clamp(4rem, 10vh, 8rem); }
+  .hero__titular {
+    max-width: 15ch;
+    font-size: 2.75rem;
+    font-size: clamp(2.6rem, 1.2rem + 6.2vw, 7.25rem);
+    font-weight: 320;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--papel);
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.25);
+  }
+  .hero__trazo { width: 13rem; width: clamp(10rem, 22vw, 20rem); height: 1.4rem; margin-top: 0.75rem; }
+  .hero__trazo :global(svg) { width: 100%; height: 100%; }
+  .hero__bajada {
+    margin-top: 1.5rem;
+    max-width: 36rem;
+    font-size: 1.125rem;
+    font-size: var(--t-md);
+    line-height: 1.55;
+    color: #f4ede1;
+  }
+  .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 2.25rem; }
+  .hero__acciones > :global(*) { margin: 0 1.75rem 0.75rem 0; }
+  .hero__enlace { color: var(--papel); font-weight: 600; padding: 0.5rem 0; }
+  .hero__scroll { position: absolute; right: var(--gutter); bottom: 1.75rem; width: 1.6rem; height: 3.75rem; color: var(--papel); opacity: 0.9; }
+  .hero__scroll :global(svg) { width: 100%; height: 100%; }
+  @media (max-width: 40em) { .hero__scroll { display: none; } }
+
+  /* ---------- PRESENTACIÓN ---------- */
+  .presentacion { text-align: center; }
+  .presentacion__cabeza { max-width: 44rem; margin: 0 auto; }
+  .presentacion__sol { width: 4rem; height: 4rem; margin: 0 auto 1.25rem; }
+  .presentacion__nombre { font-size: 3rem; font-size: clamp(3rem, 1.8rem + 6vw, 7.5rem); font-weight: 300; font-style: italic; letter-spacing: -0.035em; line-height: 0.95; }
+  .presentacion__fundada { margin: 1.25rem auto 0; font-size: 1.125rem; font-size: var(--t-md); color: var(--tinta-suave); }
+  .presentacion__trayectoria { margin: 1.25rem auto 0; font-family: var(--f-titulo); font-size: 1.625rem; font-size: var(--t-xl); line-height: 1.2; }
+  .presentacion__cabeza p { max-width: none; }
+  .presentacion__trayectoria .subrayable { white-space: normal; }
+  .presentacion__descripcion { margin: 1.5rem auto 0; max-width: 30ch; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); line-height: 1.6; }
+  .presentacion__niveles { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; margin-top: 4rem; align-items: stretch; }
+  .presentacion__division { display: none; }
+  .nivel {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 2.5rem 1.5rem 2rem;
+    border-radius: var(--radio-lg);
+    text-decoration: none;
+    transition: background-color 0.4s, transform 0.5s var(--ease-out);
+  }
+  .nivel--jardin { background: var(--arena-claro); }
+  .nivel--primaria { background: var(--verde-claro); }
+  .nivel__texto { margin-top: 1.5rem; max-width: 24ch; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.2; }
+  .nivel__anio { margin-top: 1rem; font-size: 3.5rem; font-size: clamp(3rem, 2rem + 4vw, 5.5rem); }
+  .nivel--jardin .nivel__anio { color: var(--ocre-texto); }
+  .nivel--primaria .nivel__anio { color: var(--verde-texto); }
+  .nivel__ir { margin-top: 1.25rem; font-weight: 650; font-size: 0.9375rem; }
+  .nivel__ir span { display: inline-block; transition: transform 0.4s var(--ease-out); }
+  @media (hover: hover) {
+    .nivel:hover { transform: translateY(-4px); }
+    .nivel:hover .nivel__ir span { transform: translateX(5px); }
+  }
+  .presentacion__vea { display: inline-block; margin-top: 3rem; padding: 1rem 1.5rem; border-radius: var(--radio-lg); transition: background-color 0.3s; }
+  .presentacion__vea:hover { background: var(--papel-oscuro); }
+  @media (min-width: 48em) {
+    .presentacion__niveles { grid-template-columns: 1fr auto 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+    .presentacion__division { display: block; width: 3rem; align-self: center; }
+    .presentacion__division :global(svg) { width: 3rem; height: 1rem; transform: rotate(90deg); }
+  }
+
+  /* ---------- BIENVENIDA ---------- */
+  .bienvenida__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }
+  .bienvenida__foto { border-radius: var(--radio); overflow: hidden; }
+  .bienvenida__espiral { width: 3.25rem; height: 3.25rem; margin-bottom: 1.5rem; }
+  .bienvenida__parrafo { font-family: var(--f-titulo); font-size: 1.375rem; font-size: clamp(1.375rem, 1.05rem + 1.3vw, 2.125rem); line-height: 1.35; letter-spacing: -0.01em; font-weight: 350; max-width: 28ch; }
+  @media (min-width: 56em) { .bienvenida__grilla { grid-template-columns: 7fr 5fr; grid-gap: 5rem; gap: 5rem; } }
+
+  /* ---------- LÍNEA DE TIEMPO ---------- */
+  .tiempo { overflow: hidden; }
+  .tiempo__cabeza { display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; align-items: end; margin-bottom: 4rem; }
+  .tiempo__cifra { font-size: 9rem; font-size: clamp(8rem, 4rem + 18vw, 19rem); color: var(--rojo); line-height: 0.8; letter-spacing: -0.06em; }
+  .tiempo__titulo { max-width: 14ch; }
+  .tiempo__frase { margin-top: 1.25rem; font-size: 1.5rem; font-size: var(--t-lg); color: var(--tinta); }
+  .tiempo__bajada { margin-top: 0.75rem; color: var(--tinta-suave); }
+  @media (min-width: 56em) { .tiempo__cabeza { grid-template-columns: auto 1fr; grid-gap: 3rem; gap: 3rem; } }
+
+  .tiempo__cuerpo { position: relative; }
+  .tiempo__hitos { position: relative; list-style: none; padding: 0 0 0 2.25rem; margin: 0; }
+  .tiempo__linea { position: absolute; left: 0.45rem; top: 0.5rem; bottom: 0; width: 2px; background: var(--rojo); transform-origin: 50% 0; border-radius: 2px; }
+  .hito { position: relative; display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; }
+  .hito + .hito { margin-top: 4.5rem; }
+  .hito__punto { position: absolute; left: -2.25rem; top: 0.9rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--papel); border: 2px solid var(--rojo); }
+  .hito__anio { font-size: 4.5rem; font-size: clamp(4rem, 2rem + 8vw, 9rem); color: var(--tinta); }
+  .hito__desc { margin-top: 0.75rem; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.25; max-width: 22ch; }
+  .hito__fotos { position: relative; display: flex; align-items: flex-start; }
+  .hito__foto { width: 62%; max-width: 20rem; }
+  .hito__foto--1 { width: 52%; margin-left: -10%; margin-top: 3.5rem; }
+  @media (min-width: 56em) {
+    .tiempo__hitos { padding-left: 0; }
+    .tiempo__cuerpo { padding-left: 0; }
+    .tiempo__linea { left: 50%; margin-left: -1px; }
+    .hito { grid-template-columns: 1fr 1fr; grid-gap: 6rem; gap: 6rem; align-items: center; }
+    .hito__punto { left: 50%; margin-left: -0.55rem; top: 50%; }
+    .hito--a .hito__texto { text-align: right; justify-self: end; }
+    .hito--a .hito__desc { margin-left: auto; }
+    .hito--b .hito__texto { order: 2; }
+    .hito--b .hito__fotos { order: 1; justify-content: flex-end; }
+  }
+
+  /* ---------- EJES ---------- */
+  .ejes__cabeza { display: flex; align-items: flex-end; margin-bottom: 3.5rem; }
+  .ejes__cabeza h2 { max-width: 12ch; }
+  .ejes__flecha { width: 4.5rem; height: 4.5rem; margin-left: 1.5rem; flex: none; transform: rotate(-10deg); }
+  .eje { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; align-items: center; }
+  .eje + .eje { margin-top: 5rem; margin-top: clamp(4rem, 2rem + 6vw, 8rem); }
+  .eje__foto { border-radius: var(--radio); overflow: hidden; }
+  .eje__marca { display: block; width: 3rem; height: 3rem; margin-bottom: 1.25rem; }
+  .eje__marca :global(svg) { width: 100%; height: 100%; }
+  .eje__titulo { font-size: 1.875rem; font-size: var(--t-xl); max-width: 16ch; margin-bottom: 1.25rem; font-weight: 380; }
+  .ejes__mas { margin-top: 4.5rem; text-align: center; }
+  @media (min-width: 56em) {
+    .eje { grid-template-columns: 7fr 5fr; grid-gap: 5rem; gap: 5rem; }
+    .eje--invertido { grid-template-columns: 5fr 6fr; }
+    .eje--invertido .eje__foto { order: 2; }
+    .eje--invertido .eje__texto { padding-left: 2rem; }
+  }
+
+  /* ---------- ADELANTO COMUNIDAD ---------- */
+  .adelanto { overflow: hidden; }
+  .adelanto__cabeza { max-width: 36rem; }
+  .adelanto__cabeza > * + * { margin-top: 1.25rem; }
+  .adelanto__fotos { display: grid; align-items: start; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem 1rem; gap: 1.25rem 1rem; margin-top: 3rem; }
+  .adelanto__foto--1, .adelanto__foto--3 { margin-top: 2.5rem; }
+  @media (min-width: 56em) {
+    .adelanto .contenedor { display: grid; grid-template-columns: 4fr 7fr; grid-gap: 4rem; gap: 4rem; align-items: center; }
+    .adelanto__fotos { margin-top: 0; grid-gap: 2rem 1.5rem; gap: 2rem 1.5rem; }
+  }
+</style>

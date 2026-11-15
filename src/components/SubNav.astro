@@ -1,0 +1,56 @@
+---
+// Subnavegación de anclas pegajosa (Jardín, Primaria, Comunidad). En mobile: fila con scroll horizontal.
+interface Props { items: { href: string; texto: string }[]; etiqueta: string }
+const { items, etiqueta } = Astro.props;
+---
+<nav class="subnav" aria-label={etiqueta} data-subnav>
+  <div class="subnav__fila contenedor" data-subnav-fila data-sin-lenis>
+    <ul class="subnav__lista">
+      {items.map((i) => <li><a href={i.href} class="subnav__enlace">{i.texto}</a></li>)}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .subnav {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(250, 246, 238, 0.97);
+    border-bottom: 1px solid rgba(35, 32, 28, 0.1);
+    transition: top 0.5s var(--ease-out);
+  }
+  @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) {
+    .subnav { background: rgba(250, 246, 238, 0.86); -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2); }
+  }
+  /* Cuando el header está visible, la subnav baja para no quedar tapada */
+  :global(.encabezado:not(.is-oculto)) ~ :global(main) .subnav { top: var(--header-h); }
+  .subnav__fila {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .subnav__fila::-webkit-scrollbar { display: none; }
+  .subnav__lista { display: flex; white-space: nowrap; padding: 0.35rem 0; }
+  .subnav__lista li { flex: none; }
+  .subnav__enlace {
+    position: relative;
+    display: inline-flex; align-items: center;
+    min-height: 44px;
+    padding: 0 0.85rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--tinta-suave);
+    text-decoration: none;
+    border-radius: 999px;
+    transition: color 0.25s, background-color 0.25s;
+  }
+  .subnav__lista li:first-child .subnav__enlace { margin-left: -0.85rem; }
+  .subnav__enlace:hover { color: var(--tinta); }
+  .subnav__enlace[aria-current='true'] { color: var(--tinta); background: var(--acento-suave); }
+  .subnav__enlace[aria-current='true']::after {
+    content: ''; position: absolute; left: 0.85rem; right: 0.85rem; bottom: 6px; height: 2px;
+    background: var(--acento); border-radius: 2px;
+  }
+</style>

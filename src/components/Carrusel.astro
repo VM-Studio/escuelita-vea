@@ -1,0 +1,78 @@
+---
+// Carrusel liviano (Embla, cargado solo cuando se acerca). Sin JS: fila con scroll horizontal y snap.
+// `soloMovil`: en desktop se apaga y los slides quedan como grilla (lo define el CSS de cada uso).
+interface Props { etiqueta: string; soloMovil?: boolean; class?: string; id?: string }
+const { etiqueta, soloMovil = false, class: clase = '', id } = Astro.props;
+---
+<div class:list={['carrusel', { 'carrusel--solo-movil': soloMovil }, clase]} data-carrusel={soloMovil ? 'movil' : ''} role="region" aria-roledescription="carrusel" aria-label={etiqueta} id={id}>
+  <div class="carrusel__viewport" data-carrusel-viewport data-sin-lenis>
+    <div class="carrusel__pista">
+      <slot />
+    </div>
+  </div>
+  <div class="carrusel__controles" data-carrusel-controles hidden>
+    <button type="button" class="carrusel__flecha" data-carrusel-prev aria-label="Anterior">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M20 12 C 15 12.2, 10 11.8, 5 12 M10 6 C 8 8.5, 6 10.6, 4.5 12 C 6 13.4, 8 15.5, 10 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <div class="carrusel__puntos" data-carrusel-puntos></div>
+    <button type="button" class="carrusel__flecha" data-carrusel-next aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 12.5 C 9 12, 14 12.2, 19 12 M14 6.5 C 16 9, 18 11, 19.5 12 C 18 13.2, 16 15, 14 17.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  import { iniciarCarruseles } from '../scripts/carrusel';
+  iniciarCarruseles();
+</script>
+
+<style>
+  .carrusel { position: relative; }
+  .carrusel__viewport {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-left: calc(-1 * var(--gutter));
+    margin-right: calc(-1 * var(--gutter));
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+  .carrusel__viewport::-webkit-scrollbar { display: none; }
+  .carrusel.is-embla .carrusel__viewport { overflow: hidden; scroll-snap-type: none; }
+  .carrusel__pista { display: flex; touch-action: pan-y pinch-zoom; }
+  .carrusel__pista > :global(*) { flex: 0 0 82%; min-width: 0; scroll-snap-align: start; margin-right: 1rem; }
+  @media (min-width: 40em) { .carrusel__pista > :global(*) { flex-basis: 46%; } }
+  @media (min-width: 64em) { .carrusel:not(.carrusel--solo-movil) .carrusel__pista > :global(*) { flex-basis: 31%; } }
+
+  .carrusel__controles { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; }
+  .carrusel__controles[hidden] { display: none; }
+  .carrusel__flecha {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 3rem; height: 3rem; flex: none;
+    border: 1.5px solid var(--tinta); border-radius: 50%;
+    background: transparent; color: var(--tinta);
+    transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+  }
+  .carrusel__flecha:disabled { opacity: 0.3; cursor: default; }
+  @media (hover: hover) { .carrusel__flecha:not(:disabled):hover { background: var(--tinta); color: var(--papel); } }
+  .carrusel__puntos { display: flex; flex-wrap: wrap; justify-content: center; padding: 0 1rem; }
+  .carrusel__puntos :global(button) {
+    position: relative;
+    width: 28px; height: 28px; border: 0; padding: 0; margin: 0 1px;
+    background: none;
+  }
+  .carrusel__puntos :global(button)::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%;
+    background: var(--tinta); opacity: 0.25;
+    transition: opacity 0.3s, transform 0.4s var(--ease-out);
+  }
+  .carrusel__puntos :global(button[aria-current='true'])::before { opacity: 1; transform: scale(1.35); background: var(--acento); }
+
+  /* Solo móvil: desde 64em deja de ser carrusel */
+  @media (min-width: 64em) {
+    .carrusel--solo-movil .carrusel__viewport { overflow: visible; margin: 0; padding: 0; scroll-snap-type: none; }
+    .carrusel--solo-movil .carrusel__controles { display: none; }
+  }
+</style>

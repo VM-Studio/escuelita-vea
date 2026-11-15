@@ -1,0 +1,78 @@
+---
+// Sistema de trazos a mano: subrayados, círculos, flechas, sol, hoja, espiral…
+// Se dibujan con el scroll (DrawSVG) cuando tienen data-dibujar.
+// La textura de crayón la da el filtro #crayon definido una sola vez en el layout.
+export type NombreTrazo =
+  | 'subrayado' | 'subrayado-doble' | 'circulo' | 'flecha' | 'flecha-curva' | 'sol' | 'hoja' | 'espiral'
+  | 'ola' | 'estrella' | 'ronda' | 'lazos' | 'garabato' | 'corazon' | 'scroll' | 'tilde' | 'rayitas';
+
+interface Props {
+  nombre: NombreTrazo;
+  class?: string;
+  grosor?: number;
+  dibujar?: boolean | 'scroll';
+  color?: 'rojo' | 'ocre' | 'verde' | 'tinta' | 'arena' | 'actual';
+  crayon?: boolean;
+  titulo?: string;
+}
+const { nombre, class: clase = '', grosor = 3, dibujar = true, color = 'rojo', crayon = true, titulo } = Astro.props;
+
+const T: Record<NombreTrazo, { vb: string; d: string[] }> = {
+  subrayado: { vb: '0 0 300 22', d: ['M4 14 C 58 7, 118 5, 178 9 S 268 15, 296 8'] },
+  'subrayado-doble': { vb: '0 0 300 26', d: ['M6 11 C 70 4, 150 4, 220 7 S 280 12, 294 9', 'M24 20 C 92 14, 178 13, 284 17'] },
+  circulo: { vb: '0 0 220 90', d: ['M168 14 C 124 2, 52 4, 20 30 C -4 52, 38 84, 112 84 C 182 84, 214 60, 206 34 C 198 10, 150 2, 98 8'] },
+  flecha: { vb: '0 0 130 60', d: ['M6 42 C 32 54, 74 52, 112 22', 'M92 17 L 114 20 L 108 42'] },
+  'flecha-curva': { vb: '0 0 120 120', d: ['M20 10 C 4 50, 30 96, 96 100', 'M78 86 L 98 101 L 80 114'] },
+  sol: {
+    vb: '0 0 120 120',
+    d: [
+      'M62 37 C 77 36, 86 48, 85 61 C 84 76, 72 86, 58 85 C 44 84, 35 73, 36 59 C 37 46, 47 37, 63 38',
+      'M60 8 L 61 24', 'M96 22 L 86 33', 'M112 60 L 97 61', 'M96 98 L 86 88', 'M60 112 L 60 97', 'M24 98 L 34 87', 'M8 60 L 23 60', 'M24 22 L 34 33',
+    ],
+  },
+  hoja: {
+    vb: '0 0 80 124',
+    d: [
+      'M40 8 C 72 30, 74 80, 40 108 C 8 80, 10 30, 40 8',
+      'M40 116 C 40 84, 39 46, 40 14',
+      'M40 46 L 26 34', 'M40 62 L 56 48', 'M40 78 L 24 66', 'M40 90 L 54 80',
+    ],
+  },
+  espiral: { vb: '0 0 120 120', d: ['M60 60 C 60 54, 68 54, 68 60 C 68 70, 52 70, 52 60 C 52 44, 76 44, 76 60 C 76 82, 44 82, 44 60 C 44 32, 86 32, 86 60 C 86 94, 34 94, 34 60 C 34 22, 100 22, 102 58'] },
+  ola: { vb: '0 0 400 30', d: ['M4 16 C 30 4, 52 4, 76 16 S 124 28, 150 16 S 200 4, 226 16 S 276 28, 302 16 S 352 4, 396 14'] },
+  estrella: { vb: '0 0 100 100', d: ['M50 10 L 52 90', 'M12 34 L 88 66', 'M14 68 L 86 32', 'M30 14 L 70 86'] },
+  ronda: {
+    vb: '0 0 120 120',
+    d: [
+      'M60 20 C 82 20, 100 38, 100 60 C 100 82, 82 100, 60 100 C 38 100, 20 82, 20 60 C 20 40, 36 22, 58 20',
+      'M60 12 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0',
+      'M100 60 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0',
+      'M60 108 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0',
+      'M20 60 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0',
+    ],
+  },
+  lazos: { vb: '0 0 140 90', d: ['M70 45 C 50 10, 10 14, 12 46 C 14 78, 54 76, 70 45 C 86 14, 128 12, 128 44 C 128 78, 88 80, 70 45'] },
+  garabato: { vb: '0 0 200 60', d: ['M6 40 C 20 10, 34 10, 30 34 C 26 56, 52 52, 58 30 C 64 8, 84 12, 80 34 C 76 56, 104 52, 110 30 C 116 10, 134 14, 132 34 C 130 54, 156 50, 162 30 C 168 12, 186 16, 194 30'] },
+  corazon: { vb: '0 0 100 90', d: ['M50 82 C 18 60, 6 42, 10 26 C 14 10, 38 6, 50 26 C 62 6, 88 10, 90 28 C 92 46, 78 62, 50 82'] },
+  scroll: { vb: '0 0 40 90', d: ['M20 6 C 18 30, 22 50, 20 78', 'M8 64 C 14 72, 18 78, 20 82 C 23 76, 27 70, 33 64'] },
+  tilde: { vb: '0 0 60 50', d: ['M6 28 C 14 34, 20 40, 24 44 C 34 28, 44 16, 56 6'] },
+  rayitas: { vb: '0 0 100 40', d: ['M10 30 L 22 8', 'M36 32 L 46 6', 'M62 32 L 70 8', 'M86 30 L 94 10'] },
+};
+const t = T[nombre];
+const colores = { rojo: 'var(--rojo-vivo)', ocre: 'var(--ocre)', verde: 'var(--verde)', tinta: 'var(--tinta)', arena: 'var(--arena)', actual: 'currentColor' };
+---
+<svg
+  class:list={['trazo', `trazo--${nombre}`, clase]}
+  viewBox={t.vb}
+  preserveAspectRatio={['subrayado', 'subrayado-doble', 'ola', 'garabato', 'circulo'].includes(nombre) ? 'none' : 'xMidYMid meet'}
+  style={`color:${colores[color]};stroke-width:${grosor}px`}
+  aria-hidden={titulo ? undefined : 'true'}
+  role={titulo ? 'img' : undefined}
+  focusable="false"
+  data-dibujar={dibujar ? (dibujar === 'scroll' ? 'scroll' : '') : undefined}
+>
+  {titulo && <title>{titulo}</title>}
+  <g filter={crayon ? 'url(#crayon)' : undefined}>
+    {t.d.map((d) => <path d={d} />)}
+  </g>
+</svg>

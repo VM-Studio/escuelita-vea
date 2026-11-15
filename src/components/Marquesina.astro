@@ -1,0 +1,46 @@
+---
+// Marquesina lenta con los materiales del taller (texto textual del contenido). CSS puro, se pausa con movimiento reducido.
+interface Props { items: string[] }
+const { items } = Astro.props;
+const grupo = [...items, ...items];
+---
+<div class="marquesina" role="group" aria-label="Materiales del taller">
+  <p class="sr-only">{items.join(', ')}</p>
+  <div class="marquesina__pista" aria-hidden="true">
+    {[0, 1].map(() => (
+      <ul class="marquesina__grupo">
+        {grupo.map((m, i) => (
+          <li class="marquesina__item"><span class:list={['marquesina__palabra', i % 2 ? 'is-cursiva' : '']}>{m}</span><span class="marquesina__punto">·</span></li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquesina {
+    position: relative;
+    overflow: hidden;
+    padding: 2.25rem 0;
+    border-top: 1px solid rgba(35, 32, 28, 0.12);
+    border-bottom: 1px solid rgba(35, 32, 28, 0.12);
+    background: var(--papel-oscuro);
+  }
+  .marquesina__pista { display: flex; width: max-content; animation: marquesina 70s linear infinite; }
+  .marquesina:hover .marquesina__pista { animation-play-state: paused; }
+  .marquesina__grupo { display: flex; flex: none; }
+  .marquesina__item { display: flex; align-items: center; flex: none; }
+  .marquesina__palabra {
+    font-family: var(--f-titulo);
+    font-size: 2.5rem;
+    font-size: clamp(2.25rem, 1.4rem + 4vw, 5.25rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .marquesina__palabra.is-cursiva { font-style: italic; color: var(--rojo); font-weight: 300; }
+  .marquesina__punto { margin: 0 2rem; color: var(--ocre); font-size: 2rem; }
+  @keyframes marquesina { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+  @media (prefers-reduced-motion: reduce) { .marquesina__pista { animation: none; } }
+  :global(html.liviano) .marquesina__pista { animation-duration: 140s; }
+</style>
