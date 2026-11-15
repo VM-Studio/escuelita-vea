@@ -4,7 +4,7 @@ let listo = false;
 
 function preparar() {
   if (cargado) return cargado;
-  cargado = Promise.all([import('photoswipe/lightbox'), import('photoswipe'), import('photoswipe/style.css')]).then(([{ default: PhotoSwipeLightbox }, { default: PhotoSwipe }]) => {
+  cargado = Promise.all([import('photoswipe/lightbox'), import('photoswipe')]).then(([{ default: PhotoSwipeLightbox }, { default: PhotoSwipe }]) => {
     document.querySelectorAll<HTMLElement>('[data-galeria]').forEach((g) => {
       const lb = new PhotoSwipeLightbox({
         gallery: g,
@@ -38,6 +38,7 @@ function preparar() {
     });
     listo = true;
   });
+  cargado.catch((e) => { console.warn('[galería] sin lightbox:', e); cargado = null; });
   return cargado;
 }
 

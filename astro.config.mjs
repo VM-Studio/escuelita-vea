@@ -11,7 +11,7 @@ export default defineConfig({
   trailingSlash: 'ignore',
   compressHTML: true,
   scopedStyleStrategy: 'class', // las clases pasadas a componentes hijos reciben el estilo del padre
-  build: { format: 'directory', inlineStylesheets: 'auto' },
+  build: { format: 'directory', inlineStylesheets: 'always' /* CSS incrustado: sin recursos que bloqueen el render */ },
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   devToolbar: { enabled: false },
   image: {

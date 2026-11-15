@@ -269,6 +269,10 @@ function subnav() {
     let max = 0;
     secciones.forEach((s) => { const v = visibles.get(s.id) || 0; if (v > max) { max = v; mejor = s.id; } });
     if (mejor) marcar(mejor);
+    else if (secciones[0] && secciones[0].getBoundingClientRect().top > window.innerHeight * 0.4) {
+      enlaces.forEach((a) => a.removeAttribute('aria-current'));
+      if (fila) fila.scrollLeft = 0;
+    }
   }, { rootMargin: '-35% 0px -55% 0px', threshold: [0, 0.01, 0.25, 0.5, 1] });
   secciones.forEach((s) => io.observe(s));
 }

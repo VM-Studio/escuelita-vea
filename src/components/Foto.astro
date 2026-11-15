@@ -42,11 +42,11 @@ const textoAlt = alt ?? meta?.alt ?? '';
 ---
 {img ? (
   <figure
-    class:list={['foto', ratio ? 'foto--recorte' : 'foto--natural', clase]}
+    class:list={['foto', ratio ? 'foto--recorte' : 'foto--natural', { 'foto--prioridad': prioridad }, clase]}
     style={pt ? `--pt:${pt}` : undefined}
     data-revelar-img={revelar ? '' : undefined}
   >
-    {lqip && <span class="foto__lqip" style={`background-image:url(${lqip})`} aria-hidden="true"></span>}
+    {lqip && !prioridad && <span class="foto__lqip" style={`background-image:url(${lqip})`} aria-hidden="true"></span>}
     <Picture
       src={img}
       alt={textoAlt}

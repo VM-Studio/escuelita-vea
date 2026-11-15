@@ -109,7 +109,12 @@ async function iniciar() {
       const resto = q('[data-hero-resto]', hero);
       const trazos = q('[data-hero-trazo] path', hero);
       const fondo = hero.querySelector('[data-hero-fondo]');
-      if (titular) {
+      // En pantallas chicas el titular no se parte en líneas: es el LCP y tiene que pintarse de inmediato.
+      const titularAnimado = window.matchMedia('(min-width: 1024px)').matches;
+      if (titular && !titularAnimado) {
+        gsap.set(titular, { visibility: 'visible' }); // se queda quieto: ya está pintado desde el HTML
+      }
+      if (titular && titularAnimado) {
         const st = SplitText.create(titular, { type: 'lines', mask: 'lines', linesClass: 'linea' });
         gsap.set(titular, { visibility: 'visible' });
         gsap.set(st.lines, { yPercent: 105 });
@@ -132,7 +137,7 @@ async function iniciar() {
 
     /* ---- Titulares por líneas con máscara ---- */
     q('[data-titulo-lineas]:not([data-anim-hecho])').forEach((el) => {
-      const st = SplitText.create(el, { type: 'lines', mask: 'lines', linesClass: 'linea' });
+      const st = SplitText.create(el, { type: 'lines', mask: 'lines', linesClass: 'linea', aria: el.matches('h1,h2,h3,h4,h5,h6') ? 'auto' : 'none' });
       gsap.set(el, { visibility: 'visible' });
       gsap.from(st.lines, {
         yPercent: 105,
@@ -145,7 +150,7 @@ async function iniciar() {
 
     /* ---- Frases de interludio: palabra por palabra, más lentas ---- */
     q('[data-frase]').forEach((el) => {
-      const st = SplitText.create(el, { type: 'words,lines', mask: 'lines', linesClass: 'linea' });
+      const st = SplitText.create(el, { type: 'words,lines', mask: 'lines', linesClass: 'linea', aria: el.matches('h1,h2,h3,h4') ? 'auto' : 'none' });
       gsap.set(el, { visibility: 'visible' });
       gsap.from(st.words, {
         yPercent: 110,
@@ -215,7 +220,7 @@ async function iniciar() {
     /* ---- Palabras grandes que aparecen de a una (habilidades del egresado) ---- */
     q('[data-de-a-una]').forEach((cont) => {
       const items = q('[data-palabra]', cont);
-      gsap.set(items, { autoAlpha: 0.08, y: 14 });
+      gsap.set(items, { autoAlpha: 0, y: 14 });
       gsap.to(items, { autoAlpha: 1, y: 0, stagger: 0.28, duration: 0.9, ease: 'power2.out', scrollTrigger: { trigger: cont, start: 'top 75%', once: true } });
     });
 

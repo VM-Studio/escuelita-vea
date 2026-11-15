@@ -34,7 +34,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 
   <SubNav items={subnav} etiqueta="Secciones de Comunidad" />
 
-  <!-- Introducción: la frase de la escuela destacada como apertura (sin repetirla) -->
+  {/* Introducción: la frase de la escuela destacada como apertura (sin repetirla) */}
   <section class="seccion intro-com ancla" id="vida-en-comunidad" aria-label="Introducción">
     <div class="contenedor intro-com__grilla">
       <div>
@@ -47,7 +47,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 
   <section class="seccion seccion--papel-oscuro" aria-label="Talleres, salidas y familias">
     <div class="contenedor contenedor--ancho">
-      <!-- Talleres y Muestras -->
+      {/* Talleres y Muestras */}
       <Acordeon id={c.talleresMuestras.id} titulo={c.talleresMuestras.titulo} subtitulo={c.talleresMuestras.bajada} grupo="comunidad">
         <div class="bloque-com">
           <div class="fechas" aria-hidden="true">
@@ -65,7 +65,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
         </div>
       </Acordeon>
 
-      <!-- Salidas y Celebraciones -->
+      {/* Salidas y Celebraciones */}
       <Acordeon id={c.salidas.id} titulo={c.salidas.titulo} subtitulo={c.salidas.bajada} grupo="comunidad">
         <div class="bloque-com">
           <p class="bloque-com__lead"><strong>{c.salidas.salidasEducativas.etiqueta}:</strong> {c.salidas.salidasEducativas.texto}</p>
@@ -87,7 +87,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
         </div>
       </Acordeon>
 
-      <!-- Actividades con familias -->
+      {/* Actividades con familias */}
       <Acordeon id={c.familias.id} titulo={c.familias.titulo} subtitulo={c.familias.bajada} grupo="comunidad">
         <div class="bloque-com bloque-com__grilla">
           <p class="bloque-com__lead">{c.familias.texto}</p>
@@ -97,7 +97,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
     </div>
   </section>
 
-  <!-- Hitos anuales y viajes -->
+  {/* Hitos anuales y viajes */}
   <section class="seccion ancla" id="hitos-anuales" aria-labelledby="hitos-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
@@ -121,7 +121,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 
   <Interludio foto={c.interludio.foto} frase={c.interludio.frase} />
 
-  <!-- Voces de la comunidad: construido, OCULTO hasta tener testimonios reales -->
+  {/* Voces de la comunidad: construido, OCULTO hasta tener testimonios reales */}
   {mostrarVoces && (
     <section class="seccion seccion--acento voces" aria-labelledby="voces-titulo">
       <div class="contenedor">
@@ -141,7 +141,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
     </section>
   )}
 
-  <!-- Talleres extracurriculares -->
+  {/* Talleres extracurriculares */}
   <section class="seccion seccion--tinta ancla extra" id="talleres" aria-labelledby="talleres-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">

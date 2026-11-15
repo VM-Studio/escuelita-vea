@@ -29,6 +29,14 @@ for (const ancho of anchos) {
   page.on('console', (m) => { if (m.type() === 'error') problemas.push(`[${ancho}] consola: ${m.text()}`); });
   for (const ruta of rutas) {
     await page.goto(base + ruta, { waitUntil: 'networkidle' });
+    if (modo === 'sinjs') {
+      for (let y = 0; y < 30000; y += 700) { await page.mouse.wheel(0, 700); await page.waitForTimeout(60); }
+      await page.waitForTimeout(500);
+      const nombre = `${ruta.replace(/\//g, '_').replace(/^_|_$/g, '') || 'inicio'}-${ancho}.png`;
+      await page.screenshot({ path: path.join(salida, nombre), fullPage: true });
+      process.stdout.write(`✓ ${nombre}\n`);
+      continue;
+    }
     // recorrer para disparar lazy-load y revelados
     await page.evaluate(async () => {
       const paso = window.innerHeight * 0.7;

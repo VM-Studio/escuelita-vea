@@ -28,7 +28,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   heroOscuro
   precargar={precargar}
 >
-  <!-- ============ HERO ============ -->
+  {/* ============ HERO ============ */}
   <section class="hero" data-hero aria-label="Portada">
     <div class="hero__fondo" data-hero-fondo>
       <div class="hero__parallax" data-hero-parallax>
@@ -58,7 +58,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     </a>
   </section>
 
-  <!-- ============ PRESENTACIÓN CON LOGOS ============ -->
+  {/* ============ PRESENTACIÓN CON LOGOS ============ */}
   <section class="presentacion seccion" id="presentacion" aria-labelledby="presentacion-titulo">
     <div class="contenedor">
       <div class="presentacion__cabeza">
@@ -71,7 +71,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
         <p class="presentacion__descripcion" data-revelar>{p.presentacion.descripcion}</p>
       </div>
 
-      <!-- Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha, VEA abajo. -->
+      {/* Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha, VEA abajo. */}
       <div class="presentacion__niveles">
         <a href="/jardin/" class="nivel nivel--jardin" data-revelar>
           <Logo nivel="jardin" alto={112} decorativo />
@@ -93,7 +93,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     </div>
   </section>
 
-  <!-- ============ BIENVENIDA ============ -->
+  {/* ============ BIENVENIDA ============ */}
   <section class="bienvenida seccion seccion--papel-oscuro" aria-label="Bienvenida">
     <div class="contenedor bienvenida__grilla">
       <div class="bienvenida__foto">
@@ -106,10 +106,10 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     </div>
   </section>
 
-  <!-- ============ INTERLUDIO ============ -->
+  {/* ============ INTERLUDIO ============ */}
   <Interludio foto={p.interludio.foto} frase={p.interludio.frase} />
 
-  <!-- ============ LÍNEA DE TIEMPO ============ -->
+  {/* ============ LÍNEA DE TIEMPO ============ */}
   <section class="tiempo seccion" aria-labelledby="tiempo-titulo" data-linea-tiempo>
     <div class="contenedor">
       <div class="tiempo__cabeza">
@@ -146,7 +146,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     </div>
   </section>
 
-  <!-- ============ EJES PEDAGÓGICOS ============ -->
+  {/* ============ EJES PEDAGÓGICOS ============ */}
   <section class="ejes seccion seccion--papel-oscuro" aria-labelledby="ejes-titulo">
     <div class="contenedor">
       <div class="ejes__cabeza">
@@ -171,13 +171,13 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     </div>
   </section>
 
-  <!-- ============ DOS PUERTAS ============ -->
+  {/* ============ DOS PUERTAS ============ */}
   <Puertas />
 
-  <!-- ============ MARQUESINA DE MATERIALES ============ -->
+  {/* ============ MARQUESINA DE MATERIALES ============ */}
   <Marquesina items={p.materiales} />
 
-  <!-- ============ COMUNIDAD (ADELANTO) ============ -->
+  {/* ============ COMUNIDAD (ADELANTO) ============ */}
   <section class="adelanto seccion" aria-labelledby="adelanto-titulo">
     <div class="contenedor">
       <div class="adelanto__cabeza">

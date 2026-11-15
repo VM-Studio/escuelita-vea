@@ -1,5 +1,6 @@
 ---
 // Galería con lightbox (PhotoSwipe, cargado solo al usarse). Sin JS: cada foto enlaza a su versión grande.
+import 'photoswipe/style.css';
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Foto from './Foto.astro';
@@ -46,6 +47,7 @@ const items = await Promise.all(
 </script>
 
 <style>
+  :global(.pswp__texto-alt) { position: absolute; left: 0; right: 0; bottom: 0; padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom)); color: #f1e9da; font-family: var(--f-frase); font-style: italic; font-size: 0.9375rem; text-align: center; background: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,0)); pointer-events: none; }
   .galeria__item { position: relative; display: block; overflow: hidden; border-radius: 2px; }
   .galeria__item :global(img) { transition: transform 1.4s var(--ease-out), opacity 0.7s var(--ease-suave); }
   @media (hover: hover) { .galeria__item:hover :global(img) { transform: scale(1.04); } }
