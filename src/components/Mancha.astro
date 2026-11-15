@@ -1,0 +1,18 @@
+---
+// Mancha de pintura orgánica (acuarela/témpera), decorativa. Se ubica con la clase que le pasa el padre.
+interface Props { forma?: 'a' | 'b' | 'c' | 'd'; color?: 'arena' | 'ocre' | 'verde' | 'rojo' | 'azul' | 'rosa'; class?: string; opacidad?: number }
+const { forma = 'a', color = 'arena', class: clase = '', opacidad = 1 } = Astro.props;
+const F = {
+  a: 'M118 12C160 8 196 38 204 78c8 42-10 86-50 104-38 18-92 16-122-12C2 142-8 96 10 60 26 26 76 16 118 12Z',
+  b: 'M60 20c34-22 92-16 122 10 30 26 32 70 14 104-18 34-60 54-104 48C48 176 12 150 6 112 0 76 26 42 60 20Z',
+  c: 'M98 6c40 2 82 22 96 60 14 36-6 70-24 96-18 26-56 42-94 38C38 196 8 168 4 128 0 92 14 60 38 36 56 18 74 5 98 6Z',
+  d: 'M30 60C44 26 86 4 126 10c38 6 72 36 78 74 6 40-20 78-58 94-36 16-84 12-112-14C8 140 16 92 30 60Z',
+};
+const C = { arena: '#E8CFA4', ocre: '#E5B66D', verde: '#B9CFAA', rojo: '#F2A49A', azul: '#B7CBE0', rosa: '#F1C6C0' };
+---
+<svg class:list={['mancha', clase]} viewBox="0 0 210 210" aria-hidden="true" focusable="false" style={`opacity:${opacidad}`}>
+  <path d={F[forma]} fill={C[color]} />
+</svg>
+<style>
+  .mancha { position: absolute; pointer-events: none; z-index: 0; overflow: visible; }
+</style>

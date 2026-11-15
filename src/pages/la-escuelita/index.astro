@@ -1,4 +1,5 @@
 ---
+import Sello from '../../components/Sello.astro';
 import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
 import Trazo from '../../components/Trazo.astro';
@@ -8,7 +9,7 @@ import Desplegable from '../../components/Desplegable.astro';
 import Interludio from '../../components/Interludio.astro';
 import Galeria from '../../components/Galeria.astro';
 import { laEscuelita as e } from '../../content/la-escuelita';
-import { parrafos, enLinea } from '../../lib/texto';
+import { parrafos, enLinea, acento } from '../../lib/texto';
 const [principal, ...archivo] = e.historia.fotos;
 ---
 <Base
@@ -23,7 +24,10 @@ const [principal, ...archivo] = e.historia.fotos;
       <div class="historia__texto">
         <p class="t-volanta" data-hero-resto>Historia e identidad</p>
         <h1 id="historia-titulo" class="historia__titulo" data-hero-titular>{e.historia.titulo}</h1>
-        <p class="historia__anio t-cifra" data-hero-resto aria-hidden="true">1959</p>
+        <div class="historia__fila" data-hero-resto>
+          <p class="historia__anio t-cifra" aria-hidden="true">1959</p>
+          <Sello tamano={104} color="tinta" />
+        </div>
         <p class="historia__parrafo" data-hero-resto>{e.historia.texto}</p>
       </div>
       <figure class="historia__principal pegada" style="--rot:-2deg" data-hero-resto>
@@ -46,7 +50,7 @@ const [principal, ...archivo] = e.historia.fotos;
       <div class="reconocimiento__caja">
         <Trazo nombre="estrella" class="reconocimiento__estrella" grosor={2.4} />
         <p class="reconocimiento__fecha" data-revelar>22 · 08 · 2024</p>
-        <h2 id="rec-titulo" class="reconocimiento__titulo" data-titulo-lineas>{e.reconocimiento.titulo}</h2>
+        <h2 id="rec-titulo" class="reconocimiento__titulo" data-titulo-lineas set:html={acento(e.reconocimiento.titulo)} />
         <p class="reconocimiento__texto" data-revelar>{e.reconocimiento.texto}</p>
       </div>
       <div class="carta-desplegable" data-revelar>
@@ -68,7 +72,7 @@ const [principal, ...archivo] = e.historia.fotos;
   <section class="seccion seccion--tinta hitos" aria-labelledby="hitos-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
-        <h2 id="hitos-titulo" data-titulo-lineas>{e.hitos.titulo}</h2>
+        <h2 id="hitos-titulo" data-titulo-lineas set:html={acento(e.hitos.titulo)} />
         <p class="hitos__intro" data-revelar>{e.hitos.intro}</p>
       </div>
       <ol class="hitos__lista">
@@ -98,7 +102,7 @@ const [principal, ...archivo] = e.historia.fotos;
           <p class="vea__anio t-cifra" aria-hidden="true"><span data-contador="1992" data-desde="1959">1992</span></p>
         </div>
         <div class="vea__texto">
-          <h2 id="vea-titulo" class="vea__titulo" data-titulo-lineas>{e.vea.titulo}</h2>
+          <h2 id="vea-titulo" class="vea__titulo" data-titulo-lineas set:html={acento(e.vea.titulo)} />
           <div class="prosa" data-revelar set:html={parrafos(e.vea.texto)} />
         </div>
       </div>
@@ -120,7 +124,7 @@ const [principal, ...archivo] = e.historia.fotos;
     <div class="contenedor">
       <div class="identidad__grilla">
         <div>
-          <h2 id="id-titulo" data-titulo-lineas>{e.identidad.titulo}</h2>
+          <h2 id="id-titulo" data-titulo-lineas set:html={acento(e.identidad.titulo)} />
           <p class="identidad__texto" data-revelar>{e.identidad.texto}</p>
         </div>
         <div class="identidad__foto">
@@ -143,7 +147,7 @@ const [principal, ...archivo] = e.historia.fotos;
   {/* ¿Por qué educar a través del arte? */}
   <section class="seccion porque" aria-labelledby="porque-titulo">
     <div class="contenedor contenedor--ancho porque__grilla">
-      <h2 id="porque-titulo" class="porque__titulo" data-titulo-lineas>{e.porQue.titulo}</h2>
+      <h2 id="porque-titulo" class="porque__titulo" data-titulo-lineas set:html={acento(e.porQue.titulo)} />
       <div class="prosa porque__texto" data-revelar set:html={parrafos(e.porQue.texto)} />
     </div>
   </section>
@@ -159,87 +163,89 @@ const [principal, ...archivo] = e.historia.fotos;
 </Base>
 
 <style>
-  .historia { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 3rem; overflow: hidden; }
-  .historia__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 3rem; gap: 3rem; align-items: center; }
-  .historia__titulo { margin-top: 1rem; font-size: 3rem; font-size: clamp(3rem, 1.6rem + 6vw, 7.5rem); font-weight: 300; letter-spacing: -0.04em; max-width: 8ch; line-height: 0.95; }
-  .historia__anio { margin-top: 1rem; font-size: 4rem; font-size: clamp(4rem, 2rem + 8vw, 9rem); color: var(--rojo); }
-  .historia__parrafo { margin-top: 1.5rem; font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
+  .historia { padding-top: calc(var(--header-h) + 2.04rem); padding-bottom: 2.04rem; overflow: hidden; }
+  .historia__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; }
+  .historia__titulo { margin-top: 1rem; font-size: 2.58rem; font-size: clamp(2.58rem, 1.312rem + 3.6vw, 4.5rem); font-weight: 300; letter-spacing: -0.04em; max-width: 8ch; line-height: 0.95; }
+  .historia__fila { display: flex; align-items: center; margin-top: 1rem; }
+  .historia__fila > :global(.sello) { margin-left: 1.5rem; }
+  .historia__anio { font-size: 3.44rem; font-size: clamp(3.44rem, 1.64rem + 4.8vw, 5.4rem); color: var(--rojo); }
+  .historia__parrafo { margin-top: 1.275rem; font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
   .historia__principal { position: relative; width: 82%; max-width: 26rem; margin: 0 auto; }
-  @media (min-width: 56em) { .historia__grilla { grid-template-columns: 7fr 5fr; grid-gap: 5rem; gap: 5rem; } }
+  @media (min-width: 56em) { .historia__grilla { grid-template-columns: 7fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 
   .reconocimiento__caja { max-width: 46rem; margin: 0 auto; text-align: center; }
-  .reconocimiento__estrella { width: 3rem; height: 3rem; margin: 0 auto 1rem; }
+  .reconocimiento__estrella { width: 2.4rem; height: 2.4rem; margin: 0 auto 1rem; }
   .reconocimiento__fecha { margin: 0 auto 1rem; font-weight: 700; letter-spacing: 0.2em; color: var(--rojo); font-size: 0.875rem; }
   .reconocimiento__titulo { margin: 0 auto; max-width: 16ch; }
-  .reconocimiento__texto { margin: 1.5rem auto 0; font-size: 1.125rem; font-size: var(--t-md); }
-  .carta-desplegable { margin-top: 2.5rem; }
+  .reconocimiento__texto { margin: 1.275rem auto 0; font-size: 1.125rem; font-size: var(--t-md); }
+  .carta-desplegable { margin-top: 1.7rem; }
 
   /* La carta: papel, márgenes amplios, serif, firma */
   .carta {
     position: relative;
     max-width: 44rem;
     margin: 0 auto;
-    padding: 2.5rem 1.5rem;
-    padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 7vw, 5.5rem);
+    padding: 1.7rem 1.275rem;
+    padding: clamp(1.7rem, 4.2vw, 3.4rem) clamp(1.275rem, 4.9vw, 3.74rem);
     background-color: #fffdf8;
     background-image: url('/textura-papel.png'), linear-gradient(rgba(140, 90, 18, 0.06) 1px, transparent 1px);
     background-size: 160px 160px, 100% 2.1rem;
     box-shadow: var(--sombra-papel-alta);
     transform: rotate(-0.4deg);
     font-family: var(--f-titulo);
-    font-size: 1.125rem;
-    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    font-size: 0.978rem;
+    font-size: clamp(0.978rem, 0.82rem + 0.294vw, 1.05rem);
     line-height: 1.75;
     color: #2b2620;
   }
   .carta p { max-width: none; }
   .carta p + p { margin-top: 1.1em; }
-  .carta__fecha { text-align: right; font-style: italic; color: var(--tinta-suave); margin-bottom: 2rem; }
-  .carta__firma { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(35, 32, 28, 0.15); }
-  .carta__nombre { font-style: italic; font-size: 2rem; line-height: 1.1; color: var(--rojo); }
+  .carta__fecha { text-align: right; font-style: italic; color: var(--tinta-suave); margin-bottom: 1.7rem; }
+  .carta__firma { margin-top: 1.7rem; padding-top: 1.275rem; border-top: 1px solid rgba(35, 32, 28, 0.15); }
+  .carta__nombre { font-style: italic; font-size: 1.48rem; line-height: 1.1; color: var(--rojo); }
   .carta__cargo { margin-top: 0.6rem !important; font-family: var(--f-texto); font-size: 0.875rem; line-height: 1.5; color: var(--tinta-suave); }
 
   .hitos__intro { color: #e9e1d3; font-size: 1.125rem; font-size: var(--t-md); }
   .hitos__lista { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1px; gap: 1px; background: rgba(250, 246, 238, 0.14); border: 1px solid rgba(250, 246, 238, 0.14); border-radius: var(--radio-lg); overflow: hidden; }
-  .hito-c { padding: 2rem 1.5rem; padding: clamp(1.5rem, 3vw, 2.75rem); background: var(--tinta); }
+  .hito-c { padding: 1.7rem 1.275rem; padding: clamp(1.275rem, 2.1vw, 1.87rem); background: var(--tinta); }
   .hito-c--anios { background: #2c2823; }
-  .hito-c__anios { display: flex; align-items: baseline; font-size: 3.5rem; font-size: clamp(3rem, 2rem + 4vw, 5.5rem); color: var(--arena); margin-bottom: 1rem; }
+  .hito-c__anios { display: flex; align-items: baseline; font-size: 2.58rem; font-size: clamp(2.58rem, 1.64rem + 2.4vw, 3.3rem); color: var(--arena); margin-bottom: 1rem; }
   .hito-c__guion { margin: 0 0.3em; font-size: 0.5em; color: #9c9284; }
-  .hito-c__titulo { color: var(--papel); font-size: 1.5rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
+  .hito-c__titulo { color: var(--papel); font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
   .hito-c__texto { color: #ddd4c4; }
   @media (min-width: 56em) { .hitos__lista { grid-template-columns: 1fr 1fr; } }
 
-  .vea__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; margin-bottom: 4rem; }
+  .vea__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; margin-bottom: 2.72rem; }
   .vea__logo { display: flex; flex-direction: column; align-items: flex-start; }
-  .vea__anio { margin-top: 1.25rem; font-size: 4rem; font-size: clamp(3.5rem, 2rem + 6vw, 7rem); color: var(--rojo); }
-  .vea__titulo { font-size: 1.875rem; font-size: var(--t-xl); margin-bottom: 1.5rem; max-width: 22ch; }
-  .vea__ejes-titulo { font-size: 1.5rem; font-size: var(--t-lg); margin-bottom: 2rem; }
+  .vea__anio { margin-top: 1.25rem; font-size: 3.01rem; font-size: clamp(3.01rem, 1.64rem + 3.6vw, 4.2rem); color: var(--rojo); }
+  .vea__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1.275rem; max-width: 22ch; }
+  .vea__ejes-titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 1.7rem; }
   .vea__ejes { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1.25rem; gap: 1.25rem; }
-  .vea-eje { padding: 1.5rem; border: 1px solid rgba(35, 32, 28, 0.14); border-radius: var(--radio-lg); background: #fffdf8; }
-  .vea-eje__icono { display: block; width: 2.5rem; height: 2.5rem; margin-bottom: 0.75rem; }
+  .vea-eje { padding: 1.275rem; border: 1px solid rgba(35, 32, 28, 0.14); border-radius: var(--radio-lg); background: #fffdf8; }
+  .vea-eje__icono { display: block; width: 2rem; height: 2rem; margin-bottom: 0.75rem; }
   .vea-eje__icono :global(svg) { width: 100%; height: 100%; }
   .vea-eje__titulo { font-family: var(--f-titulo); font-weight: 450; font-size: 1.25rem; margin-bottom: 0.5rem; }
   @media (min-width: 48em) { .vea__ejes { grid-template-columns: 1fr 1fr; } }
   @media (min-width: 64em) { .vea__ejes { grid-template-columns: repeat(6, 1fr); } .vea-eje { grid-column: span 2; } .vea-eje:nth-child(4) { grid-column: 2 / span 2; } }
-  @media (min-width: 56em) { .vea__grilla { grid-template-columns: 4fr 7fr; grid-gap: 5rem; gap: 5rem; } }
+  @media (min-width: 56em) { .vea__grilla { grid-template-columns: 4fr 7fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 
-  .identidad__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }
-  .identidad__texto { margin-top: 1.5rem; font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
+  .identidad__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; }
+  .identidad__texto { margin-top: 1.275rem; font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
   .identidad__foto { border-radius: var(--radio); overflow: hidden; }
-  .identidad__pilares-intro { margin: 4rem 0 2rem; font-family: var(--f-titulo); font-style: italic; font-size: 1.375rem; font-size: var(--t-lg); }
-  .pilares { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; }
+  .identidad__pilares-intro { margin: 2.72rem 0 1.7rem; font-family: var(--f-titulo); font-style: italic; font-size: 1.375rem; font-size: var(--t-lg); }
+  .pilares { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
   .pilar { padding-top: 1.25rem; border-top: 2px solid var(--tinta); }
-  .pilar__trazo { width: 2.5rem; height: 2.5rem; margin-bottom: 0.75rem; }
+  .pilar__trazo { width: 2rem; height: 2rem; margin-bottom: 0.75rem; }
   .pilar__titulo { font-size: 1.375rem; margin-bottom: 0.5rem; }
   @media (min-width: 48em) { .pilares { grid-template-columns: 1fr 1fr; } }
   @media (min-width: 64em) { .pilares { grid-template-columns: repeat(4, 1fr); } }
-  @media (min-width: 56em) { .identidad__grilla { grid-template-columns: 6fr 5fr; grid-gap: 5rem; gap: 5rem; } }
+  @media (min-width: 56em) { .identidad__grilla { grid-template-columns: 6fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 
-  .porque__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; }
+  .porque__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
   .porque__titulo { max-width: 12ch; }
   .porque__texto { font-size: 1.125rem; font-size: var(--t-md); }
-  @media (min-width: 56em) { .porque__grilla { grid-template-columns: 5fr 7fr; grid-gap: 4rem; gap: 4rem; } }
+  @media (min-width: 56em) { .porque__grilla { grid-template-columns: 5fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; } }
 
-  .equipo-link__caja { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; border-top: 1px solid rgba(35, 32, 28, 0.15); padding-top: 2.5rem; }
-  .equipo-link__texto { font-family: var(--f-titulo); font-size: 2rem; font-size: var(--t-xl); margin: 0 2rem 1rem 0; }
+  .equipo-link__caja { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; border-top: 1px solid rgba(35, 32, 28, 0.15); padding-top: 1.7rem; }
+  .equipo-link__texto { font-family: var(--f-titulo); font-size: 1.48rem; font-size: var(--t-xl); margin: 0 1.7rem 1rem 0; }
 </style>

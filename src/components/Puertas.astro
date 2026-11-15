@@ -1,4 +1,5 @@
 ---
+import { acento } from '../lib/texto';
 // Dos puertas: Jardín y Primaria. Paneles grandes con foto, una línea (texto institucional) y botón.
 import Foto from './Foto.astro';
 import Trazo from './Trazo.astro';
@@ -13,12 +14,12 @@ const puertas = [
 ---
 <section class="puertas seccion" aria-label={titulo ?? 'Jardín y Primaria'}>
   <div class="contenedor">
-    {titulo && <h2 class="puertas__titulo" data-titulo-lineas>{titulo}</h2>}
+    {titulo && <h2 class="puertas__titulo" data-titulo-lineas set:html={acento(titulo)} />}
     <div class="puertas__grilla">
       {puertas.map((p) => (
         <a href={p.href} class:list={['puerta', `puerta--${p.nivel}`]} data-revelar>
           <div class="puerta__foto">
-            <Foto id={p.foto} ratio="4/5" sizes="(min-width: 48em) 46vw, 94vw" />
+            <Foto id={p.foto} ratio="4/3" sizes="(min-width: 48em) 40vw, 94vw" />
           </div>
           <div class="puerta__velo" aria-hidden="true"></div>
           <div class="puerta__texto">
@@ -37,9 +38,9 @@ const puertas = [
 </section>
 
 <style>
-  .puertas__titulo { margin-bottom: 2.5rem; max-width: 18ch; }
+  .puertas__titulo { margin-bottom: 1.7rem; max-width: 18ch; }
   .puertas__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.25rem; gap: 1.25rem; }
-  @media (min-width: 48em) { .puertas__grilla { grid-template-columns: 1fr 1fr; grid-gap: 1.5rem; gap: 1.5rem; } }
+  @media (min-width: 48em) { .puertas__grilla { grid-template-columns: 1fr 1fr; grid-gap: 1.275rem; gap: 1.275rem; } }
   .puerta {
     position: relative; display: block; overflow: hidden;
     border-radius: var(--radio-lg);
@@ -55,19 +56,19 @@ const puertas = [
   .puerta--primaria .puerta__velo { background: linear-gradient(to top, rgba(20, 44, 22, 0.82) 0%, rgba(20, 44, 22, 0.3) 45%, rgba(20, 44, 22, 0) 72%); }
   .puerta__texto {
     position: absolute; left: 0; right: 0; bottom: 0;
-    padding: 1.5rem;
-    padding: clamp(1.25rem, 3vw, 2.5rem);
+    padding: 1.275rem;
+    padding: clamp(1.25rem, 2.1vw, 1.7rem);
     display: flex; flex-direction: column; align-items: flex-start;
   }
-  .puerta__trazo { width: 3rem; height: 3rem; margin-bottom: 0.5rem; }
+  .puerta__trazo { width: 2.4rem; height: 2.4rem; margin-bottom: 0.5rem; }
   .puerta__nivel {
     font-family: var(--f-titulo);
-    font-size: 2.75rem;
-    font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem);
+    font-size: 2.15rem;
+    font-size: clamp(2.15rem, 1.312rem + 2.376vw, 3.135rem);
     line-height: 0.95;
     letter-spacing: -0.03em;
   }
-  .puerta__linea { margin-top: 0.6rem; max-width: 28ch; font-family: var(--f-frase); font-style: italic; font-size: 1.125rem; font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.375rem); line-height: 1.35; }
+  .puerta__linea { margin-top: 0.6rem; max-width: 28ch; font-family: var(--f-frase); font-style: italic; font-size: 0.978rem; font-size: clamp(0.978rem, 0.779rem + 0.42vw, 1.155rem); line-height: 1.35; }
   .puerta__boton { margin-top: 1.25rem; }
   @media (hover: hover) {
     .puerta:hover .puerta__foto :global(img) { transform: scale(1.045); }

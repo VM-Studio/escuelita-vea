@@ -10,7 +10,7 @@ const grupo = [...items, ...items];
     {[0, 1].map(() => (
       <ul class="marquesina__grupo">
         {grupo.map((m, i) => (
-          <li class="marquesina__item"><span class:list={['marquesina__palabra', i % 2 ? 'is-cursiva' : '']}>{m}</span><span class="marquesina__punto">·</span></li>
+          <li class="marquesina__item"><span class:list={['marquesina__palabra', i % 2 ? 'is-cursiva' : '', `c${i % 4}`]}>{m}</span><span class="marquesina__punto">·</span></li>
         ))}
       </ul>
     ))}
@@ -21,10 +21,9 @@ const grupo = [...items, ...items];
   .marquesina {
     position: relative;
     overflow: hidden;
-    padding: 2.25rem 0;
-    border-top: 1px solid rgba(35, 32, 28, 0.12);
-    border-bottom: 1px solid rgba(35, 32, 28, 0.12);
-    background: var(--papel-oscuro);
+    padding: 1.1rem 0;
+    background: var(--tinta);
+    color: var(--papel);
   }
   .marquesina__pista { display: flex; width: max-content; animation: marquesina 70s linear infinite; }
   .marquesina:hover .marquesina__pista { animation-play-state: paused; }
@@ -32,14 +31,17 @@ const grupo = [...items, ...items];
   .marquesina__item { display: flex; align-items: center; flex: none; }
   .marquesina__palabra {
     font-family: var(--f-titulo);
-    font-size: 2.5rem;
-    font-size: clamp(2.25rem, 1.4rem + 4vw, 5.25rem);
+    font-size: 1.935rem;
+    font-size: clamp(1.935rem, 1.148rem + 2.4vw, 3.15rem);
     line-height: 1;
     letter-spacing: -0.02em;
     white-space: nowrap;
   }
-  .marquesina__palabra.is-cursiva { font-style: italic; color: var(--rojo); font-weight: 300; }
-  .marquesina__punto { margin: 0 2rem; color: var(--ocre); font-size: 2rem; }
+  .marquesina__palabra.is-cursiva { font-style: italic; font-weight: 300; }
+  .marquesina__palabra.c1 { color: #ff7a6b; }
+  .marquesina__palabra.c3 { color: #9fc48f; }
+  .marquesina__palabra.is-cursiva.c3 { color: #e5b66d; }
+  .marquesina__punto { margin: 0 1.7rem; color: var(--ocre); font-size: 1.48rem; }
   @keyframes marquesina { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
   @media (prefers-reduced-motion: reduce) { .marquesina__pista { animation: none; } }
   :global(html.liviano) .marquesina__pista { animation-duration: 140s; }

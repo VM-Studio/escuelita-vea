@@ -45,11 +45,11 @@ const { etiqueta, soloMovil = false, class: clase = '', id } = Astro.props;
   @media (min-width: 40em) { .carrusel__pista > :global(*) { flex-basis: 46%; } }
   @media (min-width: 64em) { .carrusel:not(.carrusel--solo-movil) .carrusel__pista > :global(*) { flex-basis: 31%; } }
 
-  .carrusel__controles { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; }
+  .carrusel__controles { display: flex; align-items: center; justify-content: space-between; margin-top: 1.275rem; }
   .carrusel__controles[hidden] { display: none; }
   .carrusel__flecha {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 3rem; height: 3rem; flex: none;
+    width: 2.4rem; height: 2.4rem; flex: none;
     border: 1.5px solid var(--tinta); border-radius: 50%;
     background: transparent; color: var(--tinta);
     transition: background-color 0.3s, color 0.3s, opacity 0.3s;

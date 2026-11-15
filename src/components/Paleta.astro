@@ -1,0 +1,16 @@
+---
+// Paleta: pinceladas de color del taller (separador gráfico).
+interface Props { class?: string }
+const { class: clase = '' } = Astro.props;
+const trazos = [
+  ['#D23334', 'M6 18 C 30 10, 60 8, 92 14 C 98 16, 96 24, 88 24 C 60 26, 30 26, 8 24 C 2 23, 2 19, 6 18Z'],
+  ['#C4872E', 'M108 16 C 130 9, 160 9, 186 14 C 193 16, 192 24, 184 25 C 160 27, 132 27, 110 24 C 103 23, 102 18, 108 16Z'],
+  ['#4E7A4B', 'M204 17 C 228 10, 254 10, 280 15 C 287 17, 286 24, 278 25 C 256 27, 230 26, 206 24 C 199 23, 198 18, 204 17Z'],
+  ['#2F5D8A', 'M298 16 C 320 10, 350 9, 374 14 C 381 16, 380 24, 372 25 C 350 27, 324 26, 300 24 C 293 23, 292 18, 298 16Z'],
+  ['#E3C79B', 'M392 17 C 412 11, 436 11, 456 15 C 462 17, 461 24, 454 25 C 434 26, 414 26, 394 24 C 388 23, 387 18, 392 17Z'],
+];
+---
+<svg class:list={['paleta', clase]} viewBox="0 0 464 34" aria-hidden="true" focusable="false">
+  <g filter="url(#crayon)">{trazos.map(([c, d]) => <path d={d} fill={c} />)}</g>
+</svg>
+<style>.paleta { display: block; width: 9rem; height: auto; }</style>

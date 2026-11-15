@@ -1,4 +1,5 @@
 ---
+import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Trazo from '../components/Trazo.astro';
 import { NIVELES, SITIO } from '../config/sitio';
@@ -20,8 +21,8 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
   <section class="cabeza" data-hero>
     <div class="contenedor">
       <p class="t-volanta" data-hero-resto>Admisión</p>
-      <h1 class="cabeza__titulo" data-hero-titular>Contacto</h1>
-      <div class="cabeza__trazo" data-hero-trazo aria-hidden="true"><Trazo nombre="subrayado" grosor={3} dibujar={false} /></div>
+      <h1 class="cabeza__titulo" data-hero-titular><em class="acento">Contacto</em></h1>
+      <Paleta class="cabeza__paleta" />
     </div>
   </section>
 
@@ -56,7 +57,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
   <section class="seccion seccion--papel-oscuro ancla" id="entrevista" aria-labelledby="entrevista-titulo">
     <div class="contenedor entrevista">
       <div class="entrevista__texto">
-        <h2 id="entrevista-titulo" data-titulo-lineas>Pedí una entrevista</h2>
+        <h2 id="entrevista-titulo" data-titulo-lineas>Pedí una <em class="acento">entrevista</em></h2>
         <p class="t-lead" data-revelar>Contanos quién sos y qué nivel te interesa. Al enviar, se abre WhatsApp con tu mensaje listo para mandar al Jardín o a la Primaria.</p>
         <Trazo nombre="flecha" class="entrevista__flecha" grosor={2.6} />
       </div>
@@ -104,7 +105,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
 
   <section class="seccion mapa-seccion" aria-labelledby="mapa-titulo">
     <div class="contenedor">
-      <h2 id="mapa-titulo" class="mapa-titulo" data-titulo-lineas>Cómo llegar</h2>
+      <h2 id="mapa-titulo" class="mapa-titulo" data-titulo-lineas>Cómo <em class="acento">llegar</em></h2>
       <p class="mapa-dir" data-revelar>{SITIO.direccion.texto}</p>
       <div class="mapa" data-mapa data-src={mapsEmbed}>
         <div class="mapa__aviso">
@@ -219,30 +220,31 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
 </script>
 
 <style>
-  .cabeza { padding-top: calc(var(--header-h) + 4rem); }
-  .cabeza__titulo { margin-top: 1rem; font-size: 3rem; font-size: clamp(3rem, 1.6rem + 6vw, 7.5rem); font-weight: 300; letter-spacing: -0.04em; }
+  .cabeza { padding-top: calc(var(--header-h) + 2.72rem); }
+  .cabeza__titulo { margin-top: 1rem; font-size: 2.58rem; font-size: clamp(2.58rem, 1.312rem + 3.6vw, 4.5rem); font-weight: 300; letter-spacing: -0.04em; }
+  .cabeza__paleta { margin-top: 1rem; }
   .cabeza__trazo { width: 60%; max-width: 22rem; height: 1.3rem; margin-top: 0.75rem; }
   .cabeza__trazo :global(svg) { width: 100%; height: 100%; }
 
-  .tarjetas { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
-  .tarjeta-nivel { padding: 2rem 1.5rem; padding: clamp(1.75rem, 4vw, 3rem); border-radius: var(--radio-lg); }
+  .tarjetas { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
+  .tarjeta-nivel { padding: 1.7rem 1.275rem; padding: clamp(1.488rem, 2.8vw, 2.04rem); border-radius: var(--radio-lg); }
   .tarjeta-nivel--jardin { background: var(--arena-claro); }
   .tarjeta-nivel--primaria { background: var(--verde-claro); }
-  .tarjeta-nivel__trazo { width: 3rem; height: 3rem; margin-bottom: 1rem; }
-  .tarjeta-nivel__titulo { font-size: 2.5rem; font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem); margin-bottom: 1.5rem; }
+  .tarjeta-nivel__trazo { width: 2.4rem; height: 2.4rem; margin-bottom: 1rem; }
+  .tarjeta-nivel__titulo { font-size: 1.935rem; font-size: clamp(1.935rem, 1.312rem + 1.716vw, 2.475rem); margin-bottom: 1.275rem; }
   .tarjeta-nivel__datos > div { padding: 0.85rem 0; border-top: 1px solid rgba(35, 32, 28, 0.14); }
   .tarjeta-nivel__datos dt { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); }
   .tarjeta-nivel__datos dd { margin: 0.25rem 0 0; font-size: 1.125rem; }
-  .tarjeta-nivel__wa { margin-top: 1.5rem; }
-  @media (min-width: 48em) { .tarjetas { grid-template-columns: 1fr 1fr; grid-gap: 2rem; gap: 2rem; } }
+  .tarjeta-nivel__wa { margin-top: 1.275rem; }
+  @media (min-width: 48em) { .tarjetas { grid-template-columns: 1fr 1fr; grid-gap: 1.7rem; gap: 1.7rem; } }
 
-  .entrevista { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .entrevista { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
   .entrevista__texto > * + * { margin-top: 1.25rem; }
-  .entrevista__flecha { width: 6rem; height: 3rem; transform: rotate(8deg); }
-  @media (min-width: 56em) { .entrevista { grid-template-columns: 5fr 6fr; grid-gap: 5rem; gap: 5rem; } }
+  .entrevista__flecha { width: 4.8rem; height: 2.4rem; transform: rotate(8deg); }
+  @media (min-width: 56em) { .entrevista { grid-template-columns: 5fr 6fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 
-  .formulario { padding: 2rem 1.5rem; padding: clamp(1.5rem, 4vw, 3rem); background: #fffdf8; border-radius: var(--radio-lg); box-shadow: var(--sombra-papel); }
-  .campo { position: relative; margin-bottom: 1.5rem; border: 0; padding: 0; min-width: 0; }
+  .formulario { padding: 1.7rem 1.275rem; padding: clamp(1.275rem, 2.8vw, 2.04rem); background: #fffdf8; border-radius: var(--radio-lg); box-shadow: var(--sombra-papel); }
+  .campo { position: relative; margin-bottom: 1.275rem; border: 0; padding: 0; min-width: 0; }
   .campo input[type='text'], .campo textarea {
     width: 100%;
     padding: 1.45rem 1rem 0.55rem;
@@ -255,7 +257,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
     -webkit-appearance: none;
     appearance: none;
   }
-  .campo textarea { resize: vertical; min-height: 7.5rem; }
+  .campo textarea { resize: vertical; min-height: 6rem; }
   .campo input:focus, .campo textarea:focus { outline: none; border-color: var(--tinta); box-shadow: 0 0 0 3px rgba(210, 51, 52, 0.18); }
   .campo input[aria-invalid='true'] { border-color: var(--rojo); }
   /* Etiquetas flotantes */
@@ -290,21 +292,21 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
   .campo__error { min-height: 0; margin-top: 0.4rem; color: var(--rojo-hondo); font-size: 0.9375rem; font-weight: 600; }
   .campo__error:empty { margin: 0; }
   .formulario__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 0.5rem; }
-  .formulario__acciones > * { margin: 0 1.5rem 0.75rem 0; }
+  .formulario__acciones > * { margin: 0 1.275rem 0.75rem 0; }
   .formulario__mail { font-weight: 600; padding: 0.5rem 0; }
   .formulario__ok { display: flex; align-items: center; margin-top: 1rem; padding: 1rem 1.25rem; background: var(--verde-claro); border-radius: var(--radio); }
   .formulario__ok:focus { outline: none; }
-  .formulario__ok-trazo { width: 2.5rem; height: 2rem; margin-right: 0.9rem; flex: none; color: var(--verde); }
+  .formulario__ok-trazo { width: 2rem; height: 1.6rem; margin-right: 0.9rem; flex: none; color: var(--verde); }
   .formulario__ok-trazo path { stroke-dasharray: 80; stroke-dashoffset: 80; }
   .formulario__ok.is-dibujado .formulario__ok-trazo path { animation: ok-trazo 0.8s var(--ease-out) 0.1s forwards; }
   @keyframes ok-trazo { to { stroke-dashoffset: 0; } }
   @media (prefers-reduced-motion: reduce) { .formulario__ok-trazo path { stroke-dashoffset: 0; } }
 
-  .mapa-titulo { font-size: 1.875rem; font-size: var(--t-xl); }
-  .mapa-dir { margin: 0.75rem 0 2rem; font-size: 1.125rem; }
+  .mapa-titulo { font-size: 1.387rem; font-size: var(--t-xl); }
+  .mapa-dir { margin: 0.75rem 0 1.7rem; font-size: 1.125rem; }
   .mapa { position: relative; height: 26rem; height: clamp(20rem, 50vw, 32rem); border-radius: var(--radio-lg); overflow: hidden; background: var(--papel-oscuro); background-image: url('/textura-papel.png'); }
-  .mapa__aviso { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem; }
-  .mapa__sol { width: 4rem; height: 4rem; margin-bottom: 1.25rem; }
+  .mapa__aviso { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.275rem; }
+  .mapa__sol { width: 3.2rem; height: 3.2rem; margin-bottom: 1.25rem; }
   .mapa__externo { margin-top: 1rem; font-weight: 600; }
   .mapa :global(iframe) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
   .mapa.is-cargado .mapa__aviso { visibility: hidden; }

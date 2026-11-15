@@ -1,4 +1,5 @@
 ---
+import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
@@ -12,7 +13,7 @@ import TarjetaProyecto from '../components/TarjetaProyecto.astro';
 import VideoLitio from '../components/VideoLitio.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import { primaria as p } from '../content/primaria';
-import { parrafos, enLinea } from '../lib/texto';
+import { parrafos, enLinea, acento } from '../lib/texto';
 
 const subnav = [
   { href: '#como-aprendemos', texto: 'Cómo aprendemos' },
@@ -36,7 +37,7 @@ const subnav = [
   <section class="seccion cita-nivel" aria-label="Presentación de la Primaria">
     <div class="contenedor cita-nivel__grilla">
       <figure class="cita-nivel__cita">
-        <Trazo nombre="hoja" class="cita-nivel__trazo" grosor={2.2} color="verde" />
+        <Paleta class="cita-nivel__paleta" />
         <blockquote><p class="t-frase cita-nivel__texto" data-frase>{p.portada.cita}</p></blockquote>
         <figcaption class="cita-nivel__firma" data-revelar>— {p.portada.citaFirma}</figcaption>
       </figure>
@@ -50,7 +51,7 @@ const subnav = [
   <section class="seccion ancla" id="como-aprendemos" aria-labelledby="ca-titulo">
     <div class="contenedor contenedor--ancho">
       <div class="cabecera-seccion">
-        <h2 id="ca-titulo" data-titulo-lineas>{p.comoAprendemos.titulo}</h2>
+        <h2 id="ca-titulo" data-titulo-lineas set:html={acento(p.comoAprendemos.titulo)} />
       </div>
       <div class="copete" data-revelar>
         <h3 class="copete__titulo">{p.comoAprendemos.copeteTitulo}</h3>
@@ -80,7 +81,7 @@ const subnav = [
   <section class="seccion seccion--acento ancla" id="areas" aria-labelledby="areas-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
-        <h2 id="areas-titulo" data-titulo-lineas>{p.areas.titulo}</h2>
+        <h2 id="areas-titulo" data-titulo-lineas set:html={acento(p.areas.titulo)} />
       </div>
       <div class="areas-intro">
         <p class="areas-intro__texto" data-revelar>{p.areas.intro}</p>
@@ -142,7 +143,7 @@ const subnav = [
   <section class="seccion ancla" id="proyectos" aria-labelledby="proy-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
-        <h2 id="proy-titulo" data-titulo-lineas>{p.proyectos.titulo}</h2>
+        <h2 id="proy-titulo" data-titulo-lineas set:html={acento(p.proyectos.titulo)} />
       </div>
       <div class="proyectos">
         {p.proyectos.items.map((pr, i) => <TarjetaProyecto id={pr.id} titulo={pr.titulo} texto={pr.texto} foto={pr.foto} trazo={pr.trazo} indice={i} />)}
@@ -157,7 +158,7 @@ const subnav = [
     <div class="contenedor">
       <div class="secundaria">
         <Trazo nombre="flecha" class="secundaria__flecha" grosor={2.6} color="verde" />
-        <h2 id="sec-titulo" class="secundaria__h2" data-titulo-lineas>{p.secundaria.titulo}</h2>
+        <h2 id="sec-titulo" class="secundaria__h2" data-titulo-lineas set:html={acento(p.secundaria.titulo)} />
         <h3 class="secundaria__pregunta" data-revelar>{p.secundaria.pregunta}</h3>
         <p class="sr-only">{p.secundaria.habilidadesTexto}</p>
         <ul class="habilidades" data-de-a-una aria-hidden="true">
@@ -174,80 +175,81 @@ const subnav = [
 </Base>
 
 <style>
-  .portada-sub { font-family: var(--f-frase); font-style: italic; font-size: 1.375rem; font-size: clamp(1.25rem, 1rem + 1.2vw, 2rem); color: #f6efe3; max-width: 30ch; line-height: 1.3; }
+  .portada-sub { font-family: var(--f-frase); font-style: italic; font-size: 1.15rem; font-size: clamp(1.15rem, 0.82rem + 1.008vw, 1.68rem); color: #f6efe3; max-width: 30ch; line-height: 1.3; }
 
-  .cita-nivel__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
-  .cita-nivel__trazo { width: 2.5rem; height: 3.5rem; margin-bottom: 1rem; }
-  .cita-nivel__texto { font-size: 1.75rem; font-size: clamp(1.625rem, 1.1rem + 2.3vw, 3rem); max-width: 24ch; }
+  .cita-nivel__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
+  .cita-nivel__paleta { margin-bottom: 1.25rem; }
+  .cita-nivel__trazo { width: 2rem; height: 2.8rem; margin-bottom: 1rem; }
+  .cita-nivel__texto { font-size: 1.397rem; font-size: clamp(1.397rem, 0.902rem + 1.702vw, 2.22rem); max-width: 24ch; }
   .cita-nivel__firma { margin-top: 1rem; font-weight: 650; color: var(--verde-texto); }
   .cita-nivel__parrafo { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
-  @media (min-width: 56em) { .cita-nivel__grilla { grid-template-columns: 7fr 5fr; grid-gap: 5rem; gap: 5rem; } .cita-nivel__parrafo { margin-top: 5rem; } }
+  @media (min-width: 56em) { .cita-nivel__grilla { grid-template-columns: 7fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } .cita-nivel__parrafo { margin-top: 3.4rem; } }
 
   .copete { max-width: 44rem; }
-  .copete__titulo { font-size: 1.5rem; font-size: var(--t-lg); margin-bottom: 1rem; }
+  .copete__titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 1rem; }
   .copete__texto { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
-  .ca__desplegable { margin-top: 2.5rem; }
-  .convivencia { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .ca__desplegable { margin-top: 1.7rem; }
+  .convivencia { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
   .convivencia__titulo { font-size: 1.375rem; font-size: var(--t-lg); margin-bottom: 1.25rem; max-width: 30ch; }
-  .ronda-caja { padding: 2rem; padding: clamp(1.5rem, 3.5vw, 2.5rem); background: var(--verde); color: #fff; border-radius: var(--radio-lg); }
-  .ronda-caja__trazo { width: 3.25rem; height: 3.25rem; margin-bottom: 1rem; color: #fff !important; }
-  .ronda-caja__titulo { color: #fff; font-size: 1.625rem; font-size: var(--t-xl); margin-bottom: 1rem; }
+  .ronda-caja { padding: 1.7rem; padding: clamp(1.275rem, 2.45vw, 1.7rem); background: var(--verde); color: #fff; border-radius: var(--radio-lg); }
+  .ronda-caja__trazo { width: 2.6rem; height: 2.6rem; margin-bottom: 1rem; color: #fff !important; }
+  .ronda-caja__titulo { color: #fff; font-size: 1.202rem; font-size: var(--t-xl); margin-bottom: 1rem; }
   .ronda-caja p { color: #f2f6ee; }
-  @media (min-width: 56em) { .convivencia { grid-template-columns: 7fr 5fr; grid-gap: 4rem; gap: 4rem; } }
+  @media (min-width: 56em) { .convivencia { grid-template-columns: 7fr 5fr; grid-gap: 2.72rem; gap: 2.72rem; } }
 
-  .areas-intro { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; margin-bottom: 4rem; }
+  .areas-intro { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; margin-bottom: 2.72rem; }
   .areas-intro__texto { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
-  .ciclos { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
-  .ciclo { padding: 1.5rem; background: var(--papel); border-radius: var(--radio-lg); }
-  .ciclo__trazo { width: 2.5rem; height: 2.5rem; margin-bottom: 0.6rem; }
+  .ciclos { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
+  .ciclo { padding: 1.275rem; background: var(--papel); border-radius: var(--radio-lg); }
+  .ciclo__trazo { width: 2rem; height: 2rem; margin-bottom: 0.6rem; }
   .ciclo__titulo { font-size: 1.25rem; margin-bottom: 0.5rem; }
-  @media (min-width: 56em) { .areas-intro { grid-template-columns: 6fr 5fr; grid-gap: 4rem; gap: 4rem; } }
+  @media (min-width: 56em) { .areas-intro { grid-template-columns: 6fr 5fr; grid-gap: 2.72rem; gap: 2.72rem; } }
 
-  .area__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; align-items: start; padding: 2rem; padding: clamp(1.25rem, 3vw, 2.75rem); background: var(--papel); border-radius: var(--radio-lg); }
-  .area__titulo { font-size: 1.875rem; font-size: var(--t-xl); margin-bottom: 1.25rem; }
+  .area__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; padding: 1.7rem; padding: clamp(1.25rem, 2.1vw, 1.87rem); background: var(--papel); border-radius: var(--radio-lg); }
+  .area__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1.25rem; }
   .area__lista { margin-top: 1.25rem; padding-left: 1.1rem; }
   .area__lista li + li { margin-top: 0.6rem; }
-  .area__rap { margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
+  .area__rap { margin-top: 1.488rem; padding-top: 1.25rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
   .area__rap > * + * { margin-top: 1rem; }
   .area__fotos :global(.foto) { border-radius: var(--radio); }
   .area__fotos :global(figcaption) { margin-top: 0.6rem; font-size: 1.125rem; color: var(--tinta); }
   .area__fotos--dos { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1rem; gap: 1rem; align-items: start; }
-  .area__fotos--dos > :global(*:nth-child(2)) { margin-top: 2.5rem; }
+  .area__fotos--dos > :global(*:nth-child(2)) { margin-top: 1.7rem; }
   .area__penas-titulo { font-family: var(--f-titulo); font-weight: 400; font-size: 1.375rem; margin-bottom: 1.25rem; }
   .area__penas :global(.galeria--pegadas) { grid-template-columns: 1fr 1fr; }
   @media (min-width: 56em) {
-    .area__grilla { grid-template-columns: 6fr 5fr; grid-gap: 3.5rem; gap: 3.5rem; }
+    .area__grilla { grid-template-columns: 6fr 5fr; grid-gap: 2.38rem; gap: 2.38rem; }
     .area__grilla--sin-foto { grid-template-columns: 1fr; }
     .area__grilla--sin-foto .area__texto { max-width: 44rem; }
   }
 
-  .proyectos { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; align-items: start; }
+  .proyectos { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; align-items: start; }
   @media (min-width: 56em) {
-    .proyectos { grid-template-columns: 1fr 1fr; grid-gap: 2rem; gap: 2rem; }
-    .proyectos > :global(*:nth-child(2n)) { margin-top: 4rem; }
+    .proyectos { grid-template-columns: 1fr 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
+    .proyectos > :global(*:nth-child(2n)) { margin-top: 2.72rem; }
   }
 
   .secundaria {
     position: relative;
-    padding: 2.5rem 1.5rem;
-    padding: clamp(2rem, 6vw, 5.5rem) clamp(1.25rem, 6vw, 5.5rem);
+    padding: 1.7rem 1.275rem;
+    padding: clamp(1.7rem, 4.2vw, 3.74rem) clamp(1.25rem, 4.2vw, 3.74rem);
     background: var(--verde-claro);
     border-radius: var(--radio-lg);
   }
-  .secundaria__flecha { width: 4rem; height: 2rem; margin-bottom: 1rem; }
+  .secundaria__flecha { width: 3.2rem; height: 1.6rem; margin-bottom: 1rem; }
   .secundaria__h2 { max-width: 14ch; }
-  .secundaria__pregunta { margin-top: 1.5rem; font-family: var(--f-texto); font-size: 1.125rem; font-weight: 650; max-width: 40ch; }
-  .habilidades { display: flex; flex-wrap: wrap; align-items: baseline; margin: 2rem 0 2.5rem; }
+  .secundaria__pregunta { margin-top: 1.275rem; font-family: var(--f-texto); font-size: 1.125rem; font-weight: 650; max-width: 40ch; }
+  .habilidades { display: flex; flex-wrap: wrap; align-items: baseline; margin: 1.7rem 0 1.7rem; }
   .habilidad {
     margin-right: 0.45em;
     font-family: var(--f-titulo);
-    font-size: 2rem;
-    font-size: clamp(1.875rem, 1rem + 3.8vw, 4.5rem);
+    font-size: 1.613rem;
+    font-size: clamp(1.613rem, 0.82rem + 2.508vw, 2.97rem);
     line-height: 1.12;
     letter-spacing: -0.025em;
     font-weight: 330;
   }
   .habilidad--cursiva { font-style: italic; color: var(--verde-texto); }
   .secundaria__texto { columns: 1; }
-  @media (min-width: 64em) { .secundaria__texto { column-count: 2; column-gap: 3.5rem; } .secundaria__texto :global(p) { break-inside: avoid; } }
+  @media (min-width: 64em) { .secundaria__texto { column-count: 2; column-gap: 2.38rem; } .secundaria__texto :global(p) { break-inside: avoid; } }
 </style>

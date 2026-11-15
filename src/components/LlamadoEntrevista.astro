@@ -4,6 +4,7 @@ import Foto from './Foto.astro';
 import Trazo from './Trazo.astro';
 import Boton from './Boton.astro';
 import { NIVELES } from '../config/sitio';
+import { acento } from '../lib/texto';
 interface Props { nivel?: 'jardin' | 'primaria'; foto?: string; titulo?: string }
 const { nivel, foto, titulo = 'Vení a conocer La Escuelita' } = Astro.props;
 const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrevista';
@@ -17,9 +18,7 @@ const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrev
       </div>
     )}
     <div class="llamado__texto">
-      <h2 id="llamado-titulo" class="llamado__titulo" data-titulo-lineas>
-        {titulo}
-      </h2>
+      <h2 id="llamado-titulo" class="llamado__titulo" data-titulo-lineas set:html={acento(titulo)} />
       <Trazo nombre="subrayado-doble" class="llamado__trazo" grosor={3} />
       <p class="llamado__bajada t-lead" data-revelar>
         Escribinos y coordinamos una entrevista{nivel ? ` en el ${NIVELES[nivel].nombre === 'Jardín' ? 'Jardín' : 'nivel Primario'}` : ''}.
@@ -36,13 +35,13 @@ const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrev
 
 <style>
   .llamado { background: var(--acento-suave); overflow: hidden; }
-  .llamado__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 3rem; gap: 3rem; align-items: center; }
-  .llamado__foto { position: relative; width: 70%; max-width: 22rem; margin: 0 auto; }
-  .llamado__titulo { font-size: 2.25rem; font-size: var(--t-2xl); max-width: 16ch; }
-  .llamado__trazo { width: 14rem; height: 1.2rem; margin: 0.6rem 0 1.5rem; }
+  .llamado__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; }
+  .llamado__foto { position: relative; width: 60%; max-width: 15rem; margin: 0 auto; }
+  .llamado__titulo { font-size: 1.665rem; font-size: var(--t-2xl); max-width: 16ch; }
+  .llamado__trazo { width: 14rem; height: 1.2rem; margin: 0.6rem 0 1.275rem; }
   .llamado__bajada { max-width: 34ch; }
-  .llamado__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 2rem; }
-  .llamado__acciones > :global(*) { margin: 0 1.5rem 0.75rem 0; }
+  .llamado__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.7rem; }
+  .llamado__acciones > :global(*) { margin: 0 1.275rem 0.75rem 0; }
   .llamado__wa { font-weight: 600; padding: 0.5rem 0; }
   .llamado--sin-foto .llamado__grilla { text-align: center; }
   .llamado--sin-foto .llamado__titulo, .llamado--sin-foto .llamado__bajada { margin-left: auto; margin-right: auto; }
@@ -50,7 +49,7 @@ const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrev
   .llamado--sin-foto .llamado__acciones { justify-content: center; }
   .llamado--sin-foto .llamado__acciones > :global(*) { margin: 0 0.75rem 0.75rem; }
   @media (min-width: 56em) {
-    .llamado:not(.llamado--sin-foto) .llamado__grilla { grid-template-columns: 4fr 7fr; grid-gap: 5rem; gap: 5rem; }
+    .llamado:not(.llamado--sin-foto) .llamado__grilla { grid-template-columns: 4fr 7fr; grid-gap: 3.4rem; gap: 3.4rem; }
     .llamado__foto { width: 100%; }
   }
 </style>

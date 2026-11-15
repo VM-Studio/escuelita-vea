@@ -54,7 +54,7 @@ const items = await Promise.all(
   .galeria__lupa {
     position: absolute; right: 0.6rem; bottom: 0.6rem;
     display: inline-flex; align-items: center; justify-content: center;
-    width: 2.25rem; height: 2.25rem; border-radius: 50%;
+    width: 1.8rem; height: 1.8rem; border-radius: 50%;
     background: rgba(250, 246, 238, 0.92); color: var(--tinta);
     opacity: 0; transform: scale(0.8);
     transition: opacity 0.3s, transform 0.4s var(--ease-out);
@@ -78,7 +78,7 @@ const items = await Promise.all(
   @media (min-width: 64em) { .galeria--tira .galeria__item { flex-basis: 26%; } }
 
   /* Pegadas: como trabajos colgados en el taller */
-  .galeria--pegadas { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1.5rem 1rem; gap: 1.5rem 1rem; }
+  .galeria--pegadas { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1.275rem 1rem; gap: 1.275rem 1rem; }
   .galeria--pegadas .galeria__item { overflow: visible; }
-  @media (min-width: 48em) { .galeria--pegadas { grid-template-columns: repeat(3, 1fr); grid-gap: 2.5rem 2rem; gap: 2.5rem 2rem; } }
+  @media (min-width: 48em) { .galeria--pegadas { grid-template-columns: repeat(3, 1fr); grid-gap: 1.7rem 1.7rem; gap: 1.7rem 1.7rem; } }
 </style>

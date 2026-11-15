@@ -1,9 +1,10 @@
 ---
+import Paleta from '../../components/Paleta.astro';
 import Base from '../../layouts/Base.astro';
 import Trazo from '../../components/Trazo.astro';
 import LlamadoEntrevista from '../../components/LlamadoEntrevista.astro';
 import { equipo as e } from '../../content/equipo';
-import { parrafos } from '../../lib/texto';
+import { parrafos, acento } from '../../lib/texto';
 ---
 <Base
   titulo="Nuestro equipo"
@@ -13,7 +14,7 @@ import { parrafos } from '../../lib/texto';
     <div class="contenedor">
       <p class="t-volanta" data-hero-resto>La Escuelita</p>
       <h1 class="cabeza__titulo" data-hero-titular>{e.titulo}</h1>
-      <div class="cabeza__trazo" data-hero-trazo aria-hidden="true"><Trazo nombre="subrayado" grosor={3} dibujar={false} /></div>
+      <Paleta class="cabeza__paleta" />
     </div>
   </section>
 
@@ -58,7 +59,7 @@ import { parrafos } from '../../lib/texto';
 
   <section class="seccion seccion--papel-oscuro compromiso" aria-labelledby="comp-titulo">
     <div class="contenedor contenedor--ancho compromiso__grilla">
-      <h2 id="comp-titulo" data-titulo-lineas>{e.compromiso.titulo}</h2>
+      <h2 id="comp-titulo" data-titulo-lineas set:html={acento(e.compromiso.titulo)} />
       <div class="prosa compromiso__texto" data-revelar set:html={parrafos(e.compromiso.texto)} />
     </div>
   </section>
@@ -66,7 +67,7 @@ import { parrafos } from '../../lib/texto';
   <section class="seccion perfiles" aria-labelledby="perf-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
-        <h2 id="perf-titulo" data-titulo-lineas>{e.perfiles.titulo}</h2>
+        <h2 id="perf-titulo" data-titulo-lineas set:html={acento(e.perfiles.titulo)} />
       </div>
       <div class="alternador" data-alternador>
         <ul class="copetes">
@@ -104,8 +105,9 @@ import { parrafos } from '../../lib/texto';
 </Base>
 
 <style>
-  .cabeza { padding-top: calc(var(--header-h) + 4rem); }
-  .cabeza__titulo { margin-top: 1rem; font-size: 3rem; font-size: clamp(3rem, 1.6rem + 6vw, 7.5rem); font-weight: 300; letter-spacing: -0.04em; }
+  .cabeza { padding-top: calc(var(--header-h) + 2.72rem); }
+  .cabeza__titulo { margin-top: 1rem; font-size: 2.58rem; font-size: clamp(2.58rem, 1.312rem + 3.6vw, 4.5rem); font-weight: 300; letter-spacing: -0.04em; }
+  .cabeza__paleta { margin-top: 1rem; }
   .cabeza__trazo { width: 60%; max-width: 24rem; height: 1.3rem; margin-top: 0.75rem; }
   .cabeza__trazo :global(svg) { width: 100%; height: 100%; }
 
@@ -113,33 +115,33 @@ import { parrafos } from '../../lib/texto';
   .persona { position: relative; padding: 0.5rem 1rem; }
   .persona__cargo { margin: 0 auto; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tinta-suave); }
   .persona__nombre { margin: 0.35rem auto 0; font-family: var(--f-titulo); line-height: 1.1; }
-  .persona--fundadora .persona__nombre { font-size: 2.25rem; font-size: clamp(2rem, 1.2rem + 3.6vw, 4rem); font-style: italic; font-weight: 320; }
+  .persona--fundadora .persona__nombre { font-size: 1.72rem; font-size: clamp(1.72rem, 0.984rem + 2.376vw, 2.64rem); font-style: italic; font-weight: 320; }
   .persona__circulo { position: absolute; left: -8%; top: -6%; width: 116%; height: 150%; pointer-events: none; }
   .persona--fundadora .persona__cargo { position: relative; top: -0.6rem; }
-  .persona--asesora { margin-top: 1.75rem; }
-  .persona--asesora .persona__nombre { font-size: 1.5rem; font-size: var(--t-lg); }
-  .organigrama__ramas { display: block; width: 100%; max-width: 40rem; height: 4.5rem; margin: 1.25rem auto 0; overflow: visible; }
-  .organigrama__niveles { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
-  .nivel-eq { padding: 2rem 1.5rem; padding: clamp(1.5rem, 3vw, 2.5rem); border-radius: var(--radio-lg); }
+  .persona--asesora { margin-top: 1.488rem; }
+  .persona--asesora .persona__nombre { font-size: 1.26rem; font-size: var(--t-lg); }
+  .organigrama__ramas { display: block; width: 100%; max-width: 40rem; height: 3.6rem; margin: 1.25rem auto 0; overflow: visible; }
+  .organigrama__niveles { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
+  .nivel-eq { padding: 1.7rem 1.275rem; padding: clamp(1.275rem, 2.1vw, 1.7rem); border-radius: var(--radio-lg); }
   .nivel-eq--jardin { background: var(--arena-claro); }
   .nivel-eq--primaria { background: var(--verde-claro); }
-  .nivel-eq__titulo { font-size: 1.625rem; font-size: var(--t-xl); margin-bottom: 1.5rem; }
+  .nivel-eq__titulo { font-size: 1.202rem; font-size: var(--t-xl); margin-bottom: 1.275rem; }
   .nivel-eq__fila { padding: 0.9rem 0; border-top: 1px solid rgba(35, 32, 28, 0.14); }
   .nivel-eq__fila dt { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); }
   .nivel-eq__fila dd { margin: 0.25rem 0 0; font-family: var(--f-titulo); font-size: 1.375rem; line-height: 1.25; }
-  @media (min-width: 48em) { .organigrama__niveles { grid-template-columns: 1fr 1fr; grid-gap: 2rem; gap: 2rem; } }
-  @media (max-width: 47.99em) { .organigrama__ramas { display: none; } .organigrama__niveles { margin-top: 2.5rem; } }
+  @media (min-width: 48em) { .organigrama__niveles { grid-template-columns: 1fr 1fr; grid-gap: 1.7rem; gap: 1.7rem; } }
+  @media (max-width: 47.99em) { .organigrama__ramas { display: none; } .organigrama__niveles { margin-top: 1.7rem; } }
 
-  .compromiso__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; }
+  .compromiso__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
   .compromiso__texto { font-size: 1.125rem; font-size: var(--t-md); }
-  @media (min-width: 56em) { .compromiso__grilla { grid-template-columns: 5fr 7fr; grid-gap: 4rem; gap: 4rem; } }
+  @media (min-width: 56em) { .compromiso__grilla { grid-template-columns: 5fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; } }
 
   .copetes { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1.25rem; gap: 1.25rem; }
-  .copete-p { display: flex; flex-direction: column; align-items: flex-start; padding: 1.75rem 1.5rem; border: 1px solid rgba(35, 32, 28, 0.14); border-radius: var(--radio-lg); background: #fffdf8; }
-  .copete-p__trazo { width: 2.75rem; height: 2.75rem; margin-bottom: 0.9rem; }
+  .copete-p { display: flex; flex-direction: column; align-items: flex-start; padding: 1.488rem 1.275rem; border: 1px solid rgba(35, 32, 28, 0.14); border-radius: var(--radio-lg); background: #fffdf8; }
+  .copete-p__trazo { width: 2.2rem; height: 2.2rem; margin-bottom: 0.9rem; }
   .copete-p__titulo { font-size: 1.375rem; margin-bottom: 0.6rem; }
   .copete-p p { flex: 1; }
-  .copete-p__boton { display: none; margin-top: 1.5rem; }
+  .copete-p__boton { display: none; margin-top: 1.275rem; }
   .alternador.is-js .copete-p__boton { display: inline-flex; }
   .copete-p__boton[aria-expanded='true'] { color: var(--papel); }
   .copete-p__boton[aria-expanded='true']::before { transform: translateX(0) skewX(-12deg); }
@@ -149,14 +151,14 @@ import { parrafos } from '../../lib/texto';
   .copete-p__boton[aria-expanded='true'] .copete-p__signo { transform: rotate(135deg); }
   @media (min-width: 56em) { .copetes { grid-template-columns: repeat(3, 1fr); } }
 
-  .perfil { margin-top: 2.5rem; padding: 2rem 1.5rem; padding: clamp(1.75rem, 4vw, 3.5rem); background: var(--papel-oscuro); border-radius: var(--radio-lg); }
+  .perfil { margin-top: 1.7rem; padding: 1.7rem 1.275rem; padding: clamp(1.488rem, 2.8vw, 2.38rem); background: var(--papel-oscuro); border-radius: var(--radio-lg); }
   .alternador.is-js .perfil.is-activo { animation: perfil-entra 0.6s var(--ease-out); }
   @keyframes perfil-entra { from { opacity: 0; transform: translate3d(0, 14px, 0); } to { opacity: 1; transform: none; } }
-  .perfil__titulo { font-size: 1.875rem; font-size: var(--t-xl); margin-bottom: 1.25rem; }
+  .perfil__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1.25rem; }
   .perfil__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; max-width: 44rem; }
-  .perfil__puntos { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; margin-top: 2rem; }
+  .perfil__puntos { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; margin-top: 1.7rem; }
   .perfil__punto dt { display: flex; align-items: center; font-family: var(--f-titulo); font-size: 1.25rem; margin-bottom: 0.4rem; }
   .perfil__tilde { width: 1.4rem; height: 1.2rem; margin-right: 0.5rem; flex: none; }
   .perfil__punto dd { margin: 0; }
-  @media (min-width: 56em) { .perfil__puntos { grid-template-columns: repeat(3, 1fr); grid-gap: 2.5rem; gap: 2.5rem; } }
+  @media (min-width: 56em) { .perfil__puntos { grid-template-columns: repeat(3, 1fr); grid-gap: 1.7rem; gap: 1.7rem; } }
 </style>

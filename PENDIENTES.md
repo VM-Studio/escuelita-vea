@@ -84,3 +84,13 @@ Primera versión completa. Lo de abajo está abierto: cada punto tiene el supues
 - Lighthouse en mobile (Inicio, Jardín, Primaria): **Performance 93–94, Accesibilidad 100, Buenas prácticas 100, SEO 100**. En desktop: Performance 96–97 y el resto en 100. El LCP en mobile simulado da 3,0–3,2 s (objetivo: 2,5 s): el elemento es el titular, que espera la tipografía y la foto del hero en una conexión 4G lenta simulada. Se puede bajar a costa de `font-display: optional` para Fraunces o de achicar más la foto del hero: decidir.
 - No hay push ni deploy: queda listo para Vercel (estático).
 - El sitio no tiene todavía el dominio verificado: `site` en `astro.config.mjs` apunta a `https://laescuelitavea.org.ar`.
+
+## 6. Rediseño de escala y lenguaje gráfico (segunda pasada)
+
+- Todo el sitio más compacto: tipografías, espacios entre secciones, tarjetas, botones (más finos), header y fotos.
+- Recursos de "escuela de arte" (para validar):
+  - Titulares editoriales: una parte del título en cursiva y color (el texto no cambia; es solo tipografía).
+  - Sello circular giratorio con el texto "Primer Jardín Argentino de Educación por el Arte · 1959" (portada, historia y footer).
+  - Manchas de pintura orgánicas detrás de algunas fotos y fotos con recorte en arco.
+  - "Paleta" de pinceladas de color como separador (presentación, Jardín, Primaria, Equipo, Contacto, footer).
+  - Marquesina de materiales sobre fondo tinta con palabras de colores.

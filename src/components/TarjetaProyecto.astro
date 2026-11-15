@@ -25,10 +25,10 @@ const { id, titulo, texto, foto, trazo, indice } = Astro.props;
   }
   .proyecto__foto { position: relative; }
   .proyecto__foto :global(img) { transition: transform 1.6s var(--ease-out), opacity 0.7s var(--ease-suave); }
-  .proyecto__marca { position: absolute; left: 1.25rem; bottom: -1.6rem; width: 3.25rem; height: 3.25rem; padding: 0.45rem; border-radius: 50%; background: #fffdf8; }
+  .proyecto__marca { position: absolute; left: 1.25rem; bottom: -1.6rem; width: 2.6rem; height: 2.6rem; padding: 0.45rem; border-radius: 50%; background: #fffdf8; }
   .proyecto__marca :global(svg) { width: 100%; height: 100%; }
-  .proyecto__cuerpo { padding: 2.5rem 1.5rem 1.75rem; padding: 2.5rem clamp(1.25rem, 3vw, 2.25rem) 2rem; }
-  .proyecto__titulo { font-size: 1.625rem; font-size: var(--t-xl); margin-bottom: 1rem; max-width: 18ch; }
+  .proyecto__cuerpo { padding: 1.7rem 1.275rem 1.488rem; padding: 1.7rem clamp(1.25rem, 2.1vw, 1.912rem) 1.7rem; }
+  .proyecto__titulo { font-size: 1.202rem; font-size: var(--t-xl); margin-bottom: 1rem; max-width: 18ch; }
   .proyecto__texto { font-size: 0.98rem; line-height: 1.65; }
   @media (hover: hover) {
     .proyecto:hover { transform: translateY(-4px); box-shadow: var(--sombra-papel-alta); }

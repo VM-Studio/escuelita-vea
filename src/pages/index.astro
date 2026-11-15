@@ -10,9 +10,12 @@ import Interludio from '../components/Interludio.astro';
 import Puertas from '../components/Puertas.astro';
 import Marquesina from '../components/Marquesina.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
+import Sello from '../components/Sello.astro';
+import Mancha from '../components/Mancha.astro';
+import Paleta from '../components/Paleta.astro';
 import { inicio } from '../content/inicio';
 import { comunidad } from '../content/comunidad';
-import { parrafos } from '../lib/texto';
+import { parrafos, acento } from '../lib/texto';
 
 const p = inicio;
 // Precarga de la foto del hero (mismos parámetros que <Foto prioridad>)
@@ -53,6 +56,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
         <a href="/contacto/#entrevista" class="hero__enlace enlace-trazo">Pedí una entrevista</a>
       </div>
     </div>
+    <div class="hero__sello" data-hero-resto><Sello tamano={132} /></div>
     <a href="#presentacion" class="hero__scroll" aria-label="Bajar a la presentación" data-hero-trazo>
       <Trazo nombre="scroll" color="actual" grosor={2} dibujar={false} crayon={false} />
     </a>
@@ -63,12 +67,13 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     <div class="contenedor">
       <div class="presentacion__cabeza">
         <Trazo nombre="sol" class="presentacion__sol" grosor={2.6} />
-        <h2 id="presentacion-titulo" class="presentacion__nombre" data-titulo-lineas>{p.presentacion.nombre}</h2>
+        <h2 id="presentacion-titulo" class="presentacion__nombre" data-titulo-lineas set:html={acento(p.presentacion.nombre)} />
         <p class="presentacion__fundada" data-revelar>{p.presentacion.fundada}</p>
         <p class="presentacion__trayectoria" data-revelar>
           <span class="subrayable">{p.presentacion.trayectoria}<Trazo nombre="subrayado" grosor={3} /></span>
         </p>
         <p class="presentacion__descripcion" data-revelar>{p.presentacion.descripcion}</p>
+        <Paleta class="presentacion__paleta" />
       </div>
 
       {/* Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha, VEA abajo. */}
@@ -96,8 +101,9 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   {/* ============ BIENVENIDA ============ */}
   <section class="bienvenida seccion seccion--papel-oscuro" aria-label="Bienvenida">
     <div class="contenedor bienvenida__grilla">
-      <div class="bienvenida__foto">
-        <Foto id={p.bienvenida.foto} ratio="4/3" sizes="(min-width: 56em) 55vw, 100vw" revelar />
+      <div class="bienvenida__foto con-mancha">
+        <Mancha forma="b" color="ocre" class="bienvenida__mancha" />
+        <Foto id={p.bienvenida.foto} ratio="4/3" sizes="(min-width: 56em) 55vw, 100vw" revelar class="bienvenida__img" />
       </div>
       <div class="bienvenida__texto">
         <Trazo nombre="espiral" class="bienvenida__espiral" grosor={2.2} color="ocre" />
@@ -115,7 +121,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
       <div class="tiempo__cabeza">
         <p class="tiempo__cifra t-cifra" aria-hidden="true"><span data-contador="67" data-desde="0">67</span></p>
         <div>
-          <h2 id="tiempo-titulo" class="tiempo__titulo" data-titulo-lineas>{p.lineaDeTiempo.titulo}</h2>
+          <h2 id="tiempo-titulo" class="tiempo__titulo" data-titulo-lineas set:html={acento(p.lineaDeTiempo.titulo)} />
           <p class="tiempo__frase t-frase" data-revelar>{p.lineaDeTiempo.frase}</p>
           <p class="tiempo__bajada" data-revelar>{p.lineaDeTiempo.bajada}</p>
         </div>
@@ -150,13 +156,14 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   <section class="ejes seccion seccion--papel-oscuro" aria-labelledby="ejes-titulo">
     <div class="contenedor">
       <div class="ejes__cabeza">
-        <h2 id="ejes-titulo" data-titulo-lineas>{p.ejes.titulo}</h2>
+        <h2 id="ejes-titulo" data-titulo-lineas set:html={acento(p.ejes.titulo)} />
         <Trazo nombre="flecha-curva" class="ejes__flecha" grosor={2.4} />
       </div>
       {p.ejes.items.map((e, i) => (
         <article class:list={['eje', { 'eje--invertido': i % 2 === 1 }]}>
-          <div class="eje__foto">
-            <Foto id={e.foto} ratio={i % 2 ? '4/5' : '5/4'} sizes="(min-width: 56em) 48vw, 100vw" revelar />
+          <div class="eje__foto con-mancha">
+            <Mancha forma={(['a', 'c', 'd', 'b'] as const)[i]} color={(['arena', 'verde', 'rosa', 'azul'] as const)[i]} class={`eje__mancha eje__mancha--${i % 2 ? 'b' : 'a'}`} />
+            <Foto id={e.foto} ratio={i % 2 ? '1/1' : '4/3'} sizes="(min-width: 56em) 34vw, 100vw" revelar class={i % 2 ? 'forma-arco' : ''} />
           </div>
           <div class="eje__texto">
             <span class="eje__marca" aria-hidden="true"><Trazo nombre={(['sol', 'lazos', 'espiral', 'hoja'] as const)[i]} grosor={2.4} color={i % 2 ? 'verde' : 'ocre'} /></span>
@@ -181,11 +188,12 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   <section class="adelanto seccion" aria-labelledby="adelanto-titulo">
     <div class="contenedor">
       <div class="adelanto__cabeza">
-        <h2 id="adelanto-titulo" data-titulo-lineas>{comunidad.portada.titulo}</h2>
+        <h2 id="adelanto-titulo" data-titulo-lineas set:html={acento(comunidad.portada.titulo)} />
         <p class="t-lead" data-revelar>{comunidad.portada.bajada}</p>
         <div data-revelar><Boton href="/comunidad/">Conocé nuestra comunidad</Boton></div>
       </div>
-      <div class="adelanto__fotos">
+      <div class="adelanto__fotos con-mancha">
+        <Mancha forma="d" color="verde" class="adelanto__mancha" opacidad={0.7} />
         {p.comunidadFotos.map((f, i) => (
           <div class:list={['pegada', 'adelanto__foto', `adelanto__foto--${i}`]} style={`--rot:${[-2, 1.5, -1, 2.2][i]}deg`} data-revelar>
             <Foto id={f} ratio={i % 2 ? '4/5' : '4/3'} sizes="(min-width: 56em) 26vw, 46vw" />
@@ -221,11 +229,11 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
       linear-gradient(to top, rgba(18, 14, 10, 0.82) 0%, rgba(18, 14, 10, 0.5) 30%, rgba(18, 14, 10, 0.12) 58%, rgba(18, 14, 10, 0) 72%),
       linear-gradient(to bottom, rgba(18, 14, 10, 0.45) 0%, rgba(18, 14, 10, 0) 20%);
   }
-  .hero__contenido { position: relative; padding-top: calc(var(--header-h) + 4rem); padding-bottom: 4.5rem; padding-bottom: clamp(4rem, 10vh, 8rem); }
+  .hero__contenido { position: relative; padding-top: calc(var(--header-h) + 2.72rem); padding-bottom: 3.06rem; padding-bottom: clamp(2.72rem, 10vh, 5.44rem); }
   .hero__titular {
     max-width: 15ch;
-    font-size: 2.75rem;
-    font-size: clamp(2.6rem, 1.2rem + 6.2vw, 7.25rem);
+    font-size: 2.236rem;
+    font-size: clamp(2.236rem, 0.984rem + 3.72vw, 4.35rem);
     font-weight: 320;
     line-height: 1.02;
     letter-spacing: -0.03em;
@@ -235,43 +243,44 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .hero__trazo { width: 13rem; width: clamp(10rem, 22vw, 20rem); height: 1.4rem; margin-top: 0.75rem; }
   .hero__trazo :global(svg) { width: 100%; height: 100%; }
   .hero__bajada {
-    margin-top: 1.5rem;
+    margin-top: 1.275rem;
     max-width: 36rem;
     font-size: 1.125rem;
     font-size: var(--t-md);
     line-height: 1.55;
     color: #f4ede1;
   }
-  .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 2.25rem; }
-  .hero__acciones > :global(*) { margin: 0 1.75rem 0.75rem 0; }
+  .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.912rem; }
+  .hero__acciones > :global(*) { margin: 0 1.488rem 0.75rem 0; }
   .hero__enlace { color: var(--papel); font-weight: 600; padding: 0.5rem 0; }
-  .hero__scroll { position: absolute; right: var(--gutter); bottom: 1.75rem; width: 1.6rem; height: 3.75rem; color: var(--papel); opacity: 0.9; }
+  .hero__scroll { position: absolute; right: var(--gutter); bottom: 1.75rem; width: 1.28rem; height: 3rem; color: var(--papel); opacity: 0.9; }
   .hero__scroll :global(svg) { width: 100%; height: 100%; }
   @media (max-width: 40em) { .hero__scroll { display: none; } }
 
   /* ---------- PRESENTACIÓN ---------- */
   .presentacion { text-align: center; }
   .presentacion__cabeza { max-width: 44rem; margin: 0 auto; }
-  .presentacion__sol { width: 4rem; height: 4rem; margin: 0 auto 1.25rem; }
-  .presentacion__nombre { font-size: 3rem; font-size: clamp(3rem, 1.8rem + 6vw, 7.5rem); font-weight: 300; font-style: italic; letter-spacing: -0.035em; line-height: 0.95; }
+  .presentacion__sol { width: 3.2rem; height: 3.2rem; margin: 0 auto 1.25rem; }
+  .presentacion__nombre { font-size: 2.58rem; font-size: clamp(2.58rem, 1.476rem + 3.6vw, 4.5rem); font-weight: 330; letter-spacing: -0.04em; line-height: 0.95; }
+  .presentacion__paleta { margin: 1.25rem auto 0; }
   .presentacion__fundada { margin: 1.25rem auto 0; font-size: 1.125rem; font-size: var(--t-md); color: var(--tinta-suave); }
-  .presentacion__trayectoria { margin: 1.25rem auto 0; font-family: var(--f-titulo); font-size: 1.625rem; font-size: var(--t-xl); line-height: 1.2; }
+  .presentacion__trayectoria { margin: 1.25rem auto 0; font-family: var(--f-titulo); font-size: 1.202rem; font-size: var(--t-xl); line-height: 1.2; }
   .presentacion__cabeza p { max-width: none; }
   .presentacion__trayectoria .subrayable { white-space: normal; }
-  .presentacion__descripcion { margin: 1.5rem auto 0; max-width: 30ch; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); line-height: 1.6; }
-  .presentacion__niveles { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; margin-top: 4rem; align-items: stretch; }
+  .presentacion__descripcion { margin: 1.275rem auto 0; max-width: 30ch; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); line-height: 1.6; }
+  .presentacion__niveles { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; margin-top: 2.72rem; align-items: stretch; }
   .presentacion__division { display: none; }
   .nivel {
     display: flex; flex-direction: column; align-items: center;
-    padding: 2.5rem 1.5rem 2rem;
+    padding: 1.7rem 1.275rem 1.7rem;
     border-radius: var(--radio-lg);
     text-decoration: none;
     transition: background-color 0.4s, transform 0.5s var(--ease-out);
   }
   .nivel--jardin { background: var(--arena-claro); }
   .nivel--primaria { background: var(--verde-claro); }
-  .nivel__texto { margin-top: 1.5rem; max-width: 24ch; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.2; }
-  .nivel__anio { margin-top: 1rem; font-size: 3.5rem; font-size: clamp(3rem, 2rem + 4vw, 5.5rem); }
+  .nivel__texto { margin-top: 1.275rem; max-width: 24ch; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.2; }
+  .nivel__anio { margin-top: 1rem; font-size: 2.58rem; font-size: clamp(2.58rem, 1.64rem + 2.4vw, 3.3rem); }
   .nivel--jardin .nivel__anio { color: var(--ocre-texto); }
   .nivel--primaria .nivel__anio { color: var(--verde-texto); }
   .nivel__ir { margin-top: 1.25rem; font-weight: 650; font-size: 0.9375rem; }
@@ -280,46 +289,47 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     .nivel:hover { transform: translateY(-4px); }
     .nivel:hover .nivel__ir span { transform: translateX(5px); }
   }
-  .presentacion__vea { display: inline-block; margin-top: 3rem; padding: 1rem 1.5rem; border-radius: var(--radio-lg); transition: background-color 0.3s; }
+  .presentacion__vea { display: inline-block; margin-top: 2.04rem; padding: 1rem 1.275rem; border-radius: var(--radio-lg); transition: background-color 0.3s; }
   .presentacion__vea:hover { background: var(--papel-oscuro); }
   @media (min-width: 48em) {
-    .presentacion__niveles { grid-template-columns: 1fr auto 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
-    .presentacion__division { display: block; width: 3rem; align-self: center; }
-    .presentacion__division :global(svg) { width: 3rem; height: 1rem; transform: rotate(90deg); }
+    .presentacion__niveles { grid-template-columns: 1fr auto 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
+    .presentacion__division { display: block; width: 2.4rem; align-self: center; }
+    .presentacion__division :global(svg) { width: 2.4rem; height: 1rem; transform: rotate(90deg); }
   }
 
   /* ---------- BIENVENIDA ---------- */
-  .bienvenida__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }
-  .bienvenida__foto { border-radius: var(--radio); overflow: hidden; }
-  .bienvenida__espiral { width: 3.25rem; height: 3.25rem; margin-bottom: 1.5rem; }
-  .bienvenida__parrafo { font-family: var(--f-titulo); font-size: 1.375rem; font-size: clamp(1.375rem, 1.05rem + 1.3vw, 2.125rem); line-height: 1.35; letter-spacing: -0.01em; font-weight: 350; max-width: 28ch; }
-  @media (min-width: 56em) { .bienvenida__grilla { grid-template-columns: 7fr 5fr; grid-gap: 5rem; gap: 5rem; } }
+  .bienvenida, .ejes { overflow: hidden; }
+  .bienvenida__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; }
+  .bienvenida__foto :global(.bienvenida__img) { border-radius: var(--radio); }
+  .bienvenida__espiral { width: 2.6rem; height: 2.6rem; margin-bottom: 1.275rem; }
+  .bienvenida__parrafo { font-family: var(--f-titulo); font-size: 1.265rem; font-size: clamp(1.265rem, 0.861rem + 1.092vw, 1.785rem); line-height: 1.35; letter-spacing: -0.01em; font-weight: 350; max-width: 28ch; }
+  @media (min-width: 56em) { .bienvenida__grilla { grid-template-columns: 6fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 
   /* ---------- LÍNEA DE TIEMPO ---------- */
   .tiempo { overflow: hidden; }
-  .tiempo__cabeza { display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; align-items: end; margin-bottom: 4rem; }
-  .tiempo__cifra { font-size: 9rem; font-size: clamp(8rem, 4rem + 18vw, 19rem); color: var(--rojo); line-height: 0.8; letter-spacing: -0.06em; }
+  .tiempo__cabeza { display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; align-items: end; margin-bottom: 2.72rem; }
+  .tiempo__cifra { font-size: 6.88rem; font-size: clamp(6.88rem, 3.28rem + 10.8vw, 11.4rem); color: var(--rojo); line-height: 0.8; letter-spacing: -0.06em; }
   .tiempo__titulo { max-width: 14ch; }
-  .tiempo__frase { margin-top: 1.25rem; font-size: 1.5rem; font-size: var(--t-lg); color: var(--tinta); }
+  .tiempo__frase { margin-top: 1.25rem; font-size: 1.26rem; font-size: var(--t-lg); color: var(--tinta); }
   .tiempo__bajada { margin-top: 0.75rem; color: var(--tinta-suave); }
-  @media (min-width: 56em) { .tiempo__cabeza { grid-template-columns: auto 1fr; grid-gap: 3rem; gap: 3rem; } }
+  @media (min-width: 56em) { .tiempo__cabeza { grid-template-columns: auto 1fr; grid-gap: 2.04rem; gap: 2.04rem; } }
 
   .tiempo__cuerpo { position: relative; }
-  .tiempo__hitos { position: relative; list-style: none; padding: 0 0 0 2.25rem; margin: 0; }
+  .tiempo__hitos { position: relative; list-style: none; padding: 0 0 0 1.912rem; margin: 0; }
   .tiempo__linea { position: absolute; left: 0.45rem; top: 0.5rem; bottom: 0; width: 2px; background: var(--rojo); transform-origin: 50% 0; border-radius: 2px; }
-  .hito { position: relative; display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; }
-  .hito + .hito { margin-top: 4.5rem; }
+  .hito { position: relative; display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
+  .hito + .hito { margin-top: 3.06rem; }
   .hito__punto { position: absolute; left: -2.25rem; top: 0.9rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--papel); border: 2px solid var(--rojo); }
-  .hito__anio { font-size: 4.5rem; font-size: clamp(4rem, 2rem + 8vw, 9rem); color: var(--tinta); }
+  .hito__anio { font-size: 3.44rem; font-size: clamp(3.44rem, 1.64rem + 4.8vw, 5.4rem); color: var(--tinta); }
   .hito__desc { margin-top: 0.75rem; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.25; max-width: 22ch; }
   .hito__fotos { position: relative; display: flex; align-items: flex-start; }
-  .hito__foto { width: 62%; max-width: 20rem; }
-  .hito__foto--1 { width: 52%; margin-left: -10%; margin-top: 3.5rem; }
+  .hito__foto { width: 58%; max-width: 13.5rem; }
+  .hito__foto--1 { width: 52%; margin-left: -10%; margin-top: 2.38rem; }
   @media (min-width: 56em) {
     .tiempo__hitos { padding-left: 0; }
     .tiempo__cuerpo { padding-left: 0; }
     .tiempo__linea { left: 50%; margin-left: -1px; }
-    .hito { grid-template-columns: 1fr 1fr; grid-gap: 6rem; gap: 6rem; align-items: center; }
+    .hito { grid-template-columns: 1fr 1fr; grid-gap: 4.08rem; gap: 4.08rem; align-items: center; }
     .hito__punto { left: 50%; margin-left: -0.55rem; top: 50%; }
     .hito--a .hito__texto { text-align: right; justify-self: end; }
     .hito--a .hito__desc { margin-left: auto; }
@@ -328,31 +338,43 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   }
 
   /* ---------- EJES ---------- */
-  .ejes__cabeza { display: flex; align-items: flex-end; margin-bottom: 3.5rem; }
+  .ejes__cabeza { display: flex; align-items: flex-end; margin-bottom: 2.38rem; }
   .ejes__cabeza h2 { max-width: 12ch; }
-  .ejes__flecha { width: 4.5rem; height: 4.5rem; margin-left: 1.5rem; flex: none; transform: rotate(-10deg); }
-  .eje { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; align-items: center; }
-  .eje + .eje { margin-top: 5rem; margin-top: clamp(4rem, 2rem + 6vw, 8rem); }
-  .eje__foto { border-radius: var(--radio); overflow: hidden; }
-  .eje__marca { display: block; width: 3rem; height: 3rem; margin-bottom: 1.25rem; }
+  .ejes__flecha { width: 3.6rem; height: 3.6rem; margin-left: 1.275rem; flex: none; transform: rotate(-10deg); }
+  .eje { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; }
+  .eje + .eje { margin-top: 3.4rem; margin-top: clamp(2.72rem, 1.7rem + 4.2vw, 5.44rem); }
+  .eje__foto { border-radius: var(--radio); }
+  .eje__foto > :global(.foto) { border-radius: var(--radio); }
+  .eje__mancha { width: 62%; }
+  .eje__foto { max-width: 27rem; width: 100%; }
+  .eje--invertido .eje__foto { justify-self: end; }
+  .eje__mancha--a { left: -8%; bottom: -14%; }
+  .eje__mancha--b { right: -10%; top: -10%; }
+  .bienvenida__mancha { width: 70%; right: -12%; bottom: -16%; }
+  .adelanto__mancha { width: 80%; left: 8%; top: 12%; }
+  .hero__sello { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 1.5rem); opacity: 0.95; }
+  @media (max-width: 47.99em) { .hero__sello { transform: scale(0.72); transform-origin: 100% 0; } }
+  @media (min-width: 48em) { .hero__sello { top: auto; bottom: 6.5rem; } }
+  .eje__marca { display: block; width: 2.4rem; height: 2.4rem; margin-bottom: 1.25rem; }
   .eje__marca :global(svg) { width: 100%; height: 100%; }
-  .eje__titulo { font-size: 1.875rem; font-size: var(--t-xl); max-width: 16ch; margin-bottom: 1.25rem; font-weight: 380; }
-  .ejes__mas { margin-top: 4.5rem; text-align: center; }
+  .eje__titulo { font-size: 1.387rem; font-size: var(--t-xl); max-width: 16ch; margin-bottom: 1.25rem; font-weight: 380; }
+  .ejes__mas { margin-top: 3.06rem; text-align: center; }
   @media (min-width: 56em) {
-    .eje { grid-template-columns: 7fr 5fr; grid-gap: 5rem; gap: 5rem; }
-    .eje--invertido { grid-template-columns: 5fr 6fr; }
+    .eje { grid-template-columns: 1fr 1fr; grid-gap: 4rem; gap: 4rem; }
+    .eje--invertido { grid-template-columns: 1fr 1fr; }
     .eje--invertido .eje__foto { order: 2; }
-    .eje--invertido .eje__texto { padding-left: 2rem; }
+    .eje--invertido .eje__texto { padding-left: 1.7rem; }
+    .eje__texto { max-width: 28rem; }
   }
 
   /* ---------- ADELANTO COMUNIDAD ---------- */
   .adelanto { overflow: hidden; }
   .adelanto__cabeza { max-width: 36rem; }
   .adelanto__cabeza > * + * { margin-top: 1.25rem; }
-  .adelanto__fotos { display: grid; align-items: start; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem 1rem; gap: 1.25rem 1rem; margin-top: 3rem; }
-  .adelanto__foto--1, .adelanto__foto--3 { margin-top: 2.5rem; }
+  .adelanto__fotos { max-width: 30rem; justify-self: end; width: 100%; display: grid; align-items: start; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem 1rem; gap: 1.25rem 1rem; margin-top: 2.04rem; }
+  .adelanto__foto--1, .adelanto__foto--3 { margin-top: 1.7rem; }
   @media (min-width: 56em) {
-    .adelanto .contenedor { display: grid; grid-template-columns: 4fr 7fr; grid-gap: 4rem; gap: 4rem; align-items: center; }
-    .adelanto__fotos { margin-top: 0; grid-gap: 2rem 1.5rem; gap: 2rem 1.5rem; }
+    .adelanto .contenedor { display: grid; grid-template-columns: 4fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; align-items: center; }
+    .adelanto__fotos { margin-top: 0; grid-gap: 1.7rem 1.275rem; gap: 1.7rem 1.275rem; }
   }
 </style>

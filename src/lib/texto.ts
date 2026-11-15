@@ -40,3 +40,15 @@ export function slug(s: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }
+
+/**
+ * Titular editorial: el texto NO cambia, solo se destaca una parte en cursiva (recurso tipográfico).
+ * Si hay ":" se destaca lo que sigue; si no, la última palabra.
+ */
+export function acento(titulo: string): string {
+  const t = escapar(titulo);
+  const i = t.indexOf(':');
+  if (i > -1 && i < t.length - 2) return `${t.slice(0, i + 1)} <em class="acento">${t.slice(i + 1).trim()}</em>`;
+  const m = t.match(/^(.*\s)(\S+)$/);
+  return m ? `${m[1]}<em class="acento">${m[2]}</em>` : t;
+}

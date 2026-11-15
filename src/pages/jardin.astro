@@ -1,4 +1,5 @@
 ---
+import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
@@ -14,7 +15,7 @@ import Marquesina from '../components/Marquesina.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import { jardin as j } from '../content/jardin';
 import { inicio } from '../content/inicio';
-import { parrafos } from '../lib/texto';
+import { parrafos, acento } from '../lib/texto';
 
 const subnav = [
   { href: '#que-nos-diferencia', texto: '¿Qué nos diferencia?' },
@@ -43,7 +44,7 @@ const subnav = [
 
   <section class="seccion intro-nivel" aria-label="Presentación del Jardín">
     <div class="contenedor intro-nivel__grilla">
-      <Trazo nombre="sol" class="intro-nivel__sol" grosor={2.4} color="ocre" />
+      <Paleta class="intro-nivel__sol" />
       <p class="intro-nivel__texto" data-revelar>{j.portada.texto}</p>
     </div>
   </section>
@@ -54,7 +55,7 @@ const subnav = [
   <section class="seccion ancla" id="que-nos-diferencia" aria-labelledby="dif-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
-        <h2 id="dif-titulo" data-titulo-lineas>{j.diferencias.titulo}</h2>
+        <h2 id="dif-titulo" data-titulo-lineas set:html={acento(j.diferencias.titulo)} />
         <p class="t-lead" data-revelar>{j.diferencias.intro}</p>
       </div>
       <Carrusel etiqueta="Lo que priorizamos" soloMovil class="diferencias">
@@ -78,7 +79,7 @@ const subnav = [
   <section class="seccion seccion--acento ancla" id="propuesta" aria-labelledby="prop-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
-        <h2 id="prop-titulo" data-titulo-lineas>{j.propuesta.titulo}</h2>
+        <h2 id="prop-titulo" data-titulo-lineas set:html={acento(j.propuesta.titulo)} />
       </div>
       <div class="conceptos">
         {j.propuesta.items.map((c, i) => (
@@ -109,7 +110,7 @@ const subnav = [
   <section class="seccion ancla" id="salas" aria-labelledby="salas-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
-        <h2 id="salas-titulo" data-titulo-lineas>{j.salas.titulo}</h2>
+        <h2 id="salas-titulo" data-titulo-lineas set:html={acento(j.salas.titulo)} />
       </div>
       <Tabs items={j.salas.items.map((s) => ({ id: s.id, texto: s.nombre, sub: s.subtitulo }))} etiqueta="Salas del Jardín">
         {j.salas.items.map((s, i) => (
@@ -142,7 +143,7 @@ const subnav = [
   <section class="seccion seccion--papel-oscuro ancla" id="lenguajes" aria-labelledby="leng-titulo">
     <div class="contenedor contenedor--ancho">
       <div class="cabecera-seccion">
-        <h2 id="leng-titulo" data-titulo-lineas>{j.lenguajes.titulo}</h2>
+        <h2 id="leng-titulo" data-titulo-lineas set:html={acento(j.lenguajes.titulo)} />
       </div>
       <div class="lenguajes">
         {j.lenguajes.items.map((l) => (
@@ -175,7 +176,7 @@ const subnav = [
   <section class="seccion patio ancla" id="patio" aria-labelledby="patio-titulo">
     <div class="contenedor">
       <div class="patio__cabeza">
-        <h2 id="patio-titulo" data-titulo-lineas>{j.patio.titulo}</h2>
+        <h2 id="patio-titulo" data-titulo-lineas set:html={acento(j.patio.titulo)} />
         <p class="t-lead" data-revelar>{j.patio.intro}</p>
       </div>
     </div>
@@ -209,7 +210,7 @@ const subnav = [
   <section class="seccion ancla" id="adaptacion" aria-labelledby="adap-titulo">
     <div class="contenedor contenedor--ancho">
       <div class="cabecera-seccion">
-        <h2 id="adap-titulo" data-titulo-lineas>{j.adaptacion.titulo}</h2>
+        <h2 id="adap-titulo" data-titulo-lineas set:html={acento(j.adaptacion.titulo)} />
       </div>
       <div class="adaptacion__intro prosa" data-revelar set:html={parrafos(j.adaptacion.intro)} />
       <div class="adaptacion__desplegable" data-revelar>
@@ -234,7 +235,7 @@ const subnav = [
   <section class="seccion seccion--acento ancla" id="horarios" aria-labelledby="hor-titulo">
     <div class="contenedor contenedor--ancho">
       <div class="cabecera-seccion">
-        <h2 id="hor-titulo" data-titulo-lineas>{j.horarios.titulo}</h2>
+        <h2 id="hor-titulo" data-titulo-lineas set:html={acento(j.horarios.titulo)} />
       </div>
       <table class="horarios" data-revelar>
         <thead>
@@ -267,13 +268,13 @@ const subnav = [
 </Base>
 
 <style>
-  .portada-cita__texto { font-size: 1.25rem; font-size: clamp(1.1875rem, 0.95rem + 1vw, 1.75rem); max-width: 36ch; color: #f6efe3; }
+  .portada-cita__texto { font-size: 1.093rem; font-size: clamp(1.093rem, 0.779rem + 0.84vw, 1.47rem); max-width: 36ch; color: #f6efe3; }
   .portada-cita__firma { margin-top: 0.6rem; font-weight: 600; font-size: 0.9375rem; color: var(--arena); }
 
-  .intro-nivel__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
-  .intro-nivel__sol { width: 3.5rem; height: 3.5rem; }
-  .intro-nivel__texto { font-family: var(--f-titulo); font-size: 1.5rem; font-size: clamp(1.4rem, 1.05rem + 1.5vw, 2.375rem); line-height: 1.3; font-weight: 340; letter-spacing: -0.012em; max-width: 34ch; }
-  @media (min-width: 56em) { .intro-nivel__grilla { grid-template-columns: auto 1fr; grid-gap: 3rem; gap: 3rem; } }
+  .intro-nivel__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
+  .intro-nivel__sol { width: 7rem; margin-top: 0.6rem; }
+  .intro-nivel__texto { font-family: var(--f-titulo); font-size: 1.288rem; font-size: clamp(1.288rem, 0.861rem + 1.26vw, 1.995rem); line-height: 1.3; font-weight: 340; letter-spacing: -0.012em; max-width: 34ch; }
+  @media (min-width: 56em) { .intro-nivel__grilla { grid-template-columns: auto 1fr; grid-gap: 2.04rem; gap: 2.04rem; } }
 
   /* Tarjetas de diferencias: carrusel en mobile, grilla de 3 en desktop */
   .tarjeta-dif {
@@ -286,75 +287,75 @@ const subnav = [
     transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
   }
   .tarjeta-dif__foto :global(img) { transition: transform 1.6s var(--ease-out), opacity 0.7s var(--ease-suave); }
-  .tarjeta-dif__cuerpo { padding: 1.25rem 1.25rem 1.5rem; }
-  .tarjeta-dif__icono { display: block; width: 2.75rem; height: 2.75rem; margin-top: -2.6rem; margin-bottom: 0.75rem; padding: 0.35rem; background: #fffdf8; border-radius: 50%; position: relative; }
+  .tarjeta-dif__cuerpo { padding: 1.25rem 1.25rem 1.275rem; }
+  .tarjeta-dif__icono { display: block; width: 2.2rem; height: 2.2rem; margin-top: -1.768rem; margin-bottom: 0.75rem; padding: 0.35rem; background: #fffdf8; border-radius: 50%; position: relative; }
   .tarjeta-dif__icono :global(svg) { width: 100%; height: 100%; }
-  .tarjeta-dif__titulo { font-size: 1.5rem; margin-bottom: 0.6rem; }
+  .tarjeta-dif__titulo { font-size: 1.26rem; margin-bottom: 0.6rem; }
   .tarjeta-dif__texto { font-size: 0.9875rem; line-height: 1.6; }
   @media (hover: hover) {
     .tarjeta-dif:hover { transform: translateY(-4px); box-shadow: var(--sombra-papel-alta); }
     .tarjeta-dif:hover .tarjeta-dif__foto :global(img) { transform: scale(1.04); }
   }
   @media (min-width: 64em) {
-    .diferencias :global(.carrusel__pista) { display: grid; grid-template-columns: repeat(6, 1fr); grid-gap: 1.5rem; gap: 1.5rem; }
+    .diferencias :global(.carrusel__pista) { display: grid; grid-template-columns: repeat(6, 1fr); grid-gap: 1.275rem; gap: 1.275rem; }
     .diferencias :global(.carrusel__pista > *) { margin: 0; grid-column: span 2; }
     .diferencias :global(.carrusel__pista > *:nth-child(4)) { grid-column: 2 / span 2; }
   }
 
-  .conceptos { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; }
-  .concepto__num { display: block; width: 2.75rem; height: 2.75rem; margin-bottom: 0.9rem; }
+  .conceptos { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
+  .concepto__num { display: block; width: 2.2rem; height: 2.2rem; margin-bottom: 0.9rem; }
   .concepto__num :global(svg) { width: 100%; height: 100%; }
-  .concepto__titulo { font-size: 1.5rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
-  @media (min-width: 48em) { .conceptos { grid-template-columns: 1fr 1fr; grid-gap: 3rem 4rem; gap: 3rem 4rem; } }
-  .gesto { display: grid; grid-template-columns: 1fr; grid-gap: 3rem; gap: 3rem; align-items: center; margin-top: 5rem; }
+  .concepto__titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
+  @media (min-width: 48em) { .conceptos { grid-template-columns: 1fr 1fr; grid-gap: 2.04rem 2.72rem; gap: 2.04rem 2.72rem; } }
+  .gesto { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; margin-top: 3.4rem; }
   .gesto__foto { position: relative; width: 82%; max-width: 26rem; margin: 0 auto; }
-  .gesto__titulo { font-size: 1.875rem; font-size: var(--t-xl); margin-bottom: 1.25rem; font-style: italic; font-weight: 320; }
-  @media (min-width: 56em) { .gesto { grid-template-columns: 5fr 6fr; grid-gap: 5rem; gap: 5rem; } }
+  .gesto__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1.25rem; font-style: italic; font-weight: 320; }
+  @media (min-width: 56em) { .gesto { grid-template-columns: 5fr 6fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 
-  .sala__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .sala__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
   .sala__foto { position: relative; width: 82%; max-width: 24rem; margin: 0 auto; }
-  .sala__titulo { font-size: 1.875rem; font-size: var(--t-xl); margin-bottom: 1rem; }
+  .sala__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1rem; }
   .sala__sub { display: block; margin-top: 0.3rem; font-style: italic; font-weight: 300; color: var(--acento-texto); font-size: 0.75em; }
-  .sala__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 2rem; }
-  .sala__apartados { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+  .sala__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 1.7rem; }
+  .sala__apartados { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
   .sala__apartado { padding-top: 1rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
   .sala__apartado dt { font-weight: 700; margin-bottom: 0.35rem; }
   .sala__apartado dd { margin: 0; }
-  :global(.tabs.is-js) .sala__titulo { font-size: 1.5rem; }
+  :global(.tabs.is-js) .sala__titulo { font-size: 1.26rem; }
   @media (min-width: 56em) {
-    .sala__grilla { grid-template-columns: 4fr 7fr; grid-gap: 4.5rem; gap: 4.5rem; }
+    .sala__grilla { grid-template-columns: 4fr 7fr; grid-gap: 3.06rem; gap: 3.06rem; }
     .sala__foto { width: 100%; position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 5rem); }
-    .sala__apartados { grid-template-columns: 1fr 1fr; grid-gap: 1.75rem 2.5rem; gap: 1.75rem 2.5rem; }
+    .sala__apartados { grid-template-columns: 1fr 1fr; grid-gap: 1.488rem 1.7rem; gap: 1.488rem 1.7rem; }
   }
 
-  .lenguaje { display: grid; grid-template-columns: 1fr; grid-gap: 1.75rem; gap: 1.75rem; padding-top: 0.5rem; }
+  .lenguaje { display: grid; grid-template-columns: 1fr; grid-gap: 1.488rem; gap: 1.488rem; padding-top: 0.5rem; }
   .lenguaje__foto :global(.foto) { border-radius: var(--radio); }
   .lenguaje__foto :global(figcaption) { margin-top: 0.75rem; font-size: 1.125rem; color: var(--tinta); }
-  .lenguaje__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 1.5rem; }
+  .lenguaje__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 1.275rem; }
   .lenguaje__apartados > div + div { margin-top: 1.25rem; }
   .lenguaje__apartados dt { font-weight: 700; margin-bottom: 0.3rem; }
   .lenguaje__apartados dd { margin: 0; }
-  @media (min-width: 56em) { .lenguaje { grid-template-columns: 5fr 7fr; grid-gap: 3rem; gap: 3rem; } }
+  @media (min-width: 56em) { .lenguaje { grid-template-columns: 5fr 7fr; grid-gap: 2.04rem; gap: 2.04rem; } }
 
   .patio { overflow: hidden; }
-  .patio__cabeza { max-width: 46rem; margin-bottom: 3rem; }
+  .patio__cabeza { max-width: 46rem; margin-bottom: 2.04rem; }
   .patio__cabeza > * + * { margin-top: 1.25rem; }
-  .patio__galeria { margin-bottom: 4rem; }
-  .patio__frase { display: flex; align-items: center; margin-top: 1.5rem; font-size: 1.5rem; font-size: var(--t-lg); color: var(--verde-texto); }
-  .patio__hoja { width: 2rem; height: 2.75rem; margin-right: 0.9rem; flex: none; }
-  .patio__lista { display: grid; grid-template-columns: 1fr; grid-gap: 2.25rem; gap: 2.25rem; }
+  .patio__galeria { margin-bottom: 2.72rem; }
+  .patio__frase { display: flex; align-items: center; margin-top: 1.275rem; font-size: 1.26rem; font-size: var(--t-lg); color: var(--verde-texto); }
+  .patio__hoja { width: 1.6rem; height: 2.2rem; margin-right: 0.9rem; flex: none; }
+  .patio__lista { display: grid; grid-template-columns: 1fr; grid-gap: 1.912rem; gap: 1.912rem; }
   .patio__item { display: flex; align-items: flex-start; }
-  .patio__vineta { flex: none; width: 2.75rem; height: 2.75rem; margin-right: 1.1rem; margin-top: 0.15rem; }
+  .patio__vineta { flex: none; width: 2.2rem; height: 2.2rem; margin-right: 1.1rem; margin-top: 0.15rem; }
   .patio__vineta :global(svg) { width: 100%; height: 100%; }
   .patio__item-titulo { font-size: 1.375rem; font-size: var(--t-lg); margin-bottom: 0.5rem; }
-  @media (min-width: 56em) { .patio__lista { grid-template-columns: 1fr 1fr; grid-gap: 3rem 5rem; gap: 3rem 5rem; } }
+  @media (min-width: 56em) { .patio__lista { grid-template-columns: 1fr 1fr; grid-gap: 2.04rem 3.4rem; gap: 2.04rem 3.4rem; } }
 
   .adaptacion__intro { font-size: 1.125rem; font-size: var(--t-md); }
   .adaptacion__intro :global(p) { max-width: 44rem; }
-  .adaptacion__desplegable { margin-top: 3rem; }
-  .adaptacion__pasos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
-  .paso { display: flex; align-items: flex-start; padding: 1.5rem; background: #fffdf8; border-radius: var(--radio-lg); box-shadow: 0 1px 0 rgba(35, 32, 28, 0.06); }
-  .paso__marca { flex: none; width: 2.5rem; height: 2.5rem; margin-right: 1.1rem; }
+  .adaptacion__desplegable { margin-top: 2.04rem; }
+  .adaptacion__pasos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
+  .paso { display: flex; align-items: flex-start; padding: 1.275rem; background: #fffdf8; border-radius: var(--radio-lg); box-shadow: 0 1px 0 rgba(35, 32, 28, 0.06); }
+  .paso__marca { flex: none; width: 2rem; height: 2rem; margin-right: 1.1rem; }
   .paso__marca :global(svg) { width: 100%; height: 100%; }
   .paso__titulo { font-size: 1.25rem; margin-bottom: 0.4rem; }
   @media (min-width: 56em) { .adaptacion__pasos { grid-template-columns: 1fr 1fr; } }
@@ -371,11 +372,11 @@ const subnav = [
     .horarios tr { background: #fffdf8; border-radius: var(--radio-lg); margin-bottom: 1rem; padding: 0.5rem 0; }
     .horarios th, .horarios td { border: 0; padding: 0.5rem 1.25rem; }
     .horarios td::before { content: attr(data-etiqueta); display: block; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 700; margin-bottom: 0.15rem; }
-    .horarios tbody th { font-size: 1.5rem; padding-top: 0.9rem; }
+    .horarios tbody th { font-size: 1.26rem; padding-top: 0.9rem; }
   }
-  .beneficio { position: relative; margin-top: 2.5rem; padding: 2rem; padding: clamp(1.5rem, 4vw, 2.75rem); border: 2px dashed var(--ocre); border-radius: var(--radio-lg); background: var(--papel); }
-  .beneficio__trazo { width: 2.75rem; height: 2.5rem; margin-bottom: 0.75rem; }
-  .beneficio__titulo { font-size: 1.5rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
+  .beneficio { position: relative; margin-top: 1.7rem; padding: 1.7rem; padding: clamp(1.275rem, 2.8vw, 1.87rem); border: 2px dashed var(--ocre); border-radius: var(--radio-lg); background: var(--papel); }
+  .beneficio__trazo { width: 2.2rem; height: 2rem; margin-bottom: 0.75rem; }
+  .beneficio__titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
   .beneficio__lista { list-style: none; padding: 0; margin-top: 1.25rem; display: grid; grid-template-columns: 1fr; grid-gap: 0.75rem; gap: 0.75rem; }
   .beneficio__lista li { font-size: 1.125rem; }
   .beneficio__etiqueta { color: var(--ocre-texto); }
