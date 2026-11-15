@@ -54,6 +54,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
       </div>
 
       <div class="hero__escena">
+        <img class="hero__dibujos" src="/dibujos-crayon.webp" alt="" aria-hidden="true" width="1100" height="1555" decoding="async" />
         <svg class="hero__arco-trazo" viewBox="0 0 400 520" aria-hidden="true" data-hero-trazo>
           <g filter="url(#crayon)" fill="none" stroke="var(--rojo-vivo)" stroke-width="2.6" stroke-linecap="round">
             <path d="M18 512 L 16 210 C 14 92, 110 10, 202 12 C 300 14, 386 96, 384 214 L 382 508" />
@@ -66,7 +67,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
             </div>
           ))}
         </div>
-        <div class="hero__sol" aria-hidden="true" data-hero-trazo><Trazo nombre="sol" grosor={2.6} dibujar={false} /></div>
+
         <ul class="hero__palabras" aria-label="Hacer, sentir y pensar">
           <li class="hero__palabra hero__palabra--a" data-hero-resto><span class="hero__palabra-punto" style="background:var(--ocre)"></span>hacer</li>
           <li class="hero__palabra hero__palabra--b" data-hero-resto><span class="hero__palabra-punto" style="background:var(--rojo)"></span>sentir</li>
@@ -312,8 +313,9 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
   :global(html.reducido) .hero__capa :global(img), :global(html.liviano) .hero__capa :global(img) { transform: none; }
   .hero__arco-trazo { position: absolute; left: -5%; top: 0.4rem; width: 110%; height: auto; z-index: 0; overflow: visible; transform: rotate(-2.5deg); }
   .hero__arco { z-index: 1; }
-  .hero__sol { position: absolute; right: -6%; top: -1%; width: 5rem; height: 5rem; z-index: 3; }
-  .hero__sol :global(svg) { width: 100%; height: 100%; }
+  /* Lámina de dibujos en crayón: detalle de fondo detrás del arco */
+  .hero__dibujos { position: absolute; z-index: 0; top: -6%; left: 50%; width: 150%; max-width: none; height: auto; transform: translateX(-50%) rotate(-4deg); opacity: 0.13; pointer-events: none; user-select: none; }
+  @media (max-width: 47.99em) { .hero__dibujos { width: 125%; opacity: 0.1; } }
   .hero__palabras { list-style: none; margin: 0; padding: 0; }
   .hero__palabra {
     position: absolute; z-index: 4;
@@ -334,7 +336,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
   :global(html.liviano) .hero__palabra { animation: none; }
   @media (max-width: 30em) { .hero__palabra--a { left: -2%; } .hero__palabra--b { right: -2%; } .hero__palabra--c { left: 2%; } }
   .hero__sello { position: absolute; right: -17%; bottom: -2%; z-index: 4; padding: 6px; border-radius: 50%; background: rgba(250, 246, 238, 0.92); }
-  @media (max-width: 47.99em) { .hero__sello { transform: scale(0.72); transform-origin: 100% 100%; right: -2%; } }
+  @media (max-width: 47.99em) { .hero__sello { display: none; } }
   .hero__datos { display: flex; flex-wrap: wrap; margin: 2rem 0 0; padding-top: 1.25rem; border-top: 1px solid rgba(35, 32, 28, 0.12); }
   .hero__datos > div { margin: 0 2.25rem 0.75rem 0; display: flex; flex-direction: column-reverse; }
   .hero__datos dd { margin: 0; font-size: 2rem; font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.6rem); line-height: 1; color: var(--tinta); }
