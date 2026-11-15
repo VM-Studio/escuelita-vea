@@ -180,8 +180,9 @@ export const jardin = {
       'patio-tobogan-madera', 'patio-cavando', 'patio-tobogan-azul', 'patio-maestra-tobogan', 'patio-sala3-fila-arena',
     ],
   },
+  // (la frase "Una mano que invita a jugar…" abre el texto de adaptación: no se repite justo antes)
   interludioAdaptacion: {
-    frase: 'Una mano que invita a jugar, una palabra que nombra, una ronda que se agranda para recibir a otro compañero.',
+    frase: 'Integrarse no es sólo adaptarse: es encontrar un lugar donde cada uno es esperado y recibido.',
     foto: 'musica-ronda-manos',
   },
   adaptacion: {

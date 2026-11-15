@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import Trazo from '../components/Trazo.astro';
+import Boton from '../components/Boton.astro';
+---
+<Base titulo="Página no encontrada" descripcion="La página que buscabas no está. Volvé al inicio de La Escuelita o escribinos." noIndexar>
+  <section class="no-encontrada" data-hero>
+    <div class="contenedor no-encontrada__grilla">
+      <div>
+        <Trazo nombre="espiral" class="no-encontrada__espiral" grosor={2.4} />
+        <h1 class="no-encontrada__titulo" data-hero-titular>Por acá no hay nada… todavía</h1>
+        <p class="t-lead no-encontrada__texto" data-hero-resto>Esta página no existe o cambió de lugar. Te invitamos a volver al inicio o a escribirnos.</p>
+        <div class="no-encontrada__acciones" data-hero-resto>
+          <Boton href="/" variante="rojo">Volver al inicio</Boton>
+          <Boton href="/contacto/">Escribinos</Boton>
+        </div>
+      </div>
+      <div class="no-encontrada__foto pegada" style="--rot:2deg" data-hero-resto>
+        <span class="cinta" aria-hidden="true"></span>
+        <Foto id="primaria-construccion-arena" ratio="4/5" sizes="(min-width: 56em) 30vw, 70vw" />
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .no-encontrada { padding-top: calc(var(--header-h) + 4rem); padding-bottom: 6rem; }
+  .no-encontrada__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 3rem; gap: 3rem; align-items: center; }
+  .no-encontrada__espiral { width: 4rem; height: 4rem; margin-bottom: 1.5rem; }
+  .no-encontrada__titulo { max-width: 14ch; }
+  .no-encontrada__texto { margin-top: 1.5rem; }
+  .no-encontrada__acciones { display: flex; flex-wrap: wrap; margin-top: 2rem; }
+  .no-encontrada__acciones > :global(*) { margin: 0 1rem 0.75rem 0; }
+  .no-encontrada__foto { position: relative; width: 70%; max-width: 22rem; margin: 0 auto; }
+  @media (min-width: 56em) { .no-encontrada__grilla { grid-template-columns: 7fr 4fr; } }
+</style>

@@ -1,0 +1,81 @@
+---
+// Botonera de pestañas. Los paneles se escriben en el slot con: <section id="…" data-panel class="tabs__panel">.
+// Sin JS: la botonera se oculta y todos los paneles se ven uno debajo del otro con su título.
+interface Props { items: { id: string; texto: string; sub?: string }[]; etiqueta: string; class?: string; variante?: 'pestanas' | 'chips' }
+const { items, etiqueta, class: clase = '', variante = 'pestanas' } = Astro.props;
+---
+<div class:list={['tabs', `tabs--${variante}`, clase]} data-tabs>
+  <div class="tabs__barra" data-sin-lenis>
+    <div class="tabs__lista" data-tabs-lista aria-label={etiqueta}>
+      {items.map((i) => (
+        <button type="button" class="tabs__tab" data-tab>
+          <span class="tabs__texto">{i.texto}</span>
+          {i.sub && <span class="tabs__sub">{i.sub}</span>}
+        </button>
+      ))}
+      <span class="tabs__indicador" data-tabs-indicador aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="tabs__paneles">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .tabs__barra { display: none; }
+  :global(html.js) .tabs.is-js .tabs__barra { display: block; }
+  .tabs__lista {
+    position: relative;
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-bottom: 1px solid rgba(35, 32, 28, 0.16);
+  }
+  .tabs__lista::-webkit-scrollbar { display: none; }
+  .tabs__tab {
+    flex: none;
+    display: flex; flex-direction: column; align-items: flex-start;
+    min-height: 44px;
+    padding: 0.9rem 1.5rem 1rem 0;
+    margin-right: 1.25rem;
+    border: 0; background: none;
+    text-align: left;
+    color: var(--tinta-suave);
+    transition: color 0.3s;
+  }
+  .tabs__texto { font-family: var(--f-titulo); font-size: 1.375rem; font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem); line-height: 1.1; white-space: nowrap; }
+  .tabs__sub { margin-top: 0.3rem; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
+  .tabs__tab[aria-selected='true'] { color: var(--tinta); }
+  .tabs__tab:hover { color: var(--tinta); }
+  .tabs__indicador {
+    position: absolute; left: 0; bottom: -1px; height: 3px; width: 0;
+    background: var(--acento); border-radius: 3px;
+    transition: transform 0.55s var(--ease-out), width 0.55s var(--ease-out);
+  }
+  .tabs__paneles { margin-top: 2.5rem; }
+  /* Sin JS: paneles apilados */
+  .tabs__paneles > :global([data-panel] + [data-panel]) { margin-top: 4rem; }
+  .tabs.is-js .tabs__paneles > :global([data-panel] + [data-panel]) { margin-top: 0; }
+  .tabs.is-js .tabs__paneles > :global([data-panel].is-activo) { animation: tabs-fundido 0.6s var(--ease-suave); }
+  @keyframes tabs-fundido { from { opacity: 0; transform: translate3d(0, 10px, 0); } to { opacity: 1; transform: none; } }
+
+  /* Variante chips (áreas de Primaria) */
+  .tabs--chips .tabs__lista { border-bottom: 0; padding: 0.25rem 0 0.75rem; flex-wrap: nowrap; }
+  .tabs--chips .tabs__tab {
+    padding: 0.6rem 1.1rem;
+    margin-right: 0.5rem;
+    border: 1.5px solid rgba(35, 32, 28, 0.2);
+    border-radius: 999px;
+    color: var(--tinta);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+  .tabs--chips .tabs__texto { font-family: var(--f-texto); font-size: 0.9375rem; font-weight: 600; }
+  .tabs--chips .tabs__tab[aria-selected='true'] { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+  .tabs--chips .tabs__tab:hover:not([aria-selected='true']) { border-color: var(--tinta); }
+  .tabs--chips .tabs__indicador { display: none; }
+  @media (min-width: 64em) {
+    .tabs--chips .tabs__lista { flex-wrap: wrap; overflow: visible; }
+    .tabs--chips .tabs__tab { margin-bottom: 0.5rem; }
+  }
+</style>

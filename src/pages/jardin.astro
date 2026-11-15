@@ -1,0 +1,383 @@
+---
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import Trazo from '../components/Trazo.astro';
+import PortadaPagina from '../components/PortadaPagina.astro';
+import SubNav from '../components/SubNav.astro';
+import Carrusel from '../components/Carrusel.astro';
+import Tabs from '../components/Tabs.astro';
+import Acordeon from '../components/Acordeon.astro';
+import Desplegable from '../components/Desplegable.astro';
+import Interludio from '../components/Interludio.astro';
+import Galeria from '../components/Galeria.astro';
+import Marquesina from '../components/Marquesina.astro';
+import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
+import { jardin as j } from '../content/jardin';
+import { inicio } from '../content/inicio';
+import { parrafos } from '../lib/texto';
+
+const subnav = [
+  { href: '#que-nos-diferencia', texto: '¿Qué nos diferencia?' },
+  { href: '#propuesta', texto: 'Propuesta pedagógica' },
+  { href: '#salas', texto: 'Nuestras salas' },
+  { href: '#lenguajes', texto: 'Nuestros lenguajes' },
+  { href: '#patio', texto: 'El patio' },
+  { href: '#adaptacion', texto: 'Adaptación' },
+  { href: '#horarios', texto: 'Horarios' },
+];
+---
+<Base
+  titulo="Jardín"
+  descripcion="Primer Jardín Argentino de Educación por el Arte (1959). Talleres de 2 a 5 años, lenguajes artísticos, el patio de arena y una adaptación artesanal y amorosa."
+  nivel="jardin"
+  heroOscuro
+  fotoOg={j.portada.foto}
+  progreso
+>
+  <PortadaPagina titulo={j.portada.titulo} volanta="Jardín · Nivel Inicial" foto={j.portada.foto}>
+    <figure class="portada-cita">
+      <blockquote><p class="t-frase portada-cita__texto">{j.portada.cita}</p></blockquote>
+      <figcaption class="portada-cita__firma">— {j.portada.citaFirma}</figcaption>
+    </figure>
+  </PortadaPagina>
+
+  <section class="seccion intro-nivel" aria-label="Presentación del Jardín">
+    <div class="contenedor intro-nivel__grilla">
+      <Trazo nombre="sol" class="intro-nivel__sol" grosor={2.4} color="ocre" />
+      <p class="intro-nivel__texto" data-revelar>{j.portada.texto}</p>
+    </div>
+  </section>
+
+  <SubNav items={subnav} etiqueta="Secciones del Jardín" />
+
+  <!-- ¿Qué nos diferencia? -->
+  <section class="seccion ancla" id="que-nos-diferencia" aria-labelledby="dif-titulo">
+    <div class="contenedor">
+      <div class="cabecera-seccion">
+        <h2 id="dif-titulo" data-titulo-lineas>{j.diferencias.titulo}</h2>
+        <p class="t-lead" data-revelar>{j.diferencias.intro}</p>
+      </div>
+      <Carrusel etiqueta="Lo que priorizamos" soloMovil class="diferencias">
+        {j.diferencias.items.map((d, i) => (
+          <article class="tarjeta-dif" data-revelar>
+            <div class="tarjeta-dif__foto">
+              <Foto id={d.foto} ratio="4/3" sizes="(min-width: 64em) 30vw, (min-width: 40em) 46vw, 82vw" />
+            </div>
+            <div class="tarjeta-dif__cuerpo">
+              <span class="tarjeta-dif__icono" aria-hidden="true"><Trazo nombre={d.icono as any} grosor={2.4} color={i % 2 ? 'rojo' : 'ocre'} /></span>
+              <h3 class="tarjeta-dif__titulo">{d.etiqueta}</h3>
+              <p class="tarjeta-dif__texto">{d.texto}</p>
+            </div>
+          </article>
+        ))}
+      </Carrusel>
+    </div>
+  </section>
+
+  <!-- Propuesta pedagógica -->
+  <section class="seccion seccion--acento ancla" id="propuesta" aria-labelledby="prop-titulo">
+    <div class="contenedor">
+      <div class="cabecera-seccion">
+        <h2 id="prop-titulo" data-titulo-lineas>{j.propuesta.titulo}</h2>
+      </div>
+      <div class="conceptos">
+        {j.propuesta.items.map((c, i) => (
+          <article class="concepto" data-revelar>
+            <span class="concepto__num" aria-hidden="true"><Trazo nombre={(['espiral', 'sol', 'lazos', 'ronda'] as const)[i]} grosor={2.2} color="ocre" /></span>
+            <h3 class="concepto__titulo">{c.etiqueta}</h3>
+            <p>{c.texto}</p>
+          </article>
+        ))}
+      </div>
+      <div class="gesto">
+        <div class="gesto__foto pegada" style="--rot:-1.4deg" data-revelar>
+          <span class="cinta" aria-hidden="true"></span>
+          <Foto id="taller-pintura-mesa" ratio="4/5" sizes="(min-width: 56em) 34vw, 80vw" />
+        </div>
+        <div class="gesto__texto">
+          <h3 class="gesto__titulo" data-titulo-lineas>{j.propuesta.gesto.titulo}</h3>
+          <div class="prosa" data-revelar set:html={parrafos(j.propuesta.gesto.texto)} />
+        </div>
+      </div>
+    </div>
+  </section>
+  <Marquesina items={inicio.materiales} />
+
+  <Interludio foto={j.interludioSocial.foto} frase={j.interludioSocial.frase} />
+
+  <!-- Nuestras salas -->
+  <section class="seccion ancla" id="salas" aria-labelledby="salas-titulo">
+    <div class="contenedor">
+      <div class="cabecera-seccion">
+        <h2 id="salas-titulo" data-titulo-lineas>{j.salas.titulo}</h2>
+      </div>
+      <Tabs items={j.salas.items.map((s) => ({ id: s.id, texto: s.nombre, sub: s.subtitulo }))} etiqueta="Salas del Jardín">
+        {j.salas.items.map((s, i) => (
+          <section class="tabs__panel sala" id={s.id} data-panel aria-labelledby={`${s.id}-h`}>
+            <div class="sala__grilla">
+              <div class="sala__foto pegada" style={`--rot:${i % 2 ? 1.4 : -1.4}deg`}>
+                <span class="cinta" aria-hidden="true"></span>
+                <Foto id={s.foto} ratio="4/5" sizes="(min-width: 56em) 32vw, 86vw" />
+              </div>
+              <div class="sala__texto">
+                <h3 class="sala__titulo" id={`${s.id}-h`}>{s.nombre} <span class="sala__sub">— {s.subtitulo}</span></h3>
+                <p class="sala__intro">{s.intro}</p>
+                <dl class="sala__apartados">
+                  {s.apartados.map((a) => (
+                    <div class="sala__apartado">
+                      <dt>{a.etiqueta}</dt>
+                      <dd>{a.texto}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+          </section>
+        ))}
+      </Tabs>
+    </div>
+  </section>
+
+  <!-- Nuestros lenguajes -->
+  <section class="seccion seccion--papel-oscuro ancla" id="lenguajes" aria-labelledby="leng-titulo">
+    <div class="contenedor contenedor--ancho">
+      <div class="cabecera-seccion">
+        <h2 id="leng-titulo" data-titulo-lineas>{j.lenguajes.titulo}</h2>
+      </div>
+      <div class="lenguajes">
+        {j.lenguajes.items.map((l) => (
+          <Acordeon id={l.id} titulo={l.titulo} grupo="lenguajes">
+            <div class="lenguaje">
+              <div class="lenguaje__foto">
+                <Foto id={l.foto} ratio="4/3" sizes="(min-width: 56em) 30vw, 90vw" pie={'frase' in l ? l.frase : undefined} />
+              </div>
+              <div class="lenguaje__texto">
+                <p class="lenguaje__intro">{l.intro}</p>
+                <dl class="lenguaje__apartados">
+                  {l.apartados.map((a) => (
+                    <div>
+                      <dt>{a.etiqueta}</dt>
+                      <dd>{a.texto}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+          </Acordeon>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Interludio foto={j.interludioGrupal.foto} frase={j.interludioGrupal.frase} variante="lado" trazo="espiral" ratio="1/1" />
+
+  <!-- El patio -->
+  <section class="seccion patio ancla" id="patio" aria-labelledby="patio-titulo">
+    <div class="contenedor">
+      <div class="patio__cabeza">
+        <h2 id="patio-titulo" data-titulo-lineas>{j.patio.titulo}</h2>
+        <p class="t-lead" data-revelar>{j.patio.intro}</p>
+      </div>
+    </div>
+    <div class="patio__galeria">
+      <div class="contenedor">
+        <Galeria ids={j.patio.galeria} variante="tira" sizes="(min-width: 64em) 26vw, (min-width: 48em) 36vw, 72vw" />
+        <p class="patio__frase t-frase" data-revelar>
+          <Trazo nombre="hoja" class="patio__hoja" grosor={2} color="verde" />
+          {j.patio.frase}
+        </p>
+      </div>
+    </div>
+    <div class="contenedor">
+      <ul class="patio__lista">
+        {j.patio.items.map((it, i) => (
+          <li class="patio__item" data-revelar>
+            <span class="patio__vineta" aria-hidden="true"><Trazo nombre={(['hoja', 'ola', 'ronda', 'lazos', 'sol'] as const)[i]} grosor={2.2} color={i % 2 ? 'verde' : 'ocre'} /></span>
+            <div>
+              <h3 class="patio__item-titulo">{it.etiqueta}</h3>
+              <p>{it.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Interludio foto={j.interludioAdaptacion.foto} frase={j.interludioAdaptacion.frase} />
+
+  <!-- Adaptación -->
+  <section class="seccion ancla" id="adaptacion" aria-labelledby="adap-titulo">
+    <div class="contenedor contenedor--ancho">
+      <div class="cabecera-seccion">
+        <h2 id="adap-titulo" data-titulo-lineas>{j.adaptacion.titulo}</h2>
+      </div>
+      <div class="adaptacion__intro prosa" data-revelar set:html={parrafos(j.adaptacion.intro)} />
+      <div class="adaptacion__desplegable" data-revelar>
+        <Desplegable id="adaptacion-en-detalle" boton={j.adaptacion.boton} botonCerrar="Cerrar el detalle">
+          <ol class="adaptacion__pasos">
+            {j.adaptacion.detalle.map((d, i) => (
+              <li class="paso">
+                <span class="paso__marca" aria-hidden="true"><Trazo nombre={(['lazos', 'corazon', 'sol', 'hoja', 'espiral'] as const)[i]} grosor={2} color="ocre" crayon={false} /></span>
+                <div>
+                  <h3 class="paso__titulo">{d.etiqueta}</h3>
+                  <p>{d.texto}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Desplegable>
+      </div>
+    </div>
+  </section>
+
+  <!-- Horarios -->
+  <section class="seccion seccion--acento ancla" id="horarios" aria-labelledby="hor-titulo">
+    <div class="contenedor contenedor--ancho">
+      <div class="cabecera-seccion">
+        <h2 id="hor-titulo" data-titulo-lineas>{j.horarios.titulo}</h2>
+      </div>
+      <table class="horarios" data-revelar>
+        <thead>
+          <tr>{j.horarios.columnas.map((c) => <th scope="col">{c}</th>)}</tr>
+        </thead>
+        <tbody>
+          {j.horarios.filas.map((f) => (
+            <tr>
+              <th scope="row" data-etiqueta={j.horarios.columnas[0]}>{f[0]}</th>
+              <td data-etiqueta={j.horarios.columnas[1]}>{f[1]}</td>
+              <td data-etiqueta={j.horarios.columnas[2]}>{f[2]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <aside class="beneficio" data-revelar aria-labelledby="beneficio-titulo">
+        <Trazo nombre="corazon" class="beneficio__trazo" grosor={2.2} />
+        <h3 id="beneficio-titulo" class="beneficio__titulo">{j.horarios.beneficio.titulo}</h3>
+        <p>{j.horarios.beneficio.intro}</p>
+        <ul class="beneficio__lista">
+          {j.horarios.beneficio.items.map((b) => (
+            <li><strong class="beneficio__etiqueta">{b.etiqueta}:</strong> <span>{b.texto}</span></li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <LlamadoEntrevista nivel="jardin" foto="sala2-tunel-arena" titulo="Vení a conocer el Jardín" />
+</Base>
+
+<style>
+  .portada-cita__texto { font-size: 1.25rem; font-size: clamp(1.1875rem, 0.95rem + 1vw, 1.75rem); max-width: 36ch; color: #f6efe3; }
+  .portada-cita__firma { margin-top: 0.6rem; font-weight: 600; font-size: 0.9375rem; color: var(--arena); }
+
+  .intro-nivel__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+  .intro-nivel__sol { width: 3.5rem; height: 3.5rem; }
+  .intro-nivel__texto { font-family: var(--f-titulo); font-size: 1.5rem; font-size: clamp(1.4rem, 1.05rem + 1.5vw, 2.375rem); line-height: 1.3; font-weight: 340; letter-spacing: -0.012em; max-width: 34ch; }
+  @media (min-width: 56em) { .intro-nivel__grilla { grid-template-columns: auto 1fr; grid-gap: 3rem; gap: 3rem; } }
+
+  /* Tarjetas de diferencias: carrusel en mobile, grilla de 3 en desktop */
+  .tarjeta-dif {
+    display: flex; flex-direction: column;
+    height: 100%;
+    background: #fffdf8;
+    border-radius: var(--radio-lg);
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(35, 32, 28, 0.06);
+    transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+  }
+  .tarjeta-dif__foto :global(img) { transition: transform 1.6s var(--ease-out), opacity 0.7s var(--ease-suave); }
+  .tarjeta-dif__cuerpo { padding: 1.25rem 1.25rem 1.5rem; }
+  .tarjeta-dif__icono { display: block; width: 2.75rem; height: 2.75rem; margin-top: -2.6rem; margin-bottom: 0.75rem; padding: 0.35rem; background: #fffdf8; border-radius: 50%; position: relative; }
+  .tarjeta-dif__icono :global(svg) { width: 100%; height: 100%; }
+  .tarjeta-dif__titulo { font-size: 1.5rem; margin-bottom: 0.6rem; }
+  .tarjeta-dif__texto { font-size: 0.9875rem; line-height: 1.6; }
+  @media (hover: hover) {
+    .tarjeta-dif:hover { transform: translateY(-4px); box-shadow: var(--sombra-papel-alta); }
+    .tarjeta-dif:hover .tarjeta-dif__foto :global(img) { transform: scale(1.04); }
+  }
+  @media (min-width: 64em) {
+    .diferencias :global(.carrusel__pista) { display: grid; grid-template-columns: repeat(6, 1fr); grid-gap: 1.5rem; gap: 1.5rem; }
+    .diferencias :global(.carrusel__pista > *) { margin: 0; grid-column: span 2; }
+    .diferencias :global(.carrusel__pista > *:nth-child(4)) { grid-column: 2 / span 2; }
+  }
+
+  .conceptos { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; }
+  .concepto__num { display: block; width: 2.75rem; height: 2.75rem; margin-bottom: 0.9rem; }
+  .concepto__num :global(svg) { width: 100%; height: 100%; }
+  .concepto__titulo { font-size: 1.5rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
+  @media (min-width: 48em) { .conceptos { grid-template-columns: 1fr 1fr; grid-gap: 3rem 4rem; gap: 3rem 4rem; } }
+  .gesto { display: grid; grid-template-columns: 1fr; grid-gap: 3rem; gap: 3rem; align-items: center; margin-top: 5rem; }
+  .gesto__foto { position: relative; width: 82%; max-width: 26rem; margin: 0 auto; }
+  .gesto__titulo { font-size: 1.875rem; font-size: var(--t-xl); margin-bottom: 1.25rem; font-style: italic; font-weight: 320; }
+  @media (min-width: 56em) { .gesto { grid-template-columns: 5fr 6fr; grid-gap: 5rem; gap: 5rem; } }
+
+  .sala__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .sala__foto { position: relative; width: 82%; max-width: 24rem; margin: 0 auto; }
+  .sala__titulo { font-size: 1.875rem; font-size: var(--t-xl); margin-bottom: 1rem; }
+  .sala__sub { display: block; margin-top: 0.3rem; font-style: italic; font-weight: 300; color: var(--acento-texto); font-size: 0.75em; }
+  .sala__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 2rem; }
+  .sala__apartados { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+  .sala__apartado { padding-top: 1rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
+  .sala__apartado dt { font-weight: 700; margin-bottom: 0.35rem; }
+  .sala__apartado dd { margin: 0; }
+  :global(.tabs.is-js) .sala__titulo { font-size: 1.5rem; }
+  @media (min-width: 56em) {
+    .sala__grilla { grid-template-columns: 4fr 7fr; grid-gap: 4.5rem; gap: 4.5rem; }
+    .sala__foto { width: 100%; position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 5rem); }
+    .sala__apartados { grid-template-columns: 1fr 1fr; grid-gap: 1.75rem 2.5rem; gap: 1.75rem 2.5rem; }
+  }
+
+  .lenguaje { display: grid; grid-template-columns: 1fr; grid-gap: 1.75rem; gap: 1.75rem; padding-top: 0.5rem; }
+  .lenguaje__foto :global(.foto) { border-radius: var(--radio); }
+  .lenguaje__foto :global(figcaption) { margin-top: 0.75rem; font-size: 1.125rem; color: var(--tinta); }
+  .lenguaje__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 1.5rem; }
+  .lenguaje__apartados > div + div { margin-top: 1.25rem; }
+  .lenguaje__apartados dt { font-weight: 700; margin-bottom: 0.3rem; }
+  .lenguaje__apartados dd { margin: 0; }
+  @media (min-width: 56em) { .lenguaje { grid-template-columns: 5fr 7fr; grid-gap: 3rem; gap: 3rem; } }
+
+  .patio { overflow: hidden; }
+  .patio__cabeza { max-width: 46rem; margin-bottom: 3rem; }
+  .patio__cabeza > * + * { margin-top: 1.25rem; }
+  .patio__galeria { margin-bottom: 4rem; }
+  .patio__frase { display: flex; align-items: center; margin-top: 1.5rem; font-size: 1.5rem; font-size: var(--t-lg); color: var(--verde-texto); }
+  .patio__hoja { width: 2rem; height: 2.75rem; margin-right: 0.9rem; flex: none; }
+  .patio__lista { display: grid; grid-template-columns: 1fr; grid-gap: 2.25rem; gap: 2.25rem; }
+  .patio__item { display: flex; align-items: flex-start; }
+  .patio__vineta { flex: none; width: 2.75rem; height: 2.75rem; margin-right: 1.1rem; margin-top: 0.15rem; }
+  .patio__vineta :global(svg) { width: 100%; height: 100%; }
+  .patio__item-titulo { font-size: 1.375rem; font-size: var(--t-lg); margin-bottom: 0.5rem; }
+  @media (min-width: 56em) { .patio__lista { grid-template-columns: 1fr 1fr; grid-gap: 3rem 5rem; gap: 3rem 5rem; } }
+
+  .adaptacion__intro { font-size: 1.125rem; font-size: var(--t-md); }
+  .adaptacion__intro :global(p) { max-width: 44rem; }
+  .adaptacion__desplegable { margin-top: 3rem; }
+  .adaptacion__pasos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+  .paso { display: flex; align-items: flex-start; padding: 1.5rem; background: #fffdf8; border-radius: var(--radio-lg); box-shadow: 0 1px 0 rgba(35, 32, 28, 0.06); }
+  .paso__marca { flex: none; width: 2.5rem; height: 2.5rem; margin-right: 1.1rem; }
+  .paso__marca :global(svg) { width: 100%; height: 100%; }
+  .paso__titulo { font-size: 1.25rem; margin-bottom: 0.4rem; }
+  @media (min-width: 56em) { .adaptacion__pasos { grid-template-columns: 1fr 1fr; } }
+
+  .horarios { width: 100%; border-collapse: collapse; background: #fffdf8; border-radius: var(--radio-lg); overflow: hidden; }
+  .horarios th, .horarios td { text-align: left; padding: 1.1rem 1.25rem; border-bottom: 1px solid rgba(35, 32, 28, 0.1); vertical-align: top; }
+  .horarios thead th { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 700; background: var(--papel-oscuro); }
+  .horarios tbody th { font-family: var(--f-titulo); font-weight: 400; font-size: 1.25rem; white-space: nowrap; }
+  .horarios tbody tr:last-child th, .horarios tbody tr:last-child td { border-bottom: 0; }
+  @media (max-width: 47.99em) {
+    .horarios, .horarios tbody, .horarios tr, .horarios th, .horarios td { display: block; width: 100%; }
+    .horarios { background: none; }
+    .horarios thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .horarios tr { background: #fffdf8; border-radius: var(--radio-lg); margin-bottom: 1rem; padding: 0.5rem 0; }
+    .horarios th, .horarios td { border: 0; padding: 0.5rem 1.25rem; }
+    .horarios td::before { content: attr(data-etiqueta); display: block; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 700; margin-bottom: 0.15rem; }
+    .horarios tbody th { font-size: 1.5rem; padding-top: 0.9rem; }
+  }
+  .beneficio { position: relative; margin-top: 2.5rem; padding: 2rem; padding: clamp(1.5rem, 4vw, 2.75rem); border: 2px dashed var(--ocre); border-radius: var(--radio-lg); background: var(--papel); }
+  .beneficio__trazo { width: 2.75rem; height: 2.5rem; margin-bottom: 0.75rem; }
+  .beneficio__titulo { font-size: 1.5rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
+  .beneficio__lista { list-style: none; padding: 0; margin-top: 1.25rem; display: grid; grid-template-columns: 1fr; grid-gap: 0.75rem; gap: 0.75rem; }
+  .beneficio__lista li { font-size: 1.125rem; }
+  .beneficio__etiqueta { color: var(--ocre-texto); }
+  @media (min-width: 40em) { .beneficio__lista { grid-template-columns: 1fr 1fr; } }
+</style>

@@ -1,0 +1,13 @@
+{
+  "name": "La Escuelita · Educación por el Arte",
+  "short_name": "La Escuelita",
+  "lang": "es-AR",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#faf6ee",
+  "theme_color": "#faf6ee",
+  "icons": [
+    { "src": "/icono-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icono-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

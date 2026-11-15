@@ -1,0 +1,25 @@
+---
+// Video del Rap del Litio. LISTO pero NO PUBLICADO: se activa con PUBLICAR.videoRapDelLitio en src/config/sitio.ts
+// cuando la escuela confirme la autorización y el grado. Para activarlo:
+//   1) convertir el original con:  ffmpeg -i "RAP DEL LITIO.mp4" -vf "scale=-2:720" -c:v libx264 -crf 26 -preset slow -movflags +faststart -an public/videos/rap-del-litio.mp4
+//      (quitar `-an` si se quiere conservar el audio — es un rap: lo normal es conservarlo)
+//   2) generar el póster: ffmpeg -ss 2 -i public/videos/rap-del-litio.mp4 -frames:v 1 -q:v 4 public/videos/rap-del-litio.jpg
+//   3) poner PUBLICAR.videoRapDelLitio = true
+// El video no se reproduce solo, no se descarga hasta tocar "play" (preload="none").
+import { PUBLICAR } from '../config/sitio';
+interface Props { titulo: string }
+const { titulo } = Astro.props;
+---
+{PUBLICAR.videoRapDelLitio && (
+  <figure class="video">
+    <video controls preload="none" playsinline poster="/videos/rap-del-litio.jpg" width="1280" height="720">
+      <source src="/videos/rap-del-litio.mp4" type="video/mp4" />
+      <p>Tu navegador no puede reproducir este video. <a href="/videos/rap-del-litio.mp4">Descargalo acá</a>.</p>
+    </video>
+    <figcaption class="pie">{titulo}</figcaption>
+  </figure>
+)}
+<style>
+  .video video { width: 100%; height: auto; border-radius: var(--radio); background: var(--tinta); }
+  .video figcaption { margin-top: 0.6rem; }
+</style>

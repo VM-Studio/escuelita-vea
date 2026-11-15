@@ -8,7 +8,7 @@ interface Props { nivel?: 'jardin' | 'primaria'; foto?: string; titulo?: string 
 const { nivel, foto, titulo = 'Vení a conocer La Escuelita' } = Astro.props;
 const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrevista';
 ---
-<section class="llamado seccion" aria-labelledby="llamado-titulo">
+<section class:list={['llamado seccion', { 'llamado--sin-foto': !foto }]} aria-labelledby="llamado-titulo">
   <div class="contenedor llamado__grilla">
     {foto && (
       <div class="llamado__foto pegada" style="--rot:2deg" data-revelar>
@@ -44,8 +44,13 @@ const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrev
   .llamado__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 2rem; }
   .llamado__acciones > :global(*) { margin: 0 1.5rem 0.75rem 0; }
   .llamado__wa { font-weight: 600; padding: 0.5rem 0; }
+  .llamado--sin-foto .llamado__grilla { text-align: center; }
+  .llamado--sin-foto .llamado__titulo, .llamado--sin-foto .llamado__bajada { margin-left: auto; margin-right: auto; }
+  .llamado--sin-foto .llamado__trazo { margin-left: auto; margin-right: auto; }
+  .llamado--sin-foto .llamado__acciones { justify-content: center; }
+  .llamado--sin-foto .llamado__acciones > :global(*) { margin: 0 0.75rem 0.75rem; }
   @media (min-width: 56em) {
-    .llamado__grilla { grid-template-columns: 4fr 7fr; grid-gap: 5rem; gap: 5rem; }
+    .llamado:not(.llamado--sin-foto) .llamado__grilla { grid-template-columns: 4fr 7fr; grid-gap: 5rem; gap: 5rem; }
     .llamado__foto { width: 100%; }
   }
 </style>

@@ -54,11 +54,13 @@ export const comunidad = {
     hitosTitulo: 'Hitos anuales y viajes',
     hitos: [
       { id: 'viaje-a-rosario', etiqueta: 'Viaje a Rosario (4to grado)', fotos: ['primaria-rosario'], texto: 'El grupo de cuarto grado promete lealtad a la bandera en un proyecto nacional profundo. Los estudiantes investigan, leen y representan una obra de teatro que repasa la biografía de Manuel Belgrano y la creación del símbolo patrio. El legado de Belgrano nos interpela en valores fundamentales. La visita a la ciudad de Rosario y al [Monumento a la Bandera](https://www.monumentoalabandera.gob.ar/) cierra el proyecto con un contenido simbólico y un matiz sensible indispensable para profundizar los aprendizajes.' },
-      { id: 'penas', etiqueta: 'Las Peñas de La Escuelita', fotos: ['primaria-pena-noche', 'musica-patio-familias'], frase: 'Es un lugar para cada uno, a la medida de cada quien.', texto: 'Dos veces al año damos lugar a este evento tan esperado que nos reúne los días sábado. Niños, niñas y grandes se combinan para tocar y cantar un repertorio variado a elección de cada participante. La música, los bailes y la reunión de las familias entre los árboles permiten habitar la escuela de otra manera y celebrar el canto compartido. Es un lugar para cada uno, a la medida de cada quien.' },
+      { id: 'penas', etiqueta: 'Las Peñas de La Escuelita', fotos: ['primaria-pena-noche'], texto: 'Dos veces al año damos lugar a este evento tan esperado que nos reúne los días sábado. Niños, niñas y grandes se combinan para tocar y cantar un repertorio variado a elección de cada participante. La música, los bailes y la reunión de las familias entre los árboles permiten habitar la escuela de otra manera y celebrar el canto compartido. Es un lugar para cada uno, a la medida de cada quien.' },
       { id: 'campamentos', etiqueta: 'Campamentos', fotos: ['primaria-campamento'], texto: 'Dormir fuera de casa, explorar otros territorios, jugar y habitar la naturaleza transforma la experiencia escolar. Esta vivencia construye otra forma de estar juntos y afianza la confianza mutua.' },
       { id: 'kermese', etiqueta: 'La Kermese de 7mo Grado', fotos: ['primaria-kermese-carrera', 'primaria-kermese-ronda'], texto: 'Una mañana preparada íntegramente por los estudiantes de séptimo grado. Ellos invitan a toda la escuela a través de distintos juegos tradicionales a recrear las dinámicas lúdicas de sus primeros años institucionales. Es un clásico de cada agosto donde celebramos a las infancias a través del juego.' },
     ],
   },
+  // Frase de la escuela, como interludio entre los hitos y los talleres (no pegada al texto de Peñas).
+  interludio: { frase: 'Es un lugar para cada uno, a la medida de cada quien.', foto: 'musica-patio-familias' },
   familias: {
     id: 'actividades-con-familias',
     titulo: 'Actividades con familias',

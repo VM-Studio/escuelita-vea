@@ -133,8 +133,8 @@ const anio = new Date().getFullYear();
     .pie-sitio__logos { grid-column: 1 / -1; }
   }
   @media (min-width: 64em) {
-    .pie-sitio__grilla { grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr; }
-    .pie-sitio__logos { grid-column: auto; flex-direction: column; align-items: flex-start; }
-    .pie-sitio__logo { margin: 0 0 1rem; }
+    .pie-sitio__grilla { grid-template-columns: repeat(4, 1fr); grid-gap: 3rem 2.5rem; gap: 3rem 2.5rem; }
+    .pie-sitio__logos { grid-column: 1 / -1; padding: 1.25rem 2rem; }
+    .pie-sitio__logo { margin-right: 2.5rem; }
   }
 </style>

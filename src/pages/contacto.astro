@@ -1,0 +1,311 @@
+---
+import Base from '../layouts/Base.astro';
+import Trazo from '../components/Trazo.astro';
+import { NIVELES, SITIO } from '../config/sitio';
+
+// Para enchufar un servicio de formularios más adelante (Formspree, Basin, etc.): poner la URL acá.
+// Si está vacío, el formulario arma el mensaje y abre WhatsApp (o el mail) del nivel elegido.
+const ENDPOINT_FORMULARIO = '';
+const niveles = [
+  { clave: 'jardin', ...NIVELES.jardin },
+  { clave: 'primaria', ...NIVELES.primaria },
+] as const;
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITIO.direccion.mapsQuery)}`;
+const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.direccion.mapsQuery)}&z=16&output=embed`;
+---
+<Base
+  titulo="Admisión y contacto"
+  descripcion="Pedí una entrevista en La Escuelita. Jardín: +54 9 11 7369-4297 · info@laescuelitavea.org.ar. Primaria: +54 9 11 3092-1927 · institutolaescuelita@gmail.com. Jorge Newbery 2950, CABA."
+>
+  <section class="cabeza" data-hero>
+    <div class="contenedor">
+      <p class="t-volanta" data-hero-resto>Admisión</p>
+      <h1 class="cabeza__titulo" data-hero-titular>Contacto</h1>
+      <div class="cabeza__trazo" data-hero-trazo aria-hidden="true"><Trazo nombre="subrayado" grosor={3} dibujar={false} /></div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--ceñida" aria-label="Datos de contacto por nivel">
+    <div class="contenedor tarjetas">
+      {niveles.map((n) => (
+        <article class:list={['tarjeta-nivel', `tarjeta-nivel--${n.clave}`]} data-revelar>
+          <Trazo nombre={n.clave === 'jardin' ? 'sol' : 'hoja'} class="tarjeta-nivel__trazo" grosor={2.4} color={n.clave === 'jardin' ? 'ocre' : 'verde'} />
+          <h2 class="tarjeta-nivel__titulo">{n.nombre}</h2>
+          <dl class="tarjeta-nivel__datos">
+            <div>
+              <dt>WhatsApp / teléfono</dt>
+              <dd><a href={n.whatsapp} target="_blank" rel="noopener" class="enlace">{n.telefono}</a></dd>
+            </div>
+            <div>
+              <dt>Mail</dt>
+              <dd><a href={`mailto:${n.mail}`} class="enlace" set:html={n.mail.replace('@', '@<wbr>')} /></dd>
+            </div>
+            <div>
+              <dt>Dirección</dt>
+              <dd>{SITIO.direccion.texto}</dd>
+            </div>
+          </dl>
+          <a href={n.whatsapp} target="_blank" rel="noopener" class="boton boton--chico tarjeta-nivel__wa">
+            <span>Escribinos por WhatsApp</span>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="seccion seccion--papel-oscuro ancla" id="entrevista" aria-labelledby="entrevista-titulo">
+    <div class="contenedor entrevista">
+      <div class="entrevista__texto">
+        <h2 id="entrevista-titulo" data-titulo-lineas>Pedí una entrevista</h2>
+        <p class="t-lead" data-revelar>Contanos quién sos y qué nivel te interesa. Al enviar, se abre WhatsApp con tu mensaje listo para mandar al Jardín o a la Primaria.</p>
+        <Trazo nombre="flecha" class="entrevista__flecha" grosor={2.6} />
+      </div>
+
+      <form class="formulario" data-formulario data-endpoint={ENDPOINT_FORMULARIO} action={`mailto:${NIVELES.jardin.mail}`} method="post" enctype="text/plain" novalidate>
+        <div class="campo">
+          <input id="f-nombre" name="nombre" type="text" autocomplete="name" required placeholder=" " />
+          <label for="f-nombre">Tu nombre</label>
+          <p class="campo__error" id="f-nombre-error" aria-live="polite"></p>
+        </div>
+
+        <fieldset class="campo campo--opciones">
+          <legend>Nivel que te interesa</legend>
+          <div class="opciones">
+            <label class="opcion"><input type="radio" name="nivel" value="jardin" required /><span>Jardín</span></label>
+            <label class="opcion"><input type="radio" name="nivel" value="primaria" /><span>Primaria</span></label>
+          </div>
+          <p class="campo__error" id="f-nivel-error" aria-live="polite"></p>
+        </fieldset>
+
+        <div class="campo">
+          <input id="f-edad" name="edad" type="text" placeholder=" " />
+          <label for="f-edad">Edad o grado de tu hijo o hija</label>
+        </div>
+
+        <div class="campo">
+          <textarea id="f-mensaje" name="mensaje" rows="4" placeholder=" "></textarea>
+          <label for="f-mensaje">Mensaje (opcional)</label>
+        </div>
+
+        <div class="formulario__acciones">
+          <button type="submit" class="boton boton--rojo boton--grande">
+            <span>Enviar por WhatsApp</span>
+          </button>
+          <a href={`mailto:${NIVELES.jardin.mail}`} class="enlace-trazo formulario__mail" data-formulario-mail>Prefiero escribir por mail</a>
+        </div>
+
+        <div class="formulario__ok" data-formulario-ok hidden tabindex="-1">
+          <svg class="formulario__ok-trazo" viewBox="0 0 60 50" aria-hidden="true"><path d="M6 28 C 14 34, 20 40, 24 44 C 34 28, 44 16, 56 6" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          <p><strong>¡Listo!</strong> Abrimos WhatsApp con tu mensaje. Si no se abrió, <a href="#" data-formulario-reintentar class="enlace">tocá acá</a>.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="seccion mapa-seccion" aria-labelledby="mapa-titulo">
+    <div class="contenedor">
+      <h2 id="mapa-titulo" class="mapa-titulo" data-titulo-lineas>Cómo llegar</h2>
+      <p class="mapa-dir" data-revelar>{SITIO.direccion.texto}</p>
+      <div class="mapa" data-mapa data-src={mapsEmbed}>
+        <div class="mapa__aviso">
+          <Trazo nombre="sol" class="mapa__sol" grosor={2.2} />
+          <button type="button" class="boton" data-mapa-cargar><span>Ver el mapa</span></button>
+          <a href={mapsUrl} target="_blank" rel="noopener" class="enlace mapa__externo">Abrir en Google Maps<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { NIVELES } from '../config/sitio';
+
+  // ---- Formulario: arma un mensaje prolijo y abre el WhatsApp del nivel elegido ----
+  const form = document.querySelector<HTMLFormElement>('[data-formulario]');
+  if (form) {
+    const ok = form.querySelector<HTMLElement>('[data-formulario-ok]')!;
+    const mail = form.querySelector<HTMLAnchorElement>('[data-formulario-mail]')!;
+    const reintentar = form.querySelector<HTMLAnchorElement>('[data-formulario-reintentar]')!;
+    const endpoint = form.dataset.endpoint || '';
+    const params = new URLSearchParams(location.search);
+    const pre = params.get('nivel');
+    if (pre === 'jardin' || pre === 'primaria') {
+      const r = form.querySelector<HTMLInputElement>(`input[name="nivel"][value="${pre}"]`);
+      if (r) r.checked = true;
+    }
+
+    const datos = () => {
+      const fd = new FormData(form);
+      return {
+        nombre: String(fd.get('nombre') || '').trim(),
+        nivel: String(fd.get('nivel') || '') as 'jardin' | 'primaria' | '',
+        edad: String(fd.get('edad') || '').trim(),
+        mensaje: String(fd.get('mensaje') || '').trim(),
+      };
+    };
+    const texto = (d: ReturnType<typeof datos>) => {
+      const nivel = d.nivel ? NIVELES[d.nivel].nombre : '';
+      const lineas = [
+        `Hola, mi nombre es ${d.nombre}.`,
+        `Me gustaría pedir una entrevista para el ${nivel === 'Jardín' ? 'Jardín' : 'nivel Primario'}.`,
+      ];
+      if (d.edad) lineas.push(`Edad o grado: ${d.edad}.`);
+      if (d.mensaje) lineas.push('', d.mensaje);
+      lineas.push('', 'Mensaje enviado desde la web de La Escuelita.');
+      return lineas.join('\n');
+    };
+    const actualizarMail = () => {
+      const d = datos();
+      const n = d.nivel || 'jardin';
+      mail.href = `mailto:${NIVELES[n].mail}?subject=${encodeURIComponent('Pedido de entrevista')}&body=${encodeURIComponent(d.nombre ? texto({ ...d, nivel: n }) : '')}`;
+    };
+    form.addEventListener('input', actualizarMail);
+    form.addEventListener('change', actualizarMail);
+    actualizarMail();
+
+    const error = (id: string, msj: string) => {
+      const p = document.getElementById(id);
+      if (p) p.textContent = msj;
+    };
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const d = datos();
+      error('f-nombre-error', '');
+      error('f-nivel-error', '');
+      let valido = true;
+      if (!d.nombre) { error('f-nombre-error', 'Contanos tu nombre, así sabemos con quién hablamos.'); valido = false; }
+      if (!d.nivel) { error('f-nivel-error', 'Elegí Jardín o Primaria para saber a quién escribirle.'); valido = false; }
+      if (!valido) {
+        (form.querySelector('[aria-invalid], #f-nombre') as HTMLElement | null)?.focus();
+        form.querySelector<HTMLInputElement>('#f-nombre')!.setAttribute('aria-invalid', String(!d.nombre));
+        if (d.nombre && !d.nivel) form.querySelector<HTMLInputElement>('input[name="nivel"]')!.focus();
+        return;
+      }
+      form.querySelector<HTMLInputElement>('#f-nombre')!.removeAttribute('aria-invalid');
+      const url = `${NIVELES[d.nivel as 'jardin' | 'primaria'].whatsapp}?text=${encodeURIComponent(texto(d))}`;
+      if (endpoint) {
+        try { await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(d) }); } catch {}
+      }
+      reintentar.href = url;
+      ok.hidden = false;
+      ok.classList.remove('is-dibujado');
+      void ok.offsetWidth;
+      ok.classList.add('is-dibujado');
+      ok.focus();
+      window.open(url, '_blank', 'noopener');
+    });
+  }
+
+  // ---- Mapa: se carga al acercarse o al tocar "Ver el mapa" ----
+  const mapa = document.querySelector<HTMLElement>('[data-mapa]');
+  if (mapa) {
+    const cargar = () => {
+      if (mapa.querySelector('iframe')) return;
+      const f = document.createElement('iframe');
+      f.src = mapa.dataset.src || '';
+      f.title = 'Mapa: Jorge Newbery 2950, Ciudad de Buenos Aires';
+      f.loading = 'lazy';
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      f.setAttribute('allowfullscreen', '');
+      mapa.appendChild(f);
+      mapa.classList.add('is-cargado');
+    };
+    mapa.querySelector('[data-mapa-cargar]')?.addEventListener('click', cargar);
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); cargar(); } }, { rootMargin: '200px' });
+      io.observe(mapa);
+    }
+  }
+</script>
+
+<style>
+  .cabeza { padding-top: calc(var(--header-h) + 4rem); }
+  .cabeza__titulo { margin-top: 1rem; font-size: 3rem; font-size: clamp(3rem, 1.6rem + 6vw, 7.5rem); font-weight: 300; letter-spacing: -0.04em; }
+  .cabeza__trazo { width: 60%; max-width: 22rem; height: 1.3rem; margin-top: 0.75rem; }
+  .cabeza__trazo :global(svg) { width: 100%; height: 100%; }
+
+  .tarjetas { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+  .tarjeta-nivel { padding: 2rem 1.5rem; padding: clamp(1.75rem, 4vw, 3rem); border-radius: var(--radio-lg); }
+  .tarjeta-nivel--jardin { background: var(--arena-claro); }
+  .tarjeta-nivel--primaria { background: var(--verde-claro); }
+  .tarjeta-nivel__trazo { width: 3rem; height: 3rem; margin-bottom: 1rem; }
+  .tarjeta-nivel__titulo { font-size: 2.5rem; font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem); margin-bottom: 1.5rem; }
+  .tarjeta-nivel__datos > div { padding: 0.85rem 0; border-top: 1px solid rgba(35, 32, 28, 0.14); }
+  .tarjeta-nivel__datos dt { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); }
+  .tarjeta-nivel__datos dd { margin: 0.25rem 0 0; font-size: 1.125rem; }
+  .tarjeta-nivel__wa { margin-top: 1.5rem; }
+  @media (min-width: 48em) { .tarjetas { grid-template-columns: 1fr 1fr; grid-gap: 2rem; gap: 2rem; } }
+
+  .entrevista { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .entrevista__texto > * + * { margin-top: 1.25rem; }
+  .entrevista__flecha { width: 6rem; height: 3rem; transform: rotate(8deg); }
+  @media (min-width: 56em) { .entrevista { grid-template-columns: 5fr 6fr; grid-gap: 5rem; gap: 5rem; } }
+
+  .formulario { padding: 2rem 1.5rem; padding: clamp(1.5rem, 4vw, 3rem); background: #fffdf8; border-radius: var(--radio-lg); box-shadow: var(--sombra-papel); }
+  .campo { position: relative; margin-bottom: 1.5rem; border: 0; padding: 0; min-width: 0; }
+  .campo input[type='text'], .campo textarea {
+    width: 100%;
+    padding: 1.45rem 1rem 0.55rem;
+    border: 1.5px solid rgba(35, 32, 28, 0.22);
+    border-radius: var(--radio);
+    background: var(--papel);
+    font-size: 1.0625rem;
+    line-height: 1.4;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .campo textarea { resize: vertical; min-height: 7.5rem; }
+  .campo input:focus, .campo textarea:focus { outline: none; border-color: var(--tinta); box-shadow: 0 0 0 3px rgba(210, 51, 52, 0.18); }
+  .campo input[aria-invalid='true'] { border-color: var(--rojo); }
+  /* Etiquetas flotantes */
+  .campo > label {
+    position: absolute; left: 1rem; top: 1.05rem;
+    color: var(--tinta-suave);
+    font-size: 1.0625rem;
+    pointer-events: none;
+    transform-origin: 0 0;
+    transition: transform 0.3s var(--ease-out), color 0.3s;
+  }
+  .campo input:focus + label, .campo input:not(:placeholder-shown) + label,
+  .campo textarea:focus + label, .campo textarea:not(:placeholder-shown) + label {
+    transform: translateY(-0.6rem) scale(0.76);
+    color: var(--tinta);
+  }
+  .campo legend { font-weight: 650; margin-bottom: 0.75rem; padding: 0; }
+  .opciones { display: flex; flex-wrap: wrap; }
+  .opcion { position: relative; margin: 0 0.75rem 0.5rem 0; }
+  .opcion input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .opcion span {
+    display: inline-flex; align-items: center; min-height: 48px;
+    padding: 0.6rem 1.4rem;
+    border: 1.5px solid rgba(35, 32, 28, 0.25);
+    border-radius: 999px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+  }
+  .opcion input:checked + span { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+  .opcion input:focus-visible + span { outline: 2px solid var(--rojo); outline-offset: 3px; }
+  .campo__error { min-height: 0; margin-top: 0.4rem; color: var(--rojo-hondo); font-size: 0.9375rem; font-weight: 600; }
+  .campo__error:empty { margin: 0; }
+  .formulario__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 0.5rem; }
+  .formulario__acciones > * { margin: 0 1.5rem 0.75rem 0; }
+  .formulario__mail { font-weight: 600; padding: 0.5rem 0; }
+  .formulario__ok { display: flex; align-items: center; margin-top: 1rem; padding: 1rem 1.25rem; background: var(--verde-claro); border-radius: var(--radio); }
+  .formulario__ok:focus { outline: none; }
+  .formulario__ok-trazo { width: 2.5rem; height: 2rem; margin-right: 0.9rem; flex: none; color: var(--verde); }
+  .formulario__ok-trazo path { stroke-dasharray: 80; stroke-dashoffset: 80; }
+  .formulario__ok.is-dibujado .formulario__ok-trazo path { animation: ok-trazo 0.8s var(--ease-out) 0.1s forwards; }
+  @keyframes ok-trazo { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .formulario__ok-trazo path { stroke-dashoffset: 0; } }
+
+  .mapa-titulo { font-size: 1.875rem; font-size: var(--t-xl); }
+  .mapa-dir { margin: 0.75rem 0 2rem; font-size: 1.125rem; }
+  .mapa { position: relative; height: 26rem; height: clamp(20rem, 50vw, 32rem); border-radius: var(--radio-lg); overflow: hidden; background: var(--papel-oscuro); background-image: url('/textura-papel.png'); }
+  .mapa__aviso { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem; }
+  .mapa__sol { width: 4rem; height: 4rem; margin-bottom: 1.25rem; }
+  .mapa__externo { margin-top: 1rem; font-weight: 600; }
+  .mapa :global(iframe) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .mapa.is-cargado .mapa__aviso { visibility: hidden; }
+</style>

@@ -1,0 +1,249 @@
+---
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import Trazo from '../components/Trazo.astro';
+import PortadaPagina from '../components/PortadaPagina.astro';
+import SubNav from '../components/SubNav.astro';
+import Acordeon from '../components/Acordeon.astro';
+import Galeria from '../components/Galeria.astro';
+import Carrusel from '../components/Carrusel.astro';
+import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
+import Interludio from '../components/Interludio.astro';
+import { comunidad as c } from '../content/comunidad';
+import { PUBLICAR } from '../config/sitio';
+import { parrafos, enLinea } from '../lib/texto';
+
+const subnav = [
+  { href: '#vida-en-comunidad', texto: 'Vida en comunidad' },
+  { href: '#hitos-anuales', texto: 'Hitos anuales y viajes' },
+  { href: '#talleres', texto: 'Talleres extracurriculares' },
+];
+const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
+---
+<Base
+  titulo="Nuestra Comunidad"
+  descripcion="Talleres y muestras, salidas educativas y celebraciones, peñas, campamentos, kermese, actividades con familias y talleres extracurriculares para infancias y adultos."
+  heroOscuro
+  fotoOg={c.portada.foto}
+  progreso
+>
+  <PortadaPagina titulo={c.portada.titulo} foto={c.portada.foto} volanta="La Escuelita">
+    <p class="portada-bajada">{c.portada.bajada}</p>
+    <p class="portada-texto">{c.portada.texto}</p>
+  </PortadaPagina>
+
+  <SubNav items={subnav} etiqueta="Secciones de Comunidad" />
+
+  <!-- Introducción: la frase de la escuela destacada como apertura (sin repetirla) -->
+  <section class="seccion intro-com ancla" id="vida-en-comunidad" aria-label="Introducción">
+    <div class="contenedor intro-com__grilla">
+      <div>
+        <Trazo nombre="ronda" class="intro-com__trazo" grosor={2.4} />
+        <p class="t-frase intro-com__frase" data-frase>{c.introduccion.frase}</p>
+      </div>
+      <div class="prosa intro-com__texto" data-revelar set:html={parrafos(c.introduccion.texto)} />
+    </div>
+  </section>
+
+  <section class="seccion seccion--papel-oscuro" aria-label="Talleres, salidas y familias">
+    <div class="contenedor contenedor--ancho">
+      <!-- Talleres y Muestras -->
+      <Acordeon id={c.talleresMuestras.id} titulo={c.talleresMuestras.titulo} subtitulo={c.talleresMuestras.bajada} grupo="comunidad">
+        <div class="bloque-com">
+          <div class="fechas" aria-hidden="true">
+            {c.talleresMuestras.fechas.map((f) => <span class="fecha">{f}</span>)}
+          </div>
+          <p class="bloque-com__lead">{c.talleresMuestras.texto}</p>
+          <div class="bloque-com__grilla">
+            <dl class="bloque-com__items">
+              {c.talleresMuestras.items.map((it) => (
+                <div><dt>{it.etiqueta}</dt><dd>{it.texto}</dd></div>
+              ))}
+            </dl>
+            <Foto id={c.talleresMuestras.foto} ratio="4/3" sizes="(min-width: 56em) 34vw, 90vw" class="bloque-com__foto" />
+          </div>
+        </div>
+      </Acordeon>
+
+      <!-- Salidas y Celebraciones -->
+      <Acordeon id={c.salidas.id} titulo={c.salidas.titulo} subtitulo={c.salidas.bajada} grupo="comunidad">
+        <div class="bloque-com">
+          <p class="bloque-com__lead"><strong>{c.salidas.salidasEducativas.etiqueta}:</strong> {c.salidas.salidasEducativas.texto}</p>
+          <div class="mapa-salidas" aria-label="Mapa de salidas">
+            {c.salidas.areas.map((a) => (
+              <div class:list={['mapa-area', `mapa-area--${a.color}`]}>
+                <h3 class="mapa-area__titulo"><span class="mapa-area__punto" aria-hidden="true"></span>{a.etiqueta}</h3>
+                <p class="mapa-area__texto" set:html={enLinea(a.texto)} />
+              </div>
+            ))}
+          </div>
+          <div class="salidas-fotos">
+            {c.salidas.fotos.map((f, i) => (
+              <div class="pegada" style={`--rot:${i ? 1.6 : -1.4}deg`}>
+                <Foto id={f} ratio="4/5" sizes="(min-width: 56em) 22vw, 44vw" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </Acordeon>
+
+      <!-- Actividades con familias -->
+      <Acordeon id={c.familias.id} titulo={c.familias.titulo} subtitulo={c.familias.bajada} grupo="comunidad">
+        <div class="bloque-com bloque-com__grilla">
+          <p class="bloque-com__lead">{c.familias.texto}</p>
+          <Foto id={c.familias.foto} ratio="4/3" sizes="(min-width: 56em) 34vw, 90vw" class="bloque-com__foto" />
+        </div>
+      </Acordeon>
+    </div>
+  </section>
+
+  <!-- Hitos anuales y viajes -->
+  <section class="seccion ancla" id="hitos-anuales" aria-labelledby="hitos-titulo">
+    <div class="contenedor">
+      <div class="cabecera-seccion">
+        <h2 id="hitos-titulo" data-titulo-lineas>{c.salidas.hitosTitulo}</h2>
+      </div>
+      <div class="hitos-anuales">
+        {c.salidas.hitos.map((h, i) => (
+          <article class:list={['hito-a', { 'hito-a--b': i % 2 }]} id={h.id} data-revelar>
+            <div class="hito-a__fotos">
+              <Galeria ids={h.fotos} variante={h.fotos.length > 1 ? 'pegadas' : 'mosaico'} sizes="(min-width: 56em) 40vw, 90vw" ratio="4/3" class={h.fotos.length > 1 ? 'hito-a__galeria--dos' : 'hito-a__galeria--una'} />
+            </div>
+            <div class="hito-a__texto">
+              <h3 class="hito-a__titulo">{h.etiqueta}</h3>
+              <p set:html={enLinea(h.texto)} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Interludio foto={c.interludio.foto} frase={c.interludio.frase} />
+
+  <!-- Voces de la comunidad: construido, OCULTO hasta tener testimonios reales -->
+  {mostrarVoces && (
+    <section class="seccion seccion--acento voces" aria-labelledby="voces-titulo">
+      <div class="contenedor">
+        <div class="cabecera-seccion">
+          <p class="t-volanta">{c.voces.titulo}</p>
+          <h2 id="voces-titulo" data-titulo-lineas>{c.voces.subtitulo}</h2>
+        </div>
+        <Carrusel etiqueta={c.voces.subtitulo}>
+          {c.voces.testimonios.map((t) => (
+            <figure class="testimonio">
+              <blockquote><p class="t-frase">{t.texto}</p></blockquote>
+              <figcaption>— {t.autor}{t.rol && `, ${t.rol}`}</figcaption>
+            </figure>
+          ))}
+        </Carrusel>
+      </div>
+    </section>
+  )}
+
+  <!-- Talleres extracurriculares -->
+  <section class="seccion seccion--tinta ancla extra" id="talleres" aria-labelledby="talleres-titulo">
+    <div class="contenedor">
+      <div class="cabecera-seccion">
+        <Trazo nombre="garabato" class="extra__trazo" grosor={2.4} color="arena" />
+        <h2 id="talleres-titulo" data-titulo-lineas>{c.extracurriculares.titulo}</h2>
+      </div>
+      <div class="extra__grupos">
+        {c.extracurriculares.grupos.map((g, gi) => (
+          <div class="extra__grupo">
+            <h3 class="extra__grupo-titulo">{g.titulo}</h3>
+            <ul class="extra__lista">
+              {g.items.map((t, i) => (
+                <li class="taller" data-revelar>
+                  <span class="taller__icono" aria-hidden="true"><Trazo nombre={(gi ? ['estrella', 'garabato', 'corazon'] : ['ola', 'hoja', 'espiral', 'sol'])[i] as any} grosor={2.2} color="arena" crayon={false} /></span>
+                  <div>
+                    <p class="taller__nombre">{t.nombre}</p>
+                    <p class="taller__para">{t.para}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <LlamadoEntrevista />
+</Base>
+
+<style>
+  .portada-bajada { font-family: var(--f-frase); font-style: italic; font-size: 1.375rem; font-size: clamp(1.25rem, 1rem + 1.2vw, 2rem); line-height: 1.3; color: #f6efe3; max-width: 30ch; }
+  .portada-texto { margin-top: 1rem; color: #ece4d6; max-width: 40ch; }
+
+  .intro-com__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .intro-com__trazo { width: 3.5rem; height: 3.5rem; margin-bottom: 1.25rem; }
+  .intro-com__frase { font-size: 1.875rem; font-size: clamp(1.75rem, 1.1rem + 2.8vw, 3.5rem); max-width: 18ch; }
+  .intro-com__texto { font-size: 1.125rem; font-size: var(--t-md); }
+  @media (min-width: 56em) { .intro-com__grilla { grid-template-columns: 6fr 5fr; grid-gap: 5rem; gap: 5rem; } .intro-com__texto { margin-top: 5rem; } }
+
+  .bloque-com { padding-top: 0.5rem; }
+  .bloque-com__lead { font-size: 1.0625rem; font-size: var(--t-base); max-width: 46rem; }
+  .bloque-com__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; margin-top: 1.5rem; align-items: start; }
+  .bloque-com__items > div + div { margin-top: 1.5rem; }
+  .bloque-com__items dt { font-family: var(--f-titulo); font-size: 1.25rem; margin-bottom: 0.4rem; }
+  .bloque-com__items dd { margin: 0; }
+  .bloque-com :global(.bloque-com__foto) { border-radius: var(--radio); }
+  @media (min-width: 56em) { .bloque-com__grilla { grid-template-columns: 7fr 5fr; grid-gap: 3rem; gap: 3rem; } }
+  .fechas { display: flex; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .fecha { margin: 0 0.6rem 0.6rem 0; padding: 0.35rem 0.9rem; border-radius: 999px; background: var(--rojo); color: #fff; font-weight: 650; font-size: 0.875rem; }
+
+  .mapa-salidas { display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; margin-top: 2rem; }
+  .mapa-area { padding: 1.5rem; border-radius: var(--radio-lg); background: #fffdf8; border-top: 4px solid var(--c, var(--tinta)); }
+  .mapa-area--verde { --c: var(--verde); }
+  .mapa-area--rojo { --c: var(--rojo); }
+  .mapa-area--ocre { --c: var(--ocre); }
+  .mapa-area--azul { --c: var(--azul); }
+  .mapa-area__titulo { display: flex; align-items: center; font-family: var(--f-titulo); font-size: 1.375rem; margin-bottom: 0.9rem; }
+  .mapa-area__punto { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--c); margin-right: 0.6rem; flex: none; }
+  .mapa-area__texto { line-height: 2.05; max-width: none; }
+  .mapa-area__texto :global(.chip), .mapa-area__texto :global(a) {
+    display: inline;
+    padding: 0.2em 0.6em 0.24em;
+    border: 1px solid rgba(35, 32, 28, 0.18);
+    border-radius: 999px;
+    background: var(--papel);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    font-size: 0.94em;
+  }
+  .mapa-area__texto :global(a) { border-color: var(--c); color: var(--tinta); text-decoration: none; font-weight: 600; transition: background-color 0.25s, color 0.25s; }
+  .mapa-area__texto :global(a::after) { content: ' ↗'; font-weight: 400; }
+  .mapa-area__texto :global(a:hover) { background: var(--c); color: #fff; }
+  @media (min-width: 56em) { .mapa-salidas { grid-template-columns: 1fr 1fr; } }
+  .salidas-fotos { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem; gap: 1.25rem; max-width: 36rem; margin-top: 2.5rem; }
+
+  .hitos-anuales { display: grid; grid-template-columns: 1fr; grid-gap: 4rem; gap: 4rem; }
+  .hito-a { display: grid; grid-template-columns: 1fr; grid-gap: 1.75rem; gap: 1.75rem; align-items: center; }
+  .hito-a__titulo { font-size: 1.875rem; font-size: var(--t-xl); margin-bottom: 1rem; }
+  .hito-a__frase { margin-top: 1.5rem; font-size: 1.5rem; font-size: var(--t-lg); color: var(--rojo); max-width: 22ch; }
+  .hito-a__fotos :global(.galeria--mosaico) { column-count: 1; }
+  .hito-a__fotos :global(.galeria--pegadas) { grid-template-columns: 1fr 1fr !important; }
+  .hito-a__fotos :global(.galeria__item) { border-radius: var(--radio); }
+  @media (min-width: 56em) {
+    .hito-a { grid-template-columns: 6fr 5fr; grid-gap: 4.5rem; gap: 4.5rem; }
+    .hito-a--b .hito-a__fotos { order: 2; }
+  }
+
+  .testimonio { padding: 2rem; background: var(--papel); border-radius: var(--radio-lg); }
+  .testimonio p { font-size: 1.375rem; }
+  .testimonio figcaption { margin-top: 1rem; font-weight: 600; }
+
+  .extra__trazo { width: 8rem; height: 2.5rem; margin-bottom: 1rem; }
+  .extra__grupos { display: grid; grid-template-columns: 1fr; grid-gap: 3rem; gap: 3rem; }
+  .extra__grupo-titulo { color: var(--arena); font-family: var(--f-texto); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  .extra__lista { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; }
+  .taller { display: flex; align-items: flex-start; padding: 1.25rem; border: 1px solid rgba(250, 246, 238, 0.16); border-radius: var(--radio-lg); transition: background-color 0.3s, border-color 0.3s; }
+  @media (hover: hover) { .taller:hover { background: rgba(250, 246, 238, 0.05); border-color: rgba(250, 246, 238, 0.32); } }
+  .taller__icono { flex: none; width: 2.25rem; height: 2.25rem; margin-right: 1rem; }
+  .taller__icono :global(svg) { width: 100%; height: 100%; }
+  .taller__nombre { font-family: var(--f-titulo); font-size: 1.375rem; color: var(--papel); line-height: 1.2; }
+  .taller__para { margin-top: 0.3rem; color: #d8cfbf; font-size: 0.9375rem; }
+  @media (min-width: 48em) { .extra__lista { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 64em) { .extra__grupos { grid-template-columns: 3fr 2fr; grid-gap: 4rem; gap: 4rem; } .extra__grupo:last-child .extra__lista { grid-template-columns: 1fr; } }
+</style>

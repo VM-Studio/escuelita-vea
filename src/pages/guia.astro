@@ -1,0 +1,125 @@
+---
+// Guía de estilo (no indexada): para revisar con la escuela tipografías, colores, botones, trazos y componentes.
+import Base from '../layouts/Base.astro';
+import Trazo from '../components/Trazo.astro';
+import Boton from '../components/Boton.astro';
+import Foto from '../components/Foto.astro';
+import Logo from '../components/Logo.astro';
+import Acordeon from '../components/Acordeon.astro';
+import Desplegable from '../components/Desplegable.astro';
+import Tabs from '../components/Tabs.astro';
+import Interludio from '../components/Interludio.astro';
+const colores = [
+  ['--papel', '#FAF6EE', 'Papel (fondo)'],
+  ['--papel-oscuro', '#F1E9DA', 'Papel oscuro'],
+  ['--tinta', '#23201C', 'Tinta (texto)'],
+  ['--tinta-suave', '#5C554C', 'Tinta suave'],
+  ['--rojo', '#D23334', 'Rojo Escuelita (logo VEA, AA)'],
+  ['--rojo-vivo', '#E30613', 'Rojo del dibujo (trazos)'],
+  ['--arena', '#E3C79B', 'Arena'],
+  ['--ocre', '#C4872E', 'Ocre (acento Jardín)'],
+  ['--verde', '#4E7A4B', 'Verde hoja (acento Primaria)'],
+  ['--azul', '#2F5D8A', 'Azul anilina'],
+];
+const trazos = ['subrayado', 'subrayado-doble', 'circulo', 'flecha', 'flecha-curva', 'sol', 'hoja', 'espiral', 'ola', 'estrella', 'ronda', 'lazos', 'garabato', 'corazon', 'tilde', 'rayitas'] as const;
+---
+<Base titulo="Guía de estilo" descripcion="Guía interna de estilo del sitio de La Escuelita." noIndexar>
+  <section class="seccion" style="padding-top: calc(var(--header-h) + 3rem)">
+    <div class="contenedor guia">
+      <p class="t-volanta">Uso interno · no indexada</p>
+      <h1>Guía de estilo</h1>
+      <p class="t-lead" style="margin-top:1rem">Concepto: <em>el taller</em>. Papel, tinta china, crayón, arena y hojas.</p>
+
+      <h2 class="guia__h2">Tipografías</h2>
+      <div class="guia__grilla2">
+        <div class="guia__caja">
+          <p class="guia__etq">Títulos · Fraunces</p>
+          <p style="font-family:var(--f-titulo);font-size:3rem;line-height:1;font-weight:330">La Escuelita</p>
+          <p style="font-family:var(--f-titulo);font-size:1.75rem;margin-top:.5rem">67 años en la Educación por el Arte</p>
+        </div>
+        <div class="guia__caja">
+          <p class="guia__etq">Texto · Figtree 17–19 px · interlineado 1.65</p>
+          <p>La escuela es un espacio donde las personas transcurren buena parte de sus vidas. Allí se despliegan modos de aprendizaje y de interacción que dejan huellas y marcas entrañables.</p>
+        </div>
+        <div class="guia__caja">
+          <p class="guia__etq">Frases · Fraunces cursiva (elegida)</p>
+          <p class="t-frase" style="font-size:2.25rem">El juego y el arte son su lenguaje natural.</p>
+        </div>
+        <div class="guia__caja">
+          <p class="guia__etq">Alternativa probada · Instrument Serif cursiva</p>
+          <p style="font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:2.5rem;line-height:1.15">El juego y el arte son su lenguaje natural.</p>
+          <p class="t-chico t-suave" style="margin-top:.75rem">Muy elegante, pero más fría y angosta. Fraunces cursiva es más cálida y comparte familia con los títulos (una fuente menos que descargar).</p>
+        </div>
+      </div>
+
+      <h2 class="guia__h2">Colores</h2>
+      <div class="guia__colores">
+        {colores.map(([v, hex, n]) => (
+          <div class="guia__color"><span style={`background:var(${v})`}></span><strong>{n}</strong><code>{hex}</code></div>
+        ))}
+      </div>
+
+      <h2 class="guia__h2">Botones y enlaces</h2>
+      <div class="guia__fila">
+        <Boton href="#">Botón base</Boton>
+        <Boton href="#" variante="rojo">Pedí una entrevista</Boton>
+        <span style="background:var(--tinta);padding:1rem;border-radius:8px;display:inline-block"><Boton href="#" variante="claro">Sobre foto</Boton></span>
+        <a href="#" class="enlace-trazo" style="font-weight:600">Enlace con trazo</a>
+      </div>
+
+      <h2 class="guia__h2">Trazos a mano</h2>
+      <div class="guia__trazos">
+        {trazos.map((t) => (
+          <div class="guia__trazo"><Trazo nombre={t} grosor={2.6} dibujar={false} /><code>{t}</code></div>
+        ))}
+      </div>
+
+      <h2 class="guia__h2">Logos (provisorios)</h2>
+      <div class="guia__fila">
+        <Logo nivel="jardin" alto={100} />
+        <Logo nivel="primaria" alto={100} />
+        <Logo nivel="vea" alto={90} />
+        <Logo nivel="marca" alto={70} />
+      </div>
+      <p class="t-chico t-suave" style="margin-top:1rem">Recortes del único PNG de la web anterior. Falta recibir los tres logos por separado (ideal SVG). El de Primaria es un rótulo tipográfico provisorio.</p>
+
+      <h2 class="guia__h2">Fotos</h2>
+      <div class="guia__grilla2">
+        <Foto id="patio-ronda-arena-sombra" ratio="4/3" sizes="40vw" />
+        <div class="pegada" style="--rot:-1.5deg;position:relative;max-width:20rem"><span class="cinta"></span><Foto id="historica-dibujo-pared" ratio="4/5" sizes="30vw" pie="Foto “pegada” como trabajo colgado en el taller" /></div>
+      </div>
+
+      <h2 class="guia__h2">Acordeón y desplegable</h2>
+      <Acordeon id="guia-acordeon" titulo="Taller de Plástica" grupo="guia"><p>Contenido del acordeón.</p></Acordeon>
+      <Acordeon id="guia-acordeon-2" titulo="Taller de Música" grupo="guia"><p>Se abre de a uno.</p></Acordeon>
+      <div style="margin-top:2rem"><Desplegable id="guia-desplegable" boton="Conocé en detalle"><p>Contenido del desplegable.</p></Desplegable></div>
+
+      <h2 class="guia__h2">Pestañas</h2>
+      <Tabs items={[{ id: 'g-a', texto: 'Taller de 2', sub: 'Subtítulo' }, { id: 'g-b', texto: 'Taller de 3', sub: 'Subtítulo' }]} etiqueta="Ejemplo">
+        <section id="g-a" data-panel class="tabs__panel"><p>Panel A</p></section>
+        <section id="g-b" data-panel class="tabs__panel"><p>Panel B</p></section>
+      </Tabs>
+    </div>
+  </section>
+  <Interludio foto="patio-abrazo-arbol" frase="El juego y el arte son su lenguaje natural." />
+</Base>
+
+<style is:global>
+  @font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/instrument-serif-latin-400-italic.woff2') format('woff2'); }
+</style>
+<style>
+  .guia__h2 { font-size: 1.75rem; margin: 4rem 0 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(35,32,28,.15); }
+  .guia__grilla2 { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+  @media (min-width: 48em) { .guia__grilla2 { grid-template-columns: 1fr 1fr; } }
+  .guia__caja { padding: 1.5rem; background: #fffdf8; border-radius: 12px; }
+  .guia__etq { font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-suave); margin-bottom: .75rem; }
+  .guia__colores { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); grid-gap: 1rem; gap: 1rem; }
+  .guia__color span { display: block; height: 5rem; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); margin-bottom: .5rem; }
+  .guia__color strong { display: block; font-size: .875rem; }
+  .guia__color code, .guia__trazo code { font-size: .8125rem; color: var(--tinta-suave); }
+  .guia__fila { display: flex; flex-wrap: wrap; align-items: center; }
+  .guia__fila > :global(*) { margin: 0 1.25rem 1rem 0; }
+  .guia__trazos { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); grid-gap: 1.5rem; gap: 1.5rem; }
+  .guia__trazo { display: flex; flex-direction: column; align-items: center; padding: 1rem; background: #fffdf8; border-radius: 10px; }
+  .guia__trazo :global(svg) { width: 5rem; height: 4rem; margin-bottom: .5rem; }
+</style>

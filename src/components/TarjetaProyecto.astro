@@ -1,0 +1,37 @@
+---
+import Foto from './Foto.astro';
+import Trazo from './Trazo.astro';
+interface Props { id: string; titulo: string; texto: string; foto: string; trazo: any; indice: number }
+const { id, titulo, texto, foto, trazo, indice } = Astro.props;
+---
+<article class:list={['proyecto', { 'proyecto--b': indice % 2 === 1 }]} id={id} data-revelar>
+  <div class="proyecto__foto">
+    <Foto id={foto} ratio="4/3" sizes="(min-width: 56em) 44vw, 92vw" />
+    <span class="proyecto__marca" aria-hidden="true"><Trazo nombre={trazo} grosor={2.4} color="verde" /></span>
+  </div>
+  <div class="proyecto__cuerpo">
+    <h3 class="proyecto__titulo">{titulo}</h3>
+    <p class="proyecto__texto">{texto}</p>
+  </div>
+</article>
+<style>
+  .proyecto {
+    display: flex; flex-direction: column;
+    background: #fffdf8;
+    border-radius: var(--radio-lg);
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(35, 32, 28, 0.06);
+    transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+  }
+  .proyecto__foto { position: relative; }
+  .proyecto__foto :global(img) { transition: transform 1.6s var(--ease-out), opacity 0.7s var(--ease-suave); }
+  .proyecto__marca { position: absolute; left: 1.25rem; bottom: -1.6rem; width: 3.25rem; height: 3.25rem; padding: 0.45rem; border-radius: 50%; background: #fffdf8; }
+  .proyecto__marca :global(svg) { width: 100%; height: 100%; }
+  .proyecto__cuerpo { padding: 2.5rem 1.5rem 1.75rem; padding: 2.5rem clamp(1.25rem, 3vw, 2.25rem) 2rem; }
+  .proyecto__titulo { font-size: 1.625rem; font-size: var(--t-xl); margin-bottom: 1rem; max-width: 18ch; }
+  .proyecto__texto { font-size: 0.98rem; line-height: 1.65; }
+  @media (hover: hover) {
+    .proyecto:hover { transform: translateY(-4px); box-shadow: var(--sombra-papel-alta); }
+    .proyecto:hover .proyecto__foto :global(img) { transform: scale(1.035); }
+  }
+</style>
