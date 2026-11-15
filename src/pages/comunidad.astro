@@ -27,7 +27,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
   fotoOg={c.portada.foto}
   progreso
 >
-  <PortadaPagina titulo={c.portada.titulo} foto={c.portada.foto} volanta="La Escuelita">
+  <PortadaPagina titulo={c.portada.titulo} foto={c.portada.foto} volanta="La Escuelita" rotulo="Talleres · Salidas · Familias" tamano="enorme">
     <p class="portada-bajada">{c.portada.bajada}</p>
     <p class="portada-texto">{c.portada.texto}</p>
   </PortadaPagina>
@@ -180,7 +180,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
   .intro-com__trazo { width: 2.8rem; height: 2.8rem; margin-bottom: 1.25rem; }
   .intro-com__frase { font-size: 1.505rem; font-size: clamp(1.505rem, 0.902rem + 1.848vw, 2.31rem); max-width: 18ch; }
   .intro-com__texto { font-size: 1.125rem; font-size: var(--t-md); }
-  @media (min-width: 56em) { .intro-com__grilla { grid-template-columns: 6fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } .intro-com__texto { margin-top: 3.4rem; } }
+  @media (min-width: 56em) { .intro-com__grilla { grid-template-columns: 1fr; text-align: center; } .intro-com__grilla > div:first-child { display: flex; flex-direction: column; align-items: center; } .intro-com__frase { margin-left: auto; margin-right: auto; } .intro-com__texto { margin: 0 auto; text-align: left; column-count: 2; column-gap: 3rem; max-width: 60rem; } .intro-com__texto :global(p) { max-width: none; break-inside: avoid; } }
 
   .bloque-com { padding-top: 0.5rem; }
   .bloque-com__lead { font-size: 1.0625rem; font-size: var(--t-base); max-width: 46rem; }
@@ -225,9 +225,11 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
   .hito-a__fotos :global(.galeria--mosaico) { column-count: 1; }
   .hito-a__fotos :global(.galeria--pegadas) { grid-template-columns: 1fr 1fr !important; }
   .hito-a__fotos :global(.galeria__item) { border-radius: var(--radio); }
+  .hito-a__titulo { font-size: 1.8rem; font-size: clamp(1.7rem, 1.1rem + 2vw, 3rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1; }
+  .hito-a__texto { border-top: 1px solid rgba(35, 32, 28, 0.18); padding-top: 1rem; }
   @media (min-width: 56em) {
-    .hito-a { grid-template-columns: 6fr 5fr; grid-gap: 3.06rem; gap: 3.06rem; }
-    .hito-a--b .hito-a__fotos { order: 2; }
+    .hitos-anuales { grid-template-columns: 1fr 1fr; grid-gap: 4rem 4rem; gap: 4rem 4rem; align-items: start; }
+    .hito-a--b { margin-top: 6rem; }
   }
 
   .testimonio { padding: 1.7rem; background: var(--papel); border-radius: var(--radio-lg); }

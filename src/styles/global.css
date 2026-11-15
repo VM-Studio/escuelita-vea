@@ -538,3 +538,24 @@ html.reducido .menu-movil .menu-movil__papel, html.liviano .menu-movil .menu-mov
 @media (max-width: 63.99em) {
   [filter='url(#crayon)'] { filter: none; }
 }
+
+/* ---------- Rótulos tipo museo (SiteInspire: Albers, Pilkington) ---------- */
+.rotulo {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--tinta-suave);
+  max-width: none;
+}
+.rotulo--claro { color: rgba(250, 246, 238, 0.85); }
+.enlace-flecha { display: inline-flex; align-items: center; font-size: 0.9375rem; font-weight: 500; text-decoration: none; color: inherit; }
+.enlace-flecha::before { content: '→'; margin-right: 0.5rem; transition: transform 0.4s var(--ease-out); }
+.enlace-flecha:hover::before { transform: translateX(4px); }
+.enlace-flecha:hover { color: var(--rojo); }
+.regla { border: 0; border-top: 1px solid rgba(35, 32, 28, 0.14); margin: 0; }
+
+/* Títulos de sección: escala de display editorial (consistente en todas las páginas) */
+.cabecera-seccion h2 { font-size: 2.1rem; font-size: clamp(2.1rem, 1rem + 4vw, 5rem); font-weight: 300; letter-spacing: -0.045em; line-height: 0.95; max-width: 16ch; }
+.cabecera-seccion { max-width: 52rem; margin-bottom: 2.5rem; }

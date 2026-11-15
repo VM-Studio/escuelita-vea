@@ -1,69 +1,82 @@
 ---
-// Portada de páginas internas: foto a pantalla completa con titular (o versión papel sin foto).
+// Portada a pantalla completa (idea de Collective Gallery / Postnatural en SiteInspire):
+// video o foto a sangre, título enorme abajo, rótulos chicos tipo museo arriba y abajo.
 import Foto from './Foto.astro';
-import Trazo from './Trazo.astro';
 interface Props {
   titulo: string;
   volanta?: string;
   foto?: string;
+  video?: { mp4: string; webm?: string; poster: string };
+  rotulo?: string; // rótulo tipo museo abajo a la derecha
   alto?: 'completo' | 'medio';
-  nivel?: 'jardin' | 'primaria';
+  tamano?: 'enorme' | 'grande';
 }
-const { titulo, volanta, foto, alto = 'completo' } = Astro.props;
+const { titulo, volanta, foto, video, rotulo, alto = 'completo', tamano = 'grande' } = Astro.props;
 ---
-<section class:list={['portada', `portada--${alto}`, { 'portada--papel': !foto }]} data-hero>
-  {foto && (
-    <div class="portada__fondo" data-hero-fondo>
-      <div class="portada__parallax" data-hero-parallax>
-        <Foto id={foto} ratio="16/9" sizes="100vw" prioridad class="portada__foto" />
-      </div>
+<section class:list={['portada', `portada--${alto}`, `portada--${tamano}`]} data-hero>
+  <div class="portada__fondo" data-hero-fondo>
+    <div class="portada__parallax" data-hero-parallax>
+      {video ? (
+        <video class="portada__video" autoplay muted loop playsinline preload="metadata" poster={video.poster} aria-hidden="true" data-video-portada>
+          {video.webm && <source src={video.webm} type="video/webm" />}
+          <source src={video.mp4} type="video/mp4" />
+        </video>
+      ) : foto && <Foto id={foto} ratio="16/9" sizes="100vw" prioridad class="portada__foto" />}
     </div>
-  )}
-  {foto && <div class="portada__velo" aria-hidden="true"></div>}
+  </div>
+  <div class="portada__velo" aria-hidden="true"></div>
+
+  <div class="portada__arriba contenedor" data-hero-resto>
+    {volanta && <p class="rotulo rotulo--claro">{volanta}</p>}
+    {rotulo && <p class="rotulo rotulo--claro portada__rotulo-der">{rotulo}</p>}
+  </div>
+
   <div class="portada__contenido contenedor">
-    {volanta && <p class="t-volanta portada__volanta" data-hero-resto>{volanta}</p>}
-    <h1 class="portada__titulo" data-hero-titular>{titulo}</h1>
+    <h1 class="portada__titulo" data-hero-titular><slot name="titulo">{titulo}</slot></h1>
     <div class="portada__extra" data-hero-resto><slot /></div>
   </div>
-  {foto && (
-    <div class="portada__scroll" aria-hidden="true" data-hero-trazo>
-      <Trazo nombre="scroll" color="actual" grosor={2} dibujar={false} crayon={false} />
-    </div>
-  )}
 </section>
 
+<script>
+  // Modo liviano o movimiento reducido: el video no se reproduce (queda el póster).
+  const h = document.documentElement;
+  document.querySelectorAll<HTMLVideoElement>('[data-video-portada]').forEach((v) => {
+    if (h.classList.contains('liviano') || h.classList.contains('reducido')) { v.removeAttribute('autoplay'); v.pause(); v.preload = 'none'; return; }
+    v.muted = true;
+    const p = v.play(); if (p && p.catch) p.catch(() => {});
+    document.addEventListener('visibilitychange', () => { if (document.hidden) v.pause(); else v.play().catch(() => {}); });
+  });
+</script>
+
 <style>
-  .portada { position: relative; display: flex; align-items: flex-end; overflow: hidden; }
-  .portada--completo { min-height: 100vh; min-height: 100svh; }
-  @supports (height: 100dvh) { .portada--completo { min-height: 100dvh; } }
-  .portada--completo { max-height: 1100px; }
-  .portada--medio { min-height: 72vh; }
-  .portada:not(.portada--papel) { color: var(--papel); background: var(--tinta); }
+  .portada { position: relative; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; background: var(--tinta); color: var(--papel); }
+  .portada--completo { min-height: calc(100vh - var(--header-h)); min-height: calc(100svh - var(--header-h)); }
+  .portada--medio { min-height: 70vh; }
   .portada__fondo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
   .portada__parallax { position: absolute; top: 0; left: 0; right: 0; bottom: -10%; }
   .portada__parallax :global(.foto) { height: 100%; }
   .portada__parallax :global(.foto--recorte::before) { display: none; }
+  .portada__video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
   .portada__velo {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
     background:
-      linear-gradient(to top, rgba(18, 14, 10, 0.78) 0%, rgba(18, 14, 10, 0.42) 34%, rgba(18, 14, 10, 0.08) 62%, rgba(18, 14, 10, 0) 78%),
-      linear-gradient(to bottom, rgba(18, 14, 10, 0.4) 0%, rgba(18, 14, 10, 0) 22%);
+      linear-gradient(to top, rgba(16, 12, 9, 0.82) 0%, rgba(16, 12, 9, 0.45) 30%, rgba(16, 12, 9, 0) 62%),
+      linear-gradient(to bottom, rgba(16, 12, 9, 0.38) 0%, rgba(16, 12, 9, 0) 18%);
   }
-  .portada__contenido { position: relative; padding-top: calc(var(--header-h) + 2.04rem); padding-bottom: 3.06rem; padding-bottom: clamp(2.38rem, 8vh, 4.76rem); }
-  .portada--papel .portada__contenido { padding-top: calc(var(--header-h) + 3.4rem); padding-bottom: 2.04rem; }
-  .portada--papel { min-height: 0; }
-  .portada__volanta { margin-bottom: 1.25rem; }
-  .portada:not(.portada--papel) .portada__volanta { color: var(--arena); }
+  .portada__arriba { position: absolute; top: 1.25rem; left: 0; right: 0; display: flex; justify-content: space-between; z-index: 2; }
+  .portada__rotulo-der { text-align: right; }
+  .portada__contenido { position: relative; z-index: 2; padding-bottom: 2.25rem; padding-bottom: clamp(1.75rem, 4vh, 3.5rem); }
   .portada__titulo {
-    max-width: 18ch;
-    font-size: 1.65rem;
-    font-size: var(--t-3xl);
-    color: inherit;
-    font-weight: 330;
+    font-weight: 300;
+    color: var(--papel);
+    letter-spacing: -0.045em;
+    line-height: 0.9;
+    max-width: 16ch;
+    text-wrap: balance;
   }
-  .portada:not(.portada--papel) .portada__titulo { text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25); }
-  .portada__extra { margin-top: 1.488rem; max-width: 40rem; }
-  .portada__scroll { position: absolute; right: var(--gutter); bottom: 1.5rem; width: 1.28rem; height: 2.88rem; color: var(--papel); opacity: 0.85; }
-  .portada__scroll :global(svg) { width: 100%; height: 100%; }
-  @media (max-width: 40em) { .portada__scroll { display: none; } }
+  .portada--grande .portada__titulo { font-size: 2.6rem; font-size: clamp(2.6rem, 1rem + 5.6vw, 7.2rem); }
+  .portada--enorme .portada__titulo { font-size: 3rem; font-size: clamp(3rem, 0.8rem + 7.4vw, 9.6rem); max-width: 14ch; }
+  .portada__titulo :global(.acento) { color: #ffb8a8; }
+  .portada__extra { margin-top: 1.5rem; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; }
+  .portada__extra:empty { display: none; }
 </style>

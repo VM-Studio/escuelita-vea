@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
 import PortadaPagina from '../components/PortadaPagina.astro';
+import Declaracion from '../components/Declaracion.astro';
 import SubNav from '../components/SubNav.astro';
 import Carrusel from '../components/Carrusel.astro';
 import Tabs from '../components/Tabs.astro';
@@ -35,7 +36,7 @@ const subnav = [
   fotoOg={j.portada.foto}
   progreso
 >
-  <PortadaPagina titulo={j.portada.titulo} volanta="Jardín · Nivel Inicial" foto={j.portada.foto}>
+  <PortadaPagina titulo={j.portada.titulo} volanta="Jardín · Nivel Inicial" rotulo="Primer Jardín Argentino de Educación por el Arte — 1959" foto={j.portada.foto}>
     <figure class="portada-cita">
       <blockquote><p class="t-frase portada-cita__texto">{j.portada.cita}</p></blockquote>
       <figcaption class="portada-cita__firma">— {j.portada.citaFirma}</figcaption>
@@ -43,9 +44,12 @@ const subnav = [
   </PortadaPagina>
 
   <section class="seccion intro-nivel" aria-label="Presentación del Jardín">
-    <div class="contenedor intro-nivel__grilla">
-      <Paleta class="intro-nivel__sol" />
-      <p class="intro-nivel__texto" data-revelar>{j.portada.texto}</p>
+    <div class="contenedor">
+      <Declaracion texto={j.portada.texto} tamano="l" imagenes={[
+        { id: 'plastica-tinta-pez', despues: 'El arte', forma: 'circulo' },
+        { id: 'juego-paracaidas', despues: 'el juego', forma: 'pastilla' },
+        { id: 'patio-sonrisa-arena', despues: 'etapa fundacional.', forma: 'arco' },
+      ]} />
     </div>
   </section>
 
@@ -91,14 +95,9 @@ const subnav = [
         ))}
       </div>
       <div class="gesto">
-        <div class="gesto__foto pegada" style="--rot:-1.4deg" data-revelar>
-          <span class="cinta" aria-hidden="true"></span>
-          <Foto id="taller-pintura-mesa" ratio="4/5" sizes="(min-width: 56em) 34vw, 80vw" />
-        </div>
-        <div class="gesto__texto">
-          <h3 class="gesto__titulo" data-titulo-lineas>{j.propuesta.gesto.titulo}</h3>
-          <div class="prosa" data-revelar set:html={parrafos(j.propuesta.gesto.texto)} />
-        </div>
+        <h3 class="gesto__titulo" data-revelar>{j.propuesta.gesto.titulo}</h3>
+        <div class="gesto__banda" data-revelar><Foto id="taller-pintura-mesa" ratio="21/9" sizes="(min-width: 76em) 76rem, 100vw" revelar /></div>
+        <div class="gesto__texto prosa" data-revelar set:html={parrafos(j.propuesta.gesto.texto)} />
       </div>
     </div>
   </section>
@@ -150,7 +149,7 @@ const subnav = [
           <Acordeon id={l.id} titulo={l.titulo} grupo="lenguajes">
             <div class="lenguaje">
               <div class="lenguaje__foto">
-                <Foto id={l.foto} ratio="4/3" sizes="(min-width: 56em) 30vw, 90vw" pie={'frase' in l ? l.frase : undefined} />
+                <Foto id={l.foto} ratio="21/9" sizes="(min-width: 56em) 58rem, 90vw" pie={'frase' in l ? l.frase : undefined} />
               </div>
               <div class="lenguaje__texto">
                 <p class="lenguaje__intro">{l.intro}</p>
@@ -312,14 +311,17 @@ const subnav = [
   .concepto__num :global(svg) { width: 100%; height: 100%; }
   .concepto__titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
   @media (min-width: 48em) { .conceptos { grid-template-columns: 1fr 1fr; grid-gap: 2.04rem 2.72rem; gap: 2.04rem 2.72rem; } }
-  .gesto { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; margin-top: 3.4rem; }
-  .gesto__foto { position: relative; width: 82%; max-width: 26rem; margin: 0 auto; }
-  .gesto__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1.25rem; font-style: italic; font-weight: 320; }
-  @media (min-width: 56em) { .gesto { grid-template-columns: 5fr 6fr; grid-gap: 3.4rem; gap: 3.4rem; } }
+  .gesto { margin-top: 4rem; text-align: center; }
+  .gesto__titulo { margin: 0 auto 1.75rem; max-width: 16ch; font-size: 2rem; font-size: clamp(2rem, 1rem + 3.4vw, 4.2rem); font-style: italic; font-weight: 300; letter-spacing: -0.03em; line-height: 1; }
+  .gesto__banda :global(.foto) { border-radius: 4px; }
+  .gesto__texto { margin: 2rem auto 0; text-align: left; }
+  .gesto__texto :global(p) { max-width: none; }
+  @media (min-width: 56em) { .gesto__texto { column-count: 2; column-gap: 3rem; max-width: 60rem; } .gesto__texto :global(p) { break-inside: avoid; } }
 
-  .sala__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
-  .sala__foto { position: relative; width: 82%; max-width: 24rem; margin: 0 auto; }
-  .sala__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1rem; }
+  .sala__grilla { position: relative; }
+  .sala__texto { position: relative; }
+  .sala__foto { position: relative; width: 62%; max-width: 15rem; margin: 0 0 1.5rem auto; z-index: 2; }
+  .sala__titulo { font-size: 2rem; font-size: clamp(2rem, 1rem + 3vw, 3.8rem); font-weight: 300; letter-spacing: -0.035em; line-height: 0.95; margin-bottom: 1rem; }
   .sala__sub { display: block; margin-top: 0.3rem; font-style: italic; font-weight: 300; color: var(--acento-texto); font-size: 0.75em; }
   .sala__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 1.7rem; }
   .sala__apartados { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
@@ -328,8 +330,8 @@ const subnav = [
   .sala__apartado dd { margin: 0; }
   :global(.tabs.is-js) .sala__titulo { font-size: 1.26rem; }
   @media (min-width: 56em) {
-    .sala__grilla { grid-template-columns: 4fr 7fr; grid-gap: 3.06rem; gap: 3.06rem; }
-    .sala__foto { width: 100%; position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 5rem); }
+    .sala__foto { position: absolute; right: 0; top: -0.5rem; width: 15rem; margin: 0; }
+    .sala__titulo, .sala__intro { max-width: calc(100% - 18rem); }
     .sala__apartados { grid-template-columns: 1fr 1fr; grid-gap: 1.488rem 1.7rem; gap: 1.488rem 1.7rem; }
   }
 
@@ -340,7 +342,7 @@ const subnav = [
   .lenguaje__apartados > div + div { margin-top: 1.25rem; }
   .lenguaje__apartados dt { font-weight: 700; margin-bottom: 0.3rem; }
   .lenguaje__apartados dd { margin: 0; }
-  @media (min-width: 56em) { .lenguaje { grid-template-columns: 5fr 7fr; grid-gap: 2.04rem; gap: 2.04rem; } }
+  @media (min-width: 56em) { .lenguaje__apartados { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1.5rem 2.5rem; gap: 1.5rem 2.5rem; } .lenguaje__apartados > div + div { margin-top: 0; } }
 
   .patio { overflow: hidden; }
   .patio__cabeza { max-width: 46rem; margin-bottom: 2.04rem; }

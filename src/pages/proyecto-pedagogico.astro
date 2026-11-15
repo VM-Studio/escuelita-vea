@@ -1,13 +1,12 @@
 ---
-import Mancha from '../components/Mancha.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
-import Trazo from '../components/Trazo.astro';
 import Interludio from '../components/Interludio.astro';
 import Puertas from '../components/Puertas.astro';
+import PortadaPagina from '../components/PortadaPagina.astro';
+import Declaracion from '../components/Declaracion.astro';
 import { proyecto as p } from '../content/proyecto';
-import { parrafos, enLinea, acento } from '../lib/texto';
-const marcas = ['sol', 'espiral', 'lazos', 'hoja'] as const;
+import { parrafos, acento } from '../lib/texto';
 ---
 <Base
   titulo="Proyecto pedagógico"
@@ -15,72 +14,61 @@ const marcas = ['sol', 'espiral', 'lazos', 'hoja'] as const;
   fotoOg={p.fotoApertura}
   progreso
 >
-  {/* Apertura editorial */}
-  <section class="apertura" data-hero>
-    <div class="contenedor apertura__grilla">
-      <div class="apertura__texto">
-        <p class="t-volanta" data-hero-resto>La Escuelita</p>
-        <h1 class="apertura__titulo" data-hero-titular>{p.titulo}</h1>
-        <div class="apertura__trazo" data-hero-trazo aria-hidden="true"><Trazo nombre="subrayado" grosor={3.2} dibujar={false} /></div>
-      </div>
-      <div class="apertura__foto con-mancha" data-hero-resto>
-        <Mancha forma="a" color="rosa" class="apertura__mancha" />
-        <Foto id={p.fotoApertura} ratio="4/5" sizes="(min-width: 56em) 34vw, 90vw" prioridad class="forma-arco" />
-      </div>
+  <PortadaPagina titulo={p.titulo} foto={p.fotoApertura} volanta="La Escuelita" rotulo="Jardín y Primaria" tamano="enorme" />
+
+  {/* Introducción: declaración + dos columnas */}
+  <section class="intro" aria-labelledby="intro-titulo">
+    <div class="contenedor">
+      <h2 id="intro-titulo" class="rotulo intro__rotulo">{p.introTitulo}</h2>
+      <Declaracion
+        texto={p.intro[0]}
+        tamano="l"
+        imagenes={[
+          { id: 'taller-pintura-mesa', despues: 'el arte', forma: 'pastilla' },
+          { id: 'jardin-risas-patio', despues: 'las infancias.', forma: 'circulo' },
+        ]}
+      />
+      <div class="intro__columnas prosa" data-revelar set:html={parrafos(p.intro.slice(1))} />
     </div>
   </section>
 
-  <section class="intro seccion" aria-labelledby="intro-titulo">
-    <div class="contenedor intro__grilla">
-      <h2 id="intro-titulo" class="intro__titulo" data-titulo-lineas set:html={acento(p.introTitulo)} />
-      <div class="intro__texto">
-        <p class="intro__lead" data-revelar set:html={enLinea(p.intro[0])} />
-        <div class="prosa" data-revelar set:html={parrafos(p.intro.slice(1))} />
-      </div>
-    </div>
-  </section>
-
+  {/* Índice de ejes */}
   <section class="ejes-cabeza" aria-labelledby="ejes-titulo">
     <div class="contenedor">
-      <div class="ejes-cabeza__caja">
-        <Trazo nombre="flecha-curva" class="ejes-cabeza__flecha" grosor={2.4} />
-        <h2 id="ejes-titulo" data-titulo-lineas set:html={acento(p.ejesTitulo)} />
-        <p class="t-lead" data-revelar>{p.ejesIntro}</p>
-        <nav class="ejes-indice" aria-label="Ejes" data-revelar>
-          {p.ejes.map((e) => <a href={`#${e.id}`} class="enlace-trazo">{e.titulo}</a>)}
-        </nav>
-      </div>
+      <h2 id="ejes-titulo" class="ejes-cabeza__titulo" data-revelar set:html={acento(p.ejesTitulo)} />
+      <p class="ejes-cabeza__intro" data-revelar>{p.ejesIntro}</p>
+      <nav class="ejes-nav" aria-label="Ejes" data-revelar>
+        {p.ejes.map((e) => <a href={`#${e.id}`}><span>{e.titulo}</span></a>)}
+      </nav>
     </div>
   </section>
 
+  {/* Capítulos: título centrado, foto a lo ancho, texto en columnas (sin foto/texto a los costados) */}
   {p.ejes.map((e, i) => (
     <>
-      <article class:list={['capitulo seccion', { 'capitulo--invertido': i % 2 === 1, 'seccion--papel-oscuro': i === 3 }]} id={e.id} aria-labelledby={`${e.id}-titulo`}>
-        <div class="contenedor capitulo__grilla">
-          <header class="capitulo__cabeza">
-            <span class="capitulo__marca" aria-hidden="true"><Trazo nombre={marcas[i]} grosor={2.2} color={i % 2 ? 'verde' : 'ocre'} /></span>
-            <h2 id={`${e.id}-titulo`} class="capitulo__titulo" data-titulo-lineas set:html={acento(e.titulo)} />
-          </header>
-          <div class="capitulo__foto">
-            <Foto id={e.foto} ratio={i % 2 ? '1/1' : '4/5'} sizes="(min-width: 56em) 36vw, 92vw" revelar class={i % 2 ? '' : 'forma-arco'} />
-          </div>
-          <div class="capitulo__texto">
-            <div class="prosa capitulo__prosa" data-revelar set:html={parrafos(e.texto)} />
-            {'apartados' in e && e.apartados && (
-              <dl class="apartados">
-                {e.apartados.map((a) => (
-                  <div class="apartado" data-revelar>
-                    <dt class="apartado__titulo"><Trazo nombre="tilde" class="apartado__tilde" grosor={2.4} color="rojo" />{a.etiqueta}</dt>
-                    <dd class="apartado__texto">{a.texto}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-          </div>
+      <article class:list={['capitulo', { 'capitulo--oscuro': i === 3 }]} id={e.id} aria-labelledby={`${e.id}-titulo`}>
+        <div class="contenedor">
+          <h2 id={`${e.id}-titulo`} class="capitulo__titulo" data-revelar set:html={acento(e.titulo)} />
+        </div>
+        <div class="capitulo__banda" data-revelar>
+          <Foto id={e.foto} ratio="21/9" sizes="100vw" revelar />
+        </div>
+        <div class="contenedor">
+          <div class="capitulo__texto prosa" data-revelar set:html={parrafos(e.texto)} />
+          {'apartados' in e && e.apartados && (
+            <dl class="apartados">
+              {e.apartados.map((a) => (
+                <div class="apartado" data-revelar>
+                  <dt class="apartado__titulo">{a.etiqueta}</dt>
+                  <dd class="apartado__texto">{a.texto}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
         </div>
       </article>
-      {p.interludios.filter((x) => x.despuesDe === e.id).map((x, j) => (
-        <Interludio foto={x.foto} frase={x.frase} variante={j % 2 || i > 1 ? 'lado' : 'sobre'} trazo="sol" />
+      {p.interludios.filter((x) => x.despuesDe === e.id).map((x) => (
+        <Interludio foto={x.foto} frase={x.frase} variante={i === 0 ? 'sobre' : 'centro'} />
       ))}
     </>
   ))}
@@ -89,46 +77,33 @@ const marcas = ['sol', 'espiral', 'lazos', 'hoja'] as const;
 </Base>
 
 <style>
-  .apertura { overflow: hidden; padding-top: calc(var(--header-h) + 2.04rem); padding-bottom: 1.7rem; }
-  .apertura__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: end; }
-  .apertura__titulo { font-size: 2.58rem; font-size: clamp(2.58rem, 1.312rem + 3.9vw, 4.8rem); font-weight: 300; line-height: 0.95; letter-spacing: -0.04em; max-width: 9ch; margin-top: 1rem; }
-  .apertura__trazo { width: 70%; max-width: 26rem; height: 1.4rem; margin-top: 1rem; }
-  .apertura__trazo :global(svg) { width: 100%; height: 100%; }
-  .apertura__mancha { width: 80%; left: -18%; bottom: -10%; }
-  @media (min-width: 56em) { .apertura__grilla { grid-template-columns: 7fr 5fr; grid-gap: 2.72rem; gap: 2.72rem; } }
+  .intro { padding: 4rem 0; padding: clamp(3rem, 2rem + 4vw, 6.5rem) 0; }
+  .intro__rotulo { margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(35, 32, 28, 0.14); }
+  .intro__columnas { margin-top: 2.5rem; color: var(--tinta-suave); }
+  .intro__columnas :global(p) { max-width: none; }
+  @media (min-width: 56em) { .intro__columnas { column-count: 3; column-gap: 2.5rem; } .intro__columnas :global(p) { break-inside: avoid; } }
 
-  .intro__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
-  .intro__titulo { font-size: 1.387rem; font-size: var(--t-xl); max-width: 12ch; }
-  .intro__lead { font-family: var(--f-titulo); font-size: 1.265rem; font-size: clamp(1.265rem, 0.861rem + 1.092vw, 1.785rem); line-height: 1.3; letter-spacing: -0.01em; font-weight: 350; max-width: 30ch; margin-bottom: 1.7rem; }
-  @media (min-width: 56em) { .intro__grilla { grid-template-columns: 4fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; } }
+  .ejes-cabeza { padding: 3rem 0 2rem; border-top: 1px solid rgba(35, 32, 28, 0.12); text-align: center; }
+  .ejes-cabeza__titulo { font-size: 2.2rem; font-size: clamp(2.2rem, 1rem + 4.6vw, 5.6rem); font-weight: 300; letter-spacing: -0.045em; line-height: 0.95; }
+  .ejes-cabeza__intro { margin: 1rem auto 0; color: var(--tinta-suave); max-width: 36rem; }
+  .ejes-nav { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
+  .ejes-nav a { margin: 0.3rem; padding: 0.55rem 1.05rem; border: 1px solid rgba(35, 32, 28, 0.2); border-radius: 999px; text-decoration: none; font-family: var(--f-titulo); font-style: italic; font-size: 1.05rem; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
+  .ejes-nav a:hover { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
 
-  .ejes-cabeza { padding: 1rem 0 1.7rem; }
-  .ejes-cabeza__caja { border-top: 1px solid rgba(35, 32, 28, 0.15); padding-top: 2.04rem; max-width: 52rem; }
-  .ejes-cabeza__caja > * + * { margin-top: 1.25rem; }
-  .ejes-cabeza__flecha { width: 2.8rem; height: 2.8rem; transform: scaleX(-1) rotate(-20deg); }
-  .ejes-indice { display: flex; flex-wrap: wrap; margin-top: 1.7rem !important; }
-  .ejes-indice a { margin: 0 1.488rem 0.75rem 0; font-family: var(--f-titulo); font-size: 1.25rem; font-style: italic; text-decoration: none; }
-
-  .capitulo__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
-  .capitulo__marca { display: block; width: 2.6rem; height: 2.6rem; margin-bottom: 1rem; }
-  .capitulo__marca :global(svg) { width: 100%; height: 100%; }
-  .capitulo__titulo { font-size: 2.15rem; font-size: clamp(2.15rem, 1.148rem + 2.76vw, 3.3rem); font-weight: 320; letter-spacing: -0.03em; max-width: 12ch; }
-  .capitulo__foto > :global(.foto) { border-radius: var(--radio); }
-  .capitulo__prosa { font-size: 1.0625rem; font-size: var(--t-base); }
-  .apartados { margin-top: 1.7rem; display: grid; grid-template-columns: 1fr; grid-gap: 1.488rem; gap: 1.488rem; }
-  .apartado { padding-top: 1.25rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
-  .apartado__titulo { display: flex; align-items: center; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); margin-bottom: 0.6rem; }
-  .apartado__tilde { width: 1.5rem; height: 1.25rem; margin-right: 0.6rem; flex: none; }
-  .apartado__texto { margin: 0; max-width: 38rem; color: var(--tinta); }
-  @media (min-width: 56em) {
-    .capitulo__grilla { grid-template-columns: 5fr 6fr; grid-template-areas: 'cabeza cabeza' 'foto texto'; grid-gap: 2.04rem 3.4rem; gap: 2.04rem 3.4rem; align-items: start; }
-    .capitulo__cabeza { grid-area: cabeza; }
-    .capitulo__foto { grid-area: foto; position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 2rem); }
-    .capitulo__texto { grid-area: texto; padding-top: 1rem; }
-    .capitulo--invertido .capitulo__grilla { grid-template-columns: 6fr 5fr; grid-template-areas: 'cabeza cabeza' 'texto foto'; }
-    .capitulo--invertido .capitulo__cabeza { text-align: right; }
-    .capitulo--invertido .capitulo__titulo { margin-left: auto; }
-    .capitulo--invertido .capitulo__marca { margin-left: auto; }
-    .apartados { grid-template-columns: 1fr; }
-  }
+  .capitulo { padding: 4rem 0; padding: clamp(3rem, 2rem + 4vw, 6.5rem) 0; }
+  .capitulo--oscuro { background: var(--tinta); color: var(--papel); }
+  .capitulo--oscuro .capitulo__titulo, .capitulo--oscuro .apartado__titulo { color: var(--papel); }
+  .capitulo--oscuro .capitulo__texto, .capitulo--oscuro .apartado__texto { color: #e3dacb; }
+  .capitulo--oscuro .apartado { border-color: rgba(250, 246, 238, 0.2); }
+  .capitulo__titulo { text-align: center; margin: 0 auto 2rem; max-width: 14ch; font-size: 2.6rem; font-size: clamp(2.5rem, 1rem + 5.6vw, 7rem); font-weight: 300; letter-spacing: -0.045em; line-height: 0.92; }
+  .capitulo__banda { padding: 0 var(--gutter); max-width: 96rem; margin: 0 auto; }
+  .capitulo__banda :global(.foto) { border-radius: 4px; }
+  .capitulo__texto { margin: 2.5rem auto 0; font-size: 1.05rem; }
+  .capitulo__texto :global(p) { max-width: none; }
+  @media (min-width: 56em) { .capitulo__texto { column-count: 2; column-gap: 3.5rem; max-width: 62rem; } .capitulo__texto :global(p) { break-inside: avoid; } }
+  .apartados { display: grid; grid-template-columns: 1fr; grid-gap: 1.75rem; gap: 1.75rem; margin: 3rem auto 0; max-width: 62rem; }
+  .apartado { border-top: 1px solid rgba(35, 32, 28, 0.2); padding-top: 1rem; }
+  .apartado__titulo { font-family: var(--f-titulo); font-size: 1.35rem; font-weight: 400; margin-bottom: 0.6rem; }
+  .apartado__texto { margin: 0; font-size: 0.95rem; color: var(--tinta-suave); }
+  @media (min-width: 56em) { .apartados { grid-template-columns: repeat(3, 1fr); grid-gap: 2.5rem; gap: 2.5rem; } }
 </style>
