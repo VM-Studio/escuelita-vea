@@ -18,9 +18,8 @@ const anio = new Date().getFullYear();
 
   <div class="contenedor pie-sitio__grilla">
     <div class="pie-sitio__logos">
-      <a href="/jardin/" class="pie-sitio__logo" aria-label="Jardín"><Logo nivel="jardin" alto={72} decorativo /></a>
-      <a href="/primaria/" class="pie-sitio__logo" aria-label="Instituto La Escuelita Primaria"><Logo nivel="primaria" alto={72} decorativo /></a>
-      <a href="/la-escuelita/#vea" class="pie-sitio__logo" aria-label="V.E.A."><Logo nivel="vea" alto={64} decorativo /></a>
+      <a href="/jardin/" class="pie-sitio__logo" aria-label="Jardín"><Logo nivel="jardin" version="blanco" alto={96} decorativo /></a>
+      <a href="/primaria/" class="pie-sitio__logo" aria-label="Instituto La Escuelita Primaria"><Logo nivel="primaria" version="blanco" alto={96} decorativo /></a>
     </div>
 
     <div class="pie-sitio__col">
@@ -102,9 +101,6 @@ const anio = new Date().getFullYear();
   }
   .pie-sitio__logos {
     display: flex; align-items: center; flex-wrap: wrap;
-    padding: 1.25rem 1.25rem 1rem;
-    background: var(--papel);
-    border-radius: var(--radio-lg);
     justify-self: start;
   }
   .pie-sitio__logo { display: block; margin: 0.25rem 1.25rem 0.25rem 0; }
@@ -140,7 +136,7 @@ const anio = new Date().getFullYear();
   }
   @media (min-width: 64em) {
     .pie-sitio__grilla { grid-template-columns: repeat(4, 1fr); grid-gap: 2.04rem 1.7rem; gap: 2.04rem 1.7rem; }
-    .pie-sitio__logos { grid-column: 1 / -1; padding: 1.25rem 1.7rem; }
+    .pie-sitio__logos { grid-column: 1 / -1; padding: 0; }
     .pie-sitio__logo { margin-right: 1.7rem; }
   }
 </style>

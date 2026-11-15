@@ -282,11 +282,11 @@ export function iniciarCarruselCircular(root: HTMLElement) {
   const focusIndex = (index: number) => {
     let target = -index * s.step;
     target += 360 * Math.round((state.angle - target) / 360);
-    state.target = target; state.holdUntil = performance.now() + 2800; wake();
+    state.target = target; state.holdUntil = performance.now() + 1200; wake();
   };
   const stepBy = (delta: number) => {
     const base = state.target ?? Math.round(state.angle / s.step) * s.step;
-    state.target = base - delta * s.step * dragSign; state.holdUntil = performance.now() + 2800; wake();
+    state.target = base - delta * s.step * dragSign; state.holdUntil = performance.now() + 1200; wake();
   };
   const updatePointer = (e: PointerEvent) => {
     const rect = root.getBoundingClientRect();

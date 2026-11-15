@@ -1,59 +1,40 @@
 ---
-// Logos. Hoy se usan PROVISORIOS recortados del único PNG de la web anterior (250×112 px).
-// Cuando la escuela entregue los tres logos por separado (ideal SVG), poner los archivos en
-// public/logos/ y cambiar `archivo` acá. No redibujar, no recolorear, no deformar.
+// Logos oficiales de la escuela (entregados en alta calidad, recortados y optimizados en public/logos/).
+//  · jardin   → La Escuelita (la nena con flores) — Primer Jardín Argentino de Educación por el Arte
+//  · primaria → Instituto La Escuelita · V.E.A. (Jardín - Primaria)
+//  · vea      → mismo logo V.E.A.
+// Versiones: "sinfondo" (transparente: navbar, secciones claras) y "blanco" (con fondo blanco: sobre fondos oscuros o fotos).
+// Originales en _material/logos/originales/. No redibujar, no recolorear, no deformar.
 interface Props {
-  nivel: 'jardin' | 'primaria' | 'vea' | 'marca';
+  nivel: 'jardin' | 'primaria' | 'vea';
+  version?: 'sinfondo' | 'blanco';
   alto?: number;
   class?: string;
   decorativo?: boolean;
+  prioridad?: boolean;
 }
 const LOGOS = {
-  marca: { archivo: '/logos/escuelita-vea-provisorio.png', w: 250, h: 112, alt: 'La Escuelita · V.E.A. Instituto La Escuelita, Jardín y Primaria' },
-  jardin: { archivo: '/logos/jardin-provisorio.png', w: 90, h: 106, alt: 'Logo de La Escuelita, Primer Jardín Argentino de Educación por el Arte' },
-  // Sin archivo propio todavía: se muestra un rótulo tipográfico provisorio (no es un logo).
-  primaria: { archivo: '', w: 0, h: 0, alt: 'Instituto La Escuelita, Escuela Primaria' },
-  vea: { archivo: '/logos/vea-provisorio.png', w: 131, h: 105, alt: 'V.E.A. Visión Educacional Antropológica' },
+  jardin: { archivo: 'la-escuelita', w: 900, h: 1060, wb: 1116, hb: 1276, alt: 'La Escuelita — Primer Jardín Argentino de Educación por el Arte' },
+  primaria: { archivo: 'vea', w: 900, h: 717, wb: 1116, hb: 933, alt: 'Instituto La Escuelita — Jardín y Primaria (V.E.A.)' },
+  vea: { archivo: 'vea', w: 900, h: 717, wb: 1116, hb: 933, alt: 'V.E.A. — Instituto La Escuelita, Jardín y Primaria' },
 } as const;
-const { nivel, alto = 64, class: clase = '', decorativo = false } = Astro.props;
+const { nivel, version = 'sinfondo', alto = 64, class: clase = '', decorativo = false, prioridad = false } = Astro.props;
 const l = LOGOS[nivel];
-const ancho = l.w ? Math.round((l.w / l.h) * alto) : 0;
+const [w, h] = version === 'blanco' ? [l.wb, l.hb] : [l.w, l.h];
+const ancho = Math.round((w / h) * alto);
 ---
-{l.archivo ? (
-  <img
-    class:list={['logo', `logo--${nivel}`, clase]}
-    src={l.archivo}
-    width={ancho}
-    height={alto}
-    alt={decorativo ? '' : l.alt}
-    decoding="async"
-    style={`height:${alto}px;width:auto`}
-  />
-) : (
-  <span class:list={['logo logo--provisorio', `logo--${nivel}`, clase]} style={`--alto:${alto}px`} role={decorativo ? undefined : 'img'} aria-label={decorativo ? undefined : l.alt} aria-hidden={decorativo ? 'true' : undefined}>
-    <span class="logo-prov__a">Instituto</span>
-    <span class="logo-prov__b">La Escuelita</span>
-    <span class="logo-prov__c">Primaria</span>
-  </span>
-)}
+<img
+  class:list={['logo', `logo--${nivel}`, `logo--${version}`, clase]}
+  src={`/logos/${l.archivo}-${version}${version === 'sinfondo' && alto <= 60 ? '-sm' : ''}.png`}
+  width={ancho}
+  height={alto}
+  alt={decorativo ? '' : l.alt}
+  decoding="async"
+  loading={prioridad ? 'eager' : 'lazy'}
+  style={`height:${alto}px;width:auto`}
+/>
 
 <style>
   .logo { display: block; max-width: 100%; }
-  .logo--provisorio {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: var(--alto);
-    min-width: calc(var(--alto) * 1.3);
-    padding: 0 0.9rem;
-    border: 1.5px solid var(--rojo);
-    border-radius: 50% / 46%;
-    color: var(--rojo);
-    font-family: var(--f-titulo);
-    line-height: 1;
-    text-align: center;
-  }
-  .logo-prov__a, .logo-prov__c { font-family: var(--f-texto); font-size: calc(var(--alto) * 0.12); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; }
-  .logo-prov__b { font-size: calc(var(--alto) * 0.24); font-style: italic; margin: 0.18em 0; white-space: nowrap; }
+  .logo--blanco { border-radius: 6px; }
 </style>

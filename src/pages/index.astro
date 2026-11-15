@@ -25,41 +25,67 @@ const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.
 const primera = masters[`../assets/fotos/${p.portada.fotos[0]}.jpg`].default;
 const anchos = [480, 720, 960, 1280, 1600, 2000].filter((w) => w <= primera.width);
 const pre = await getImage({ src: primera, widths: anchos, format: 'avif' });
-const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/avif' }];
+const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 24vw, 56vw', type: 'image/avif' }];
 ---
 <Base
   titulo="Inicio"
   descripcion="La Escuelita: Primer Jardín Argentino de Educación por el Arte (1959) e Instituto La Escuelita, Escuela Primaria de Educación a través del Arte (1997). Fundada por la profesora Marta Calvo. Colegiales, CABA."
-  heroOscuro
   precargar={precargar}
 >
   {/* ============ HERO ============ */}
-  <section class="hero" data-hero aria-label="Portada">
-    <div class="hero__fondo" data-hero-fondo>
-      <div class="hero__parallax" data-hero-parallax>
-        <div class="hero__secuencia" data-hero-secuencia>
-          {p.portada.fotos.map((id, i) => (
-            <div class:list={['hero__capa', { 'is-activa': i === 0 }]} data-hero-capa>
-              <Foto id={id} ratio="16/9" sizes="100vw" prioridad={i === 0} alt={i === 0 ? undefined : ''} />
-            </div>
-          ))}
+  {/* Inspirado en patrones de 21st.dev ("Centered Hero with Image Fan", "Editorial Collage") y React Bits
+      (Image Trail, Circular Text). Fondo claro: el titular se lee siempre. */}
+  <section class="hero" data-hero aria-labelledby="hero-titulo">
+    <div class="hero__aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    <RastroImagenes ids={['plastica-tinta-pez', 'taller-pintura-mesa', 'juego-dramatico-capas', 'patio-sonrisa-arena', 'plastica-hojas-cenital', 'musica-instrumentos', 'sala4-dibujo-propio', 'historica-dibujo-pared', 'primaria-stop-motion', 'jardin-risas-patio']} size={130} />
+    <div class="hero__grilla contenedor">
+      <div class="hero__texto">
+        <p class="hero__chip" data-hero-resto><span class="hero__punto" aria-hidden="true"></span>{p.presentacion.jardin.texto} · {p.presentacion.jardin.anio}</p>
+        <h1 id="hero-titulo" class="hero__titular" data-hero-titular>El niño es cuerpo que siente y al <em class="acento">sentir, piensa.</em></h1>
+        <p class="hero__bajada" data-hero-resto>{p.portada.bajada}</p>
+        <div class="hero__acciones" data-hero-resto>
+          <Boton href="/contacto/#entrevista" variante="rojo" tamano="grande">Pedí una entrevista</Boton>
+          <Boton href="/proyecto-pedagogico/" tamano="grande">Conocé nuestra mirada</Boton>
         </div>
+        <ul class="hero__niveles" data-hero-resto>
+          <li>
+            <a href="/jardin/" class="hero__nivel">
+              <Logo nivel="jardin" alto={46} decorativo prioridad />
+              <span><strong>Jardín</strong><small>{p.presentacion.jardin.anio}</small></span>
+            </a>
+          </li>
+          <li>
+            <a href="/primaria/" class="hero__nivel">
+              <Logo nivel="primaria" alto={34} decorativo prioridad />
+              <span><strong>Primaria</strong><small>{p.presentacion.primaria.anio}</small></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="hero__collage" aria-hidden="false">
+        <Mancha forma="a" color="arena" class="hero__mancha" />
+        <div class="abanico" data-abanico>
+          <figure class="abanico__foto abanico__foto--izq" data-abanico-item style="--r:-9deg">
+            <Foto id="jardin-hojas-al-aire" ratio="4/5" sizes="(min-width: 64em) 18vw, 40vw" />
+          </figure>
+          <figure class="abanico__foto abanico__foto--der" data-abanico-item style="--r:8deg">
+            <Foto id="primaria-leyenda-bajo-arboles" ratio="4/5" sizes="(min-width: 64em) 18vw, 40vw" />
+          </figure>
+          <figure class="abanico__foto abanico__foto--centro" data-abanico-item style="--r:-1.5deg">
+            <span class="cinta" aria-hidden="true"></span>
+            <Foto id={p.portada.fotos[0]} ratio="4/5" sizes="(min-width: 64em) 24vw, 56vw" prioridad />
+          </figure>
+          <figure class="abanico__mini abanico__mini--a" data-abanico-item style="--r:6deg">
+            <Foto id="plastica-masa-muchas-manos" ratio="1/1" sizes="140px" />
+          </figure>
+          <figure class="abanico__mini abanico__mini--b" data-abanico-item style="--r:-7deg">
+            <Foto id="musica-instrumentos" ratio="1/1" sizes="140px" />
+          </figure>
+        </div>
+        <div class="hero__sello" data-hero-resto><Sello tamano={104} color="tinta" /></div>
       </div>
     </div>
-    <div class="hero__velo" aria-hidden="true"></div>
-    <RastroImagenes ids={['plastica-tinta-pez', 'taller-pintura-mesa', 'juego-dramatico-capas', 'patio-sonrisa-arena', 'plastica-hojas-cenital', 'musica-instrumentos', 'sala4-dibujo-propio', 'historica-dibujo-pared', 'primaria-stop-motion', 'jardin-risas-patio']} size={150} />
-    <div class="hero__contenido contenedor">
-      <h1 class="hero__titular" data-hero-titular>{p.portada.titular}</h1>
-      <div class="hero__trazo" data-hero-trazo aria-hidden="true">
-        <Trazo nombre="subrayado-doble" color="rojo" grosor={3.2} dibujar={false} />
-      </div>
-      <p class="hero__bajada" data-hero-resto>{p.portada.bajada}</p>
-      <div class="hero__acciones" data-hero-resto>
-        <Boton href="/proyecto-pedagogico/" variante="claro">Conocé nuestra mirada</Boton>
-        <a href="/contacto/#entrevista" class="hero__enlace enlace-trazo">Pedí una entrevista</a>
-      </div>
-    </div>
-    <div class="hero__sello" data-hero-resto><Sello tamano={132} /></div>
     <a href="#presentacion" class="hero__scroll" aria-label="Bajar a la presentación" data-hero-trazo>
       <Trazo nombre="scroll" color="actual" grosor={2} dibujar={false} crayon={false} />
     </a>
@@ -82,22 +108,19 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
       {/* Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha, VEA abajo. */}
       <div class="presentacion__niveles">
         <a href="/jardin/" class="nivel nivel--jardin" data-revelar>
-          <Logo nivel="jardin" alto={112} decorativo />
+          <Logo nivel="jardin" alto={116} decorativo />
           <span class="nivel__texto">{p.presentacion.jardin.texto}</span>
           <span class="nivel__anio t-cifra" data-contador={p.presentacion.jardin.anio} data-desde="1900">{p.presentacion.jardin.anio}</span>
           <span class="nivel__ir">Conocé el Jardín <span aria-hidden="true">→</span></span>
         </a>
         <span class="presentacion__division" aria-hidden="true"><Trazo nombre="ola" color="arena" grosor={2} /></span>
         <a href="/primaria/" class="nivel nivel--primaria" data-revelar>
-          <Logo nivel="primaria" alto={112} decorativo />
+          <Logo nivel="primaria" alto={92} decorativo />
           <span class="nivel__texto">{p.presentacion.primaria.texto}</span>
           <span class="nivel__anio t-cifra" data-contador={p.presentacion.primaria.anio} data-desde="1940">{p.presentacion.primaria.anio}</span>
           <span class="nivel__ir">Conocé la Primaria <span aria-hidden="true">→</span></span>
         </a>
       </div>
-      <a href="/la-escuelita/#vea" class="presentacion__vea" data-revelar>
-        <Logo nivel="vea" alto={92} />
-      </a>
     </div>
   </section>
 
@@ -214,56 +237,102 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
 
 <style>
   /* ---------- HERO ---------- */
-  .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; background: var(--tinta); color: var(--papel); }
-  @supports (height: 100dvh) { .hero { min-height: 100dvh; } }
-  .hero__fondo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
-  .hero__parallax { position: absolute; top: 0; left: 0; right: 0; bottom: -10%; }
-  .hero__secuencia { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
-  .hero__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: opacity 2.4s var(--ease-suave); }
-  .hero__capa.is-activa { opacity: 1; }
-  .hero__capa + .hero__capa { display: none; }
-  .hero.is-secuencia .hero__capa { display: block; }
-  .hero__capa :global(.foto) { height: 100%; }
-  .hero__capa :global(.foto--recorte::before) { display: none; }
-  /* Ken Burns muy suave */
-  .hero__capa :global(img) { transform: scale(1.02); transition: transform 9s linear, opacity 0.7s var(--ease-suave); }
-  .hero__capa.is-activa :global(img) { transform: scale(1.1); }
-  :global(html.reducido) .hero__capa :global(img), :global(html.liviano) .hero__capa :global(img) { transform: none; transition: opacity 0.4s; }
-  .hero__velo {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background:
-      linear-gradient(to top, rgba(18, 14, 10, 0.82) 0%, rgba(18, 14, 10, 0.5) 30%, rgba(18, 14, 10, 0.12) 58%, rgba(18, 14, 10, 0) 72%),
-      linear-gradient(to bottom, rgba(18, 14, 10, 0.45) 0%, rgba(18, 14, 10, 0) 20%);
+  .hero {
+    position: relative; overflow: hidden;
+    padding-top: calc(var(--header-h) + 2.5rem);
+    padding-bottom: 3rem;
+    background: var(--papel);
   }
-  .hero__contenido { position: relative; z-index: 2; pointer-events: none; }
-  .hero__contenido > * { pointer-events: auto; }
-  .hero__contenido { padding-top: calc(var(--header-h) + 2.72rem); padding-bottom: 3.06rem; padding-bottom: clamp(2.72rem, 10vh, 5.44rem); }
+  @media (min-width: 64em) { .hero { min-height: 100vh; min-height: min(100vh, 58rem); display: flex; align-items: center; padding-top: calc(var(--header-h) + 1.5rem); padding-bottom: 2.5rem; } }
+  /* Aurora de pintura: manchas de color muy suaves (CSS, sin WebGL) */
+  .hero__aurora { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; }
+  .hero__aurora span { position: absolute; border-radius: 50%; }
+  .hero__aurora span:nth-child(1) { width: 60vw; height: 60vw; right: -18vw; top: -20vw; background: radial-gradient(closest-side, rgba(242, 201, 168, 0.75), rgba(242, 201, 168, 0)); }
+  .hero__aurora span:nth-child(2) { width: 50vw; height: 50vw; right: 10vw; bottom: -26vw; background: radial-gradient(closest-side, rgba(207, 224, 196, 0.8), rgba(207, 224, 196, 0)); }
+  .hero__aurora span:nth-child(3) { width: 40vw; height: 40vw; left: -18vw; top: 14%; background: radial-gradient(closest-side, rgba(246, 220, 212, 0.7), rgba(246, 220, 212, 0)); }
+  @media (min-width: 64em) and (prefers-reduced-motion: no-preference) {
+    .hero__aurora span:nth-child(1) { animation: aurora-a 22s ease-in-out infinite alternate; }
+    .hero__aurora span:nth-child(2) { animation: aurora-b 26s ease-in-out infinite alternate; }
+    .hero__aurora span:nth-child(3) { animation: aurora-a 30s ease-in-out infinite alternate-reverse; }
+  }
+  @keyframes aurora-a { to { transform: translate3d(-4vw, 3vw, 0) scale(1.08); } }
+  @keyframes aurora-b { to { transform: translate3d(3vw, -4vw, 0) scale(0.94); } }
+  :global(html.liviano) .hero__aurora span { animation: none; }
+
+  .hero__grilla { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }
+  @media (min-width: 64em) { .hero__grilla { grid-template-columns: 1.05fr 1fr; grid-gap: 3rem; gap: 3rem; } }
+  .hero__texto { pointer-events: none; }
+  .hero__texto > * { pointer-events: auto; }
+  .hero__chip {
+    display: inline-flex; align-items: center;
+    padding: 0.4rem 0.85rem 0.42rem 0.7rem;
+    border: 1px solid rgba(35, 32, 28, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 253, 248, 0.75);
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; color: var(--tinta-suave);
+    max-width: 100%;
+  }
+  .hero__punto { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--rojo); margin-right: 0.55rem; flex: none; box-shadow: 0 0 0 4px rgba(210, 51, 52, 0.15); }
   .hero__titular {
-    max-width: 15ch;
-    font-size: 2.236rem;
-    font-size: clamp(2.236rem, 0.984rem + 3.72vw, 4.35rem);
-    font-weight: 320;
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    color: var(--papel);
-    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.25);
+    margin-top: 1.25rem;
+    max-width: 13ch;
+    font-size: 2.6rem;
+    font-size: clamp(2.6rem, 1.2rem + 4.6vw, 5.4rem);
+    font-weight: 330;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--tinta);
   }
-  .hero__trazo { width: 13rem; width: clamp(10rem, 22vw, 20rem); height: 1.4rem; margin-top: 0.75rem; }
-  .hero__trazo :global(svg) { width: 100%; height: 100%; }
-  .hero__bajada {
-    margin-top: 1.275rem;
-    max-width: 36rem;
-    font-size: 1.125rem;
-    font-size: var(--t-md);
-    line-height: 1.55;
-    color: #f4ede1;
+  .hero__titular .acento { color: var(--rojo); font-weight: 300; }
+  .hero__bajada { margin-top: 1.4rem; max-width: 34rem; font-size: 1.0625rem; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.55; color: var(--tinta-suave); }
+  .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.9rem; }
+  .hero__acciones > :global(*) { margin: 0 0.75rem 0.75rem 0; }
+  .hero__niveles { list-style: none; padding: 0; margin: 1.6rem 0 0; display: flex; flex-wrap: wrap; }
+  .hero__niveles li { margin: 0 0.75rem 0.75rem 0; }
+  .hero__nivel {
+    display: flex; align-items: center;
+    padding: 0.45rem 1rem 0.45rem 0.55rem;
+    border-radius: 14px;
+    background: rgba(255, 253, 248, 0.85);
+    border: 1px solid rgba(35, 32, 28, 0.1);
+    text-decoration: none;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s;
   }
-  .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.912rem; }
-  .hero__acciones > :global(*) { margin: 0 1.488rem 0.75rem 0; }
-  .hero__enlace { color: var(--papel); font-weight: 600; padding: 0.5rem 0; }
-  .hero__scroll { position: absolute; right: var(--gutter); bottom: 1.75rem; width: 1.28rem; height: 3rem; color: var(--papel); opacity: 0.9; }
+  .hero__nivel :global(img) { margin-right: 0.7rem; }
+  .hero__nivel span { display: flex; flex-direction: column; line-height: 1.15; }
+  .hero__nivel strong { font-family: var(--f-titulo); font-weight: 450; font-size: 1.05rem; }
+  .hero__nivel small { font-size: 0.75rem; color: var(--tinta-suave); letter-spacing: 0.06em; }
+  @media (hover: hover) { .hero__nivel:hover { transform: translateY(-2px); box-shadow: var(--sombra-papel); border-color: rgba(35, 32, 28, 0.2); } }
+
+  /* Collage en abanico */
+  .hero__collage { position: relative; }
+  .hero__mancha { width: 82%; left: 6%; top: 4%; opacity: 0.85; }
+  .abanico { position: relative; width: 100%; max-width: 34rem; margin: 0 auto; }
+  .abanico::before { content: ''; display: block; padding-top: 92%; }
+  .abanico__foto, .abanico__mini {
+    position: absolute; margin: 0;
+    background: #fffdf8; padding: 0.4rem 0.4rem 0.6rem;
+    box-shadow: 0 2px 3px rgba(60, 40, 20, 0.08), 0 22px 40px -18px rgba(60, 40, 20, 0.45);
+    transform: rotate(var(--r, 0deg));
+    transition: transform 0.7s var(--ease-out);
+  }
+  .abanico__foto :global(.foto), .abanico__mini :global(.foto) { border-radius: 2px; }
+  .abanico__foto--centro { width: 50%; left: 25%; top: 2%; z-index: 3; }
+  .abanico__foto--izq { width: 40%; left: 1%; top: 16%; z-index: 2; }
+  .abanico__foto--der { width: 40%; right: 1%; top: 18%; z-index: 2; }
+  .abanico__mini { width: 23%; z-index: 4; padding: 0.3rem; }
+  .abanico__mini--a { left: 8%; bottom: 2%; }
+  .abanico__mini--b { right: 10%; bottom: 0; }
+  @media (hover: hover) {
+    .abanico:hover .abanico__foto--izq { transform: rotate(-13deg) translate3d(-6%, 0, 0); }
+    .abanico:hover .abanico__foto--der { transform: rotate(12deg) translate3d(6%, 0, 0); }
+    .abanico:hover .abanico__foto--centro { transform: rotate(0deg) translate3d(0, -2%, 0); }
+  }
+  .hero__sello { position: absolute; left: -2%; top: -6%; z-index: 5; }
+  @media (max-width: 47.99em) { .hero__sello { transform: scale(0.7); transform-origin: 0 0; left: 0; top: -4%; } }
+  .hero__scroll { position: absolute; left: 50%; bottom: 1rem; width: 1.3rem; height: 2.8rem; margin-left: -0.65rem; color: var(--tinta-tenue); z-index: 2; }
   .hero__scroll :global(svg) { width: 100%; height: 100%; }
-  @media (max-width: 40em) { .hero__scroll { display: none; } }
+  @media (max-width: 63.99em) { .hero__scroll { display: none; } }
 
   /* ---------- PRESENTACIÓN ---------- */
   .presentacion { text-align: center; }

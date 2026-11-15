@@ -24,7 +24,7 @@ interface Props {
   speed?: number;
   intro?: 'rise' | 'assemble' | 'spin' | 'none';
 }
-const { ids, preset = 'cylinder', cardWidth = 210, aspectRatio = 0.8, gap = 24, alto = 'clamp(18rem, 32vw, 27rem)', fadeColor = '#faf6ee', cornerRadius = 8, etiqueta = 'Galería de fotos', class: clase = '', speed = 12, intro = 'rise' } = Astro.props;
+const { ids, preset = 'cylinder', cardWidth = 210, aspectRatio = 0.8, gap = 24, alto = 'clamp(18rem, 32vw, 27rem)', fadeColor = '#faf6ee', cornerRadius = 8, etiqueta = 'Galería de fotos', class: clase = '', speed = 20, intro = 'rise' } = Astro.props;
 
 const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
 const items = await Promise.all(ids.map(async (id) => {
@@ -36,7 +36,7 @@ const g = geometria({ count: items.length, preset, cardWidth, aspectRatio, gap }
 const config = {
   count: items.length, preset, cardWidth, aspectRatio, gap,
   intro, autoplay: 'drift', speed, interval: 3, direction: 'left',
-  draggable: true, momentum: 0.6, snap: true, pauseOnHover: true, focusOnClick: true,
+  draggable: true, momentum: 0.6, snap: true, pauseOnHover: false, focusOnClick: false,
   parallax: 0.3, stretch: 0.5, depthFade: 0.55,
 };
 const { axis } = g;

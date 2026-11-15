@@ -13,7 +13,7 @@ Primera versión completa. Lo de abajo está abierto: cada punto tiene el supues
 | 5 | **Testimonios** de ex alumnos, familias y docentes. | Carrusel "Voces de la comunidad" construido y **oculto** (`PUBLICAR.testimonios` + `src/content/comunidad.ts`). |
 | 6 | **Libro de hechizos (Macbeth) e historieta alfabética** (Inglés): ¿se suman como proyecto destacado? | No se publica el texto (no está en el editado). Una foto de esa carpeta ilustra el área de Inglés. |
 | 7 | **Feria**: ¿"Feria de Libros y Palabras" o "Feria de Boas Novas"? | "Feria de Libros y Palabras" (texto editado). |
-| 8 | **Logos**: faltan los tres por separado y en buena calidad (ideal SVG): Jardín, Primaria y VEA. | Provisorios: recortes del único PNG de la web anterior (250×112 px, se ven borrosos en pantallas nítidas). **Primaria no tiene logo**: se muestra un rótulo tipográfico provisorio ("Instituto La Escuelita · Primaria") que **no es un logo** y hay que reemplazar. El orden Jardín izquierda / Primaria derecha / VEA abajo está respetado. Favicon e íconos salen del dibujo de Jardín: rehacerlos con el SVG definitivo. |
+| 8 | **Logos** | ✅ Recibidos los dos logos oficiales (La Escuelita y V.E.A./Instituto La Escuelita), en alta calidad. Versiones sin fondo (navbar, hero, secciones claras, loader) y con fondo blanco (footer oscuro) en `public/logos/`; originales en `_material/logos/originales/`. Como la escuela tiene dos logos, en la presentación del Inicio va La Escuelita (Jardín, izquierda) e Instituto La Escuelita · V.E.A. (Primaria, derecha); no se repite el de V.E.A. abajo. Pendiente: rehacer favicon e íconos con el logo nuevo si se quiere. |
 | 9 | **Autorización de imagen** de todas las fotos y del video. | Se publican las fotos seleccionadas; **confirmar antes de salir a producción**. Revisar `_material/FOTOS-MANIFEST.md`. |
 | 10 | **Noticias / Cronología / Admisión 2026** de la web anterior. | Fuera de esta etapa. Las URL viejas redirigen (`vercel.json`). La estructura admite sumar una sección "Novedades" más adelante. |
 | 11 | **Redes sociales**: la web anterior tenía los íconos con enlaces vacíos (`#facebook`, `#instagram`, `#youtube`). | Íconos preparados y ocultos. Completar las URL en `src/config/sitio.ts` (`REDES`) y aparecen solos en el footer. |
@@ -107,3 +107,10 @@ Portados de React Bits (https://reactbits.dev, licencia MIT + Commons Clause, co
 - **Tilted Card** (inclinación 3D con brillo): puertas Jardín/Primaria, tarjetas "¿Qué nos diferencia?" y proyectos de Primaria (solo desktop).
 
 Microcopy nuevo: "Arrastrá para girar" (debajo del carrusel circular).
+
+## 8. Cuarta pasada: hero nuevo, logos oficiales y carrusel
+
+- **Hero del Inicio rediseñado** (inspirado en patrones de 21st.dev "Centered Hero with Image Fan" y "Editorial Collage", más React Bits): fondo claro con manchas de color suaves, titular en tinta con "sentir, piensa." en cursiva roja (se lee siempre), botones "Pedí una entrevista" y "Conocé nuestra mirada", accesos a Jardín (1959) y Primaria (1997) con sus logos, y collage de fotos en abanico con sello giratorio. El rastro de fotos al mover el mouse sigue activo.
+- El header ya no es transparente sobre fotos: siempre papel, con los dos logos sin fondo.
+- **Carrusel circular**: gira siempre (no se frena con el mouse) y más rápido.
+- Microcopy nuevo: etiqueta del hero "Primer Jardín Argentino de Educación por el Arte · 1959" (texto institucional) y los accesos "Jardín 1959 / Primaria 1997".

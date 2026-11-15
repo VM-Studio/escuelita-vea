@@ -533,3 +533,8 @@ html.reducido .menu-movil .menu-movil__papel, html.liviano .menu-movil .menu-mov
 .forma-arco { border-radius: 999px 999px var(--radio) var(--radio) !important; overflow: hidden; }
 .con-mancha { position: relative; isolation: isolate; }
 .con-mancha > :not(.mancha) { position: relative; z-index: 1; }
+
+/* Rendimiento: el filtro de crayón (ruido SVG) solo en pantallas grandes; en celulares el trazo va limpio */
+@media (max-width: 63.99em) {
+  [filter='url(#crayon)'] { filter: none; }
+}

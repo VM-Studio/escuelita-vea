@@ -11,7 +11,7 @@ const activo = (href: string) => (href === '/' ? ruta === '/' : ruta.startsWith(
 <header class:list={['encabezado', { 'encabezado--hero': sobreHero }]} data-encabezado>
   <div class="encabezado__barra contenedor">
     <a href="/" class="encabezado__logo" aria-label="La Escuelita · Inicio">
-      <Logo nivel="marca" alto={38} decorativo />
+      <span class="marca"><Logo nivel="jardin" alto={44} decorativo prioridad /><span class="marca__sep" aria-hidden="true"></span><Logo nivel="vea" alto={30} decorativo prioridad /></span>
     </a>
 
     <nav class="nav" aria-label="Principal">
@@ -119,6 +119,8 @@ const activo = (href: string) => (href === '/' ? ruta === '/' : ruta.startsWith(
     align-items: center;
     justify-content: space-between;
   }
+  .marca { display: flex; align-items: center; }
+  .marca__sep { width: 1px; height: 26px; background: rgba(35, 32, 28, 0.25); margin: 0 0.7rem; }
   .encabezado__logo {
     display: block;
     flex: none;
@@ -129,7 +131,7 @@ const activo = (href: string) => (href === '/' ? ruta === '/' : ruta.startsWith(
     transition: background-color 0.4s;
   }
   /* Sobre la foto, el logo (rojo sobre transparente) va sobre una plaquita de papel para leerse siempre */
-  .encabezado--hero:not(.is-solido):not(.is-menu-abierto) .encabezado__logo { background: rgba(250, 246, 238, 0.92); }
+
 
   .nav { display: none; }
   .encabezado__cta { display: none; }
