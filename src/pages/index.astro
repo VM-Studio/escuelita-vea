@@ -1,141 +1,244 @@
 ---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
+import Trazo from '../components/Trazo.astro';
 import Logo from '../components/Logo.astro';
 import Boton from '../components/Boton.astro';
-import PortadaPagina from '../components/PortadaPagina.astro';
-import Declaracion from '../components/Declaracion.astro';
-import Indice from '../components/Indice.astro';
 import Puertas from '../components/Puertas.astro';
 import CurvaTexto from '../components/CurvaTexto.astro';
 import TarjetasRebote from '../components/TarjetasRebote.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
+import Sello from '../components/Sello.astro';
+import Mancha from '../components/Mancha.astro';
 import Paleta from '../components/Paleta.astro';
 import CarruselCircular from '../components/CarruselCircular.astro';
+import RastroImagenes from '../components/RastroImagenes.astro';
 import { inicio } from '../content/inicio';
 import { comunidad } from '../content/comunidad';
-import { acento } from '../lib/texto';
+import { parrafos, acento } from '../lib/texto';
 
 const p = inicio;
-const video = { mp4: '/video/portada.mp4', poster: '/video/portada-poster.jpg' };
-const precargar = [{ srcset: `${video.poster} 1280w`, sizes: '100vw', type: 'image/jpeg' }];
+// Precarga de la foto del hero (mismos parámetros que <Foto prioridad>)
+const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
+const primera = masters[`../assets/fotos/${p.portada.fotos[0]}.jpg`].default;
+const anchos = [480, 720, 960, 1280, 1600, 2000].filter((w) => w <= primera.width);
+const pre = await getImage({ src: primera, widths: anchos, format: 'avif' });
+const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34vw, 86vw', type: 'image/avif' }];
 ---
 <Base
   titulo="Inicio"
   descripcion="La Escuelita: Primer Jardín Argentino de Educación por el Arte (1959) e Instituto La Escuelita, Escuela Primaria de Educación a través del Arte (1997). Fundada por la profesora Marta Calvo. Colegiales, CABA."
   precargar={precargar}
 >
-  {/* ============ HERO: video a sangre, título enorme (SiteInspire: Collective Gallery) ============ */}
-  <PortadaPagina titulo={p.portada.titular} video={video} volanta={`${p.presentacion.jardin.texto} — ${p.presentacion.jardin.anio}`} rotulo="Colegiales · Buenos Aires" tamano="enorme">
-    <span slot="titulo">El niño es cuerpo que siente y al <em class="acento">sentir, piensa.</em></span>
-    <p class="hero-bajada">{p.portada.bajada}</p>
-    <div class="hero-acciones">
-      <Boton href="/contacto/#entrevista" variante="rojo">Pedí una entrevista</Boton>
-      <Boton href="/proyecto-pedagogico/" variante="claro">Conocé nuestra mirada</Boton>
-    </div>
-  </PortadaPagina>
-
-  {/* ============ PRESENTACIÓN (minimal, tipo fundación de arte) ============ */}
-  <section class="presentacion" id="presentacion" aria-labelledby="presentacion-titulo">
-    <div class="contenedor">
-      <div class="presentacion__fila">
-        <p class="rotulo">{p.presentacion.fundada}</p>
-        <p class="rotulo presentacion__der">{p.presentacion.descripcion}</p>
+  {/* ============ HERO ============ */}
+  {/* Concepto: una puerta abierta (arco) al patio de La Escuelita. Alrededor, "hacer · sentir · pensar"
+      (de la frase de Marta Calvo): el diseño dice lo mismo que el titular. */}
+  <section class="hero" data-hero aria-labelledby="hero-titulo">
+    <div class="hero__aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="hero__grilla contenedor">
+      <div class="hero__texto">
+        <p class="hero__chip" data-hero-resto><span class="hero__punto" aria-hidden="true"></span>{p.presentacion.jardin.texto} · {p.presentacion.jardin.anio}</p>
+        <h1 id="hero-titulo" class="hero__titular" data-hero-titular>El niño es cuerpo que siente y al <em class="acento">sentir, piensa.</em></h1>
+        <p class="hero__bajada" data-hero-resto>{p.portada.bajada}</p>
+        <div class="hero__acciones" data-hero-resto>
+          <Boton href="/contacto/#entrevista" variante="rojo" tamano="grande">Pedí una entrevista</Boton>
+          <Boton href="/proyecto-pedagogico/" tamano="grande">Conocé nuestra mirada</Boton>
+        </div>
+        <dl class="hero__datos" data-hero-resto>
+          <div><dt><a href="/jardin/">Jardín</a></dt><dd class="t-cifra">{p.presentacion.jardin.anio}</dd></div>
+          <div><dt><a href="/primaria/">Primaria</a></dt><dd class="t-cifra">{p.presentacion.primaria.anio}</dd></div>
+          <div><dt>años en la Educación por el Arte</dt><dd class="t-cifra">67</dd></div>
+        </dl>
       </div>
-      <h2 id="presentacion-titulo" class="presentacion__nombre" data-revelar set:html={acento(p.presentacion.nombre)} />
-      <p class="presentacion__trayectoria" data-revelar>{p.presentacion.trayectoria}</p>
 
-      {/* Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha. */}
+      <div class="hero__escena">
+        <img class="hero__dibujos" src="/dibujos-crayon.webp" alt="" aria-hidden="true" width="1100" height="1555" decoding="async" />
+        <svg class="hero__arco-trazo" viewBox="0 0 400 520" aria-hidden="true" data-hero-trazo>
+          <g filter="url(#crayon)" fill="none" stroke="var(--rojo-vivo)" stroke-width="2.6" stroke-linecap="round">
+            <path d="M18 512 L 16 210 C 14 92, 110 10, 202 12 C 300 14, 386 96, 384 214 L 382 508" />
+          </g>
+        </svg>
+        <div class="hero__arco" data-hero-secuencia>
+          {[p.portada.fotos[0], p.portada.fotos[1], p.portada.fotos[2], p.portada.fotos[3]].map((id, i) => (
+            <div class:list={['hero__capa', { 'is-activa': i === 0 }]} data-hero-capa>
+              <Foto id={id} ratio="4/5" sizes="(min-width: 64em) 34vw, 86vw" prioridad={i === 0} alt={i === 0 ? undefined : ''} />
+            </div>
+          ))}
+        </div>
+
+        <ul class="hero__palabras" aria-label="Hacer, sentir y pensar">
+          <li class="hero__palabra hero__palabra--a" data-hero-resto><span class="hero__palabra-punto" style="background:var(--ocre)"></span>hacer</li>
+          <li class="hero__palabra hero__palabra--b" data-hero-resto><span class="hero__palabra-punto" style="background:var(--rojo)"></span>sentir</li>
+          <li class="hero__palabra hero__palabra--c" data-hero-resto><span class="hero__palabra-punto" style="background:var(--verde)"></span>pensar</li>
+        </ul>
+        <div class="hero__sello" data-hero-resto><Sello tamano={104} color="tinta" /></div>
+      </div>
+    </div>
+    <a href="#presentacion" class="hero__scroll" aria-label="Bajar a la presentación" data-hero-trazo>
+      <Trazo nombre="scroll" color="actual" grosor={2} dibujar={false} crayon={false} />
+    </a>
+  </section>
+
+  {/* ============ PRESENTACIÓN CON LOGOS ============ */}
+  <section class="presentacion seccion" id="presentacion" aria-labelledby="presentacion-titulo">
+    <div class="contenedor">
+      <div class="presentacion__cabeza">
+        <Trazo nombre="sol" class="presentacion__sol" grosor={2.6} />
+        <h2 id="presentacion-titulo" class="presentacion__nombre" data-titulo-lineas set:html={acento(p.presentacion.nombre)} />
+        <p class="presentacion__fundada" data-revelar>{p.presentacion.fundada}</p>
+        <p class="presentacion__trayectoria" data-revelar>
+          <span class="subrayable">{p.presentacion.trayectoria}<Trazo nombre="subrayado" grosor={3} /></span>
+        </p>
+        <p class="presentacion__descripcion" data-revelar>{p.presentacion.descripcion}</p>
+        <Paleta class="presentacion__paleta" />
+      </div>
+
+      {/* Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha, VEA abajo. */}
       <div class="presentacion__niveles">
-        <a href="/jardin/" class="nivel" data-revelar>
-          <Logo nivel="jardin" alto={108} decorativo />
-          <span class="nivel__anio t-cifra">{p.presentacion.jardin.anio}</span>
+        <a href="/jardin/" class="nivel nivel--jardin" data-revelar>
+          <Logo nivel="jardin" alto={116} decorativo />
           <span class="nivel__texto">{p.presentacion.jardin.texto}</span>
-          <span class="enlace-flecha">Conocé el Jardín</span>
+          <span class="nivel__anio t-cifra" data-contador={p.presentacion.jardin.anio} data-desde="1900">{p.presentacion.jardin.anio}</span>
+          <span class="nivel__ir">Conocé el Jardín <span aria-hidden="true">→</span></span>
         </a>
-        <a href="/primaria/" class="nivel" data-revelar>
-          <Logo nivel="primaria" alto={84} decorativo />
-          <span class="nivel__anio t-cifra">{p.presentacion.primaria.anio}</span>
+        <span class="presentacion__division" aria-hidden="true"><Trazo nombre="ola" color="arena" grosor={2} /></span>
+        <a href="/primaria/" class="nivel nivel--primaria" data-revelar>
+          <Logo nivel="primaria" alto={92} decorativo />
           <span class="nivel__texto">{p.presentacion.primaria.texto}</span>
-          <span class="enlace-flecha">Conocé la Primaria</span>
+          <span class="nivel__anio t-cifra" data-contador={p.presentacion.primaria.anio} data-desde="1940">{p.presentacion.primaria.anio}</span>
+          <span class="nivel__ir">Conocé la Primaria <span aria-hidden="true">→</span></span>
         </a>
       </div>
     </div>
   </section>
 
-  {/* ============ BIENVENIDA: declaración con fotos entre las palabras (SiteInspire: Albers) ============ */}
-  <section class="bienvenida" aria-label="Bienvenida">
-    <div class="contenedor">
-      <Declaracion
-        texto={p.bienvenida.texto}
-        tamano="xl"
-        imagenes={[
-          { id: p.bienvenida.foto, despues: 'un espacio', forma: 'pastilla' },
-          { id: 'taller-pintura-mesa', despues: 'aprendizaje', forma: 'circulo' },
-          { id: 'patio-abrazo-arbol', despues: 'entrañables.', forma: 'arco' },
-        ]}
-      />
+  {/* ============ BIENVENIDA ============ */}
+  <section class="bienvenida seccion seccion--papel-oscuro" aria-label="Bienvenida">
+    <div class="contenedor bienvenida__grilla">
+      {/* Collage en abanico (idea "Image Fan" de 21st.dev): la foto institucional al centro */}
+      <div class="bienvenida__foto con-mancha">
+        <Mancha forma="b" color="ocre" class="bienvenida__mancha" />
+        <div class="abanico" data-abanico>
+          <figure class="abanico__foto abanico__foto--izq" data-abanico-item style="--r:-9deg">
+            <Foto id="jardin-hojas-al-aire" ratio="4/5" sizes="(min-width: 56em) 20vw, 40vw" />
+          </figure>
+          <figure class="abanico__foto abanico__foto--der" data-abanico-item style="--r:8deg">
+            <Foto id="primaria-leyenda-bajo-arboles" ratio="4/5" sizes="(min-width: 56em) 20vw, 40vw" />
+          </figure>
+          <figure class="abanico__foto abanico__foto--centro" data-abanico-item style="--r:-1.5deg">
+            <span class="cinta" aria-hidden="true"></span>
+            <Foto id={p.bienvenida.foto} ratio="4/3" sizes="(min-width: 56em) 32vw, 70vw" />
+          </figure>
+          <figure class="abanico__mini abanico__mini--a" data-abanico-item style="--r:6deg">
+            <Foto id="plastica-masa-muchas-manos" ratio="1/1" sizes="140px" />
+          </figure>
+          <figure class="abanico__mini abanico__mini--b" data-abanico-item style="--r:-7deg">
+            <Foto id="musica-instrumentos" ratio="1/1" sizes="140px" />
+          </figure>
+        </div>
+      </div>
+      <div class="bienvenida__texto">
+        <Trazo nombre="espiral" class="bienvenida__espiral" grosor={2.2} color="ocre" />
+        <p class="bienvenida__parrafo" data-revelar>{p.bienvenida.texto}</p>
+      </div>
     </div>
   </section>
 
-  {/* ============ JUEGO Y ARTE: carrusel circular ============ */}
-  <section class="juego-arte" aria-label="El juego y el arte">
+  {/* ============ INTERLUDIO ============ */}
+  <section class="juego-arte seccion" aria-label="El juego y el arte">
     <div class="contenedor juego-arte__cabeza">
       <Paleta class="juego-arte__paleta" />
       <p class="t-frase juego-arte__frase" data-frase>{p.interludio.frase}</p>
     </div>
     <CarruselCircular ids={p.interludio.fotos} etiqueta="Juego y arte en La Escuelita" cardWidth={200} aspectRatio={0.78} gap={22} />
-    <p class="rotulo juego-arte__ayuda" aria-hidden="true">Arrastrá para girar</p>
+    <p class="juego-arte__ayuda" aria-hidden="true">Arrastrá para girar</p>
   </section>
 
-  {/* ============ LÍNEA DE TIEMPO (tipográfica) ============ */}
-  <section class="tiempo" aria-labelledby="tiempo-titulo">
+  {/* ============ LÍNEA DE TIEMPO ============ */}
+  <section class="tiempo seccion" aria-labelledby="tiempo-titulo" data-linea-tiempo>
     <div class="contenedor">
       <div class="tiempo__cabeza">
         <p class="tiempo__cifra t-cifra" aria-hidden="true"><span data-contador="67" data-desde="0">67</span></p>
         <div>
+          {/* El "67" rojo grande es el comienzo del título (no se repite) */}
           <h2 id="tiempo-titulo" class="tiempo__titulo" data-revelar set:html={'<span class="sr-only">67 </span>' + acento(p.lineaDeTiempo.titulo.replace(/^67\s+/, ''))} />
           <p class="tiempo__frase t-frase" data-revelar>{p.lineaDeTiempo.frase}</p>
           <p class="tiempo__bajada" data-revelar>{p.lineaDeTiempo.bajada}</p>
+          <div class="tiempo__boton" data-revelar><Boton href="/la-escuelita/historia/" variante="rojo">Conocé nuestra historia</Boton></div>
         </div>
       </div>
-      <div class="tiempo__hitos">
+
+      <div class="tiempo__cuerpo">
+      <span class="tiempo__linea" data-linea aria-hidden="true"></span>
+      <ol class="tiempo__hitos">
         {p.lineaDeTiempo.hitos.map((h, i) => (
-          <figure class:list={['hito', { 'hito--b': i === 1 }]} data-revelar>
-            <Foto id={h.fotos[0]} ratio="4/3" sizes="(min-width: 56em) 40vw, 90vw" revelar />
-            <figcaption>
-              <p class="hito__anio t-cifra">{h.anio}</p>
+          <li class:list={['hito', `hito--${i === 0 ? 'a' : 'b'}`]}>
+            <span class="hito__punto" aria-hidden="true"></span>
+            <div class="hito__texto" data-revelar>
+              <p class="hito__anio t-cifra"><span data-contador={h.anio} data-desde={i === 0 ? '1900' : '1959'}>{h.anio}</span></p>
               <p class="hito__desc">{h.texto}</p>
-            </figcaption>
-          </figure>
+            </div>
+            <div class="hito__fotos">
+              {h.fotos.map((f, j) => (
+                <div class:list={['pegada', 'hito__foto', `hito__foto--${j}`]} style={`--rot:${j ? 2.4 : -1.8}deg`} data-revelar>
+                  <span class="cinta" aria-hidden="true"></span>
+                  <Foto id={f} ratio={j ? '4/3' : '4/5'} sizes="(min-width: 56em) 26vw, 70vw" />
+                </div>
+              ))}
+            </div>
+          </li>
         ))}
+      </ol>
       </div>
-      <div class="tiempo__mas" data-revelar><a href="/la-escuelita/historia/" class="enlace-flecha">Conocé nuestra historia</a></div>
     </div>
   </section>
 
-  {/* ============ EJES: índice editorial (SiteInspire: Olivia Plender) ============ */}
-  <section class="ejes" aria-labelledby="ejes-titulo">
+  {/* ============ EJES PEDAGÓGICOS ============ */}
+  <section class="ejes seccion seccion--papel-oscuro" aria-labelledby="ejes-titulo">
     <div class="contenedor">
       <div class="ejes__cabeza">
-        <h2 id="ejes-titulo" data-revelar set:html={acento(p.ejes.titulo)} />
-        <a href="/proyecto-pedagogico/" class="enlace-flecha" data-revelar>Conocé el proyecto pedagógico</a>
+        <h2 id="ejes-titulo" data-titulo-lineas set:html={acento(p.ejes.titulo)} />
+        <Trazo nombre="flecha-curva" class="ejes__flecha" grosor={2.4} />
       </div>
-      <Indice items={p.ejes.items.map((e) => ({ titulo: e.titulo, texto: e.texto, foto: e.foto }))} />
+      {p.ejes.items.map((e, i) => (
+        <article class:list={['eje', { 'eje--invertido': i % 2 === 1 }]}>
+          <div class="eje__foto con-mancha">
+            <Mancha forma={(['a', 'c', 'd', 'b'] as const)[i]} color={(['arena', 'verde', 'rosa', 'azul'] as const)[i]} class={`eje__mancha eje__mancha--${i % 2 ? 'b' : 'a'}`} />
+            <Foto id={e.foto} ratio={i % 2 ? '1/1' : '4/3'} sizes="(min-width: 56em) 34vw, 100vw" revelar class={i % 2 ? 'forma-arco' : ''} />
+          </div>
+          <div class="eje__texto">
+            <span class="eje__marca" aria-hidden="true"><Trazo nombre={(['sol', 'lazos', 'espiral', 'hoja'] as const)[i]} grosor={2.4} color={i % 2 ? 'verde' : 'ocre'} /></span>
+            <h3 class="eje__titulo" data-titulo-lineas>{e.titulo}</h3>
+            <div class="prosa eje__prosa" data-revelar set:html={parrafos(e.texto)} />
+          </div>
+        </article>
+      ))}
+      <div class="ejes__mas" data-revelar>
+        <Boton href="/proyecto-pedagogico/">Conocé el proyecto pedagógico</Boton>
+      </div>
     </div>
   </section>
 
+  {/* ============ DOS PUERTAS ============ */}
   <Puertas />
 
+  {/* ============ MARQUESINA DE MATERIALES ============ */}
   <CurvaTexto items={p.materiales} etiqueta="Materiales del taller: crayones, masa, témpera, arcilla, tinta china, anilinas y collage" />
 
-  {/* ============ COMUNIDAD (centrado) ============ */}
-  <section class="adelanto" aria-labelledby="adelanto-titulo">
-    <div class="contenedor adelanto__caja">
-      <h2 id="adelanto-titulo" data-revelar set:html={acento(comunidad.portada.titulo)} />
-      <p class="adelanto__bajada" data-revelar>{comunidad.portada.bajada}</p>
-      <TarjetasRebote ids={p.comunidadFotos} ancho={720} alto={320} tamano={210} spread={130} />
-      <a href="/comunidad/" class="enlace-flecha" data-revelar>Conocé nuestra comunidad</a>
+  {/* ============ COMUNIDAD (ADELANTO) ============ */}
+  <section class="adelanto seccion" aria-labelledby="adelanto-titulo">
+    <div class="contenedor">
+      <div class="adelanto__cabeza">
+        <h2 id="adelanto-titulo" data-titulo-lineas set:html={acento(comunidad.portada.titulo)} />
+        <p class="t-lead" data-revelar>{comunidad.portada.bajada}</p>
+        <div data-revelar><Boton href="/comunidad/">Conocé nuestra comunidad</Boton></div>
+      </div>
+      <div class="adelanto__fotos con-mancha">
+        <Mancha forma="d" color="verde" class="adelanto__mancha" opacidad={0.7} />
+        <TarjetasRebote ids={p.comunidadFotos} ancho={540} alto={300} tamano={190} spread={95} />
+      </div>
     </div>
   </section>
 
@@ -143,69 +246,257 @@ const precargar = [{ srcset: `${video.poster} 1280w`, sizes: '100vw', type: 'ima
 </Base>
 
 <style>
-  /* Hero */
-  .hero-bajada { max-width: 34rem; font-size: 1rem; font-size: clamp(1rem, 0.95rem + 0.25vw, 1.15rem); line-height: 1.55; color: rgba(250, 246, 238, 0.9); margin: 0 2rem 1rem 0; }
-  .hero-acciones { display: flex; flex-wrap: wrap; }
-  .hero-acciones > :global(*) { margin: 0 0.6rem 0.6rem 0; }
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    padding-top: calc(var(--header-h) + 2.5rem);
+    padding-bottom: 3rem;
+    background: var(--papel);
+  }
+  @media (min-width: 64em) { .hero { min-height: 100vh; min-height: min(100vh, 58rem); display: flex; align-items: center; padding-top: calc(var(--header-h) + 1.5rem); padding-bottom: 2.5rem; } }
+  /* Aurora de pintura: manchas de color muy suaves (CSS, sin WebGL) */
+  .hero__aurora { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; }
+  .hero__aurora span { position: absolute; border-radius: 50%; }
+  .hero__aurora span:nth-child(1) { width: 60vw; height: 60vw; right: -18vw; top: -20vw; background: radial-gradient(closest-side, rgba(242, 201, 168, 0.75), rgba(242, 201, 168, 0)); }
+  .hero__aurora span:nth-child(2) { width: 50vw; height: 50vw; right: 10vw; bottom: -26vw; background: radial-gradient(closest-side, rgba(207, 224, 196, 0.8), rgba(207, 224, 196, 0)); }
+  .hero__aurora span:nth-child(3) { width: 40vw; height: 40vw; left: -18vw; top: 14%; background: radial-gradient(closest-side, rgba(246, 220, 212, 0.7), rgba(246, 220, 212, 0)); }
+  @media (min-width: 64em) and (prefers-reduced-motion: no-preference) {
+    .hero__aurora span:nth-child(1) { animation: aurora-a 22s ease-in-out infinite alternate; }
+    .hero__aurora span:nth-child(2) { animation: aurora-b 26s ease-in-out infinite alternate; }
+    .hero__aurora span:nth-child(3) { animation: aurora-a 30s ease-in-out infinite alternate-reverse; }
+  }
+  @keyframes aurora-a { to { transform: translate3d(-4vw, 3vw, 0) scale(1.08); } }
+  @keyframes aurora-b { to { transform: translate3d(3vw, -4vw, 0) scale(0.94); } }
+  :global(html.liviano) .hero__aurora span { animation: none; }
 
-  /* Presentación */
-  .presentacion { padding: 4rem 0 4.5rem; padding: clamp(3rem, 2rem + 4vw, 6.5rem) 0; }
-  .presentacion__fila { display: flex; flex-wrap: wrap; justify-content: space-between; border-bottom: 1px solid rgba(35, 32, 28, 0.14); padding-bottom: 0.9rem; }
-  .presentacion__fila .rotulo { margin-bottom: 0.4rem; }
-  .presentacion__der { max-width: 30ch; text-align: right; }
-  .presentacion__nombre { margin-top: 2.5rem; font-size: 3.2rem; font-size: clamp(3.2rem, 1rem + 9vw, 11rem); font-weight: 300; letter-spacing: -0.05em; line-height: 0.85; }
-  .presentacion__trayectoria { margin-top: 1rem; font-family: var(--f-titulo); font-size: 1.4rem; font-size: clamp(1.3rem, 1rem + 1.2vw, 2.2rem); font-weight: 330; letter-spacing: -0.02em; }
-  .presentacion__niveles { display: grid; grid-template-columns: 1fr; margin-top: 3rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
-  .nivel { display: grid; grid-template-columns: auto 1fr; grid-template-areas: 'logo anio' 'logo texto' 'logo ir'; grid-gap: 0.25rem 1.5rem; gap: 0.25rem 1.5rem; align-items: center; padding: 1.75rem 0; text-decoration: none; border-bottom: 1px solid rgba(35, 32, 28, 0.14); transition: background-color 0.4s; }
-  .nivel :global(.logo) { grid-area: logo; }
-  .nivel__anio { grid-area: anio; font-size: 2.6rem; font-size: clamp(2.4rem, 1.6rem + 2.6vw, 4.2rem); line-height: 1; }
-  .nivel__texto { grid-area: texto; font-family: var(--f-titulo); font-size: 1.1rem; line-height: 1.3; max-width: 28ch; }
-  .nivel .enlace-flecha { grid-area: ir; margin-top: 0.5rem; font-size: 0.875rem; }
-  @media (hover: hover) { .nivel:hover { background: rgba(255, 253, 248, 0.6); } .nivel:hover .nivel__anio { color: var(--rojo); } }
-  @media (min-width: 56em) {
-    .presentacion__niveles { grid-template-columns: 1fr 1fr; }
-    .nivel { padding: 2.25rem 2rem 2.25rem 0; }
-    .nivel + .nivel { border-left: 1px solid rgba(35, 32, 28, 0.14); padding-left: 2.5rem; }
+  .hero__grilla { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }
+  @media (min-width: 64em) { .hero__grilla { grid-template-columns: 1.05fr 1fr; grid-gap: 3rem; gap: 3rem; } }
+  .hero__texto { pointer-events: none; }
+  .hero__texto > * { pointer-events: auto; }
+  .hero__chip {
+    display: inline-flex; align-items: center;
+    padding: 0.4rem 0.85rem 0.42rem 0.7rem;
+    border: 1px solid rgba(35, 32, 28, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 253, 248, 0.75);
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; color: var(--tinta-suave);
+    max-width: 100%;
+  }
+  .hero__punto { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--rojo); margin-right: 0.55rem; flex: none; box-shadow: 0 0 0 4px rgba(210, 51, 52, 0.15); }
+  .hero__titular {
+    margin-top: 1.25rem;
+    max-width: 13ch;
+    font-size: 2.6rem;
+    font-size: clamp(2.6rem, 1.2rem + 4.6vw, 5.4rem);
+    font-weight: 330;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--tinta);
+  }
+  .hero__titular .acento { color: var(--rojo); font-weight: 300; }
+  .hero__bajada { margin-top: 1.4rem; max-width: 34rem; font-size: 1.0625rem; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.55; color: var(--tinta-suave); }
+  .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.9rem; }
+  .hero__acciones > :global(*) { margin: 0 0.75rem 0.75rem 0; }
+
+  /* Escena: arco-ventana con fotos */
+  .hero__escena { position: relative; width: 100%; max-width: 30rem; margin: 0 auto; padding: 1.5rem 0 2rem; }
+  .hero__arco { position: relative; overflow: hidden; border-radius: 999px 999px 18px 18px; box-shadow: 0 30px 60px -30px rgba(60, 40, 20, 0.5); background: var(--papel-hondo); isolation: isolate; }
+  .hero__arco::before { content: ''; display: block; padding-top: 125%; }
+  .hero__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: opacity 2.2s var(--ease-suave); }
+  .hero__capa.is-activa { opacity: 1; }
+  .hero__capa + .hero__capa { display: none; }
+  .hero.is-secuencia .hero__capa { display: block; }
+  .hero__capa :global(.foto) { height: 100%; }
+  .hero__capa :global(.foto--recorte::before) { display: none; }
+  .hero__capa :global(img) { transform: scale(1.04); transition: transform 9s linear, opacity 0.7s var(--ease-suave); }
+  .hero__capa.is-activa :global(img) { transform: scale(1.12); }
+  :global(html.reducido) .hero__capa :global(img), :global(html.liviano) .hero__capa :global(img) { transform: none; }
+  .hero__arco-trazo { position: absolute; left: -5%; top: 0.4rem; width: 110%; height: auto; z-index: 0; overflow: visible; transform: rotate(-2.5deg); }
+  .hero__arco { z-index: 1; }
+  /* Lámina de dibujos en crayón: detalle de fondo detrás del arco */
+  .hero__dibujos { position: absolute; z-index: 0; top: -6%; left: 50%; width: 150%; max-width: none; height: auto; transform: translateX(-50%) rotate(-4deg); opacity: 0.13; pointer-events: none; user-select: none; }
+  @media (max-width: 47.99em) { .hero__dibujos { width: 125%; opacity: 0.1; } }
+  .hero__palabras { list-style: none; margin: 0; padding: 0; }
+  .hero__palabra {
+    position: absolute; z-index: 4;
+    display: inline-flex; align-items: center;
+    padding: 0.45rem 0.95rem 0.5rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255, 253, 248, 0.94);
+    box-shadow: 0 10px 24px -12px rgba(60, 40, 20, 0.45);
+    font-family: var(--f-titulo); font-style: italic; font-size: 1.05rem; color: var(--tinta);
+    animation: palabra-flota 6s ease-in-out infinite;
+  }
+  .hero__palabra-punto { width: 0.5rem; height: 0.5rem; border-radius: 50%; margin-right: 0.5rem; }
+  .hero__palabra--a { left: -9%; top: 30%; animation-delay: -1s; }
+  .hero__palabra--b { right: -8%; top: 52%; animation-delay: -3s; }
+  .hero__palabra--c { left: -4%; bottom: 16%; animation-delay: -5s; }
+  @keyframes palabra-flota { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -8px, 0); } }
+  @media (prefers-reduced-motion: reduce) { .hero__palabra { animation: none; } }
+  :global(html.liviano) .hero__palabra { animation: none; }
+  @media (max-width: 30em) { .hero__palabra--a { left: -2%; } .hero__palabra--b { right: -2%; } .hero__palabra--c { left: 2%; } }
+  .hero__sello { position: absolute; right: -17%; bottom: -2%; z-index: 4; padding: 6px; border-radius: 50%; background: rgba(250, 246, 238, 0.92); }
+  @media (max-width: 47.99em) { .hero__sello { display: none; } }
+  .hero__datos { display: flex; flex-wrap: wrap; margin: 2rem 0 0; padding-top: 1.25rem; border-top: 1px solid rgba(35, 32, 28, 0.12); }
+  .hero__datos > div { margin: 0 2.25rem 0.75rem 0; display: flex; flex-direction: column-reverse; }
+  .hero__datos dd { margin: 0; font-size: 2rem; font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.6rem); line-height: 1; color: var(--tinta); }
+  .hero__datos > div:last-child dd { color: var(--rojo); }
+  .hero__datos dt { margin-top: 0.35rem; font-size: 0.75rem; letter-spacing: 0.06em; color: var(--tinta-suave); max-width: 14ch; line-height: 1.3; }
+  .hero__datos dt a { text-decoration: none; border-bottom: 1px solid rgba(35, 32, 28, 0.25); }
+  .hero__datos dt a:hover { color: var(--rojo); border-color: var(--rojo); }
+  .hero__scroll { position: absolute; left: 50%; bottom: 1rem; width: 1.3rem; height: 2.8rem; margin-left: -0.65rem; color: var(--tinta-tenue); z-index: 2; }
+  .hero__scroll :global(svg) { width: 100%; height: 100%; }
+  @media (max-width: 63.99em) { .hero__scroll { display: none; } }
+
+  /* ---------- PRESENTACIÓN ---------- */
+  .presentacion { text-align: center; }
+  .presentacion__cabeza { max-width: 44rem; margin: 0 auto; }
+  .presentacion__sol { width: 3.2rem; height: 3.2rem; margin: 0 auto 1.25rem; }
+  .presentacion__nombre { font-size: 2.58rem; font-size: clamp(2.58rem, 1.476rem + 3.6vw, 4.5rem); font-weight: 330; letter-spacing: -0.04em; line-height: 0.95; }
+  .presentacion__paleta { margin: 1.25rem auto 0; }
+  .presentacion__fundada { margin: 1.25rem auto 0; font-size: 1.125rem; font-size: var(--t-md); color: var(--tinta-suave); }
+  .presentacion__trayectoria { margin: 1.25rem auto 0; font-family: var(--f-titulo); font-size: 1.202rem; font-size: var(--t-xl); line-height: 1.2; }
+  .presentacion__cabeza p { max-width: none; }
+  .presentacion__trayectoria .subrayable { white-space: normal; }
+  .presentacion__descripcion { margin: 1.275rem auto 0; max-width: 30ch; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); line-height: 1.6; }
+  .presentacion__niveles { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; margin-top: 2.72rem; align-items: stretch; }
+  .presentacion__division { display: none; }
+  .nivel {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 1.7rem 1.275rem 1.7rem;
+    border-radius: var(--radio-lg);
+    text-decoration: none;
+    transition: background-color 0.4s, transform 0.5s var(--ease-out);
+  }
+  .nivel--jardin { background: var(--arena-claro); }
+  .nivel--primaria { background: var(--verde-claro); }
+  .nivel__texto { margin-top: 1.275rem; max-width: 24ch; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.2; }
+  .nivel__anio { margin-top: 1rem; font-size: 2.58rem; font-size: clamp(2.58rem, 1.64rem + 2.4vw, 3.3rem); }
+  .nivel--jardin .nivel__anio { color: var(--ocre-texto); }
+  .nivel--primaria .nivel__anio { color: var(--verde-texto); }
+  .nivel__ir { margin-top: 1.25rem; font-weight: 650; font-size: 0.9375rem; }
+  .nivel__ir span { display: inline-block; transition: transform 0.4s var(--ease-out); }
+  @media (hover: hover) {
+    .nivel:hover { transform: translateY(-4px); }
+    .nivel:hover .nivel__ir span { transform: translateX(5px); }
+  }
+  .presentacion__vea { display: inline-block; margin-top: 2.04rem; padding: 1rem 1.275rem; border-radius: var(--radio-lg); transition: background-color 0.3s; }
+  .presentacion__vea:hover { background: var(--papel-oscuro); }
+  @media (min-width: 48em) {
+    .presentacion__niveles { grid-template-columns: 1fr auto 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
+    .presentacion__division { display: block; width: 2.4rem; align-self: center; }
+    .presentacion__division :global(svg) { width: 2.4rem; height: 1rem; transform: rotate(90deg); }
   }
 
-  /* Bienvenida */
-  .bienvenida { padding: 3rem 0 4rem; padding: clamp(2.5rem, 1.5rem + 4vw, 6rem) 0 clamp(3rem, 2rem + 4vw, 7rem); background: var(--papel-oscuro); }
+  /* ---------- BIENVENIDA ---------- */
+  .bienvenida, .ejes { overflow: hidden; }
+  .bienvenida__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; }
+  .abanico { position: relative; width: 100%; max-width: 36rem; margin: 0 auto; }
+  .abanico::before { content: ''; display: block; padding-top: 78%; }
+  .abanico__foto, .abanico__mini {
+    position: absolute; margin: 0;
+    background: #fffdf8; padding: 0.4rem 0.4rem 0.6rem;
+    box-shadow: 0 2px 3px rgba(60, 40, 20, 0.08), 0 22px 40px -18px rgba(60, 40, 20, 0.45);
+    transform: rotate(var(--r, 0deg));
+    transition: transform 0.7s var(--ease-out);
+  }
+  .abanico__foto--centro { width: 62%; left: 19%; top: 10%; z-index: 3; }
+  .abanico__foto--izq { width: 34%; left: 0; top: 4%; z-index: 2; }
+  .abanico__foto--der { width: 34%; right: 0; top: 8%; z-index: 2; }
+  .abanico__mini { width: 22%; z-index: 4; padding: 0.3rem; }
+  .abanico__mini--a { left: 6%; bottom: 0; }
+  .abanico__mini--b { right: 8%; bottom: -2%; }
+  @media (hover: hover) {
+    .abanico:hover .abanico__foto--izq { transform: rotate(-13deg) translate3d(-5%, 0, 0); }
+    .abanico:hover .abanico__foto--der { transform: rotate(12deg) translate3d(5%, 0, 0); }
+    .abanico:hover .abanico__foto--centro { transform: rotate(0deg) translate3d(0, -2%, 0); }
+  }
+  .bienvenida__espiral { width: 2.6rem; height: 2.6rem; margin-bottom: 1.275rem; }
+  .bienvenida__parrafo { font-family: var(--f-titulo); font-size: 1.265rem; font-size: clamp(1.265rem, 0.861rem + 1.092vw, 1.785rem); line-height: 1.35; letter-spacing: -0.01em; font-weight: 350; max-width: 28ch; }
+  @media (min-width: 56em) { .bienvenida__grilla { grid-template-columns: 6fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 
-  /* Juego y arte */
-  .juego-arte { overflow: hidden; padding: 4rem 0 2.5rem; padding: clamp(3rem, 2rem + 4vw, 6rem) 0 2.5rem; }
+  /* ---------- JUEGO Y ARTE (carrusel circular) ---------- */
+  .juego-arte { overflow: hidden; padding-bottom: 2.5rem; }
   .juego-arte__cabeza { text-align: center; }
   .juego-arte__paleta { margin: 0 auto 1.25rem; }
   .juego-arte__frase { margin: 0 auto; max-width: 20ch; font-size: 1.9rem; font-size: clamp(1.9rem, 1.1rem + 3vw, 3.5rem); line-height: 1.08; }
-  .juego-arte__ayuda { margin-top: 0.5rem; text-align: center; }
+  .juego-arte__ayuda { margin: 0.5rem auto 0; text-align: center; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tinta-tenue); }
   :global(html:not(.js)) .juego-arte__ayuda, :global(html.liviano) .juego-arte__ayuda { display: none; }
   .juego-arte :global(.cc-envoltura) { margin-top: 1rem; }
   .juego-arte :global(.cc-simple) { max-width: 76rem; margin: 2rem auto 0; padding: 0 var(--gutter); }
 
-  /* Línea de tiempo */
-  .tiempo { padding: 4rem 0; padding: clamp(3rem, 2rem + 4vw, 6.5rem) 0; border-top: 1px solid rgba(35, 32, 28, 0.12); }
-  .tiempo__cabeza { display: grid; grid-template-columns: auto 1fr; grid-gap: 1rem 1.5rem; gap: 1rem 1.5rem; align-items: center; margin-bottom: 3rem; }
-  .tiempo__cifra { font-size: 5.5rem; font-size: clamp(5.5rem, 2.5rem + 11vw, 13rem); color: var(--rojo); line-height: 0.78; letter-spacing: -0.06em; }
-  .tiempo__titulo { max-width: 14ch; font-size: 1.7rem; font-size: clamp(1.6rem, 1rem + 2.4vw, 3.4rem); }
-  .tiempo__frase { margin-top: 1rem; font-size: 1.2rem; font-size: var(--t-lg); }
-  .tiempo__bajada { margin-top: 0.5rem; color: var(--tinta-suave); }
-  .tiempo__hitos { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; }
-  .hito { margin: 0; }
-  .hito :global(.foto) { border-radius: 3px; }
-  .hito figcaption { display: grid; grid-template-columns: auto 1fr; grid-gap: 1.25rem; gap: 1.25rem; align-items: baseline; margin-top: 1rem; border-top: 1px solid rgba(35, 32, 28, 0.18); padding-top: 0.9rem; }
-  .hito__anio { font-size: 2.4rem; font-size: clamp(2.2rem, 1.6rem + 2vw, 3.6rem); line-height: 1; }
-  .hito__desc { font-family: var(--f-titulo); font-size: 1.05rem; line-height: 1.3; }
-  @media (min-width: 56em) { .tiempo__hitos { grid-template-columns: 1fr 1fr; grid-gap: 4rem; gap: 4rem; } .hito--b { margin-top: 6rem; } }
-  .tiempo__mas { margin-top: 2.5rem; }
+  /* ---------- LÍNEA DE TIEMPO ---------- */
+  .tiempo { overflow: hidden; }
+  .tiempo__cabeza { display: grid; grid-template-columns: auto 1fr; grid-gap: 1rem; gap: 1rem; align-items: center; margin-bottom: 2.72rem; }
+  .tiempo__titulo :global(.sr-only) { position: absolute; }
+  .tiempo__cifra { font-size: 5.5rem; font-size: clamp(5.5rem, 3rem + 10vw, 11.4rem); color: var(--rojo); line-height: 0.8; letter-spacing: -0.06em; }
+  .tiempo__titulo { max-width: 14ch; }
+  .tiempo__frase { margin-top: 1.25rem; font-size: 1.26rem; font-size: var(--t-lg); color: var(--tinta); }
+  .tiempo__boton { margin-top: 1.25rem; }
+  .tiempo__bajada { margin-top: 0.75rem; color: var(--tinta-suave); }
+  @media (min-width: 56em) { .tiempo__cabeza { grid-gap: 2.04rem; gap: 2.04rem; } }
 
-  /* Ejes */
-  .ejes { padding: 4rem 0; padding: clamp(3rem, 2rem + 4vw, 6.5rem) 0; }
-  .ejes__cabeza { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; }
-  .ejes__cabeza h2 { max-width: 12ch; font-size: 2rem; font-size: clamp(1.9rem, 1rem + 3.6vw, 4.6rem); font-weight: 300; letter-spacing: -0.04em; line-height: 0.95; margin-right: 2rem; }
+  .tiempo__cuerpo { position: relative; }
+  .tiempo__hitos { position: relative; list-style: none; padding: 0 0 0 1.912rem; margin: 0; }
+  .tiempo__linea { position: absolute; left: 0.45rem; top: 0.5rem; bottom: 0; width: 2px; background: var(--rojo); transform-origin: 50% 0; border-radius: 2px; }
+  .hito { position: relative; display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
+  .hito + .hito { margin-top: 3.06rem; }
+  .hito__punto { position: absolute; left: -2.25rem; top: 0.9rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--papel); border: 2px solid var(--rojo); }
+  .hito__anio { font-size: 3.44rem; font-size: clamp(3.44rem, 1.64rem + 4.8vw, 5.4rem); color: var(--tinta); }
+  .hito__desc { margin-top: 0.75rem; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.25; max-width: 22ch; }
+  .hito__fotos { position: relative; display: flex; align-items: flex-start; }
+  .hito__foto { width: 58%; max-width: 13.5rem; }
+  .hito__foto--1 { width: 52%; margin-left: -10%; margin-top: 2.38rem; }
+  @media (min-width: 56em) {
+    .tiempo__hitos { padding-left: 0; }
+    .tiempo__cuerpo { padding-left: 0; }
+    .tiempo__linea { left: 50%; margin-left: -1px; }
+    .hito { grid-template-columns: 1fr 1fr; grid-gap: 4.08rem; gap: 4.08rem; align-items: center; }
+    .hito__punto { left: 50%; margin-left: -0.55rem; top: 50%; }
+    .hito--a .hito__texto { text-align: right; justify-self: end; }
+    .hito--a .hito__desc { margin-left: auto; }
+    .hito--b .hito__texto { order: 2; }
+    .hito--b .hito__fotos { order: 1; justify-content: flex-end; }
+  }
 
-  /* Comunidad */
-  .adelanto { padding: 4rem 0; padding: clamp(3rem, 2rem + 4vw, 6.5rem) 0; overflow: hidden; }
-  .adelanto__caja { display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .adelanto__caja h2 { font-size: 2.2rem; font-size: clamp(2.2rem, 1rem + 4.4vw, 5.4rem); font-weight: 300; letter-spacing: -0.04em; line-height: 0.95; }
-  .adelanto__bajada { margin: 1rem auto 1.5rem; max-width: 34rem; color: var(--tinta-suave); font-size: 1.05rem; }
-  .adelanto__caja :global(.bounce-cards) { margin: 1rem auto 2rem; }
+  /* ---------- EJES ---------- */
+  .ejes__cabeza { display: flex; align-items: flex-end; margin-bottom: 2.38rem; }
+  .ejes__cabeza h2 { max-width: 12ch; }
+  .ejes__flecha { width: 3.6rem; height: 3.6rem; margin-left: 1.275rem; flex: none; transform: rotate(-10deg); }
+  .eje { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; }
+  .eje + .eje { margin-top: 3.4rem; margin-top: clamp(2.72rem, 1.7rem + 4.2vw, 5.44rem); }
+  .eje__foto { border-radius: var(--radio); }
+  .eje__foto > :global(.foto) { border-radius: var(--radio); }
+  .eje__mancha { width: 62%; }
+  .eje__foto { max-width: 27rem; width: 100%; }
+  .eje--invertido .eje__foto { justify-self: end; }
+  .eje__mancha--a { left: -8%; bottom: -14%; }
+  .eje__mancha--b { right: -10%; top: -10%; }
+  .bienvenida__mancha { width: 70%; right: -12%; bottom: -16%; }
+  .adelanto__mancha { width: 80%; left: 8%; top: 12%; }
+  .hero__sello { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 1.5rem); opacity: 0.95; }
+  @media (max-width: 47.99em) { .hero__sello { transform: scale(0.72); transform-origin: 100% 0; } }
+  @media (min-width: 48em) { .hero__sello { top: auto; bottom: 6.5rem; } }
+  .eje__marca { display: block; width: 2.4rem; height: 2.4rem; margin-bottom: 1.25rem; }
+  .eje__marca :global(svg) { width: 100%; height: 100%; }
+  .eje__titulo { font-size: 1.387rem; font-size: var(--t-xl); max-width: 16ch; margin-bottom: 1.25rem; font-weight: 380; }
+  .ejes__mas { margin-top: 3.06rem; text-align: center; }
+  @media (min-width: 56em) {
+    .eje { grid-template-columns: 1fr 1fr; grid-gap: 4rem; gap: 4rem; }
+    .eje--invertido { grid-template-columns: 1fr 1fr; }
+    .eje--invertido .eje__foto { order: 2; }
+    .eje--invertido .eje__texto { padding-left: 1.7rem; }
+    .eje__texto { max-width: 28rem; }
+  }
+
+  /* ---------- ADELANTO COMUNIDAD ---------- */
+  .adelanto { overflow: hidden; }
+  .adelanto__cabeza { max-width: 36rem; }
+  .adelanto__cabeza > * + * { margin-top: 1.25rem; }
+  .adelanto__fotos { max-width: 36rem; justify-self: end; width: 100%; display: block; align-items: start; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem 1rem; gap: 1.25rem 1rem; margin-top: 2.04rem; }
+  .adelanto__foto--1, .adelanto__foto--3 { margin-top: 1.7rem; }
+  @media (min-width: 56em) {
+    .adelanto .contenedor { display: grid; grid-template-columns: 4fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; align-items: center; }
+    .adelanto__fotos { margin-top: 0; grid-gap: 1.7rem 1.275rem; gap: 1.7rem 1.275rem; }
+  }
 </style>

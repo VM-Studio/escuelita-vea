@@ -1,61 +1,84 @@
 ---
-// Interludio emotivo: frase en cursiva. Dos variantes, ninguna en "foto a un costado / texto al otro":
-//  · sobre  → foto a sangre con la frase grande encima (banda cinematográfica)
-//  · lado / centro → frase centrada enorme sobre papel, con la foto chica "colgada" debajo
+// Interludio emotivo: foto grande + frase en cursiva (recurso pedido por la escuela).
 import Foto from './Foto.astro';
-import Paleta from './Paleta.astro';
+import Trazo from './Trazo.astro';
 interface Props {
   foto: string;
   frase: string;
   firma?: string;
   variante?: 'sobre' | 'lado' | 'centro';
   ratio?: string;
-  trazo?: string;
+  trazo?: 'sol' | 'hoja' | 'espiral' | 'estrella' | 'garabato' | 'corazon';
 }
-const { foto, frase, firma, variante = 'sobre' } = Astro.props;
+const { foto, frase, firma, variante = 'sobre', ratio, trazo = 'hoja' } = Astro.props;
 ---
-{variante === 'sobre' ? (
-  <section class="interludio interludio--sobre" aria-label="Frase">
-    <div class="interludio__foto">
-      <div data-parallax="6" class="interludio__parallax">
-        <Foto id={foto} ratio="16/9" sizes="100vw" />
+<section class:list={['interludio', `interludio--${variante}`]} aria-label="Frase">
+  {variante === 'sobre' ? (
+    <div class="interludio__marco">
+      <div class="interludio__foto" data-parallax-caja>
+        <div data-parallax="6" class="interludio__parallax">
+          <Foto id={foto} ratio={ratio ?? '16/9'} sizes="100vw" class="interludio__img" />
+        </div>
       </div>
+      <div class="interludio__velo" aria-hidden="true"></div>
+      <figure class="interludio__texto contenedor">
+        <blockquote><p class="t-frase interludio__frase" data-frase>{frase}</p></blockquote>
+        {firma && <figcaption class="interludio__firma">— {firma}</figcaption>}
+      </figure>
     </div>
-    <div class="interludio__velo" aria-hidden="true"></div>
-    <figure class="interludio__texto contenedor">
-      <blockquote><p class="t-frase interludio__frase" data-frase>{frase}</p></blockquote>
-      {firma && <figcaption class="rotulo rotulo--claro interludio__firma">— {firma}</figcaption>}
-    </figure>
-  </section>
-) : (
-  <section class="interludio interludio--centro" aria-label="Frase">
-    <figure class="contenedor interludio__caja">
-      <Paleta class="interludio__paleta" />
-      <blockquote><p class="t-frase interludio__frase interludio__frase--tinta" data-frase>{frase}</p></blockquote>
-      {firma && <figcaption class="rotulo interludio__firma">— {firma}</figcaption>}
-      <div class="pegada interludio__pegada" data-revelar>
+  ) : (
+    <div class="contenedor interludio__grilla">
+      <div class="pegada interludio__pegada" style="--rot:-1.6deg" data-revelar>
         <span class="cinta" aria-hidden="true"></span>
-        <Foto id={foto} ratio="4/3" sizes="(min-width: 48em) 22rem, 70vw" />
+        <Foto id={foto} ratio={ratio ?? '4/5'} sizes="(min-width: 64em) 40vw, 90vw" />
       </div>
-    </figure>
-  </section>
-)}
+      <figure class="interludio__lado">
+        <Trazo nombre={trazo} class="interludio__trazo" grosor={2.4} />
+        <blockquote><p class="t-frase interludio__frase interludio__frase--tinta" data-frase>{frase}</p></blockquote>
+        {firma && <figcaption class="interludio__firma interludio__firma--tinta">— {firma}</figcaption>}
+      </figure>
+    </div>
+  )}
+</section>
 
 <style>
-  .interludio--sobre { position: relative; overflow: hidden; color: var(--papel); min-height: 64vh; display: flex; align-items: flex-end; }
+  .interludio { position: relative; }
+  .interludio--sobre { padding: 0; }
+  .interludio__marco { position: relative; overflow: hidden; color: var(--papel); min-height: 58vh; display: flex; align-items: flex-end; }
   .interludio__foto { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
   .interludio__parallax { position: absolute; top: -8%; left: 0; right: 0; bottom: -8%; }
   .interludio__parallax :global(.foto) { height: 100%; }
   .interludio__parallax :global(.foto--recorte::before) { display: none; }
-  .interludio__velo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to top, rgba(16, 12, 9, 0.72) 0%, rgba(16, 12, 9, 0.25) 45%, rgba(16, 12, 9, 0) 75%); }
-  .interludio__texto { position: relative; padding-top: 28vh; padding-bottom: 2.5rem; padding-bottom: clamp(2rem, 5vw, 4.5rem); }
-  .interludio__frase { max-width: 22ch; font-size: 2rem; font-size: clamp(2rem, 1rem + 4vw, 5rem); line-height: 1.02; color: var(--papel); }
-  .interludio__firma { margin-top: 1rem; }
+  .interludio__velo {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, rgba(20, 16, 12, 0.72) 0%, rgba(20, 16, 12, 0.35) 38%, rgba(20, 16, 12, 0) 70%);
+  }
+  .interludio__texto { position: relative; padding-top: 30vh; padding-bottom: 2.38rem; padding-bottom: clamp(1.7rem, 4.2vw, 4.08rem); }
+  .interludio__frase {
+    max-width: 20ch;
+    font-size: 1.613rem;
+    font-size: clamp(1.613rem, 0.902rem + 2.376vw, 2.805rem);
+    color: var(--papel);
+    text-shadow: 0 1px 24px rgba(0, 0, 0, 0.25);
+  }
+  .interludio__firma { margin-top: 1rem; font-family: var(--f-texto); font-weight: 600; letter-spacing: 0.04em; color: #f1e9da; }
 
-  .interludio--centro { padding: 4rem 0 4.5rem; padding: clamp(3.5rem, 2rem + 5vw, 7rem) 0; overflow: hidden; }
-  .interludio__caja { margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
-  .interludio__paleta { margin-bottom: 1.5rem; }
-  .interludio__frase--tinta { color: var(--tinta); max-width: 20ch; margin: 0 auto; font-size: 2rem; font-size: clamp(1.9rem, 1rem + 3.6vw, 4.4rem); line-height: 1.06; }
-  .interludio--centro .interludio__firma { margin-top: 1rem; }
-  .interludio__pegada { position: relative; width: 72%; max-width: 22rem; margin-top: 2.5rem; --rot: -2deg; }
+  .interludio--lado, .interludio--centro { padding-top: 2.72rem; padding-bottom: 2.72rem; padding-top: var(--seccion); padding-bottom: var(--seccion); }
+  .interludio__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; }
+  .interludio__pegada { position: relative; max-width: 30rem; margin: 0 auto; width: 88%; }
+  .interludio__lado { position: relative; }
+  .interludio__trazo { width: 2.8rem; height: 2.8rem; margin-bottom: 1.25rem; }
+  .interludio__frase--tinta {
+    color: var(--tinta);
+    max-width: 18ch;
+    font-size: 1.613rem;
+    font-size: clamp(1.613rem, 0.902rem + 1.98vw, 2.475rem);
+    text-shadow: none;
+  }
+  .interludio__firma--tinta { color: var(--tinta-suave); }
+  @media (min-width: 56em) {
+    .interludio__grilla { grid-template-columns: 5fr 6fr; grid-gap: 3.4rem; gap: 3.4rem; }
+    .interludio--centro .interludio__grilla { grid-template-columns: 6fr 5fr; }
+    .interludio--centro .interludio__pegada { order: 2; }
+  }
 </style>

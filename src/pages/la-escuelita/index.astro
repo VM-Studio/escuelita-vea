@@ -8,12 +8,9 @@ import Boton from '../../components/Boton.astro';
 import Desplegable from '../../components/Desplegable.astro';
 import Interludio from '../../components/Interludio.astro';
 import Galeria from '../../components/Galeria.astro';
-import PortadaPagina from '../../components/PortadaPagina.astro';
-import GaleriaEscalonada from '../../components/GaleriaEscalonada.astro';
-import Declaracion from '../../components/Declaracion.astro';
 import { laEscuelita as e } from '../../content/la-escuelita';
 import { parrafos, enLinea, acento } from '../../lib/texto';
-const principal = 'historica-ronda-taller';
+const [principal, ...archivo] = e.historia.fotos;
 ---
 <Base
   titulo="La Escuelita · Historia e identidad"
@@ -21,15 +18,30 @@ const principal = 'historica-ronda-taller';
   fotoOg={principal}
   progreso
 >
-  {/* Historia: foto de archivo a sangre */}
-  <PortadaPagina titulo={e.historia.titulo} foto="historica-ronda-taller" volanta="Historia e identidad" rotulo="Archivo de La Escuelita — 1959" tamano="enorme">
-    <p class="historia__parrafo">{e.historia.texto}</p>
-    <Boton href="/la-escuelita/historia/" variante="claro">Conocé nuestra historia</Boton>
-  </PortadaPagina>
+  {/* Historia */}
+  <section class="historia" data-hero aria-labelledby="historia-titulo">
+    <div class="contenedor historia__grilla">
+      <div class="historia__texto">
+        <p class="t-volanta" data-hero-resto>Historia e identidad</p>
+        <h1 id="historia-titulo" class="historia__titulo" data-hero-titular>{e.historia.titulo}</h1>
+        <div class="historia__fila" data-hero-resto>
+          <p class="historia__anio t-cifra" aria-hidden="true">1959</p>
+          <Sello tamano={104} color="tinta" />
+        </div>
+        <p class="historia__parrafo" data-hero-resto>{e.historia.texto}</p>
+        <div class="historia__boton" data-hero-resto><Boton href="/la-escuelita/historia/" variante="rojo">Conocé nuestra historia</Boton></div>
+      </div>
+      <figure class="historia__principal pegada" style="--rot:-2deg" data-hero-resto>
+        <span class="cinta" aria-hidden="true"></span>
+        <Foto id={principal} ratio="3/4" sizes="(min-width: 56em) 34vw, 80vw" prioridad />
+        <figcaption>Archivo de La Escuelita</figcaption>
+      </figure>
+    </div>
+  </section>
 
-  <section class="archivo" aria-label="Archivo fotográfico">
+  <section class="archivo seccion seccion--papel-oscuro" aria-label="Archivo fotográfico">
     <div class="contenedor">
-      <GaleriaEscalonada ids={e.historia.fotos.filter((f) => f !== 'historica-ronda-taller')} rotulos={e.historia.fotos.filter((f) => f !== 'historica-ronda-taller').map(() => 'Archivo de La Escuelita')} />
+      <Galeria ids={archivo} variante="pegadas" sizes="(min-width: 48em) 30vw, 46vw" />
     </div>
   </section>
 
@@ -85,10 +97,15 @@ const principal = 'historica-ronda-taller';
   {/* V.E.A. */}
   <section class="seccion vea ancla" id="vea" aria-labelledby="vea-titulo">
     <div class="contenedor">
-      <div class="vea__cabeza">
-        <Logo nivel="vea" alto={120} />
-        <h2 id="vea-titulo" class="vea__titulo" data-revelar set:html={acento(e.vea.titulo)} />
-        <div class="prosa vea__texto" data-revelar set:html={parrafos(e.vea.texto)} />
+      <div class="vea__grilla">
+        <div class="vea__logo" data-revelar>
+          <Logo nivel="vea" alto={150} />
+          <p class="vea__anio t-cifra" aria-hidden="true"><span data-contador="1992" data-desde="1959">1992</span></p>
+        </div>
+        <div class="vea__texto">
+          <h2 id="vea-titulo" class="vea__titulo" data-titulo-lineas set:html={acento(e.vea.titulo)} />
+          <div class="prosa" data-revelar set:html={parrafos(e.vea.texto)} />
+        </div>
       </div>
       <h3 class="vea__ejes-titulo" data-titulo-lineas>{e.vea.ejesTitulo}</h3>
       <ul class="vea__ejes">
@@ -106,11 +123,15 @@ const principal = 'historica-ronda-taller';
   {/* Identidad */}
   <section class="seccion seccion--papel-oscuro identidad" aria-labelledby="id-titulo">
     <div class="contenedor">
-      <h2 id="id-titulo" class="identidad__titulo" data-revelar set:html={acento(e.identidad.titulo)} />
-      <Declaracion texto={e.identidad.texto} tamano="l" imagenes={[
-        { id: e.identidad.foto, despues: 'educación por el arte', forma: 'pastilla' },
-        { id: 'jardin-risas-patio', despues: 'las infancias', forma: 'circulo' },
-      ]} />
+      <div class="identidad__grilla">
+        <div>
+          <h2 id="id-titulo" data-titulo-lineas set:html={acento(e.identidad.titulo)} />
+          <p class="identidad__texto" data-revelar>{e.identidad.texto}</p>
+        </div>
+        <div class="identidad__foto">
+          <Foto id={e.identidad.foto} ratio="1/1" sizes="(min-width: 56em) 40vw, 92vw" revelar />
+        </div>
+      </div>
       <p class="identidad__pilares-intro" data-revelar>{e.identidad.pilaresIntro}</p>
       <ul class="pilares">
         {e.identidad.pilares.map((x, i) => (
@@ -126,7 +147,7 @@ const principal = 'historica-ronda-taller';
 
   {/* ¿Por qué educar a través del arte? */}
   <section class="seccion porque" aria-labelledby="porque-titulo">
-    <div class="contenedor porque__grilla">
+    <div class="contenedor contenedor--ancho porque__grilla">
       <h2 id="porque-titulo" class="porque__titulo" data-titulo-lineas set:html={acento(e.porQue.titulo)} />
       <div class="prosa porque__texto" data-revelar set:html={parrafos(e.porQue.texto)} />
     </div>
@@ -225,24 +246,8 @@ const principal = 'historica-ronda-taller';
   .porque__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
   .porque__titulo { max-width: 12ch; }
   .porque__texto { font-size: 1.125rem; font-size: var(--t-md); }
-  @media (min-width: 56em) { .porque__grilla { grid-template-columns: 1fr; } }
+  @media (min-width: 56em) { .porque__grilla { grid-template-columns: 5fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; } }
 
   .equipo-link__caja { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; border-top: 1px solid rgba(35, 32, 28, 0.15); padding-top: 1.7rem; }
   .equipo-link__texto { font-family: var(--f-titulo); font-size: 1.48rem; font-size: var(--t-xl); margin: 0 1.7rem 1rem 0; }
-</style>
-
-<style>
-  .historia__parrafo { max-width: 38rem; color: rgba(250, 246, 238, 0.9); margin: 0 2rem 1rem 0; font-size: 1rem; line-height: 1.55; }
-  .archivo { padding: 4rem 0; padding: clamp(3rem, 2rem + 4vw, 6.5rem) 0; }
-  .vea__cabeza { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 3rem; }
-  .vea__cabeza .vea__titulo { margin-top: 1.5rem; max-width: 20ch; font-size: 1.9rem; font-size: clamp(1.9rem, 1rem + 3vw, 3.8rem); font-weight: 300; letter-spacing: -0.035em; line-height: 1; }
-  .vea__texto { margin-top: 1.75rem; text-align: left; }
-  .vea__texto :global(p) { max-width: none; }
-  @media (min-width: 56em) { .vea__texto { column-count: 2; column-gap: 3rem; max-width: 60rem; } .vea__texto :global(p) { break-inside: avoid; } }
-  .identidad__titulo { margin-bottom: 1.5rem; font-size: 1rem; font-family: ui-monospace, Menlo, monospace; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 400; color: var(--tinta-suave); }
-  .identidad__titulo :global(.acento) { font-style: normal; color: inherit; font-weight: 400; }
-  .porque__grilla { text-align: center; }
-  .porque__grilla .porque__titulo { margin: 0 auto; max-width: 14ch; font-size: 2.2rem; font-size: clamp(2.2rem, 1rem + 4.4vw, 5.4rem); font-weight: 300; letter-spacing: -0.045em; line-height: 0.95; }
-  .porque__grilla .porque__texto { margin: 2rem auto 0; text-align: left; }
-  @media (min-width: 56em) { .porque__grilla .porque__texto { column-count: 2; column-gap: 3rem; max-width: 60rem; } .porque__grilla .porque__texto :global(p) { max-width: none; break-inside: avoid; } }
 </style>

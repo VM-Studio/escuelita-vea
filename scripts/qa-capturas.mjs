@@ -28,7 +28,7 @@ for (const ancho of anchos) {
   page.on('pageerror', (e) => problemas.push(`[${ancho}] error JS: ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error') problemas.push(`[${ancho}] consola: ${m.text()}`); });
   for (const ruta of rutas) {
-    await page.goto(base + ruta, { waitUntil: 'load' }); await page.waitForTimeout(1200);
+    await page.goto(base + ruta, { waitUntil: 'networkidle' });
     if (modo === 'sinjs') {
       for (let y = 0; y < 30000; y += 700) { await page.mouse.wheel(0, 700); await page.waitForTimeout(60); }
       await page.waitForTimeout(500);
@@ -44,7 +44,7 @@ for (const ancho of anchos) {
       window.scrollTo(0, 0);
       await new Promise((r) => setTimeout(r, 400));
     });
-    await page.waitForTimeout(800);
+    await page.waitForLoadState('networkidle');
     // desborde horizontal
     const desborde = await page.evaluate(() => {
       const w = document.documentElement.clientWidth;

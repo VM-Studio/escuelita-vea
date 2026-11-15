@@ -1,45 +1,55 @@
 ---
-// Cierre con llamado a entrevista: composición centrada, tipográfica, con la foto intercalada en el título.
-import { getImage } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+// Cierre con llamado a entrevista. Texto de interfaz (microcopy) a aprobar por la escuela.
+import Foto from './Foto.astro';
+import Trazo from './Trazo.astro';
 import Boton from './Boton.astro';
 import { NIVELES } from '../config/sitio';
+import { acento } from '../lib/texto';
 interface Props { nivel?: 'jardin' | 'primaria'; foto?: string; titulo?: string }
 const { nivel, foto, titulo = 'Vení a conocer La Escuelita' } = Astro.props;
 const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrevista';
-const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
-const src = foto ? masters[`../assets/fotos/${foto}.jpg`]?.default : undefined;
-const img = src ? await getImage({ src, width: 360, height: 220, fit: 'cover', format: 'webp' }) : null;
-const palabras = titulo.split(' ');
-const corte = Math.max(1, Math.floor(palabras.length / 2));
 ---
-<section class="llamado" aria-labelledby="llamado-titulo">
-  <div class="contenedor llamado__caja">
-    <p class="rotulo llamado__rotulo" data-revelar>Admisión {nivel ? `· ${NIVELES[nivel].nombre}` : ''}</p>
-    <h2 id="llamado-titulo" class="llamado__titulo" data-revelar>
-      {palabras.slice(0, corte).join(' ')}{' '}
-      {img && <span class="llamado__img" aria-hidden="true"><img src={img.src} alt="" width="360" height="220" loading="lazy" decoding="async" /></span>}{' '}
-      <em class="acento">{palabras.slice(corte).join(' ')}</em>
-    </h2>
-    <p class="llamado__bajada" data-revelar>
-      Escribinos y coordinamos una entrevista{nivel ? ` en el ${nivel === 'jardin' ? 'Jardín' : 'nivel Primario'}` : ''}.
-    </p>
-    <div class="llamado__acciones" data-revelar>
-      <Boton href={href} variante="rojo" tamano="grande">Pedí una entrevista</Boton>
-      {nivel
-        ? <a class="enlace-flecha" href={NIVELES[nivel].whatsapp} target="_blank" rel="noopener">O escribinos por WhatsApp</a>
-        : <a class="enlace-flecha" href="/contacto/">Ver datos de contacto</a>}
+<section class:list={['llamado seccion', { 'llamado--sin-foto': !foto }]} aria-labelledby="llamado-titulo">
+  <div class="contenedor llamado__grilla">
+    {foto && (
+      <div class="llamado__foto pegada" style="--rot:2deg" data-revelar>
+        <span class="cinta" aria-hidden="true"></span>
+        <Foto id={foto} ratio="1/1" sizes="(min-width: 56em) 30vw, 70vw" />
+      </div>
+    )}
+    <div class="llamado__texto">
+      <h2 id="llamado-titulo" class="llamado__titulo" data-titulo-lineas set:html={acento(titulo)} />
+      <Trazo nombre="subrayado-doble" class="llamado__trazo" grosor={3} />
+      <p class="llamado__bajada t-lead" data-revelar>
+        Escribinos y coordinamos una entrevista{nivel ? ` en el ${NIVELES[nivel].nombre === 'Jardín' ? 'Jardín' : 'nivel Primario'}` : ''}.
+      </p>
+      <div class="llamado__acciones" data-revelar>
+        <Boton href={href} variante="rojo" tamano="grande">Pedí una entrevista</Boton>
+        <a class="enlace-trazo llamado__wa" href={nivel ? NIVELES[nivel].whatsapp : '/contacto/'} target={nivel ? '_blank' : undefined} rel={nivel ? 'noopener' : undefined}>
+          {nivel ? `O escribinos por WhatsApp` : 'Ver datos de contacto'}
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .llamado { padding: 4.5rem 0; padding: clamp(3.5rem, 2rem + 5vw, 7.5rem) 0; border-top: 1px solid rgba(35, 32, 28, 0.12); text-align: center; }
-  .llamado__caja { display: flex; flex-direction: column; align-items: center; }
-  .llamado__titulo { font-size: 2.3rem; font-size: clamp(2.3rem, 1rem + 4.6vw, 5.6rem); font-weight: 300; line-height: 1; letter-spacing: -0.04em; max-width: 14ch; margin-top: 1rem; }
-  .llamado__img { display: inline-block; vertical-align: middle; width: 1.6em; height: 0.95em; border-radius: 999px; overflow: hidden; margin: -0.15em 0.08em 0; transform: rotate(-3deg); box-shadow: 0 10px 22px -12px rgba(60, 40, 20, 0.55); }
-  .llamado__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .llamado__bajada { margin: 1.5rem auto 0; color: var(--tinta-suave); }
-  .llamado__acciones { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; margin-top: 1.75rem; }
-  .llamado__acciones > :global(*) { margin: 0 0.9rem 0.75rem; }
+  .llamado { background: var(--acento-suave); overflow: hidden; }
+  .llamado__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; }
+  .llamado__foto { position: relative; width: 60%; max-width: 15rem; margin: 0 auto; }
+  .llamado__titulo { font-size: 1.665rem; font-size: var(--t-2xl); max-width: 16ch; }
+  .llamado__trazo { width: 14rem; height: 1.2rem; margin: 0.6rem 0 1.275rem; }
+  .llamado__bajada { max-width: 34ch; }
+  .llamado__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.7rem; }
+  .llamado__acciones > :global(*) { margin: 0 1.275rem 0.75rem 0; }
+  .llamado__wa { font-weight: 600; padding: 0.5rem 0; }
+  .llamado--sin-foto .llamado__grilla { text-align: center; }
+  .llamado--sin-foto .llamado__titulo, .llamado--sin-foto .llamado__bajada { margin-left: auto; margin-right: auto; }
+  .llamado--sin-foto .llamado__trazo { margin-left: auto; margin-right: auto; }
+  .llamado--sin-foto .llamado__acciones { justify-content: center; }
+  .llamado--sin-foto .llamado__acciones > :global(*) { margin: 0 0.75rem 0.75rem; }
+  @media (min-width: 56em) {
+    .llamado:not(.llamado--sin-foto) .llamado__grilla { grid-template-columns: 4fr 7fr; grid-gap: 3.4rem; gap: 3.4rem; }
+    .llamado__foto { width: 100%; }
+  }
 </style>
