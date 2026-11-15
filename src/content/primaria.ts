@@ -46,7 +46,7 @@ export const primaria = {
         texto: ['Proponemos "hacer matemática" a partir de situaciones problemáticas y juegos en clave didáctica. Los estudiantes resuelven desafíos con sus propios recursos, tal como hacen los matemáticos y matemáticas. Las puestas en común potencian el saber individual al conocer el pensamiento del otro. Esto permite poner en común, institucionalizar el conocimiento y jerarquizar los pasos que economizan recursos. Valoramos y exploramos el error como motor de nuevas estrategias. Ofrecemos una matemática graduada, geometría e instrumentos de medición, y participamos activamente en las Olimpíadas Matemáticas Ñandú.'],
       },
       {
-        id: 'ciencias-sociales', boton: 'Ciencias Sociales', titulo: 'Ciencias Sociales', fotos: ['primaria-tehuelches-papel'],
+        id: 'ciencias-sociales', boton: 'Ciencias Sociales', titulo: 'Ciencias Sociales', fotos: ['primaria-inmigrantes-escalera', 'primaria-rosario', 'primaria-tehuelches-papel'],
         texto: ['Indagamos la historia antigua y la reciente al comparar fuentes y miradas en el marco grupal. Conversamos sobre los procesos que van del pasado al presente, lo que propicia la sensibilidad ante las problemáticas del mundo. A través de libros, películas, museos y líneas de tiempo, los estudiantes interactúan directamente con las fuentes para construir conocimiento propio en lugar de repetir lo dicho por otros.'],
       },
       {

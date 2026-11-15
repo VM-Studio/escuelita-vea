@@ -56,7 +56,7 @@ async function iniciar() {
     const escritorio = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1024px)').matches;
     if (escritorio) {
       const { default: Lenis } = await import('lenis');
-      const lenis = new Lenis({ duration: 1.1, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1, autoRaf: false, prevent: (n: HTMLElement) => !!n.closest('[data-sin-lenis], iframe, .pswp, [data-menu]') });
+      const lenis = new Lenis({ duration: 1.1, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1, autoRaf: false, allowNestedScroll: true, prevent: (n: HTMLElement) => !!n.closest('iframe, .pswp, [data-menu]') });
       lenisRef = lenis;
       html.classList.add('lenis');
       lenis.on('scroll', ScrollTrigger.update);
@@ -129,17 +129,18 @@ async function iniciar() {
         gsap.set(trazos, { drawSVG: '0%' });
         tlEntrada.to(trazos, { drawSVG: '100%', duration: 0.9, stagger: 0.2, ease: 'power2.inOut' }, 0.9);
       }
-      // Abanico de fotos (hero del Inicio): entran apiladas y se abren
-      const abanico = q('[data-abanico-item]', hero);
-      if (abanico.length) {
-        gsap.set(abanico, { autoAlpha: 0, y: 70, rotation: 0, scale: 0.92 });
-        tlEntrada.to(abanico, { autoAlpha: 1, y: 0, rotation: (i: number, el: HTMLElement) => parseFloat(getComputedStyle(el).getPropertyValue('--r')) || 0, scale: 1, duration: 1.3, stagger: 0.09, ease: 'expo.out', clearProps: 'transform' }, 0.25);
-      }
       // parallax muy leve de la foto del hero
       if (fondo) gsap.to(hero.querySelector('[data-hero-parallax]') || fondo, { yPercent: 10, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
       // Marcar los elementos del hero como "ya revelados" para que no los tome el batch general
       q('[data-revelar], [data-dibujar], [data-titulo-lineas]', hero).forEach((el) => el.setAttribute('data-anim-hecho', ''));
     }
+
+    /* ---- Abanico de fotos: entran apiladas y se abren al llegar con el scroll ---- */
+    q('[data-abanico]').forEach((caja) => {
+      const items = q('[data-abanico-item]', caja);
+      gsap.set(items, { autoAlpha: 0, y: 60, rotation: 0, scale: 0.92 });
+      gsap.to(items, { autoAlpha: 1, y: 0, rotation: (_i: number, el: HTMLElement) => parseFloat(getComputedStyle(el).getPropertyValue('--r')) || 0, scale: 1, duration: 1.3, stagger: 0.09, ease: 'expo.out', clearProps: 'transform', scrollTrigger: { trigger: caja, start: 'top 80%', once: true } });
+    });
 
     /* ---- Titulares por líneas con máscara ---- */
     q('[data-titulo-lineas]:not([data-anim-hecho])').forEach((el) => {

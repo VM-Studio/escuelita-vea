@@ -61,6 +61,7 @@ export const NAV = [
     href: '/la-escuelita/',
     hijos: [
       { texto: 'Historia e identidad', href: '/la-escuelita/' },
+      { texto: 'Nuestra historia (cronología)', href: '/la-escuelita/historia/' },
       { texto: 'Nuestro equipo', href: '/la-escuelita/equipo/' },
     ],
   },

@@ -214,6 +214,7 @@ const subnav = [
   .area__fotos :global(.foto) { border-radius: var(--radio); }
   .area__fotos :global(figcaption) { margin-top: 0.6rem; font-size: 1.125rem; color: var(--tinta); }
   .area__fotos--dos { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1rem; gap: 1rem; align-items: start; }
+  .area__fotos--dos > :global(*:nth-child(3)) { grid-column: 1 / -1; margin-top: 0; }
   .area__fotos--dos > :global(*:nth-child(2)) { margin-top: 1.7rem; }
   .area__penas-titulo { font-family: var(--f-titulo); font-weight: 400; font-size: 1.375rem; margin-bottom: 1.25rem; }
   .area__penas :global(.galeria--pegadas) { grid-template-columns: 1fr 1fr; }

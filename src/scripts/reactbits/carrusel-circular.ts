@@ -97,7 +97,7 @@ function construirTiles(root: HTMLElement, g: ReturnType<typeof geometria>) {
 export function iniciarCarruselCircular(root: HTMLElement) {
   const cfg = JSON.parse(root.dataset.config || '{}') as Config;
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('liviano');
-  const g = geometria({ ...cfg, tiles: window.innerWidth < 768 ? 5 : 8 });
+  const g = geometria({ ...cfg, tiles: window.innerWidth < 768 ? 4 : 6 });
   construirTiles(root, g);
   const stage = root.querySelector<HTMLElement>('[data-cc-stage]')!;
   const camera = root.querySelector<HTMLElement>('[data-cc-camera]')!;
@@ -266,7 +266,8 @@ export function iniciarCarruselCircular(root: HTMLElement) {
 
   root.addEventListener('wheel', (event) => {
     if (!s.draggable) return;
-    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : 0;
+    // Solo gestos claramente horizontales (trackpad): el scroll vertical de la página nunca se bloquea
+    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) * 2 && Math.abs(event.deltaX) > 3 ? event.deltaX : 0;
     if (!delta) return;
     event.preventDefault();
     const perPixel = 180 / (Math.PI * s.radius * state.fit);

@@ -29,6 +29,7 @@ const [principal, ...archivo] = e.historia.fotos;
           <Sello tamano={104} color="tinta" />
         </div>
         <p class="historia__parrafo" data-hero-resto>{e.historia.texto}</p>
+        <div class="historia__boton" data-hero-resto><Boton href="/la-escuelita/historia/" variante="rojo">Conocé nuestra historia</Boton></div>
       </div>
       <figure class="historia__principal pegada" style="--rot:-2deg" data-hero-resto>
         <span class="cinta" aria-hidden="true"></span>
@@ -170,6 +171,7 @@ const [principal, ...archivo] = e.historia.fotos;
   .historia__fila > :global(.sello) { margin-left: 1.5rem; }
   .historia__anio { font-size: 3.44rem; font-size: clamp(3.44rem, 1.64rem + 4.8vw, 5.4rem); color: var(--rojo); }
   .historia__parrafo { margin-top: 1.275rem; font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
+  .historia__boton { margin-top: 1.5rem; }
   .historia__principal { position: relative; width: 82%; max-width: 26rem; margin: 0 auto; }
   @media (min-width: 56em) { .historia__grilla { grid-template-columns: 7fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } }
 

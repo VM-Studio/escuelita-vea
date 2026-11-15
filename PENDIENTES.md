@@ -114,3 +114,13 @@ Microcopy nuevo: "Arrastrá para girar" (debajo del carrusel circular).
 - El header ya no es transparente sobre fotos: siempre papel, con los dos logos sin fondo.
 - **Carrusel circular**: gira siempre (no se frena con el mouse) y más rápido.
 - Microcopy nuevo: etiqueta del hero "Primer Jardín Argentino de Educación por el Arte · 1959" (texto institucional) y los accesos "Jardín 1959 / Primaria 1997".
+
+## 9. Quinta pasada
+
+- **Footer**: fondo arena claro, logos sin fondo, solo 3 columnas (Jardín, Primaria, Dirección), más compacto.
+- **Línea de tiempo (Inicio)**: el "67" rojo es el comienzo del título ("67 años en la educación por el arte"), sin repetirse. Nuevo botón "Conocé nuestra historia".
+- **Carrusel circular**: ya no bloquea el scroll de la página (solo responde a gestos horizontales del trackpad y al arrastre).
+- **Nueva página `/la-escuelita/historia/`**: cronología completa 1959–2020 con el texto **tal cual** la web anterior (54 entradas), agrupada por décadas, con fotos de archivo, hitos destacados (1959, 1990, 1992, 1997, 2012, 2019), línea que se dibuja con el scroll, contadores, años en curva y rastro de fotos históricas en la portada. Enlazada desde el menú (La Escuelita), el Inicio y La Escuelita. Las fotos de las décadas son de ambiente (archivo y escuela), no ilustran un hecho puntual: si la escuela tiene fotos de exposiciones, se pueden sumar.
+- **Hero nuevo**: un arco/ventana al patio con fotos que se suceden, trazo de crayón, sol y las palabras "hacer · sentir · pensar" (de la frase de Marta Calvo) flotando alrededor; a la izquierda el titular, botones y los datos 1959 / 1997 / 67. El collage en abanico pasó a la Bienvenida y el rastro de fotos a la página de historia.
+- **Fotos del documento de la escuela**: en Ciencias Sociales ahora están Inmigrantes, Viaje a Rosario y Tehuelches, como pidió la escuela. Sin cambios en el resto (ya coincidían). Siguen sin fotos en el Drive: feriantes de Boas Novas, Noche de los Museos, pandemia, jardines del IVA y Talleres integrados en el MNBA (el documento dice "hay fotos": pedirlas).
+- Microcopy nuevo a aprobar: "Conocé nuestra historia", "Recorrer la cronología", "Historia e identidad" (botón), "Década del 60", palabras "hacer / sentir / pensar" del hero, "Nuestra historia (cronología)" en el menú.
