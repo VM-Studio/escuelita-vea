@@ -655,6 +655,146 @@ export const fotos = [
     porque: 'Imagen tierna, sin rostros, que invita a seguir explorando.',
     foco: '50% 50%',
   },
+  {
+    id: 'obra-yaguarete', nivel: 'primaria', carpeta: 'ANIMALES 1°', archivo: 'primaria/ANIMALES 1°/WhatsApp Image 2026-11-02 at 09.23.29 (1).jpeg',
+    ve: 'Pintura de un yaguareté amarillo sobre pasto verde, hecha por chicos de primer grado.', alt: 'Pintura de un yaguareté amarillo sobre pasto verde, hecha por chicos de primer grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-pez', nivel: 'primaria', carpeta: 'ANIMALES 1°', archivo: 'primaria/ANIMALES 1°/WhatsApp Image 2026-11-02 at 09.23.28 (1).jpeg',
+    ve: 'Pintura de un pez con crayón sobre fondo celeste, hecha por chicos de primer grado.', alt: 'Pintura de un pez con crayón sobre fondo celeste, hecha por chicos de primer grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-mariposas', nivel: 'primaria', carpeta: 'ANIMALES 1°', archivo: 'primaria/ANIMALES 1°/WhatsApp Image 2026-11-02 at 09.23.28 (2).jpeg',
+    ve: 'Pintura de mariposas de colores sobre fondo violeta, hecha por chicos de primer grado.', alt: 'Pintura de mariposas de colores sobre fondo violeta, hecha por chicos de primer grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-ave', nivel: 'primaria', carpeta: 'ANIMALES 1°', archivo: 'primaria/ANIMALES 1°/WhatsApp Image 2026-11-02 at 09.23.28.jpeg',
+    ve: 'Pintura de un ave marrón con crayón y acuarela, hecha por chicos de primer grado.', alt: 'Pintura de un ave marrón con crayón y acuarela, hecha por chicos de primer grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-tucan', nivel: 'primaria', carpeta: 'ANIMALES 1°', archivo: 'primaria/ANIMALES 1°/WhatsApp Image 2026-11-02 at 09.23.29.jpeg',
+    ve: 'Dibujo de un tucán con crayón sobre acuarela celeste, hecho por chicos de primer grado.', alt: 'Dibujo de un tucán con crayón sobre acuarela celeste, hecho por chicos de primer grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-lagarto', nivel: 'primaria', carpeta: 'ANIMALES 1°', archivo: 'primaria/ANIMALES 1°/WhatsApp Image 2026-11-02 at 09.23.27.jpeg',
+    ve: 'Pintura de un animal oscuro sobre fondo rosa, hecha por chicos de primer grado.', alt: 'Pintura de un animal oscuro sobre fondo rosa, hecha por chicos de primer grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-animales-carton', nivel: 'primaria', carpeta: 'ANIMALES 1°', archivo: 'primaria/ANIMALES 1°/WhatsApp Image 2026-11-02 at 09.23.31 (1).jpeg',
+    ve: 'Escultura de un ave hecha con cartón pintado, expuesta en una muestra de primer grado.', alt: 'Escultura de un ave hecha con cartón pintado, expuesta en una muestra de primer grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-cordillera', nivel: 'primaria', carpeta: 'ACTO SAN MARTIN 5°', archivo: 'primaria/ACTO SAN MARTIN 5°/WhatsApp Image 2026-11-02 at 09.23.36.jpeg',
+    ve: 'Gran mural de la cordillera nevada con figuras recortadas del cruce de los Andes, hecho por quinto grado.', alt: 'Gran mural de la cordillera nevada con figuras recortadas del cruce de los Andes, hecho por quinto grado.', usos: ['Galería de obras; Primaria · Ciencias Sociales'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-cordillera-luz', nivel: 'primaria', carpeta: 'ACTO SAN MARTIN 5°', archivo: 'primaria/ACTO SAN MARTIN 5°/WhatsApp Image 2026-11-02 at 09.23.36 (1).jpeg',
+    ve: 'Escenografía de montañas pintadas iluminada desde atrás, para el acto de quinto grado.', alt: 'Escenografía de montañas pintadas iluminada desde atrás, para el acto de quinto grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-calendario', nivel: 'primaria', carpeta: 'CALENDARIO 3°', archivo: 'primaria/CALENDARIO 3°/7_Mesa de trabajo 1.jpg',
+    ve: 'Collage de árboles y personajes hecho por chicos de tercer grado.', alt: 'Collage de árboles y personajes hecho por chicos de tercer grado.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-quillango-sol', nivel: 'primaria', carpeta: 'PUEBLOS ORIGINARIOS 2° / QUILLANGOS', archivo: 'primaria/PUEBLOS ORIGINARIOS 2°/QUILLANGOS/WhatsApp Image 2026-11-02 at 09.23.39.jpeg',
+    ve: 'Chico de segundo grado pintando guardas y símbolos sobre un quillango de papel madera, en el piso.', alt: 'Chico de segundo grado pintando guardas y símbolos sobre un quillango de papel madera, en el piso.', usos: ['Galería de obras; Primaria'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'obra-quillangos-guardas', nivel: 'primaria', carpeta: 'PUEBLOS ORIGINARIOS 2° / QUILLANGOS', archivo: 'primaria/PUEBLOS ORIGINARIOS 2°/QUILLANGOS/9.jpeg',
+    ve: 'Quillangos de papel con guardas de colores extendidos en el piso, con chicas trabajando.', alt: 'Quillangos de papel con guardas de colores extendidos en el piso, con chicas trabajando.', usos: ['Galería de obras'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'primaria-leyenda-ronda', nivel: 'primaria', carpeta: 'PUEBLOS ORIGINARIOS 2° / REPRESENTACIÓN LEYENDA', archivo: 'primaria/PUEBLOS ORIGINARIOS 2°/REPRESENTACIÓN LEYENDA/WhatsApp Image 2026-11-02 at 09.23.10.jpeg',
+    ve: 'Chicos con quillangos representando una leyenda bajo los árboles del patio.', alt: 'Chicos con quillangos representando una leyenda bajo los árboles del patio.', usos: ['Colección de la vida escolar'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'primaria-muestra-mesa', nivel: 'primaria', carpeta: 'MUESTRA DE AMBIENTES 5°', archivo: 'primaria/MUESTRA DE AMBIENTES 5°/WhatsApp Image 2026-10-26 at 11.48.37.jpeg',
+    ve: 'Mesa de la muestra de ambientes de quinto grado con folletos y comidas típicas.', alt: 'Mesa de la muestra de ambientes de quinto grado con folletos y comidas típicas.', usos: ['Comunidad'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'primaria-muestra-estepa', nivel: 'primaria', carpeta: 'MUESTRA DE AMBIENTES 5°', archivo: 'primaria/MUESTRA DE AMBIENTES 5°/WhatsApp Image 2026-10-26 at 11.48.38.jpeg',
+    ve: 'Chicos de quinto grado junto a su mesa “Estepa y bosque patagónico” en la muestra.', alt: 'Chicos de quinto grado junto a su mesa “Estepa y bosque patagónico” en la muestra.', usos: ['Comunidad'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'primaria-lectura-leyenda', nivel: 'primaria', carpeta: 'PUEBLOS ORIGINARIOS 2° / LECTURA LEYENDA', archivo: 'primaria/PUEBLOS ORIGINARIOS 2°/LECTURA LEYENDA/1.jpeg',
+    ve: 'Ronda de chicos en el aula alrededor de una guirnalda de luces, durante la lectura de una leyenda.', alt: 'Ronda de chicos en el aula alrededor de una guirnalda de luces, durante la lectura de una leyenda.', usos: ['Primaria · Lengua'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-tinta-ojos', nivel: 'jardin', carpeta: 'TALLER DE 3', archivo: 'jardin/TALLER DE 3/8-T3.jpeg',
+    ve: 'Un nene dibuja con tiza blanca sobre papel negro en la mesa del taller.', alt: 'Un nene dibuja con tiza blanca sobre papel negro en la mesa del taller.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-sol-grande', nivel: 'jardin', carpeta: 'TALLER DE 4', archivo: 'jardin/TALLER DE 4/7-T4.png',
+    ve: 'Chicos del jardín trabajando en el taller.', alt: 'Chicos del jardín trabajando en el taller.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-tiza-negro', nivel: 'jardin', carpeta: 'TALLER DE 3', archivo: 'jardin/TALLER DE 3/6-T3.jpeg',
+    ve: 'Chicos dibujan con tiza blanca sobre hojas negras en una mesa compartida.', alt: 'Chicos dibujan con tiza blanca sobre hojas negras en una mesa compartida.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-mesa-roja-masa', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/1-T2.png',
+    ve: 'Ronda de chicos de la sala de dos amasando sobre una mesa roja larga.', alt: 'Ronda de chicos de la sala de dos amasando sobre una mesa roja larga.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-papel-grande', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/8-T2.jpeg',
+    ve: 'Chicos de la sala de dos dibujan juntos sobre un papel grande que cubre la mesa.', alt: 'Chicos de la sala de dos dibujan juntos sobre un papel grande que cubre la mesa.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-arena-cocina', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/9-T2.jpeg',
+    ve: 'Chicos de la sala de dos juegan con cuencos y arena en el arenero, con una maestra.', alt: 'Chicos de la sala de dos juegan con cuencos y arena en el arenero, con una maestra.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-construccion-amarilla', nivel: 'jardin', carpeta: 'TALLER DE 5', archivo: 'jardin/TALLER DE 5/11-T5.jpeg',
+    ve: 'Chicos pintan una construcción amarilla y roja de cartón en el taller.', alt: 'Chicos pintan una construcción amarilla y roja de cartón en el taller.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-pintura-murales', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/7-PLAST.jpeg',
+    ve: 'Vista desde arriba de chicos pintando dibujos de figuras con témpera y pinceles.', alt: 'Vista desde arriba de chicos pintando dibujos de figuras con témpera y pinceles.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-hojas-crayon', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/8-PLAST.jpeg',
+    ve: 'Un chico dibuja hojas secas con crayones de colores, con hojas reales sobre la mesa.', alt: 'Un chico dibuja hojas secas con crayones de colores, con hojas reales sobre la mesa.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-tiza-piso', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/9-PLAST.png',
+    ve: 'Una nena dibuja figuras grandes con tiza rosa en el piso.', alt: 'Una nena dibuja figuras grandes con tiza rosa en el piso.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-arcilla-figuras', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/5-PLAST.jpeg',
+    ve: 'Un nene mira las figuras de arcilla que modeló, alineadas sobre una tabla.', alt: 'Un nene mira las figuras de arcilla que modeló, alineadas sobre una tabla.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-collage-corazon', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/19-PLAST.jpeg',
+    ve: 'Manos armando un corazón con papelitos blancos sobre papel negro.', alt: 'Manos armando un corazón con papelitos blancos sobre papel negro.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-pintura-mesa-azul', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/4-PLAST.png',
+    ve: 'Chicos pintan juntos con témpera azul y amarilla sobre una mesa larga.', alt: 'Chicos pintan juntos con témpera azul y amarilla sobre una mesa larga.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-musica-piano', nivel: 'jardin', carpeta: 'MÚSICA', archivo: 'jardin/MÚSICA/1-MUSICA.jpeg',
+    ve: 'Una maestra toca el piano mientras los chicos escuchan sentados en el piso.', alt: 'Una maestra toca el piano mientras los chicos escuchan sentados en el piso.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-musica-guitarra', nivel: 'jardin', carpeta: 'MÚSICA', archivo: 'jardin/MÚSICA/2-MUSICA.jpeg',
+    ve: 'Ronda de chicos alrededor de una maestra con guitarra, en una sala con dibujos colgados.', alt: 'Ronda de chicos alrededor de una maestra con guitarra, en una sala con dibujos colgados.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-libros-ronda', nivel: 'jardin', carpeta: 'LITERATURA', archivo: 'jardin/LITERATURA/5-LITERATURA.png',
+    ve: 'Chicos sentados leyendo libros en un rincón del jardín.', alt: 'Chicos sentados leyendo libros en un rincón del jardín.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-libro-cara', nivel: 'jardin', carpeta: 'LITERATURA', archivo: 'jardin/LITERATURA/3-LITERATURA.png',
+    ve: 'Una nena asoma la cara a través del agujero de un libro ilustrado.', alt: 'Una nena asoma la cara a través del agujero de un libro ilustrado.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-aros', nivel: 'jardin', carpeta: 'ED FÍSICA', archivo: 'jardin/ED FÍSICA/4-ED FÍSICA.png',
+    ve: 'Chicos del jardín en fila sosteniendo aros de colores.', alt: 'Chicos del jardín en fila sosteniendo aros de colores.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
+  {
+    id: 'jardin-disfraces', nivel: 'jardin', carpeta: 'JUEGO DRAMÁTICO', archivo: 'jardin/JUEGO DRAMÁTICO/5-JUEG-DRAM.jpeg',
+    ve: 'Chicos disfrazados de animales y personajes sentados en el patio.', alt: 'Chicos disfrazados de animales y personajes sentados en el patio.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+  },
 ].filter((f) => f.usos.length > 0);
 
 /** Fotos revisadas y NO usadas (o descartadas) — van al manifest para que la escuela sepa qué se miró. */

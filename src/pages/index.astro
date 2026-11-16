@@ -7,6 +7,8 @@ import Trazo from '../components/Trazo.astro';
 import Logo from '../components/Logo.astro';
 import Boton from '../components/Boton.astro';
 import Puertas from '../components/Puertas.astro';
+import Constelacion from '../components/Constelacion.astro';
+import GaleriaObras from '../components/GaleriaObras.astro';
 import CurvaTexto from '../components/CurvaTexto.astro';
 import TarjetasRebote from '../components/TarjetasRebote.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
@@ -116,33 +118,14 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
 
   {/* ============ BIENVENIDA ============ */}
   <section class="bienvenida seccion seccion--papel-oscuro" aria-label="Bienvenida">
-    <div class="contenedor bienvenida__grilla">
-      {/* Collage en abanico (idea "Image Fan" de 21st.dev): la foto institucional al centro */}
-      <div class="bienvenida__foto con-mancha">
-        <Mancha forma="b" color="ocre" class="bienvenida__mancha" />
-        <div class="abanico" data-abanico>
-          <figure class="abanico__foto abanico__foto--izq" data-abanico-item style="--r:-9deg">
-            <Foto id="jardin-hojas-al-aire" ratio="4/5" sizes="(min-width: 56em) 20vw, 40vw" />
-          </figure>
-          <figure class="abanico__foto abanico__foto--der" data-abanico-item style="--r:8deg">
-            <Foto id="primaria-leyenda-bajo-arboles" ratio="4/5" sizes="(min-width: 56em) 20vw, 40vw" />
-          </figure>
-          <figure class="abanico__foto abanico__foto--centro" data-abanico-item style="--r:-1.5deg">
-            <span class="cinta" aria-hidden="true"></span>
-            <Foto id={p.bienvenida.foto} ratio="4/3" sizes="(min-width: 56em) 32vw, 70vw" />
-          </figure>
-          <figure class="abanico__mini abanico__mini--a" data-abanico-item style="--r:6deg">
-            <Foto id="plastica-masa-muchas-manos" ratio="1/1" sizes="140px" />
-          </figure>
-          <figure class="abanico__mini abanico__mini--b" data-abanico-item style="--r:-7deg">
-            <Foto id="musica-instrumentos" ratio="1/1" sizes="140px" />
-          </figure>
-        </div>
-      </div>
-      <div class="bienvenida__texto">
-        <Trazo nombre="espiral" class="bienvenida__espiral" grosor={2.2} color="ocre" />
+    <div class="contenedor">
+      <Constelacion items={[
+        { id: p.bienvenida.foto }, { id: 'jardin-hojas-crayon' }, { id: 'primaria-leyenda-ronda' }, { id: 'jardin-libro-cara' },
+        { id: 'jardin-arcilla-figuras' }, { id: 'patio-tres-nenas-arena' }, { id: 'primaria-escribiendo-juntos' }, { id: 'jardin-musica-guitarra' },
+      ]} etiqueta="La vida en La Escuelita">
+        <Paleta class="bienvenida__paleta" />
         <p class="bienvenida__parrafo" data-revelar>{p.bienvenida.texto}</p>
-      </div>
+      </Constelacion>
     </div>
   </section>
 
@@ -223,6 +206,23 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
 
   {/* ============ DOS PUERTAS ============ */}
   <Puertas />
+
+  <GaleriaObras
+    titulo="Obras del"
+    acento="taller"
+    bajada="Producciones de los chicos y las chicas en los talleres de La Escuelita."
+    obras={[
+      { id: 'obra-yaguarete', rotulo: 'Animales', detalle: '1° grado' },
+      { id: 'obra-cordillera', rotulo: 'La cordillera', detalle: '5° grado' },
+      { id: 'obra-pez', rotulo: 'Animales', detalle: '1° grado' },
+      { id: 'obra-quillango-sol', rotulo: 'Quillangos', detalle: '2° grado' },
+      { id: 'obra-mariposas', rotulo: 'Animales', detalle: '1° grado' },
+      { id: 'obra-calendario', rotulo: 'Collage', detalle: '3° grado' },
+      { id: 'obra-tucan', rotulo: 'Animales', detalle: '1° grado' },
+      { id: 'obra-animales-carton', rotulo: 'Escultura', detalle: '1° grado' },
+    ]}
+    enlace={{ href: '/primaria/#areas', texto: 'Conocé las áreas de la Primaria' }}
+  />
 
   {/* ============ MARQUESINA DE MATERIALES ============ */}
   <CurvaTexto items={p.materiales} etiqueta="Materiales del taller: crayones, masa, témpera, arcilla, tinta china, anilinas y collage" />
@@ -389,6 +389,9 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
   }
 
   /* ---------- BIENVENIDA ---------- */
+  .bienvenida { overflow: hidden; }
+  .bienvenida__paleta { margin: 0 auto 1.25rem; }
+  .bienvenida :global(.conste__centro) .bienvenida__parrafo { margin: 0 auto; }
   .bienvenida, .ejes { overflow: hidden; }
   .bienvenida__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; }
   .abanico { position: relative; width: 100%; max-width: 36rem; margin: 0 auto; }

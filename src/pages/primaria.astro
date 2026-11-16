@@ -10,6 +10,7 @@ import Desplegable from '../components/Desplegable.astro';
 import Interludio from '../components/Interludio.astro';
 import Galeria from '../components/Galeria.astro';
 import TarjetaProyecto from '../components/TarjetaProyecto.astro';
+import GaleriaObras from '../components/GaleriaObras.astro';
 import VideoLitio from '../components/VideoLitio.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import { primaria as p } from '../content/primaria';
@@ -138,6 +139,22 @@ const subnav = [
   </section>
 
   <Interludio foto={p.interludioAcontecimiento.foto} frase={p.interludioAcontecimiento.frase} />
+
+  <GaleriaObras
+    titulo="Obras de la"
+    acento="Primaria"
+    bajada="Producciones de los chicos y las chicas en los proyectos de cada grado."
+    obras={[
+      { id: 'obra-cordillera', rotulo: 'La cordillera', detalle: '5° grado' },
+      { id: 'obra-yaguarete', rotulo: 'Animales', detalle: '1° grado' },
+      { id: 'obra-quillangos-guardas', rotulo: 'Quillangos', detalle: '2° grado' },
+      { id: 'obra-ave', rotulo: 'Animales', detalle: '1° grado' },
+      { id: 'obra-calendario', rotulo: 'Collage', detalle: '3° grado' },
+      { id: 'obra-cordillera-luz', rotulo: 'Escenografía', detalle: '5° grado' },
+      { id: 'obra-lagarto', rotulo: 'Animales', detalle: '1° grado' },
+      { id: 'obra-animales-carton', rotulo: 'Escultura', detalle: '1° grado' },
+    ]}
+  />
 
   {/* Proyectos destacados */}
   <section class="seccion ancla" id="proyectos" aria-labelledby="proy-titulo">

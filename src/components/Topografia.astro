@@ -1,0 +1,31 @@
+---
+// Líneas "topográficas" dibujadas a mano (idea de las curvas de nivel de landonorris.com, llevada al crayón).
+// Decorativo y liviano: un solo SVG generado en el build.
+interface Props { class?: string; semilla?: number; color?: string; opacidad?: number }
+const { class: clase = '', semilla = 3, color = 'var(--tinta)', opacidad = 0.07 } = Astro.props;
+let s = semilla * 9973;
+const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+const centros = [[0.22, 0.3], [0.78, 0.68], [0.55, 0.12]].map(([x, y]) => [x * 1200 + rnd() * 80, y * 800 + rnd() * 60]);
+const paths: string[] = [];
+for (const [cx, cy] of centros) {
+  const fases = [rnd() * 6, rnd() * 6, rnd() * 6];
+  for (let k = 1; k <= 9; k++) {
+    const r = 34 * k + rnd() * 10;
+    let d = '';
+    for (let a = 0; a <= 64; a++) {
+      const t = (a / 64) * Math.PI * 2;
+      const w = 1 + 0.16 * Math.sin(3 * t + fases[0]) + 0.08 * Math.sin(5 * t + fases[1] + k * 0.3) + 0.05 * Math.sin(2 * t + fases[2]);
+      const x = cx + Math.cos(t) * r * w * 1.25;
+      const y = cy + Math.sin(t) * r * w;
+      d += `${a ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`;
+    }
+    paths.push(d + 'Z');
+  }
+}
+---
+<svg class:list={['topo', clase]} viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" style={`--topo-op:${opacidad}`}>
+  <g fill="none" stroke={color} stroke-width="1.2" filter="url(#crayon)">{paths.map((d) => <path d={d} />)}</g>
+</svg>
+<style>
+  .topo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: var(--topo-op); z-index: 0; }
+</style>

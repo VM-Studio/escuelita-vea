@@ -1,0 +1,75 @@
+---
+// Constelación de fotos: fotos sueltas a distintas "profundidades" (se mueven a distinta velocidad con el scroll),
+// cada una con un rótulo chico, y un texto en el centro. Idea adaptada de landonorris.com.
+// Mobile y sin JS: grilla ordenada de fotos y el texto arriba.
+import Foto from './Foto.astro';
+import Topografia from './Topografia.astro';
+import { fotos as registro } from '../data/fotos.mjs';
+interface Item { id: string; rotulo?: string }
+interface Props { items: Item[]; class?: string; etiqueta?: string }
+const { items, class: clase = '', etiqueta = 'Fotos de la escuela' } = Astro.props;
+// Posiciones (x %, y %, ancho rem, velocidad) — pensadas para 7–8 fotos alrededor del centro
+const POS = [
+  [3, 6, 10, 0.18], [24, 0, 7.5, 0.32], [72, 2, 9.5, 0.14], [88, 40, 7, 0.36],
+  [2, 56, 8, 0.28], [20, 72, 9, 0.12], [70, 68, 10.5, 0.22], [50, 82, 7, 0.4],
+];
+const rot = (id: string, r?: string) => {
+  if (r) return r;
+  const f = registro.find((x) => x.id === id);
+  if (!f) return '';
+  const c = f.carpeta.split('(')[0].split('/')[0].trim().toLowerCase().replace(/^./, (x: string) => x.toUpperCase());
+  return `${f.nivel === 'jardin' ? 'Jardín' : 'Primaria'} — ${c}`;
+};
+---
+<div class:list={['conste', clase]} data-constelacion>
+  <Topografia semilla={5} />
+  <div class="conste__centro"><slot /></div>
+  <ul class="conste__fotos" aria-label={etiqueta}>
+    {items.slice(0, POS.length).map((it, i) => {
+      const [x, y, w, v] = POS[i];
+      return (
+        <li class="conste__item" style={`--x:${x}%;--y:${y}%;--w:${w}rem;--rot:${(i % 2 ? 1 : -1) * (1 + (i % 3))}deg`} data-velocidad={v} data-revelar>
+          <figure>
+            <Foto id={it.id} ratio={i % 3 === 1 ? '1/1' : '4/5'} sizes="(min-width: 64em) 11rem, 45vw" />
+            <figcaption class="conste__rotulo">{rot(it.id, it.rotulo)}</figcaption>
+          </figure>
+        </li>
+      );
+    })}
+  </ul>
+</div>
+
+<script>
+  const fino = window.matchMedia('(min-width: 64em)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !document.documentElement.classList.contains('liviano');
+  if (fino) document.querySelectorAll<HTMLElement>('[data-constelacion]').forEach((c) => {
+    const items = Array.prototype.slice.call(c.querySelectorAll<HTMLElement>('[data-velocidad]')) as HTMLElement[];
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const r = c.getBoundingClientRect();
+      const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight; // -1..1 aprox
+      items.forEach((el) => { el.style.setProperty('--py', `${(p * Number(el.dataset.velocidad) * -180).toFixed(1)}px`); });
+    };
+    window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    update();
+  });
+</script>
+
+<style>
+  .conste { position: relative; overflow: hidden; }
+  .conste__centro { position: relative; z-index: 2; max-width: 40rem; margin: 0 auto; text-align: center; padding: 1rem 0 2rem; }
+  .conste__fotos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 0.75rem; gap: 0.75rem; position: relative; z-index: 1; }
+  .conste__item figure { margin: 0; }
+  .conste__item :global(.foto) { border-radius: 3px; }
+  .conste__rotulo { margin-top: 0.4rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.5625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-suave); line-height: 1.3; }
+  @media (max-width: 63.99em) { .conste__item:nth-child(n + 7) { display: none; } }
+  @media (min-width: 64em) {
+    .conste { min-height: 48rem; display: flex; align-items: center; padding-bottom: 2rem; }
+    .conste__centro { padding: 0; max-width: 34rem; }
+    .conste__fotos { position: absolute; top: 2rem; left: 0; right: 0; bottom: 2rem; display: block; }
+    .conste__item { position: absolute; left: var(--x); top: var(--y); width: var(--w); transform: translate3d(0, var(--py, 0), 0) rotate(var(--rot)); transition: transform 0.1s linear; }
+    .conste__item figure { transition: transform 0.6s var(--ease-out); }
+    .conste__item:hover figure { transform: scale(1.06) rotate(calc(var(--rot) * -1)); }
+    .conste__item:hover { z-index: 3; }
+  }
+</style>

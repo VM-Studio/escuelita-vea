@@ -4,8 +4,9 @@ import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
 import PortadaPagina from '../components/PortadaPagina.astro';
+import ListaFoto from '../components/ListaFoto.astro';
+import Constelacion from '../components/Constelacion.astro';
 import SubNav from '../components/SubNav.astro';
-import Carrusel from '../components/Carrusel.astro';
 import Tabs from '../components/Tabs.astro';
 import Acordeon from '../components/Acordeon.astro';
 import Desplegable from '../components/Desplegable.astro';
@@ -58,20 +59,8 @@ const subnav = [
         <h2 id="dif-titulo" data-titulo-lineas set:html={acento(j.diferencias.titulo)} />
         <p class="t-lead" data-revelar>{j.diferencias.intro}</p>
       </div>
-      <Carrusel etiqueta="Lo que priorizamos" soloMovil class="diferencias">
-        {j.diferencias.items.map((d, i) => (
-          <article class="tarjeta-dif" data-revelar data-inclinar='{"amplitude":6,"scale":1.02}'>
-            <div class="tarjeta-dif__foto">
-              <Foto id={d.foto} ratio="4/3" sizes="(min-width: 64em) 30vw, (min-width: 40em) 46vw, 82vw" />
-            </div>
-            <div class="tarjeta-dif__cuerpo">
-              <span class="tarjeta-dif__icono" aria-hidden="true"><Trazo nombre={d.icono as any} grosor={2.4} color={i % 2 ? 'rojo' : 'ocre'} /></span>
-              <h3 class="tarjeta-dif__titulo">{d.etiqueta}</h3>
-              <p class="tarjeta-dif__texto">{d.texto}</p>
-            </div>
-          </article>
-        ))}
-      </Carrusel>
+      {/* "donde priorizamos:" — la palabra sale del propio texto de la escuela */}
+      <ListaFoto palabra="priorizamos" id="priorizamos" items={j.diferencias.items.map((d) => ({ titulo: d.etiqueta, texto: d.texto, foto: d.foto }))} />
     </div>
   </section>
 
@@ -91,14 +80,13 @@ const subnav = [
         ))}
       </div>
       <div class="gesto">
-        <div class="gesto__foto pegada" style="--rot:-1.4deg" data-revelar>
-          <span class="cinta" aria-hidden="true"></span>
-          <Foto id="taller-pintura-mesa" ratio="4/5" sizes="(min-width: 56em) 34vw, 80vw" />
-        </div>
-        <div class="gesto__texto">
-          <h3 class="gesto__titulo" data-titulo-lineas>{j.propuesta.gesto.titulo}</h3>
-          <div class="prosa" data-revelar set:html={parrafos(j.propuesta.gesto.texto)} />
-        </div>
+        <Constelacion items={[
+          { id: 'jardin-hojas-crayon' }, { id: 'jardin-arcilla-figuras' }, { id: 'jardin-tiza-negro' }, { id: 'jardin-collage-corazon' },
+          { id: 'jardin-pintura-mesa-azul' }, { id: 'jardin-tiza-piso' }, { id: 'jardin-mesa-roja-masa' }, { id: 'jardin-construccion-amarilla' },
+        ]} etiqueta="Las materias del taller">
+          <h3 class="gesto__titulo" data-revelar>{j.propuesta.gesto.titulo}</h3>
+          <div class="prosa gesto__texto" data-revelar set:html={parrafos(j.propuesta.gesto.texto)} />
+        </Constelacion>
       </div>
     </div>
   </section>
@@ -312,10 +300,10 @@ const subnav = [
   .concepto__num :global(svg) { width: 100%; height: 100%; }
   .concepto__titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
   @media (min-width: 48em) { .conceptos { grid-template-columns: 1fr 1fr; grid-gap: 2.04rem 2.72rem; gap: 2.04rem 2.72rem; } }
-  .gesto { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; margin-top: 3.4rem; }
+  .gesto { margin-top: 3rem; }
+  .gesto__texto { text-align: left; font-size: 0.95rem; }
   .gesto__foto { position: relative; width: 82%; max-width: 26rem; margin: 0 auto; }
-  .gesto__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1.25rem; font-style: italic; font-weight: 320; }
-  @media (min-width: 56em) { .gesto { grid-template-columns: 5fr 6fr; grid-gap: 3.4rem; gap: 3.4rem; } }
+  .gesto__titulo { font-size: 1.6rem; font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.3rem); margin-bottom: 1rem; font-style: italic; font-weight: 320; }
 
   .sala__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
   .sala__foto { position: relative; width: 82%; max-width: 24rem; margin: 0 auto; }

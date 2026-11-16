@@ -124,3 +124,15 @@ Microcopy nuevo: "Arrastrá para girar" (debajo del carrusel circular).
 - **Hero nuevo**: un arco/ventana al patio con fotos que se suceden, trazo de crayón, sol y las palabras "hacer · sentir · pensar" (de la frase de Marta Calvo) flotando alrededor; a la izquierda el titular, botones y los datos 1959 / 1997 / 67. El collage en abanico pasó a la Bienvenida y el rastro de fotos a la página de historia.
 - **Fotos del documento de la escuela**: en Ciencias Sociales ahora están Inmigrantes, Viaje a Rosario y Tehuelches, como pidió la escuela. Sin cambios en el resto (ya coincidían). Siguen sin fotos en el Drive: feriantes de Boas Novas, Noche de los Museos, pandemia, jardines del IVA y Talleres integrados en el MNBA (el documento dice "hay fotos": pedirlas).
 - Microcopy nuevo a aprobar: "Conocé nuestra historia", "Recorrer la cronología", "Historia e identidad" (botón), "Década del 60", palabras "hacer / sentir / pensar" del hero, "Nuestra historia (cronología)" en el menú.
+
+## 11. Rediseño creativo (rama `rediseno-creativo`)
+
+Referencias: Awwwards (Hatching Dragons, Fine Acts, London Film School, Department of Emotions) y landonorris.com
+(ideas adaptadas, nada copiado). Se trabaja en una rama de git: para volver a la versión anterior, `git checkout main`.
+
+- **Más fotos:** se sumaron 35 fotos del Drive que no se usaban (obras de 1°, 2°, 3° y 5°, y escenas del taller del Jardín). Ver manifest.
+- **Constelación de fotos** con líneas topográficas de crayón (Inicio: bienvenida; Jardín: "El gesto espontáneo y sus materias").
+- **Galería de obras** sobre fondo oscuro con rótulos de grado (Inicio y Primaria).
+- **Puertas Jardín / Primaria** que se expanden al pasar el mouse.
+- **"Priorizamos"**: lista con foto que cambia en "¿Qué nos diferencia?" (Jardín).
+- Microcopy nuevo a aprobar: "Obras del taller", "Obras de la Primaria", "Producciones de los chicos y las chicas en los talleres de La Escuelita.", "Producciones de los chicos y las chicas en los proyectos de cada grado.", "Conocé las áreas de la Primaria", rótulos de obras ("Animales · 1° grado", "La cordillera · 5° grado", etc.).
