@@ -1,0 +1,99 @@
+---
+// "Conocé nuestro Instagram": 4 reels de @la.escuelita.vea reproduciéndose sin sonido.
+// Al tocar uno, se activa el sonido y los controles. Los videos se cargan recién cuando la sección
+// se acerca a la pantalla. Botón "Conocenos" → Instagram.
+import Dibujito from './Dibujito.astro';
+import { acento } from '../lib/texto';
+const IG = 'https://www.instagram.com/la.escuelita.vea/';
+const reels = [
+  { n: 1, texto: 'Bienvenida a la primavera en el Jardín', url: 'https://www.instagram.com/reel/Dd2Jvehvc-M/' },
+  { n: 2, texto: 'Taller de 2', url: 'https://www.instagram.com/reel/DdunjNxPuyz/' },
+  { n: 3, texto: '2do grado · Los Pueblos', url: 'https://www.instagram.com/reel/DfnHHuJPNei/' },
+  { n: 4, texto: 'Los recreos en nuestro fondo', url: 'https://www.instagram.com/reel/DcIljCUSVgP/' },
+];
+---
+<section class="ig" aria-labelledby="ig-titulo">
+  <Dibujito nombre="cara-orejas" lado="izq" top="12%" ancho="6rem" rot={-8} />
+  <Dibujito nombre="nena-vestido" lado="der" top="48%" ancho="4.5rem" rot={5} />
+  <div class="contenedor">
+    <div class="ig__cabeza">
+      <div>
+        <p class="ig__usuario">@la.escuelita.vea</p>
+        <h2 id="ig-titulo" class="ig__titulo" data-revelar set:html={acento('Conocé nuestro Instagram')} />
+      </div>
+      <a class="boton boton--rojo" href={IG} target="_blank" rel="noopener" data-revelar>
+        <span>Conocenos</span>
+        <svg class="boton__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 C 9 12, 14 12.2, 19 12 M14 6.5 C 16 9, 18 11, 19.5 12 C 18 13.2, 16 15, 14 17.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        <span class="sr-only"> (se abre Instagram en una pestaña nueva)</span>
+      </a>
+    </div>
+    <ul class="ig__reels" data-ig>
+      {reels.map((r, i) => (
+        <li class="reel" data-revelar style={`--rot:${[-1.2, 0.8, -0.6, 1.1][i]}deg`}>
+          <div class="reel__marco">
+            <video class="reel__video" muted loop playsinline preload="none" poster={`/reels/reel-${r.n}.jpg`} data-src={`/reels/reel-${r.n}.mp4`} aria-label={`Reel: ${r.texto}`}></video>
+            <button type="button" class="reel__sonido" aria-pressed="false" data-reel-sonido>
+              <span class="sr-only">Activar sonido: {r.texto}</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="reel__mute"><path d="M4 9h4l5-4v14l-5-4H4zM16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="reel__on"><path d="M4 9h4l5-4v14l-5-4H4zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <a class="reel__pie" href={r.url} target="_blank" rel="noopener">{r.texto} <span aria-hidden="true">↗</span><span class="sr-only"> (Instagram, se abre en una pestaña nueva)</span></a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ig]').forEach((lista) => {
+    const videos = Array.prototype.slice.call(lista.querySelectorAll<HTMLVideoElement>('video')) as HTMLVideoElement[];
+    const h = document.documentElement;
+    const quieto = h.classList.contains('liviano') || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cargar = (v: HTMLVideoElement) => { if (!v.src && v.dataset.src) { v.src = v.dataset.src; v.preload = 'auto'; } };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => {
+        const v = e.target as HTMLVideoElement;
+        if (e.isIntersecting) { cargar(v); if (!quieto || v.dataset.activo) v.play().catch(() => {}); }
+        else v.pause();
+      }), { rootMargin: '200px' });
+      videos.forEach((v) => io.observe(v));
+    }
+    // Tocar un reel: sonido y controles en ese, silencio en los demás
+    lista.querySelectorAll<HTMLButtonElement>('[data-reel-sonido]').forEach((b, i) => {
+      const activar = () => {
+        const v = videos[i];
+        const encender = v.muted;
+        videos.forEach((o, j) => { if (j !== i) { o.muted = true; o.controls = false; lista.querySelectorAll('[data-reel-sonido]')[j].setAttribute('aria-pressed', 'false'); } });
+        cargar(v);
+        v.muted = !encender;
+        v.controls = encender;
+        v.dataset.activo = encender ? '1' : '';
+        b.setAttribute('aria-pressed', String(encender));
+        v.play().catch(() => {});
+      };
+      b.addEventListener('click', activar);
+      videos[i].addEventListener('click', () => { if (videos[i].muted) activar(); });
+    });
+  });
+</script>
+
+<style>
+  .ig { position: relative; overflow: hidden; padding: 3.5rem 0; padding: clamp(3rem, 2rem + 3vw, 5rem) 0; background: var(--papel-oscuro); }
+  .ig__cabeza { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; margin-bottom: 1.75rem; }
+  .ig__usuario { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--tinta-suave); margin-bottom: 0.4rem; }
+  .ig__titulo { font-size: 1.8rem; font-size: clamp(1.7rem, 1.1rem + 2vw, 2.7rem); font-weight: 330; letter-spacing: -0.03em; margin-right: 2rem; margin-bottom: 0.75rem; }
+  .ig__reels { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 0.9rem; gap: 0.9rem; }
+  @media (min-width: 56em) { .ig__reels { grid-template-columns: repeat(4, 1fr); grid-gap: 1.25rem; gap: 1.25rem; } }
+  .reel__marco { position: relative; overflow: hidden; border-radius: 14px; background: var(--tinta); transform: rotate(var(--rot)); box-shadow: 0 18px 34px -20px rgba(35, 32, 28, 0.55); transition: transform 0.5s var(--ease-out); }
+  .reel__marco::before { content: ''; display: block; padding-top: 177.7%; }
+  @media (hover: hover) { .reel:hover .reel__marco { transform: rotate(0) translateY(-4px); } }
+  .reel__video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+  .reel__sonido { position: absolute; right: 0.6rem; bottom: 0.6rem; z-index: 2; display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border: 0; border-radius: 50%; background: rgba(250, 246, 238, 0.9); color: var(--tinta); cursor: pointer; }
+  .reel__on { display: none; }
+  .reel__sonido[aria-pressed='true'] .reel__on { display: block; }
+  .reel__sonido[aria-pressed='true'] .reel__mute { display: none; }
+  .reel__sonido[aria-pressed='true'] { background: var(--rojo); color: #fff; }
+  .reel__pie { display: block; margin-top: 0.6rem; font-size: 0.8125rem; color: var(--tinta-suave); text-decoration: none; }
+  .reel__pie:hover { color: var(--rojo); }
+</style>

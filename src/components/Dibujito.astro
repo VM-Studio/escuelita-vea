@@ -1,0 +1,57 @@
+---
+// Dibujito de los chicos como marca lateral (pedido de la dueña: "recortarlo de alguno de los dibujos,
+// hacerlo chiquito, ponerlo en un lateral"). Se mueve "cuadro a cuadro" como el posteo animado del Instagram.
+// Decorativo: aria-hidden. Los dibujos están en public/dibujos/.
+export type NombreDibujo =
+  | 'arbol' | 'cara-anteojos' | 'cara-mujer' | 'cara-ojos' | 'cara-orejas' | 'cara-pelo-largo'
+  | 'cara-perfil' | 'cara-pestanas' | 'cuerpo-musculos' | 'esqueleto' | 'nena-vestido' | 'paisaje-barco';
+interface Props {
+  nombre: NombreDibujo;
+  lado?: 'izq' | 'der';
+  top?: string;        // posición vertical dentro de la sección (ej. '10%')
+  ancho?: string;      // ej. '7rem'
+  rot?: number;        // rotación base en grados
+  opacidad?: number;
+  class?: string;
+}
+const { nombre, lado = 'der', top = '8%', ancho = '6.5rem', rot = 0, opacidad = 0.55, class: clase = '' } = Astro.props;
+---
+<img
+  class:list={['dibujito', `dibujito--${lado}`, clase]}
+  src={`/dibujos/${nombre}.webp`}
+  alt=""
+  aria-hidden="true"
+  loading="lazy"
+  decoding="async"
+  width="180"
+  height="180"
+  style={`--top:${top};--ancho:${ancho};--rot:${rot}deg;--op:${opacidad}`}
+/>
+
+<style>
+  .dibujito {
+    position: absolute;
+    top: var(--top);
+    width: var(--ancho);
+    height: auto;
+    opacity: var(--op);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    transform: rotate(var(--rot));
+    mix-blend-mode: multiply;
+    animation: dibujito-cuadro 1.6s steps(1) infinite;
+  }
+  .dibujito--izq { left: 1.5%; }
+  .dibujito--der { right: 1.5%; }
+  /* "Stop motion": tres posiciones apenas distintas, como dibujos animados a mano */
+  @keyframes dibujito-cuadro {
+    0% { transform: rotate(var(--rot)) translate(0, 0); }
+    33% { transform: rotate(calc(var(--rot) + 2.5deg)) translate(1px, -2px); }
+    66% { transform: rotate(calc(var(--rot) - 1.5deg)) translate(-1px, 1px); }
+  }
+  @media (max-width: 63.99em) { .dibujito { width: calc(var(--ancho) * 0.6); opacity: calc(var(--op) * 0.6); } }
+  @media (max-width: 40em) { .dibujito { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .dibujito { animation: none; } }
+  :global(html.liviano) .dibujito { animation: none; }
+</style>

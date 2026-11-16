@@ -15,8 +15,8 @@ const { foto, frase, firma, variante = 'sobre', ratio, trazo = 'hoja' } = Astro.
 <section class:list={['interludio', `interludio--${variante}`]} aria-label="Frase">
   {variante === 'sobre' ? (
     <div class="interludio__marco">
-      <div class="interludio__foto" data-parallax-caja>
-        <div data-parallax="6" class="interludio__parallax">
+      <div class="interludio__foto">
+        <div class="interludio__parallax">
           <Foto id={foto} ratio={ratio ?? '16/9'} sizes="100vw" class="interludio__img" />
         </div>
       </div>
@@ -44,16 +44,21 @@ const { foto, frase, firma, variante = 'sobre', ratio, trazo = 'hoja' } = Astro.
 <style>
   .interludio { position: relative; }
   .interludio--sobre { padding: 0; }
-  .interludio__marco { position: relative; overflow: hidden; color: var(--papel); min-height: 58vh; display: flex; align-items: flex-end; }
+  .interludio__marco { position: relative; overflow: hidden; color: var(--papel); min-height: 62vh; display: flex; align-items: flex-end; -webkit-clip-path: inset(0 0 0 0); clip-path: inset(0 0 0 0); }
+  /* Efecto bedes.com.ar: la foto queda quieta debajo y la página pasa por encima */
+  .interludio__foto { position: fixed !important; top: 0; left: 0; width: 100%; height: 100vh; }
+  @media (prefers-reduced-motion: reduce) { .interludio__foto { position: absolute !important; height: 100%; } }
+  :global(html.liviano) .interludio__foto { position: absolute !important; height: 100%; }
   .interludio__foto { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
-  .interludio__parallax { position: absolute; top: -8%; left: 0; right: 0; bottom: -8%; }
+  .interludio__parallax { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
   .interludio__parallax :global(.foto) { height: 100%; }
   .interludio__parallax :global(.foto--recorte::before) { display: none; }
   .interludio__velo {
+    z-index: 1;
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
     background: linear-gradient(to top, rgba(20, 16, 12, 0.72) 0%, rgba(20, 16, 12, 0.35) 38%, rgba(20, 16, 12, 0) 70%);
   }
-  .interludio__texto { position: relative; padding-top: 30vh; padding-bottom: 2.38rem; padding-bottom: clamp(1.7rem, 4.2vw, 4.08rem); }
+  .interludio__texto { position: relative; z-index: 2; padding-top: 30vh; padding-bottom: 2.38rem; padding-bottom: clamp(1.7rem, 4.2vw, 4.08rem); }
   .interludio__frase {
     max-width: 20ch;
     font-size: 1.613rem;

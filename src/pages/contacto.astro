@@ -1,4 +1,5 @@
 ---
+import Dibujito from '../components/Dibujito.astro';
 import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Trazo from '../components/Trazo.astro';
@@ -55,6 +56,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
   </section>
 
   <section class="seccion seccion--papel-oscuro ancla" id="entrevista" aria-labelledby="entrevista-titulo">
+    <Dibujito nombre="cara-ojos" lado="izq" top="55%" ancho="6rem" rot={-6} />
     <div class="contenedor entrevista">
       <div class="entrevista__texto">
         <h2 id="entrevista-titulo" data-titulo-lineas>Pedí una <em class="acento">entrevista</em></h2>

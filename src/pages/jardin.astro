@@ -1,4 +1,6 @@
 ---
+import Dibujito from '../components/Dibujito.astro';
+import Telon from '../components/Telon.astro';
 import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
@@ -96,6 +98,7 @@ const subnav = [
 
   {/* Nuestras salas */}
   <section class="seccion ancla" id="salas" aria-labelledby="salas-titulo">
+    <Dibujito nombre="nena-vestido" lado="der" top="6%" ancho="4.5rem" rot={4} />
     <div class="contenedor">
       <div class="cabecera-seccion">
         <h2 id="salas-titulo" data-titulo-lineas set:html={acento(j.salas.titulo)} />
@@ -129,6 +132,7 @@ const subnav = [
 
   {/* Nuestros lenguajes */}
   <section class="seccion seccion--papel-oscuro ancla" id="lenguajes" aria-labelledby="leng-titulo">
+    <Dibujito nombre="cara-pestanas" lado="izq" top="14%" ancho="6.5rem" rot={-6} />
     <div class="contenedor contenedor--ancho">
       <div class="cabecera-seccion">
         <h2 id="leng-titulo" data-titulo-lineas set:html={acento(j.lenguajes.titulo)} />
@@ -195,7 +199,10 @@ const subnav = [
   <Interludio foto={j.interludioAdaptacion.foto} frase={j.interludioAdaptacion.frase} />
 
   {/* Adaptación */}
+  <Telon foto="patio-abrazo-arbol" rotulo="El patio · naturaleza y encuentro" alto="medio" />
+
   <section class="seccion ancla" id="adaptacion" aria-labelledby="adap-titulo">
+    <Dibujito nombre="cara-orejas" lado="der" top="10%" ancho="6rem" rot={6} />
     <div class="contenedor contenedor--ancho">
       <div class="cabecera-seccion">
         <h2 id="adap-titulo" data-titulo-lineas set:html={acento(j.adaptacion.titulo)} />
@@ -221,6 +228,7 @@ const subnav = [
 
   {/* Horarios */}
   <section class="seccion seccion--acento ancla" id="horarios" aria-labelledby="hor-titulo">
+    <Dibujito nombre="arbol" lado="izq" top="20%" ancho="7rem" rot={-3} opacidad={0.4} />
     <div class="contenedor contenedor--ancho">
       <div class="cabecera-seccion">
         <h2 id="hor-titulo" data-titulo-lineas set:html={acento(j.horarios.titulo)} />

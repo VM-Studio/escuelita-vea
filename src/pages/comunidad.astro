@@ -1,4 +1,5 @@
 ---
+import Dibujito from '../components/Dibujito.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
@@ -36,6 +37,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 
   {/* Introducción: la frase de la escuela destacada como apertura (sin repetirla) */}
   <section class="seccion intro-com ancla" id="vida-en-comunidad" aria-label="Introducción">
+    <Dibujito nombre="paisaje-barco" lado="der" top="10%" ancho="9rem" rot={3} opacidad={0.5} />
     <div class="contenedor intro-com__grilla">
       <div>
         <Trazo nombre="ronda" class="intro-com__trazo" grosor={2.4} />
@@ -99,6 +101,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 
   {/* Hitos anuales y viajes */}
   <section class="seccion ancla" id="hitos-anuales" aria-labelledby="hitos-titulo">
+    <Dibujito nombre="cara-perfil" lado="izq" top="6%" ancho="6.5rem" rot={-5} />
     <div class="contenedor">
       <div class="cabecera-seccion">
         <h2 id="hitos-titulo" data-titulo-lineas set:html={acento(c.salidas.hitosTitulo)} />
@@ -145,7 +148,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
   <section class="seccion seccion--tinta ancla extra" id="talleres" aria-labelledby="talleres-titulo">
     <div class="contenedor">
       <div class="cabecera-seccion">
-        <Trazo nombre="garabato" class="extra__trazo" grosor={2.4} color="arena" />
+        <Trazo nombre="garabato" class="extra__trazo" grosor={2.4} color="ocre" />
         <h2 id="talleres-titulo" data-titulo-lineas set:html={acento(c.extracurriculares.titulo)} />
       </div>
       <div class="extra__grupos">
@@ -155,7 +158,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
             <ul class="extra__lista">
               {g.items.map((t, i) => (
                 <li class="taller" data-revelar>
-                  <span class="taller__icono" aria-hidden="true"><Trazo nombre={(gi ? ['estrella', 'garabato', 'corazon'] : ['ola', 'hoja', 'espiral', 'sol'])[i] as any} grosor={2.2} color="arena" crayon={false} /></span>
+                  <span class="taller__icono" aria-hidden="true"><Trazo nombre={(gi ? ['estrella', 'garabato', 'corazon'] : ['ola', 'hoja', 'espiral', 'sol'])[i] as any} grosor={2.2} color="ocre" crayon={false} /></span>
                   <div>
                     <p class="taller__nombre">{t.nombre}</p>
                     <p class="taller__para">{t.para}</p>
@@ -236,14 +239,14 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 
   .extra__trazo { width: 6.4rem; height: 2rem; margin-bottom: 1rem; }
   .extra__grupos { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; }
-  .extra__grupo-titulo { color: var(--arena); font-family: var(--f-texto); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  .extra__grupo-titulo { color: var(--ocre-texto); font-family: var(--f-texto); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.25rem; }
   .extra__lista { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; }
-  .taller { display: flex; align-items: flex-start; padding: 1.25rem; border: 1px solid rgba(250, 246, 238, 0.16); border-radius: var(--radio-lg); transition: background-color 0.3s, border-color 0.3s; }
-  @media (hover: hover) { .taller:hover { background: rgba(250, 246, 238, 0.05); border-color: rgba(250, 246, 238, 0.32); } }
+  .taller { display: flex; align-items: flex-start; padding: 1.25rem; border: 1px solid rgba(35, 32, 28, 0.14); background: #f8f5ef; border-radius: var(--radio-lg); transition: background-color 0.3s, border-color 0.3s; }
+  @media (hover: hover) { .taller:hover { background: #fff; border-color: rgba(35, 32, 28, 0.3); } }
   .taller__icono { flex: none; width: 1.8rem; height: 1.8rem; margin-right: 1rem; }
   .taller__icono :global(svg) { width: 100%; height: 100%; }
-  .taller__nombre { font-family: var(--f-titulo); font-size: 1.375rem; color: var(--papel); line-height: 1.2; }
-  .taller__para { margin-top: 0.3rem; color: #d8cfbf; font-size: 0.9375rem; }
+  .taller__nombre { font-family: var(--f-titulo); font-size: 1.375rem; color: var(--tinta); line-height: 1.2; }
+  .taller__para { margin-top: 0.3rem; color: var(--tinta-suave); font-size: 0.9375rem; }
   @media (min-width: 48em) { .extra__lista { grid-template-columns: 1fr 1fr; } }
   @media (min-width: 64em) { .extra__grupos { grid-template-columns: 3fr 2fr; grid-gap: 2.72rem; gap: 2.72rem; } .extra__grupo:last-child .extra__lista { grid-template-columns: 1fr; } }
 </style>

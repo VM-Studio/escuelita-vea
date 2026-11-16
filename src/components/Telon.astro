@@ -1,0 +1,47 @@
+---
+// "Telón" (efecto de bedes.com.ar): al pasar de una sección a otra, la foto queda quieta debajo
+// y las secciones se deslizan por encima, como una ventana. Opcionalmente con una frase o rótulo
+// que entra y sale con el scroll.
+import Foto from './Foto.astro';
+interface Props { foto: string; frase?: string; firma?: string; rotulo?: string; alto?: 'bajo' | 'medio' | 'alto'; foco?: string }
+const { foto, frase, firma, rotulo, alto = 'medio', foco } = Astro.props;
+---
+<section class:list={['telon', `telon--${alto}`]} aria-label={frase ? 'Frase' : 'Foto'} data-telon>
+  <div class="telon__fijo" aria-hidden={frase ? 'true' : undefined}>
+    <Foto id={foto} ratio="16/9" sizes="100vw" foco={foco} />
+  </div>
+  {(frase || rotulo) && <div class="telon__velo" aria-hidden="true"></div>}
+  {frase && (
+    <figure class="telon__texto contenedor" data-telon-texto>
+      <blockquote><p class="t-frase telon__frase">{frase}</p></blockquote>
+      {firma && <figcaption class="telon__firma">— {firma}</figcaption>}
+    </figure>
+  )}
+  {rotulo && !frase && <p class="telon__rotulo contenedor">{rotulo}</p>}
+</section>
+
+<style>
+  .telon {
+    position: relative;
+    overflow: hidden;
+    /* La ventana: todo lo que queda "fijo" adentro solo se ve dentro de esta sección */
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+    display: flex; align-items: flex-end;
+    color: var(--papel);
+  }
+  .telon--bajo { min-height: 42vh; }
+  .telon--medio { min-height: 60vh; }
+  .telon--alto { min-height: 80vh; }
+  .telon__fijo { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; }
+  .telon__fijo :global(.foto) { height: 100%; }
+  .telon__fijo :global(.foto--recorte::before) { display: none; }
+  .telon__velo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background: linear-gradient(to top, rgba(20, 16, 12, 0.6) 0%, rgba(20, 16, 12, 0.15) 45%, rgba(20, 16, 12, 0) 70%); }
+  .telon__texto { position: relative; z-index: 2; padding-top: 4rem; padding-bottom: 2.5rem; }
+  .telon__frase { max-width: 22ch; font-size: 1.7rem; font-size: clamp(1.6rem, 1rem + 2.2vw, 2.7rem); color: var(--papel); text-shadow: 0 1px 24px rgba(0, 0, 0, 0.3); }
+  .telon__firma { margin-top: 0.75rem; font-weight: 600; font-size: 0.875rem; color: #f1e9da; }
+  .telon__rotulo { position: relative; z-index: 2; padding-bottom: 1.25rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250, 246, 238, 0.9); }
+  /* Movimiento reducido / liviano: la foto acompaña al scroll normalmente */
+  @media (prefers-reduced-motion: reduce) { .telon__fijo { position: absolute; height: 100%; } }
+  :global(html.liviano) .telon__fijo { position: absolute; height: 100%; }
+</style>

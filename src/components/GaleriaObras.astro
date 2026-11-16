@@ -8,9 +8,9 @@ interface Props { titulo: string; acento?: string; bajada?: string; obras: Obra[
 const { titulo, acento, bajada, obras, enlace } = Astro.props;
 ---
 <section class="obras" aria-labelledby="obras-titulo">
-  <Topografia semilla={11} color="#faf6ee" opacidad={0.06} />
+  <Topografia semilla={11} opacidad={0.08} />
   <div class="contenedor obras__cabeza">
-    <h2 id="obras-titulo" class="obras__titulo" data-revelar>{titulo}{acento && <> <em class="acento">{acento}</em></>}</h2>
+    <h2 id="obras-titulo" class="obras__titulo" data-revelar>{titulo}{acento && <>{" "}<em class="acento">{acento}</em></>}</h2>
     {bajada && <p class="obras__bajada" data-revelar>{bajada}</p>}
   </div>
   <div class="contenedor">
@@ -29,25 +29,25 @@ const { titulo, acento, bajada, obras, enlace } = Astro.props;
 </section>
 
 <style>
-  .obras { position: relative; overflow: hidden; background: #1d1a17; color: var(--papel); padding: 3.5rem 0; padding: clamp(3rem, 2rem + 3vw, 5rem) 0; }
+  .obras { position: relative; overflow: hidden; background: var(--piedra); color: var(--tinta); padding: 3.5rem 0; padding: clamp(3rem, 2rem + 3vw, 5rem) 0; }
   .obras__cabeza { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
-  .obras__titulo { color: var(--papel); font-size: 1.8rem; font-size: clamp(1.7rem, 1.1rem + 2vw, 2.8rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1; margin: 0 2rem 0.75rem 0; }
-  .obras__titulo :global(.acento) { color: #f2b544; }
-  .obras__bajada { max-width: 24rem; font-size: 0.875rem; color: #c9bfae; margin-bottom: 0.75rem; }
+  .obras__titulo { color: var(--tinta); font-size: 1.8rem; font-size: clamp(1.7rem, 1.1rem + 2vw, 2.8rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1; margin: 0 2rem 0.75rem 0; }
+  
+  .obras__bajada { max-width: 24rem; font-size: 0.875rem; color: var(--tinta-suave); margin-bottom: 0.75rem; }
   .obras__grilla { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 0.75rem; gap: 0.75rem; align-items: start; }
   @media (min-width: 48em) { .obras__grilla { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width: 64em) { .obras__grilla { grid-template-columns: repeat(4, 1fr); grid-gap: 1rem; gap: 1rem; } .obra:nth-child(4n + 2) { margin-top: 2.5rem; } .obra:nth-child(4n + 4) { margin-top: 1.25rem; } }
   .obra figure { margin: 0; }
-  .obra__marco { padding: 0.6rem; border: 1px solid rgba(250, 246, 238, 0.14); border-radius: 6px; background: #26221e; transition: transform 0.5s var(--ease-out), border-color 0.3s, background-color 0.3s; }
+  .obra__marco { padding: 0.6rem; border: 1px solid rgba(35, 32, 28, 0.08); border-radius: 6px; background: #f8f5ef; box-shadow: 0 10px 24px -18px rgba(35, 32, 28, 0.5); transition: transform 0.5s var(--ease-out), border-color 0.3s, background-color 0.3s; }
   .obra__marco :global(.foto) { border-radius: 3px; }
   .obra__marco :global(img) { transition: transform 0.8s var(--ease-out); }
-  .obra__pie { display: flex; justify-content: space-between; margin-top: 0.5rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.5625rem; letter-spacing: 0.08em; text-transform: uppercase; color: #b8ad9c; }
-  .obra__det { color: #f2b544; }
+  .obra__pie { display: flex; justify-content: space-between; margin-top: 0.5rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.5625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-suave); }
+  .obra__det { color: var(--rojo); }
   @media (hover: hover) {
-    .obra:hover .obra__marco { transform: translateY(-4px) rotate(-0.6deg); border-color: rgba(242, 181, 68, 0.6); background: #2c2722; }
+    .obra:hover .obra__marco { transform: translateY(-4px) rotate(-0.6deg); border-color: rgba(35, 32, 28, 0.2); background: #fff; }
     .obra:hover .obra__marco :global(img) { transform: scale(1.04); }
   }
   .obras__mas { margin-top: 2rem; }
-  .obras__enlace { display: inline-flex; align-items: center; padding: 0.55rem 1rem; border-radius: 999px; background: #f2b544; color: #1d1a17; font-size: 0.8125rem; font-weight: 650; text-decoration: none; transition: transform 0.3s var(--ease-out); }
+  .obras__enlace { display: inline-flex; align-items: center; padding: 0.55rem 1rem; border-radius: 999px; background: var(--tinta); color: var(--papel); font-size: 0.8125rem; font-weight: 650; text-decoration: none; transition: transform 0.3s var(--ease-out); }
   .obras__enlace:hover { transform: translateX(3px); }
 </style>

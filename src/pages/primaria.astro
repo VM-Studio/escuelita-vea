@@ -1,4 +1,6 @@
 ---
+import Dibujito from '../components/Dibujito.astro';
+import Telon from '../components/Telon.astro';
 import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
@@ -49,7 +51,10 @@ const subnav = [
   <SubNav items={subnav} etiqueta="Secciones de la Primaria" />
 
   {/* Cómo aprendemos */}
+  <Telon foto="primaria-recreo-sombra-arena" rotulo="Recreo en el fondo de la escuela" alto="bajo" />
+
   <section class="seccion ancla" id="como-aprendemos" aria-labelledby="ca-titulo">
+    <Dibujito nombre="cara-anteojos" lado="der" top="10%" ancho="6.5rem" rot={5} />
     <div class="contenedor contenedor--ancho">
       <div class="cabecera-seccion">
         <h2 id="ca-titulo" data-titulo-lineas set:html={acento(p.comoAprendemos.titulo)} />
@@ -158,6 +163,7 @@ const subnav = [
 
   {/* Proyectos destacados */}
   <section class="seccion ancla" id="proyectos" aria-labelledby="proy-titulo">
+    <Dibujito nombre="cuerpo-musculos" lado="izq" top="4%" ancho="6rem" rot={-4} opacidad={0.45} />
     <div class="contenedor">
       <div class="cabecera-seccion">
         <h2 id="proy-titulo" data-titulo-lineas set:html={acento(p.proyectos.titulo)} />
@@ -172,6 +178,7 @@ const subnav = [
 
   {/* Preparación para la secundaria */}
   <section class="seccion ancla" id="secundaria" aria-labelledby="sec-titulo">
+    <Dibujito nombre="cara-mujer" lado="der" top="8%" ancho="6rem" rot={4} />
     <div class="contenedor">
       <div class="secundaria">
         <Trazo nombre="flecha" class="secundaria__flecha" grosor={2.6} color="verde" />

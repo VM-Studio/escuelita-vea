@@ -136,3 +136,12 @@ Referencias: Awwwards (Hatching Dragons, Fine Acts, London Film School, Departme
 - **Puertas Jardín / Primaria** que se expanden al pasar el mouse.
 - **"Priorizamos"**: lista con foto que cambia en "¿Qué nos diferencia?" (Jardín).
 - Microcopy nuevo a aprobar: "Obras del taller", "Obras de la Primaria", "Producciones de los chicos y las chicas en los talleres de La Escuelita.", "Producciones de los chicos y las chicas en los proyectos de cada grado.", "Conocé las áreas de la Primaria", rótulos de obras ("Animales · 1° grado", "La cordillera · 5° grado", etc.).
+
+## 12. Pedidos de la dueña (16/11/2026)
+
+- **Fondos apastelados / color piedra:** se aclararon los fondos y se pasaron a piedra las secciones que eran oscuras (obras, hitos culturales, talleres extracurriculares, hitos de la cronología).
+- **Letra manuscrita de niño:** la palabra destacada de los títulos usa Reenie Beanie (letra de marcador infantil). Si se quiere en más o menos lugares, es un solo estilo (`.acento`).
+- **Dibujitos de los chicos en los costados:** se recortaron los 12 dibujos de la lámina en crayón (`public/dibujos/`) y aparecen chiquitos en los laterales, moviéndose "cuadro a cuadro" como el posteo animado del Instagram. Se pueden sumar más dibujos si la escuela manda otras láminas.
+- **Efecto bedes.com.ar:** al pasar de sección, la foto queda quieta debajo y la página se desliza por encima (todas las frases con foto + nuevas bandas de foto en Inicio, Jardín y Primaria). Las fotos se ponen en blanco y negro al pasar el mouse.
+- **"Conocé nuestro Instagram":** fila de 4 reels de @la.escuelita.vea que se reproducen sin sonido (se activa al tocar) y botón "Conocenos". Reels usados: Bienvenida a la primavera (Jardín), Taller de 2, 2do grado · Los Pueblos, Los recreos en nuestro fondo. Recortados a 20 s y comprimidos (`public/reels/`). **Confirmar** que se pueden publicar en la web y cuáles prefieren; se cambian reemplazando 4 archivos.
+- Microcopy nuevo: "Conocé nuestro Instagram", "Conocenos", títulos de los reels, rótulos de las bandas de foto ("El patio de La Escuelita", "El taller, todos los días", "El patio · naturaleza y encuentro", "Recreo en el fondo de la escuela").

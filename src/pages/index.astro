@@ -7,6 +7,9 @@ import Trazo from '../components/Trazo.astro';
 import Logo from '../components/Logo.astro';
 import Boton from '../components/Boton.astro';
 import Puertas from '../components/Puertas.astro';
+import Telon from '../components/Telon.astro';
+import Dibujito from '../components/Dibujito.astro';
+import Instagram from '../components/Instagram.astro';
 import Constelacion from '../components/Constelacion.astro';
 import GaleriaObras from '../components/GaleriaObras.astro';
 import CurvaTexto from '../components/CurvaTexto.astro';
@@ -85,6 +88,8 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
 
   {/* ============ PRESENTACIÓN CON LOGOS ============ */}
   <section class="presentacion seccion" id="presentacion" aria-labelledby="presentacion-titulo">
+    <Dibujito nombre="cara-pelo-largo" lado="izq" top="10%" ancho="7rem" rot={-6} />
+    <Dibujito nombre="cara-ojos" lado="der" top="46%" ancho="6.5rem" rot={8} />
     <div class="contenedor">
       <div class="presentacion__cabeza">
         <Trazo nombre="sol" class="presentacion__sol" grosor={2.6} />
@@ -116,6 +121,8 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
     </div>
   </section>
 
+  <Telon foto="jardin-ronda-arena-arboles" rotulo="El patio de La Escuelita" alto="bajo" />
+
   {/* ============ BIENVENIDA ============ */}
   <section class="bienvenida seccion seccion--papel-oscuro" aria-label="Bienvenida">
     <div class="contenedor">
@@ -141,6 +148,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
 
   {/* ============ LÍNEA DE TIEMPO ============ */}
   <section class="tiempo seccion" aria-labelledby="tiempo-titulo" data-linea-tiempo>
+    <Dibujito nombre="arbol" lado="der" top="6%" ancho="8rem" rot={3} opacidad={0.45} />
     <div class="contenedor">
       <div class="tiempo__cabeza">
         <p class="tiempo__cifra t-cifra" aria-hidden="true"><span data-contador="67" data-desde="0">67</span></p>
@@ -178,8 +186,11 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
     </div>
   </section>
 
+  <Telon foto="taller-pintura-mesa" rotulo="El taller, todos los días" alto="medio" />
+
   {/* ============ EJES PEDAGÓGICOS ============ */}
   <section class="ejes seccion seccion--papel-oscuro" aria-labelledby="ejes-titulo">
+    <Dibujito nombre="esqueleto" lado="izq" top="38%" ancho="5rem" rot={-4} />
     <div class="contenedor">
       <div class="ejes__cabeza">
         <h2 id="ejes-titulo" data-titulo-lineas set:html={acento(p.ejes.titulo)} />
@@ -229,6 +240,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
 
   {/* ============ COMUNIDAD (ADELANTO) ============ */}
   <section class="adelanto seccion" aria-labelledby="adelanto-titulo">
+    <Dibujito nombre="paisaje-barco" lado="izq" top="8%" ancho="9rem" rot={-3} opacidad={0.5} />
     <div class="contenedor">
       <div class="adelanto__cabeza">
         <h2 id="adelanto-titulo" data-titulo-lineas set:html={acento(comunidad.portada.titulo)} />
@@ -241,6 +253,8 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
       </div>
     </div>
   </section>
+
+  <Instagram />
 
   <LlamadoEntrevista foto={p.cierreFoto} />
 </Base>
