@@ -25,6 +25,7 @@ import { comunidad } from '../content/comunidad';
 import { parrafos, acento } from '../lib/texto';
 
 const p = inicio;
+import laminaDibujos from '../data/hero-dibujos.json';
 // Precarga de la foto del hero (mismos parámetros que <Foto prioridad>)
 const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
 const primera = masters[`../assets/fotos/${p.portada.fotos[0]}.jpg`].default;
@@ -42,24 +43,23 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
       (de la frase de Marta Calvo): el diseño dice lo mismo que el titular. */}
   <section class="hero" data-hero aria-labelledby="hero-titulo">
     <div class="hero__aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    {/* Lámina de dibujos de los chicos: cada dibujo aparece, se mueve y desaparece a su ritmo */}
+    <div class="lamina" aria-hidden="true">
+      {laminaDibujos.map((d, i) => (
+        <img class="lamina__dibujo" src={`/hero-dibujos/${d.n}.webp`} alt="" decoding="async" style={`left:${d.x}%;top:${d.y}%;width:${d.w}%;--d:${(i * 1.7) % 11}s;--dur:${10 + (i % 4) * 1.5}s;--r:${(i % 2 ? 1 : -1) * (2 + (i % 3))}deg`} />
+      ))}
+    </div>
     <div class="hero__grilla contenedor">
       <div class="hero__texto">
-        <p class="hero__chip" data-hero-resto><span class="hero__punto" aria-hidden="true"></span>{p.presentacion.jardin.texto} · {p.presentacion.jardin.anio}</p>
         <h1 id="hero-titulo" class="hero__titular" data-hero-titular>El niño es cuerpo que siente y al <em class="acento">sentir, piensa.</em></h1>
         <p class="hero__bajada" data-hero-resto>{p.portada.bajada}</p>
         <div class="hero__acciones" data-hero-resto>
           <Boton href="/contacto/#entrevista" variante="rojo" tamano="grande">Pedí una entrevista</Boton>
           <Boton href="/proyecto-pedagogico/" tamano="grande">Conocé nuestra mirada</Boton>
         </div>
-        <dl class="hero__datos" data-hero-resto>
-          <div><dt><a href="/jardin/">Jardín</a></dt><dd class="t-cifra">{p.presentacion.jardin.anio}</dd></div>
-          <div><dt><a href="/primaria/">Primaria</a></dt><dd class="t-cifra">{p.presentacion.primaria.anio}</dd></div>
-          <div><dt>años en la Educación por el Arte</dt><dd class="t-cifra">67</dd></div>
-        </dl>
       </div>
 
       <div class="hero__escena">
-        <img class="hero__dibujos" src="/dibujos-crayon.webp" alt="" aria-hidden="true" width="1100" height="1555" decoding="async" />
         <svg class="hero__arco-trazo" viewBox="0 0 400 520" aria-hidden="true" data-hero-trazo>
           <g filter="url(#crayon)" fill="none" stroke="var(--rojo-vivo)" stroke-width="2.6" stroke-linecap="round">
             <path d="M18 512 L 16 210 C 14 92, 110 10, 202 12 C 300 14, 386 96, 384 214 L 382 508" />
@@ -74,9 +74,9 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
         </div>
 
         <ul class="hero__palabras" aria-label="Hacer, sentir y pensar">
-          <li class="hero__palabra hero__palabra--a" data-hero-resto><span class="hero__palabra-punto" style="background:var(--ocre)"></span>hacer</li>
-          <li class="hero__palabra hero__palabra--b" data-hero-resto><span class="hero__palabra-punto" style="background:var(--rojo)"></span>sentir</li>
-          <li class="hero__palabra hero__palabra--c" data-hero-resto><span class="hero__palabra-punto" style="background:var(--verde)"></span>pensar</li>
+          <li class="hero__palabra hero__palabra--a" data-hero-resto>hacer</li>
+          <li class="hero__palabra hero__palabra--b" data-hero-resto>sentir</li>
+          <li class="hero__palabra hero__palabra--c" data-hero-resto>pensar</li>
         </ul>
         <div class="hero__sello" data-hero-resto><Sello tamano={104} color="tinta" /></div>
       </div>
@@ -287,16 +287,6 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
   @media (min-width: 64em) { .hero__grilla { grid-template-columns: 1.05fr 1fr; grid-gap: 3rem; gap: 3rem; } }
   .hero__texto { pointer-events: none; }
   .hero__texto > * { pointer-events: auto; }
-  .hero__chip {
-    display: inline-flex; align-items: center;
-    padding: 0.4rem 0.85rem 0.42rem 0.7rem;
-    border: 1px solid rgba(35, 32, 28, 0.14);
-    border-radius: 999px;
-    background: rgba(255, 253, 248, 0.75);
-    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; color: var(--tinta-suave);
-    max-width: 100%;
-  }
-  .hero__punto { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--rojo); margin-right: 0.55rem; flex: none; box-shadow: 0 0 0 4px rgba(210, 51, 52, 0.15); }
   .hero__titular {
     margin-top: 1.25rem;
     max-width: 13ch;
@@ -311,6 +301,20 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
   .hero__bajada { margin-top: 1.4rem; max-width: 34rem; font-size: 1.0625rem; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.55; color: var(--tinta-suave); }
   .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.9rem; }
   .hero__acciones > :global(*) { margin: 0 0.75rem 0.75rem 0; }
+
+  /* Lámina de dibujos en todo el hero */
+  .lamina { position: absolute; top: 3%; left: 2%; right: 2%; bottom: 3%; z-index: 0; pointer-events: none; }
+  .lamina__dibujo { position: absolute; height: auto; max-width: none; opacity: 0; mix-blend-mode: multiply; animation: lamina-vive var(--dur) ease-in-out var(--d) infinite; }
+  @keyframes lamina-vive {
+    0% { opacity: 0; transform: translate3d(0, 14px, 0) rotate(var(--r)) scale(0.96); }
+    20% { opacity: 0.22; }
+    50% { opacity: 0.26; transform: translate3d(6px, -6px, 0) rotate(calc(var(--r) * -0.5)) scale(1); }
+    80% { opacity: 0.2; }
+    100% { opacity: 0; transform: translate3d(-6px, -16px, 0) rotate(var(--r)) scale(1.03); }
+  }
+  @media (prefers-reduced-motion: reduce) { .lamina__dibujo { animation: none; opacity: 0.14; } }
+  :global(html.liviano) .lamina__dibujo { animation: none; opacity: 0.14; }
+  @media (max-width: 47.99em) { .lamina { top: 1%; bottom: 40%; } }
 
   /* Escena: arco-ventana con fotos */
   .hero__escena { position: relative; width: 100%; max-width: 30rem; margin: 0 auto; padding: 1.5rem 0 2rem; }
@@ -328,36 +332,28 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
   .hero__arco-trazo { position: absolute; left: -5%; top: 0.4rem; width: 110%; height: auto; z-index: 0; overflow: visible; transform: rotate(-2.5deg); }
   .hero__arco { z-index: 1; }
   /* Lámina de dibujos en crayón: detalle de fondo detrás del arco */
-  .hero__dibujos { position: absolute; z-index: 0; top: -6%; left: 50%; width: 150%; max-width: none; height: auto; transform: translateX(-50%) rotate(-4deg); opacity: 0.13; pointer-events: none; user-select: none; }
-  @media (max-width: 47.99em) { .hero__dibujos { width: 125%; opacity: 0.1; } }
   .hero__palabras { list-style: none; margin: 0; padding: 0; }
   .hero__palabra {
     position: absolute; z-index: 4;
-    display: inline-flex; align-items: center;
-    padding: 0.45rem 0.95rem 0.5rem 0.75rem;
-    border-radius: 999px;
-    background: rgba(255, 253, 248, 0.94);
-    box-shadow: 0 10px 24px -12px rgba(60, 40, 20, 0.45);
-    font-family: var(--f-titulo); font-style: italic; font-size: 1.05rem; color: var(--tinta);
+    padding: 0.1rem 0.85rem 0.25rem;
+    border-radius: 46% 54% 40% 60% / 60% 42% 58% 40%;
+    background: rgba(250, 246, 238, 0.92);
+    box-shadow: 0 8px 20px -14px rgba(60, 40, 20, 0.5);
+    font-family: 'Manuscrita', var(--f-titulo); font-size: 2.1rem; line-height: 1.1; color: var(--tinta);
     animation: palabra-flota 6s ease-in-out infinite;
   }
-  .hero__palabra-punto { width: 0.5rem; height: 0.5rem; border-radius: 50%; margin-right: 0.5rem; }
+  .hero__palabra--a { color: var(--ocre-texto); }
+  .hero__palabra--b { color: var(--rojo); }
+  .hero__palabra--c { color: var(--verde-texto); }
   .hero__palabra--a { left: -9%; top: 30%; animation-delay: -1s; }
   .hero__palabra--b { right: -8%; top: 52%; animation-delay: -3s; }
   .hero__palabra--c { left: -4%; bottom: 16%; animation-delay: -5s; }
-  @keyframes palabra-flota { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -8px, 0); } }
+  @keyframes palabra-flota { 0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); } 50% { transform: translate3d(0, -8px, 0) rotate(2deg); } }
   @media (prefers-reduced-motion: reduce) { .hero__palabra { animation: none; } }
   :global(html.liviano) .hero__palabra { animation: none; }
   @media (max-width: 30em) { .hero__palabra--a { left: -2%; } .hero__palabra--b { right: -2%; } .hero__palabra--c { left: 2%; } }
   .hero__sello { position: absolute; right: -17%; bottom: -2%; z-index: 4; padding: 6px; border-radius: 50%; background: rgba(250, 246, 238, 0.92); }
   @media (max-width: 47.99em) { .hero__sello { display: none; } }
-  .hero__datos { display: flex; flex-wrap: wrap; margin: 2rem 0 0; padding-top: 1.25rem; border-top: 1px solid rgba(35, 32, 28, 0.12); }
-  .hero__datos > div { margin: 0 2.25rem 0.75rem 0; display: flex; flex-direction: column-reverse; }
-  .hero__datos dd { margin: 0; font-size: 2rem; font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.6rem); line-height: 1; color: var(--tinta); }
-  .hero__datos > div:last-child dd { color: var(--rojo); }
-  .hero__datos dt { margin-top: 0.35rem; font-size: 0.75rem; letter-spacing: 0.06em; color: var(--tinta-suave); max-width: 14ch; line-height: 1.3; }
-  .hero__datos dt a { text-decoration: none; border-bottom: 1px solid rgba(35, 32, 28, 0.25); }
-  .hero__datos dt a:hover { color: var(--rojo); border-color: var(--rojo); }
   .hero__scroll { position: absolute; left: 50%; bottom: 1rem; width: 1.3rem; height: 2.8rem; margin-left: -0.65rem; color: var(--tinta-tenue); z-index: 2; }
   .hero__scroll :global(svg) { width: 100%; height: 100%; }
   @media (max-width: 63.99em) { .hero__scroll { display: none; } }
