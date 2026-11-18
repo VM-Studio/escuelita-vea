@@ -25,7 +25,6 @@ import { comunidad } from '../content/comunidad';
 import { parrafos, acento } from '../lib/texto';
 
 const p = inicio;
-import laminaDibujos from '../data/hero-dibujos.json';
 // Precarga de la foto del hero (mismos parámetros que <Foto prioridad>)
 const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
 const primera = masters[`../assets/fotos/${p.portada.fotos[0]}.jpg`].default;
@@ -43,11 +42,12 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
       (de la frase de Marta Calvo): el diseño dice lo mismo que el titular. */}
   <section class="hero" data-hero aria-labelledby="hero-titulo">
     <div class="hero__aurora" aria-hidden="true"><span></span><span></span><span></span></div>
-    {/* Lámina de dibujos de los chicos: cada dibujo aparece, se mueve y desaparece a su ritmo */}
-    <div class="lamina" aria-hidden="true">
-      {laminaDibujos.map((d, i) => (
-        <img class="lamina__dibujo" src={`/hero-dibujos/${d.n}.webp`} alt="" decoding="async" style={`left:${d.x}%;top:${d.y}%;width:${d.w}%;--d:${(i * 1.7) % 11}s;--dur:${10 + (i % 4) * 1.5}s;--r:${(i % 2 ? 1 : -1) * (2 + (i % 3))}deg`} />
-      ))}
+    {/* Tres dibujos de los chicos, sueltos en los márgenes, como en una lámina colgada. El resto de los
+        dibujos acompaña el recorrido del sitio (componente Dibujito). */}
+    <div class="hero__dibujos" aria-hidden="true">
+      <span class="hero__dibujo hero__dibujo--a" data-hero-dibujo data-vel="-14"><img src="/hero-dibujos/cara-pestanas.webp" alt="" width="387" height="396" decoding="async" /></span>
+      <span class="hero__dibujo hero__dibujo--b" data-hero-dibujo data-vel="-26"><img src="/hero-dibujos/cara-anteojos.webp" alt="" width="393" height="396" decoding="async" /></span>
+      <span class="hero__dibujo hero__dibujo--c" data-hero-dibujo data-vel="-8"><img src="/hero-dibujos/cuerpo-musculos.webp" alt="" width="367" height="395" decoding="async" /></span>
     </div>
     <div class="hero__grilla contenedor">
       <div class="hero__texto">
@@ -302,19 +302,29 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
   .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.9rem; }
   .hero__acciones > :global(*) { margin: 0 0.75rem 0.75rem 0; }
 
-  /* Lámina de dibujos en todo el hero */
-  .lamina { position: absolute; top: 3%; left: 2%; right: 2%; bottom: 3%; z-index: 0; pointer-events: none; }
-  .lamina__dibujo { position: absolute; height: auto; max-width: none; opacity: 0; mix-blend-mode: multiply; animation: lamina-vive var(--dur) ease-in-out var(--d) infinite; }
-  @keyframes lamina-vive {
-    0% { opacity: 0; transform: translate3d(0, 14px, 0) rotate(var(--r)) scale(0.96); }
-    20% { opacity: 0.22; }
-    50% { opacity: 0.26; transform: translate3d(6px, -6px, 0) rotate(calc(var(--r) * -0.5)) scale(1); }
-    80% { opacity: 0.2; }
-    100% { opacity: 0; transform: translate3d(-6px, -16px, 0) rotate(var(--r)) scale(1.03); }
+  /* Dibujos sueltos: pocos, con aire, en los márgenes y nunca detrás del texto */
+  .hero__dibujos { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: none; }
+  .hero__dibujo { position: absolute; display: block; }
+  .hero__dibujo img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; opacity: 0.62; transform: rotate(var(--rot, 0deg)); animation: hero-dibujo-cuadro 1.8s steps(1) infinite; }
+  .hero__dibujo--a { width: 8.5rem; left: 45%; top: calc(var(--header-h) + 1.5rem); --rot: -7deg; }
+  .hero__dibujo--b { width: 8rem; right: 1.25rem; top: 17%; --rot: 7deg; }
+  .hero__dibujo--b img { animation-delay: -0.6s; }
+  .hero__dibujo--c { width: 6.5rem; right: 1.5rem; bottom: 4%; --rot: 5deg; }
+  .hero__dibujo--c img { opacity: 0.5; animation-delay: -1.2s; }
+  /* "Stop motion" muy leve, como el resto de los dibujitos del sitio */
+  @keyframes hero-dibujo-cuadro {
+    0% { transform: rotate(var(--rot, 0deg)) translate(0, 0); }
+    33% { transform: rotate(calc(var(--rot, 0deg) + 2deg)) translate(1px, -2px); }
+    66% { transform: rotate(calc(var(--rot, 0deg) - 1.5deg)) translate(-1px, 1px); }
   }
-  @media (prefers-reduced-motion: reduce) { .lamina__dibujo { animation: none; opacity: 0.14; } }
-  :global(html.liviano) .lamina__dibujo { animation: none; opacity: 0.14; }
-  @media (max-width: 47.99em) { .lamina { top: 1%; bottom: 40%; } }
+  @media (prefers-reduced-motion: reduce) { .hero__dibujo img { animation: none; } }
+  :global(html.liviano) .hero__dibujo img { animation: none; }
+  /* Entre 64em y 80em el margen derecho es chico: queda solo el del medio */
+  @media (max-width: 79.99em) { .hero__dibujo--b, .hero__dibujo--c { display: none; } }
+  @media (max-width: 63.99em) {
+    .hero__dibujo--a { width: 5.5rem; left: auto; right: 1rem; top: calc(var(--header-h) + 0.5rem); }
+    .hero__dibujo--a img { opacity: 0.45; }
+  }
 
   /* Escena: arco-ventana con fotos */
   .hero__escena { position: relative; width: 100%; max-width: 30rem; margin: 0 auto; padding: 1.5rem 0 2rem; }
@@ -335,19 +345,25 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '(min-width: 64em) 34v
   .hero__palabras { list-style: none; margin: 0; padding: 0; }
   .hero__palabra {
     position: absolute; z-index: 4;
-    padding: 0.1rem 0.85rem 0.25rem;
-    border-radius: 46% 54% 40% 60% / 60% 42% 58% 40%;
-    background: rgba(250, 246, 238, 0.92);
-    box-shadow: 0 8px 20px -14px rgba(60, 40, 20, 0.5);
-    font-family: 'Manuscrita', var(--f-titulo); font-size: 2.1rem; line-height: 1.1; color: var(--tinta);
+    padding: 0;
+    font-family: 'Manuscrita', var(--f-titulo); font-size: 2rem; line-height: 1; color: var(--tinta);
     animation: palabra-flota 6s ease-in-out infinite;
   }
   .hero__palabra--a { color: var(--ocre-texto); }
   .hero__palabra--b { color: var(--rojo); }
   .hero__palabra--c { color: var(--verde-texto); }
+  /* Fuera del arco, sobre el papel, como anotaciones al margen */
   .hero__palabra--a { left: -9%; top: 30%; animation-delay: -1s; }
   .hero__palabra--b { right: -8%; top: 52%; animation-delay: -3s; }
   .hero__palabra--c { left: -4%; bottom: 16%; animation-delay: -5s; }
+  @media (max-width: 63.99em) {
+    .hero__palabra { padding: 0.05rem 0.6rem 0.2rem; border-radius: 999px; background: rgba(250, 246, 238, 0.92); font-size: 1.5rem; }
+  }
+  @media (min-width: 64em) {
+    .hero__palabra--a { left: -22%; top: 38%; }
+    .hero__palabra--b { right: -20%; top: 52%; }
+    .hero__palabra--c { left: -20%; bottom: 22%; }
+  }
   @keyframes palabra-flota { 0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); } 50% { transform: translate3d(0, -8px, 0) rotate(2deg); } }
   @media (prefers-reduced-motion: reduce) { .hero__palabra { animation: none; } }
   :global(html.liviano) .hero__palabra { animation: none; }
