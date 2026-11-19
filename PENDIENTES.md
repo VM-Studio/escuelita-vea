@@ -154,3 +154,4 @@ Referencias: Awwwards (Hatching Dragons, Fine Acts, London Film School, Departme
 - **Obras del taller:** tarjetas con foto arriba y panel blanco con el nombre del taller y el grado.
 - **Cierre "Vení a conocer La Escuelita":** foto y título más centrados, con dos dibujitos a los costados (solo en el Inicio).
 - Microcopy nuevo: aria-label "Bajar" en la flecha del hero principal.
+- **Bienvenida ("La escuela es un espacio…"):** fotos a la izquierda que pasan solas cada 4,5 s (con flechas y contador), texto al costado. El fondo ondulado pasó a "El juego y el arte son su lenguaje natural".

@@ -1,0 +1,96 @@
+---
+// Fotos que se van pasando solas (fundido), con flechas para avanzar o volver y el rótulo de cada foto.
+// Sin JS: se ve la primera foto. Con movimiento reducido o modo liviano: no avanza sola.
+import Foto from './Foto.astro';
+import { fotos as registro } from '../data/fotos.mjs';
+interface Item { id: string; rotulo?: string }
+interface Props { items: Item[]; etiqueta: string; ratio?: string; intervalo?: number; class?: string }
+const { items, etiqueta, ratio = '4/3', intervalo = 4500, class: clase = '' } = Astro.props;
+const rot = (id: string, r?: string) => {
+  if (r) return r;
+  const f = registro.find((x) => x.id === id);
+  if (!f) return '';
+  const c = f.carpeta.split('(')[0].split('/')[0].trim().toLowerCase().replace(/^./, (x: string) => x.toUpperCase());
+  return `${f.nivel === 'jardin' ? 'Jardín' : 'Primaria'} — ${c}`;
+};
+---
+<div class:list={['pasa', clase]} role="region" aria-roledescription="carrusel" aria-label={etiqueta} data-pasa={intervalo}>
+  <div class="pasa__marco">
+    {items.map((it, i) => (
+      <figure class:list={['pasa__item', { 'is-activa': i === 0 }]} data-pasa-item aria-hidden={i === 0 ? undefined : 'true'}>
+        <Foto id={it.id} ratio={ratio} sizes="(min-width: 56em) 50vw, 100vw" />
+        <figcaption class="pasa__rotulo">{rot(it.id, it.rotulo)}</figcaption>
+      </figure>
+    ))}
+  </div>
+  <div class="pasa__controles" data-pasa-controles hidden>
+    <button type="button" class="pasa__flecha" data-pasa-prev aria-label="Anterior">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M20 12 C 15 12.2, 10 11.8, 5 12 M10 6 C 8 8.5, 6 10.6, 4.5 12 C 6 13.4, 8 15.5, 10 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <span class="pasa__cuenta" aria-hidden="true"><span data-pasa-n>1</span> / {items.length}</span>
+    <button type="button" class="pasa__flecha" data-pasa-next aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 12.5 C 9 12, 14 12.2, 19 12 M14 6.5 C 16 9, 18 11, 19.5 12 C 18 13.2, 16 15, 14 17.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('liviano');
+  document.querySelectorAll<HTMLElement>('[data-pasa]').forEach((caja) => {
+    const items = Array.prototype.slice.call(caja.querySelectorAll<HTMLElement>('[data-pasa-item]')) as HTMLElement[];
+    if (items.length < 2) return;
+    const controles = caja.querySelector<HTMLElement>('[data-pasa-controles]')!;
+    const n = caja.querySelector<HTMLElement>('[data-pasa-n]')!;
+    controles.hidden = false;
+    caja.classList.add('is-listo');
+    let i = 0;
+    const cargar = (el: HTMLElement) => el.querySelectorAll('img').forEach((im) => { im.loading = 'eager'; });
+    const ir = (sig: number) => {
+      sig = (sig + items.length) % items.length;
+      cargar(items[(sig + 1) % items.length]);
+      items[i].classList.remove('is-activa');
+      items[i].setAttribute('aria-hidden', 'true');
+      items[sig].classList.add('is-activa');
+      items[sig].removeAttribute('aria-hidden');
+      n.textContent = String(sig + 1);
+      i = sig;
+    };
+    let pausa = false;
+    let visible = false;
+    caja.addEventListener('mouseenter', () => { pausa = true; });
+    caja.addEventListener('mouseleave', () => { pausa = false; });
+    caja.addEventListener('focusin', () => { pausa = true; });
+    caja.addEventListener('focusout', () => { pausa = false; });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) cargar(items[1]); }, { rootMargin: '200px' }).observe(caja);
+    } else { visible = true; }
+    const intervalo = Number(caja.dataset.pasa) || 4500;
+    let reloj = 0;
+    const programar = () => { clearInterval(reloj); if (!quieto) reloj = window.setInterval(() => { if (visible && !pausa && !document.hidden) ir(i + 1); }, intervalo); };
+    caja.querySelector('[data-pasa-prev]')!.addEventListener('click', () => { ir(i - 1); programar(); });
+    caja.querySelector('[data-pasa-next]')!.addEventListener('click', () => { ir(i + 1); programar(); });
+    programar();
+  });
+</script>
+
+<style>
+  .pasa { position: relative; }
+  .pasa__marco { position: relative; }
+  .pasa__item { margin: 0; }
+  .pasa__item + .pasa__item { display: none; }
+  .pasa.is-listo .pasa__item { display: block; position: absolute; top: 0; left: 0; right: 0; opacity: 0; transition: opacity 1.2s var(--ease-suave); }
+  .pasa.is-listo .pasa__item.is-activa { position: relative; opacity: 1; z-index: 1; }
+  .pasa__item :global(.foto) { box-shadow: 0 24px 50px -30px rgba(35, 32, 28, 0.55); }
+  .pasa__rotulo { margin-top: 0.75rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-suave); }
+  .pasa__controles { position: absolute; right: 0; bottom: -0.35rem; z-index: 2; display: flex; align-items: center; }
+  .pasa__controles[hidden] { display: none; }
+  .pasa__cuenta { margin: 0 0.75rem; font-size: 0.8125rem; color: var(--tinta-suave); min-width: 2.6rem; text-align: center; }
+  .pasa__flecha {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.4rem; height: 2.4rem; flex: none;
+    border: 1.5px solid var(--tinta); border-radius: 50%;
+    background: transparent; color: var(--tinta); cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  @media (hover: hover) { .pasa__flecha:hover { background: var(--tinta); color: var(--papel); } }
+</style>

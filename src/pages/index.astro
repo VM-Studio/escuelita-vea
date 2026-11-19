@@ -10,7 +10,8 @@ import Puertas from '../components/Puertas.astro';
 import Telon from '../components/Telon.astro';
 import Dibujito from '../components/Dibujito.astro';
 import Instagram from '../components/Instagram.astro';
-import Constelacion from '../components/Constelacion.astro';
+import PasaFotos from '../components/PasaFotos.astro';
+import Topografia from '../components/Topografia.astro';
 import GaleriaObras from '../components/GaleriaObras.astro';
 import TarjetasRebote from '../components/TarjetasRebote.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
@@ -133,19 +134,23 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
 
   {/* ============ BIENVENIDA ============ */}
   <section class="bienvenida seccion seccion--papel-oscuro" aria-label="Bienvenida">
-    <div class="contenedor">
-      <Constelacion items={[
-        { id: p.bienvenida.foto }, { id: 'jardin-hojas-crayon' }, { id: 'primaria-leyenda-ronda' }, { id: 'jardin-libro-cara' },
-        { id: 'jardin-arcilla-figuras' }, { id: 'patio-tres-nenas-arena' }, { id: 'primaria-escribiendo-juntos' }, { id: 'jardin-musica-guitarra' },
-      ]} etiqueta="La vida en La Escuelita">
+    <div class="contenedor bienvenida__grilla">
+      <div class="bienvenida__fotos" data-revelar>
+        <PasaFotos items={[
+          { id: p.bienvenida.foto }, { id: 'jardin-hojas-crayon' }, { id: 'primaria-leyenda-ronda' }, { id: 'jardin-libro-cara' },
+          { id: 'jardin-arcilla-figuras' }, { id: 'patio-tres-nenas-arena' }, { id: 'primaria-escribiendo-juntos' }, { id: 'jardin-musica-guitarra' },
+        ]} etiqueta="La vida en La Escuelita" />
+      </div>
+      <div class="bienvenida__texto">
         <Paleta class="bienvenida__paleta" />
         <p class="bienvenida__parrafo" data-revelar>{p.bienvenida.texto}</p>
-      </Constelacion>
+      </div>
     </div>
   </section>
 
   {/* ============ INTERLUDIO ============ */}
   <section class="juego-arte seccion" aria-label="El juego y el arte">
+    <Topografia semilla={5} />
     <div class="contenedor juego-arte__cabeza">
       <Paleta class="juego-arte__paleta" />
       <p class="t-frase juego-arte__frase" data-frase>{p.interludio.frase}</p>
@@ -417,8 +422,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
 
   /* ---------- BIENVENIDA ---------- */
   .bienvenida { overflow: hidden; }
-  .bienvenida__paleta { margin: 0 auto 1.25rem; }
-  .bienvenida :global(.conste__centro) .bienvenida__parrafo { margin: 0 auto; }
+  .bienvenida__paleta { margin: 0 0 1.5rem; }
   .bienvenida, .ejes { overflow: hidden; }
   .bienvenida__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; }
   .abanico { position: relative; width: 100%; max-width: 36rem; margin: 0 auto; }
@@ -443,10 +447,12 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   }
   .bienvenida__espiral { width: 2.6rem; height: 2.6rem; margin-bottom: 1.275rem; }
   .bienvenida__parrafo { font-family: var(--f-titulo); font-size: 1.265rem; font-size: clamp(1.265rem, 0.861rem + 1.092vw, 1.785rem); line-height: 1.35; letter-spacing: -0.01em; font-weight: 350; max-width: 28ch; }
-  @media (min-width: 56em) { .bienvenida__grilla { grid-template-columns: 6fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } }
+  .bienvenida__fotos { min-width: 0; }
+  @media (min-width: 56em) { .bienvenida__grilla { grid-template-columns: 7fr 5fr; grid-gap: 4.5rem; gap: 4.5rem; } }
 
   /* ---------- JUEGO Y ARTE (carrusel circular) ---------- */
-  .juego-arte { overflow: hidden; padding-bottom: 2.5rem; }
+  .juego-arte { position: relative; overflow: hidden; padding-bottom: 2.5rem; }
+  .juego-arte > :global(*:not(.topo)) { position: relative; z-index: 1; }
   .juego-arte__cabeza { text-align: center; }
   .juego-arte__paleta { margin: 0 auto 1.25rem; }
   .juego-arte__frase { margin: 0 auto; max-width: 20ch; font-size: 1.9rem; font-size: clamp(1.9rem, 1.1rem + 3vw, 3.5rem); line-height: 1.08; }
