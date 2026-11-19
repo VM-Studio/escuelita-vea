@@ -97,8 +97,7 @@ const jsonLd = {
         if (reducido) h.className += ' reducido';
         var visto = '1';
         try { visto = w.sessionStorage.getItem('le-cargador'); w.sessionStorage.setItem('le-cargador', '1'); } catch (e) { visto = '1'; }
-        var grande = w.matchMedia && w.matchMedia('(min-width: 1024px)').matches; // en celulares no: el loader taparía la primera pintura (LCP)
-        if (!visto && !liviano && basicas && grande) h.className += ' con-cargador';
+        if (!visto && !liviano && basicas) h.className += ' con-cargador';
       })(document, window);
     </script>
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

@@ -91,9 +91,9 @@ async function iniciar() {
       gsap.set(izq, { autoAlpha: 0, x: -120 });
       gsap.set(der, { autoAlpha: 0, x: 120 });
       const tl = gsap.timeline({ onComplete: () => { html.classList.remove('con-cargador'); } });
-      tl.to(izq, { autoAlpha: 1, x: 0, duration: 1, ease: 'expo.out' }, 0.1)
-        .to(der, { autoAlpha: 1, x: 0, duration: 1, ease: 'expo.out' }, 0.25)
-        .to(hoja, { yPercent: -104, rotate: -1.5, duration: 0.85, ease: 'expo.inOut' }, '+=0.45')
+      tl.to(izq, { autoAlpha: 1, x: 0, duration: 1.7, ease: 'power3.out' }, 0.15)
+        .to(der, { autoAlpha: 1, x: 0, duration: 1.7, ease: 'power3.out' }, 0.45)
+        .to(hoja, { yPercent: -104, rotate: -1.5, duration: 0.9, ease: 'expo.inOut' }, '+=0.5')
         .add(() => { tlEntrada.play(); }, '-=0.45');
     } else {
       requestAnimationFrame(() => tlEntrada.play());
