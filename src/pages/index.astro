@@ -17,9 +17,7 @@ import TarjetasRebote from '../components/TarjetasRebote.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import Sello from '../components/Sello.astro';
 import Mancha from '../components/Mancha.astro';
-import Paleta from '../components/Paleta.astro';
 import CarruselCircular from '../components/CarruselCircular.astro';
-import RastroImagenes from '../components/RastroImagenes.astro';
 import { inicio } from '../content/inicio';
 import { comunidad } from '../content/comunidad';
 import { parrafos, acento } from '../lib/texto';
@@ -101,27 +99,25 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     <Dibujito nombre="cara-ojos" lado="der" top="46%" ancho="6.5rem" rot={8} />
     <div class="contenedor">
       <div class="presentacion__cabeza">
-        <Trazo nombre="sol" class="presentacion__sol" grosor={2.6} />
         <h2 id="presentacion-titulo" class="presentacion__nombre" data-titulo-lineas set:html={acento(p.presentacion.nombre)} />
         <p class="presentacion__fundada" data-revelar>{p.presentacion.fundada}</p>
         <p class="presentacion__trayectoria" data-revelar>
-          <span class="subrayable">{p.presentacion.trayectoria}<Trazo nombre="subrayado" grosor={3} /></span>
+          {p.presentacion.trayectoria}
         </p>
         <p class="presentacion__descripcion" data-revelar>{p.presentacion.descripcion}</p>
-        <Paleta class="presentacion__paleta" />
       </div>
 
       {/* Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha, VEA abajo. */}
       <div class="presentacion__niveles">
         <a href="/jardin/" class="nivel nivel--jardin" data-revelar>
-          <Logo nivel="jardin" alto={116} decorativo />
+          <Logo nivel="jardin" alto={190} decorativo class="nivel__logo" />
           <span class="nivel__texto">{p.presentacion.jardin.texto}</span>
           <span class="nivel__anio t-cifra" data-contador={p.presentacion.jardin.anio} data-desde="1900">{p.presentacion.jardin.anio}</span>
           <span class="nivel__ir">Conocé el Jardín <span aria-hidden="true">→</span></span>
         </a>
-        <span class="presentacion__division" aria-hidden="true"><Trazo nombre="ola" color="arena" grosor={2} /></span>
+        <span class="presentacion__division" aria-hidden="true"></span>
         <a href="/primaria/" class="nivel nivel--primaria" data-revelar>
-          <Logo nivel="primaria" alto={92} decorativo />
+          <Logo nivel="primaria" alto={150} decorativo class="nivel__logo" />
           <span class="nivel__texto">{p.presentacion.primaria.texto}</span>
           <span class="nivel__anio t-cifra" data-contador={p.presentacion.primaria.anio} data-desde="1940">{p.presentacion.primaria.anio}</span>
           <span class="nivel__ir">Conocé la Primaria <span aria-hidden="true">→</span></span>
@@ -142,7 +138,6 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
         ]} etiqueta="La vida en La Escuelita" />
       </div>
       <div class="bienvenida__texto">
-        <Paleta class="bienvenida__paleta" />
         <p class="bienvenida__parrafo" data-revelar>{p.bienvenida.texto}</p>
       </div>
     </div>
@@ -152,7 +147,6 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   <section class="juego-arte seccion" aria-label="El juego y el arte">
     <Topografia semilla={5} />
     <div class="contenedor juego-arte__cabeza">
-      <Paleta class="juego-arte__paleta" />
       <p class="t-frase juego-arte__frase" data-frase>{p.interludio.frase}</p>
     </div>
     <CarruselCircular ids={p.interludio.fotos} etiqueta="Juego y arte en La Escuelita" cardWidth={250} aspectRatio={0.78} gap={34} alto="clamp(20rem, 38vw, 33rem)" />
@@ -173,7 +167,6 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
             <Foto id={e.foto} ratio="16/10" sizes="(min-width: 56em) 55vw, 100vw" revelar />
           </div>
           <div class="eje__texto">
-            <span class="eje__marca" aria-hidden="true"><Trazo nombre={(['sol', 'lazos', 'espiral', 'hoja'] as const)[i]} grosor={2.4} color={i % 2 ? 'verde' : 'ocre'} /></span>
             <h3 class="eje__titulo" data-titulo-lineas>{e.titulo}</h3>
             <div class="prosa eje__prosa" data-revelar set:html={parrafos(e.texto)} />
           </div>
@@ -227,8 +220,9 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   /* ---------- HERO PRINCIPAL ---------- */
   .portada { position: relative; overflow: hidden; height: 100vh; height: 100svh; min-height: 32rem; max-height: 68rem; background: var(--tinta); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; }
   .portada__fondo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
-  .portada__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: opacity 1.6s var(--ease-suave); }
-  .portada__capa.is-activa { opacity: 1; }
+  .portada__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; }
+  .portada__capa.is-previa { z-index: 1; opacity: 1; }
+  .portada__capa.is-activa { z-index: 2; opacity: 1; transition: opacity 1.8s ease-in-out; }
   .portada__capa + .portada__capa { display: none; }
   .portada.is-secuencia .portada__capa { display: block; }
   .portada__capa :global(.foto) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -300,14 +294,15 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .hero__pill::before { content: ''; display: block; padding-top: 72%; }
   @media (min-width: 64em) { .hero__pill::before { padding-top: 78%; } }
   .hero__pill-trazo { position: absolute; z-index: 0; top: -0.7rem; left: -0.8rem; right: -2rem; bottom: 0.6rem; border: 2.5px solid var(--rojo-vivo); border-right: 0; border-radius: 999px 0 0 999px; transform: rotate(-1.5deg); filter: url(#crayon); }
-  .hero__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0; transition: opacity 2.2s var(--ease-suave); }
-  .hero__capa.is-activa { opacity: 1; }
+  .hero__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; }
+  .hero__capa.is-previa { z-index: 1; opacity: 1; }
+  .hero__capa.is-activa { z-index: 2; opacity: 1; transition: opacity 2.2s ease-in-out; }
   .hero__capa + .hero__capa { display: none; }
   .hero.is-secuencia .hero__capa { display: block; }
   .hero__capa :global(.foto) { height: 100%; }
   .hero__capa :global(.foto--recorte::before) { display: none; }
   .hero__capa :global(img) { transform: scale(1.04); transition: transform 9s linear, opacity 0.7s var(--ease-suave); }
-  .hero__capa.is-activa :global(img) { transform: scale(1.12); }
+  .hero__capa.is-activa :global(img), .hero__capa.is-previa :global(img) { transform: scale(1.12); }
   :global(html.reducido) .hero__capa :global(img), :global(html.liviano) .hero__capa :global(img) { transform: none; }
   .hero__palabras { list-style: none; margin: 0; padding: 0; }
   .hero__palabra {
@@ -370,8 +365,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .presentacion__vea:hover { background: var(--papel-oscuro); }
   @media (min-width: 48em) {
     .presentacion__niveles { grid-template-columns: 1fr auto 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
-    .presentacion__division { display: block; width: 2.4rem; align-self: center; }
-    .presentacion__division :global(svg) { width: 2.4rem; height: 1rem; transform: rotate(90deg); }
+    .presentacion__division { display: block; width: 1px; align-self: stretch; margin: 1.5rem 1.5rem; background: rgba(35, 32, 28, 0.2); }
   }
 
   /* ---------- BIENVENIDA ---------- */

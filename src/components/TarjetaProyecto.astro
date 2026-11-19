@@ -7,7 +7,6 @@ const { id, titulo, texto, foto, trazo, indice } = Astro.props;
 <article class:list={['proyecto', { 'proyecto--b': indice % 2 === 1 }]} id={id} data-revelar data-inclinar='{"amplitude":5,"scale":1.015}'>
   <div class="proyecto__foto">
     <Foto id={foto} ratio="4/3" sizes="(min-width: 56em) 44vw, 92vw" />
-    <span class="proyecto__marca" aria-hidden="true"><Trazo nombre={trazo} grosor={2.4} color="verde" /></span>
   </div>
   <div class="proyecto__cuerpo">
     <h3 class="proyecto__titulo">{titulo}</h3>

@@ -2,7 +2,6 @@
 import { NIVELES, REDES, SITIO } from '../config/sitio';
 import Logo from './Logo.astro';
 import IconoRed from './IconoRed.astro';
-import Paleta from './Paleta.astro';
 const redes = REDES.filter((r) => r.url);
 const anio = new Date().getFullYear();
 const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITIO.direccion.mapsQuery)}`;
@@ -14,7 +13,6 @@ const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURICompone
       <a href="/primaria/" aria-label="Instituto La Escuelita Primaria"><Logo nivel="vea" alto={60} decorativo /></a>
     </div>
     <div class="pie-sitio__frase">
-      <Paleta class="pie-sitio__paleta" />
       <p class="t-frase">El niño es cuerpo que siente y al sentir, piensa.</p>
     </div>
   </div>

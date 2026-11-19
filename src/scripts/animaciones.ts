@@ -86,15 +86,13 @@ async function iniciar() {
     if (conCargador && cargador) {
       html.classList.add('cargador-js');
       const circulo = cargador.querySelector('.cargador__circulo');
-      const rayos = q('.cargador__rayos path', cargador);
       const logo = cargador.querySelector('[data-cargador-logo]');
       const hoja = cargador.querySelector('[data-cargador-hoja]');
       const sol = cargador.querySelector('[data-cargador-sol]');
-      gsap.set([circulo, ...rayos], { drawSVG: '0%' });
+      gsap.set(circulo, { drawSVG: '0%' });
       const tl = gsap.timeline({ onComplete: () => { html.classList.remove('con-cargador'); } });
       tl.to(circulo, { drawSVG: '100%', duration: 0.75, ease: 'power2.inOut' })
-        .to(rayos, { drawSVG: '100%', duration: 0.22, stagger: 0.045, ease: 'power1.out' }, '-=0.05')
-        .to(sol, { rotate: 25, scale: 0.86, duration: 0.6, ease: 'power2.inOut' }, '-=0.1')
+        .to(sol, { scale: 0.86, duration: 0.6, ease: 'power2.inOut' }, '-=0.1')
         .fromTo(logo, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.45 }, '-=0.45')
         .to(hoja, { yPercent: -104, rotate: -1.5, duration: 0.85, ease: 'expo.inOut' }, '+=0.15')
         .add(() => { tlEntrada.play(); }, '-=0.45');

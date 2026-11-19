@@ -37,7 +37,6 @@ const dibujo = DIBUJOS[[...foto].reduce((a, c) => a + c.charCodeAt(0), 0) % DIBU
         <Foto id={foto} ratio={ratio ?? '4/5'} sizes="(min-width: 64em) 40vw, 90vw" />
       </div>
       <figure class="interludio__lado">
-        <Trazo nombre={trazo} class="interludio__trazo" grosor={2.4} />
         <blockquote><p class="t-frase interludio__frase interludio__frase--tinta" data-frase>{frase}</p></blockquote>
         {firma && <figcaption class="interludio__firma interludio__firma--tinta">— {firma}</figcaption>}
       </figure>

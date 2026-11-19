@@ -31,29 +31,28 @@ export const comunidad = {
     titulo: 'Salidas y Celebraciones',
     bajada: 'Eventos anuales, jornadas especiales y articulaciones institucionales.',
     salidasEducativas: { etiqueta: 'Salidas Educativas', texto: 'Forma parte de la agenda anual visitar un gran número de museos y espacios de nuestra Ciudad, en consonancia con el contenido de cada grado. Nos interesa interactuar tanto con exposiciones permanentes como ocasionales. Todo espacio que sume contenido a los proyectos se consolida como un lugar factible de visita.' },
-    // "Mapa de salidas": el texto se publica completo; los lugares marcados con {{…}} o [enlace](url) se ven como chips.
     areas: [
       {
         etiqueta: 'Área de Ciencias', color: 'verde',
-        texto: 'Desarrollamos indagaciones directas y contrastes de fuentes en el [Museo Argentino de Ciencias Naturales Bernardino Rivadavia](https://www.macnconicet.gob.ar/), el {{Museo Etnográfico Juan B. Ambrosetti}}, el [MUNTREF - Museo de la Inmigración](https://untref.edu.ar/muntref/es/museo-de-la-inmigracion/), el [Centro Ana Frank Argentina](https://centroanafrank.com.ar/), la {{Planta Potabilizadora General San Martín de AySA}}, el {{Instituto Geográfico Nacional (IGN)}}, el {{Congreso de la Nación}} y la {{Casa de Gobierno}}. Realizamos además el {{Circuito Belgraniano}}, el {{Circuito Sanmartiniano}}, el {{Museo Histórico de Buenos Aires Cornelio de Saavedra}} y los recorridos de memoria en el {{Parque de la Memoria}} y el {{Museo Evita}}.',
+        texto: 'Desarrollamos indagaciones directas y contrastes de fuentes en el Museo Argentino de Ciencias Naturales Bernardino Rivadavia, el Museo Etnográfico Juan B. Ambrosetti, el MUNTREF - Museo de la Inmigración, el Centro Ana Frank Argentina, la Planta Potabilizadora General San Martín de AySA, el Instituto Geográfico Nacional (IGN), el Congreso de la Nación y la Casa de Gobierno. Realizamos además el Circuito Belgraniano, el Circuito Sanmartiniano, el Museo Histórico de Buenos Aires Cornelio de Saavedra y los recorridos de memoria en el Parque de la Memoria y el Museo Evita.',
       },
       {
         etiqueta: 'Área de Arte', color: 'rojo',
-        texto: 'Enriquecemos la percepción visual y la mirada crítica en el [MALBA](https://www.malba.org.ar/), el [Museo Nacional de Bellas Artes](https://www.bellasartes.gob.ar/), el {{Museo Casa de Yrurtia}}, el {{Museo de Artistas Argentinos "Benito Quinquela Martín"}}, {{Fundación PROA}} y los espacios dedicados a la experimentación como el {{Museo Xul Solar}} y el {{Museo de Arte Popular José Hernández}}.',
+        texto: 'Enriquecemos la percepción visual y la mirada crítica en el MALBA, el Museo Nacional de Bellas Artes, el Museo Casa de Yrurtia, el Museo de Artistas Argentinos "Benito Quinquela Martín", Fundación PROA y los espacios dedicados a la experimentación como el Museo Xul Solar y el Museo de Arte Popular José Hernández.',
       },
       {
         etiqueta: 'Entorno Local y Literatura', color: 'ocre',
-        texto: 'Realizamos recorridos por el barrio de {{Colegiales}} (comercios, plazas, correo) y visitas orientadas a las letras en la {{Biblioteca La Nube}}, la {{Biblioteca Nacional Mariano Moreno}} y la {{Biblioteca del Congreso de la Nación}}.',
+        texto: 'Realizamos recorridos por el barrio de Colegiales (comercios, plazas, correo) y visitas orientadas a las letras en la Biblioteca La Nube, la Biblioteca Nacional Mariano Moreno y la Biblioteca del Congreso de la Nación.',
       },
       {
         etiqueta: 'Área de Teatro', color: 'azul',
-        texto: 'Asistimos a salas independientes como {{Hasta Trilce}} para presenciar, por ejemplo, la adaptación de los cuentos de “Sucedió en colores” de la autora Liliana Bodoc.',
+        texto: 'Asistimos a salas independientes como Hasta Trilce para presenciar, por ejemplo, la adaptación de los cuentos de “Sucedió en colores” de la autora Liliana Bodoc.',
       },
     ],
     fotos: ['primaria-salida-caminito', 'primaria-museo-ciencias'],
     hitosTitulo: 'Hitos anuales y viajes',
     hitos: [
-      { id: 'viaje-a-rosario', etiqueta: 'Viaje a Rosario (4to grado)', fotos: ['primaria-rosario'], texto: 'El grupo de cuarto grado promete lealtad a la bandera en un proyecto nacional profundo. Los estudiantes investigan, leen y representan una obra de teatro que repasa la biografía de Manuel Belgrano y la creación del símbolo patrio. El legado de Belgrano nos interpela en valores fundamentales. La visita a la ciudad de Rosario y al [Monumento a la Bandera](https://www.monumentoalabandera.gob.ar/) cierra el proyecto con un contenido simbólico y un matiz sensible indispensable para profundizar los aprendizajes.' },
+      { id: 'viaje-a-rosario', etiqueta: 'Viaje a Rosario (4to grado)', fotos: ['primaria-rosario'], texto: 'El grupo de cuarto grado promete lealtad a la bandera en un proyecto nacional profundo. Los estudiantes investigan, leen y representan una obra de teatro que repasa la biografía de Manuel Belgrano y la creación del símbolo patrio. El legado de Belgrano nos interpela en valores fundamentales. La visita a la ciudad de Rosario y al Monumento a la Bandera cierra el proyecto con un contenido simbólico y un matiz sensible indispensable para profundizar los aprendizajes.' },
       { id: 'penas', etiqueta: 'Las Peñas de La Escuelita', fotos: ['primaria-pena-noche'], texto: 'Dos veces al año damos lugar a este evento tan esperado que nos reúne los días sábado. Niños, niñas y grandes se combinan para tocar y cantar un repertorio variado a elección de cada participante. La música, los bailes y la reunión de las familias entre los árboles permiten habitar la escuela de otra manera y celebrar el canto compartido. Es un lugar para cada uno, a la medida de cada quien.' },
       { id: 'campamentos', etiqueta: 'Campamentos', fotos: ['primaria-campamento'], texto: 'Dormir fuera de casa, explorar otros territorios, jugar y habitar la naturaleza transforma la experiencia escolar. Esta vivencia construye otra forma de estar juntos y afianza la confianza mutua.' },
       { id: 'kermese', etiqueta: 'La Kermese de 7mo Grado', fotos: ['primaria-kermese-carrera', 'primaria-kermese-ronda'], texto: 'Una mañana preparada íntegramente por los estudiantes de séptimo grado. Ellos invitan a toda la escuela a través de distintos juegos tradicionales a recrear las dinámicas lúdicas de sus primeros años institucionales. Es un clásico de cada agosto donde celebramos a las infancias a través del juego.' },

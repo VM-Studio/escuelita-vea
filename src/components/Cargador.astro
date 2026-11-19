@@ -1,5 +1,5 @@
 ---
-// Loader: un trazo de crayón rojo dibuja un círculo y después sus rayos (un sol),
+// Loader: un trazo de crayón rojo dibuja un círculo,
 // aparece el logo y la pantalla se levanta como una hoja de papel.
 // · Solo en la primera visita de la sesión (sessionStorage) — lo decide el script del <head>.
 // · Sin JS no existe (display:none salvo html.con-cargador).
@@ -11,10 +11,6 @@ import Logo from './Logo.astro';
     <svg class="cargador__sol" viewBox="0 0 120 120" data-cargador-sol>
       <g filter="url(#crayon)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <path class="cargador__circulo" d="M62 37 C 77 36, 86 48, 85 61 C 84 76, 72 86, 58 85 C 44 84, 35 73, 36 59 C 37 46, 47 37, 63 38" stroke-width="3.4" />
-        <g class="cargador__rayos" stroke-width="3">
-          <path d="M60 8 L 61 24" /><path d="M96 22 L 86 33" /><path d="M112 60 L 97 61" /><path d="M96 98 L 86 88" />
-          <path d="M60 112 L 60 97" /><path d="M24 98 L 34 87" /><path d="M8 60 L 23 60" /><path d="M24 22 L 34 33" />
-        </g>
       </g>
     </svg>
     <div class="cargador__logo" data-cargador-logo>

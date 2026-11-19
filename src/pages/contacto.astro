@@ -1,6 +1,5 @@
 ---
 import Dibujito from '../components/Dibujito.astro';
-import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Trazo from '../components/Trazo.astro';
 import { NIVELES, SITIO } from '../config/sitio';
@@ -23,7 +22,6 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
     <div class="contenedor">
       <p class="t-volanta" data-hero-resto>Admisión</p>
       <h1 class="cabeza__titulo" data-hero-titular><em class="acento">Contacto</em></h1>
-      <Paleta class="cabeza__paleta" />
     </div>
   </section>
 
@@ -31,7 +29,6 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
     <div class="contenedor tarjetas">
       {niveles.map((n) => (
         <article class:list={['tarjeta-nivel', `tarjeta-nivel--${n.clave}`]} data-revelar>
-          <Trazo nombre={n.clave === 'jardin' ? 'sol' : 'hoja'} class="tarjeta-nivel__trazo" grosor={2.4} color={n.clave === 'jardin' ? 'ocre' : 'verde'} />
           <h2 class="tarjeta-nivel__titulo">{n.nombre}</h2>
           <dl class="tarjeta-nivel__datos">
             <div>
@@ -61,7 +58,6 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
       <div class="entrevista__texto">
         <h2 id="entrevista-titulo" data-titulo-lineas>Pedí una <em class="acento">entrevista</em></h2>
         <p class="t-lead" data-revelar>Contanos quién sos y qué nivel te interesa. Al enviar, se abre WhatsApp con tu mensaje listo para mandar al Jardín o a la Primaria.</p>
-        <Trazo nombre="flecha" class="entrevista__flecha" grosor={2.6} />
       </div>
 
       <form class="formulario" data-formulario data-endpoint={ENDPOINT_FORMULARIO} action={`mailto:${NIVELES.jardin.mail}`} method="post" enctype="text/plain" novalidate>
@@ -111,7 +107,6 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(SITIO.dire
       <p class="mapa-dir" data-revelar>{SITIO.direccion.texto}</p>
       <div class="mapa" data-mapa data-src={mapsEmbed}>
         <div class="mapa__aviso">
-          <Trazo nombre="sol" class="mapa__sol" grosor={2.2} />
           <button type="button" class="boton" data-mapa-cargar><span>Ver el mapa</span></button>
           <a href={mapsUrl} target="_blank" rel="noopener" class="enlace mapa__externo">Abrir en Google Maps<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
         </div>

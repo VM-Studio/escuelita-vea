@@ -1,7 +1,6 @@
 ---
 import Dibujito from '../components/Dibujito.astro';
 import Telon from '../components/Telon.astro';
-import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
@@ -40,7 +39,6 @@ const subnav = [
   <section class="seccion cita-nivel" aria-label="Presentación de la Primaria">
     <div class="contenedor cita-nivel__grilla">
       <figure class="cita-nivel__cita">
-        <Paleta class="cita-nivel__paleta" />
         <blockquote><p class="t-frase cita-nivel__texto" data-frase>{p.portada.cita}</p></blockquote>
         <figcaption class="cita-nivel__firma" data-revelar>— {p.portada.citaFirma}</figcaption>
       </figure>
@@ -71,7 +69,6 @@ const subnav = [
               <div class="prosa" set:html={parrafos(p.comoAprendemos.convivencia)} />
             </div>
             <aside class="ronda-caja">
-              <Trazo nombre="ronda" class="ronda-caja__trazo" grosor={2.2} color="verde" />
               <h3 class="ronda-caja__titulo">{p.comoAprendemos.ronda.etiqueta}</h3>
               <p>{p.comoAprendemos.ronda.texto}</p>
             </aside>
@@ -94,7 +91,6 @@ const subnav = [
         <div class="ciclos">
           {p.areas.ciclos.map((c, i) => (
             <div class="ciclo" data-revelar>
-              <Trazo nombre={i ? 'espiral' : 'sol'} class="ciclo__trazo" grosor={2.2} color="verde" />
               <h3 class="ciclo__titulo">{c.etiqueta}</h3>
               <p>{c.texto}</p>
             </div>
@@ -181,7 +177,6 @@ const subnav = [
     <Dibujito nombre="cara-mujer" lado="der" top="8%" ancho="6rem" rot={4} />
     <div class="contenedor">
       <div class="secundaria">
-        <Trazo nombre="flecha" class="secundaria__flecha" grosor={2.6} color="verde" />
         <h2 id="sec-titulo" class="secundaria__h2" data-titulo-lineas set:html={acento(p.secundaria.titulo)} />
         <h3 class="secundaria__pregunta" data-revelar>{p.secundaria.pregunta}</h3>
         <p class="sr-only">{p.secundaria.habilidadesTexto}</p>

@@ -347,7 +347,8 @@ function heroSecuencia() {
     cargar(capas[(sig + 1) % capas.length]);
     const img = $<HTMLImageElement>('img', capas[sig]);
     if (img && !(img.complete && img.naturalWidth)) return; // esperar a que esté cargada
-    capas[i].classList.remove('is-activa');
+    capas.forEach((c) => c.classList.remove('is-previa'));
+    capas[i].classList.replace('is-activa', 'is-previa');
     capas[sig].classList.add('is-activa');
     i = sig;
   }, 7000);
@@ -372,7 +373,8 @@ function portadaSecuencia() {
     cargar(capas[(sig + 1) % capas.length]);
     const img = $<HTMLImageElement>('img', capas[sig]);
     if (img && !(img.complete && img.naturalWidth)) return; // esperar a que esté cargada
-    capas[i].classList.remove('is-activa');
+    capas.forEach((c) => c.classList.remove('is-previa'));
+    capas[i].classList.replace('is-activa', 'is-previa');
     capas[sig].classList.add('is-activa');
     if (marcas.length) {
       if (sig === 0) marcas.forEach((m) => m.classList.remove('is-hecha', 'is-activa'));

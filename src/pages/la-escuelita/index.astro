@@ -50,7 +50,6 @@ const [principal, ...archivo] = e.historia.fotos;
   <section class="seccion reconocimiento" aria-labelledby="rec-titulo">
     <div class="contenedor contenedor--ancho">
       <div class="reconocimiento__caja">
-        <Trazo nombre="estrella" class="reconocimiento__estrella" grosor={2.4} />
         <p class="reconocimiento__fecha" data-revelar>22 · 08 · 2024</p>
         <h2 id="rec-titulo" class="reconocimiento__titulo" data-titulo-lineas set:html={acento(e.reconocimiento.titulo)} />
         <p class="reconocimiento__texto" data-revelar>{e.reconocimiento.texto}</p>
@@ -113,7 +112,6 @@ const [principal, ...archivo] = e.historia.fotos;
       <ul class="vea__ejes">
         {e.vea.ejes.map((x, i) => (
           <li class="vea-eje" data-revelar>
-            <span class="vea-eje__icono" aria-hidden="true"><Trazo nombre={(['sol', 'hoja', 'espiral', 'estrella', 'lazos'] as const)[i]} grosor={2.2} /></span>
             <h4 class="vea-eje__titulo">{x.etiqueta}</h4>
             <p>{x.texto}</p>
           </li>
@@ -138,7 +136,6 @@ const [principal, ...archivo] = e.historia.fotos;
       <ul class="pilares">
         {e.identidad.pilares.map((x, i) => (
           <li class="pilar" data-revelar>
-            <Trazo nombre={(['sol', 'estrella', 'espiral', 'ronda'] as const)[i]} class="pilar__trazo" grosor={2.2} color={i % 2 ? 'verde' : 'ocre'} />
             <h3 class="pilar__titulo">{x.etiqueta}</h3>
             <p>{x.texto}</p>
           </li>

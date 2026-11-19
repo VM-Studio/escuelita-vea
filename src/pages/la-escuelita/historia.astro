@@ -4,9 +4,7 @@ import { inicio } from '../../content/inicio';
 import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
 import Trazo from '../../components/Trazo.astro';
-import Paleta from '../../components/Paleta.astro';
 import Sello from '../../components/Sello.astro';
-import RastroImagenes from '../../components/RastroImagenes.astro';
 import LlamadoEntrevista from '../../components/LlamadoEntrevista.astro';
 import Boton from '../../components/Boton.astro';
 import { cronologia } from '../../content/cronologia';
@@ -43,12 +41,10 @@ const ultimo = anios[anios.length - 1];
   progreso
 >
   <section class="h-hero" data-hero aria-labelledby="h-titulo">
-    <RastroImagenes ids={['historica-dibujo-pared', 'historica-flautas', 'historica-manos-pintura', 'historica-ronda-taller', 'historica-aros', 'historica-rincon', 'historica-mesa']} size={140} />
     <div class="contenedor h-hero__grilla">
       <div class="h-hero__texto">
         <p class="t-volanta" data-hero-resto>La Escuelita · {primero} — {ultimo}</p>
         <h1 id="h-titulo" class="h-hero__titulo" data-hero-titular set:html={acento('Nuestra historia')} />
-        <Paleta class="h-hero__paleta" />
         <p class="h-hero__frase t-frase" data-hero-resto>{inicio.lineaDeTiempo.frase}</p>
         <p class="h-hero__bajada" data-hero-resto>{inicio.lineaDeTiempo.bajada}</p>
         <p class="h-hero__parrafo" data-hero-resto>{laEscuelita.historia.texto}</p>
@@ -97,7 +93,6 @@ const ultimo = anios[anios.length - 1];
                   <h3 class="hito-h__titulo">{h.titulo}</h3>
                   <p class="hito-h__texto">{h.texto}</p>
                 </div>
-                {h.destacado && <Trazo nombre="estrella" class="hito-h__estrella" grosor={2.4} />}
               </li>
             ))}
           </ol>
@@ -109,7 +104,6 @@ const ultimo = anios[anios.length - 1];
 
   <section class="seccion h-cierre">
     <div class="contenedor h-cierre__caja">
-      <Trazo nombre="sol" class="h-cierre__sol" grosor={2.4} />
       <p class="t-frase h-cierre__frase" set:html={acento(laEscuelita.reconocimiento.titulo)} />
       <div class="h-cierre__acciones">
         <Boton href="/la-escuelita/#carta" variante="rojo">{laEscuelita.reconocimiento.boton}</Boton>

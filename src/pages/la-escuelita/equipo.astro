@@ -1,5 +1,4 @@
 ---
-import Paleta from '../../components/Paleta.astro';
 import Base from '../../layouts/Base.astro';
 import Trazo from '../../components/Trazo.astro';
 import LlamadoEntrevista from '../../components/LlamadoEntrevista.astro';
@@ -14,7 +13,6 @@ import { parrafos, acento } from '../../lib/texto';
     <div class="contenedor">
       <p class="t-volanta" data-hero-resto>La Escuelita</p>
       <h1 class="cabeza__titulo" data-hero-titular>{e.titulo}</h1>
-      <Paleta class="cabeza__paleta" />
     </div>
   </section>
 
@@ -24,7 +22,7 @@ import { parrafos, acento } from '../../lib/texto';
       <div class="organigrama__cima">
         <div class="persona persona--fundadora" data-revelar>
           <p class="persona__cargo">{e.fundadora.cargo}</p>
-          <p class="persona__nombre"><span class="persona__aro">{e.fundadora.nombre}<Trazo nombre="circulo" class="persona__circulo" grosor={2.2} /></span></p>
+          <p class="persona__nombre">{e.fundadora.nombre}</p>
         </div>
         <div class="persona persona--asesora" data-revelar>
           <p class="persona__cargo">{e.asesora.cargo}</p>
@@ -72,7 +70,6 @@ import { parrafos, acento } from '../../lib/texto';
         <ul class="copetes">
           {e.perfiles.items.map((x, i) => (
             <li class="copete-p" data-revelar>
-              <Trazo nombre={(['ronda', 'sol', 'corazon'] as const)[i]} class="copete-p__trazo" grosor={2.2} color={(['ocre', 'rojo', 'verde'] as const)[i]} />
               <h3 class="copete-p__titulo">{x.copeteEtiqueta}</h3>
               <p>{x.copete}</p>
               <button type="button" class="boton copete-p__boton" data-alternar={x.id} aria-expanded="false" aria-controls={x.id}>
@@ -89,7 +86,7 @@ import { parrafos, acento } from '../../lib/texto';
             <dl class="perfil__puntos">
               {x.puntos.map((pt) => (
                 <div class="perfil__punto">
-                  <dt><Trazo nombre="tilde" class="perfil__tilde" grosor={2.4} dibujar={false} />{pt.etiqueta}</dt>
+                  <dt>{pt.etiqueta}</dt>
                   <dd>{pt.texto}</dd>
                 </div>
               ))}
