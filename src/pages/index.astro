@@ -25,6 +25,9 @@ import { comunidad } from '../content/comunidad';
 import { parrafos, acento } from '../lib/texto';
 
 const p = inicio;
+// "67 años en la educación por el arte": sin el 67 (va como cifra grande) y con la última palabra aparte
+const palabrasTiempo = p.lineaDeTiempo.titulo.replace(/^67\s+/, '').split(' ');
+const tituloTiempo = { resto: palabrasTiempo.slice(0, -1).join(' '), ultima: palabrasTiempo[palabrasTiempo.length - 1] };
 // Precarga de la foto del hero (mismos parámetros que <Foto prioridad>)
 const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
 const primera = masters[`../assets/fotos/${p.portadaFondo[0]}.jpg`].default;
@@ -155,7 +158,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
       <Paleta class="juego-arte__paleta" />
       <p class="t-frase juego-arte__frase" data-frase>{p.interludio.frase}</p>
     </div>
-    <CarruselCircular ids={p.interludio.fotos} etiqueta="Juego y arte en La Escuelita" cardWidth={200} aspectRatio={0.78} gap={22} />
+    <CarruselCircular ids={p.interludio.fotos} etiqueta="Juego y arte en La Escuelita" cardWidth={250} aspectRatio={0.78} gap={34} alto="clamp(20rem, 38vw, 33rem)" />
     <p class="juego-arte__ayuda" aria-hidden="true">Arrastrá para girar</p>
   </section>
 
@@ -164,14 +167,15 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     <Dibujito nombre="arbol" lado="der" top="6%" ancho="8rem" rot={3} opacidad={0.45} />
     <div class="contenedor">
       <div class="tiempo__cabeza">
-        <p class="tiempo__cifra t-cifra" aria-hidden="true"><span data-contador="67" data-desde="0">67</span></p>
-        <div>
-          {/* El "67" rojo grande es el comienzo del título (no se repite) */}
-          <h2 id="tiempo-titulo" class="tiempo__titulo" data-revelar set:html={'<span class="sr-only">67 </span>' + acento(p.lineaDeTiempo.titulo.replace(/^67\s+/, ''))} />
-          <p class="tiempo__frase t-frase" data-revelar>{p.lineaDeTiempo.frase}</p>
-          <p class="tiempo__bajada" data-revelar>{p.lineaDeTiempo.bajada}</p>
-          <div class="tiempo__boton" data-revelar><Boton href="/la-escuelita/historia/" variante="rojo">Conocé nuestra historia</Boton></div>
-        </div>
+        {/* Todo el título en una línea (el "67" rojo grande es su comienzo) y "arte" sola abajo, centrada */}
+        <h2 id="tiempo-titulo" class="tiempo__titulo" data-revelar>
+          <span class="sr-only">67 </span><span class="tiempo__cifra t-cifra" aria-hidden="true"><span data-contador="67" data-desde="0">67</span></span>
+          <span class="tiempo__renglon">{tituloTiempo.resto}</span>
+          <em class="acento tiempo__arte">{tituloTiempo.ultima}</em>
+        </h2>
+        <p class="tiempo__frase t-frase" data-revelar>{p.lineaDeTiempo.frase}</p>
+        <p class="tiempo__bajada" data-revelar>{p.lineaDeTiempo.bajada}</p>
+        <div class="tiempo__boton" data-revelar><Boton href="/la-escuelita/historia/" variante="rojo">Conocé nuestra historia</Boton></div>
       </div>
 
       <div class="tiempo__cuerpo">
@@ -234,7 +238,6 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   <GaleriaObras
     titulo="Obras del"
     acento="taller"
-    bajada="Producciones de los chicos y las chicas en los talleres de La Escuelita."
     obras={[
       { id: 'obra-yaguarete', rotulo: 'Animales', detalle: '1° grado' },
       { id: 'obra-cordillera', rotulo: 'La cordillera', detalle: '5° grado' },
@@ -463,17 +466,15 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
 
   /* ---------- LÍNEA DE TIEMPO ---------- */
   .tiempo { overflow: hidden; }
-  .tiempo__cabeza { display: grid; grid-template-columns: auto 1fr; grid-gap: 1rem; gap: 1rem; align-items: center; margin: 0 auto 2.72rem; max-width: 62rem; }
+  .tiempo__cabeza { margin: 0 auto 2.72rem; text-align: center; }
+  .tiempo__titulo { margin: 0 auto; font-size: 1.9rem; font-size: clamp(1.9rem, 0.9rem + 3vw, 4.2rem); line-height: 1.05; letter-spacing: -0.025em; }
   .tiempo__titulo :global(.sr-only) { position: absolute; }
-  .tiempo__cifra { font-size: 5.5rem; font-size: clamp(5.5rem, 3rem + 10vw, 11.4rem); color: var(--rojo); line-height: 0.8; letter-spacing: -0.06em; }
-  .tiempo__titulo { max-width: 20ch; }
-  .tiempo__frase { margin-top: 1.25rem; font-size: 1.26rem; font-size: var(--t-lg); color: var(--tinta); }
-  .tiempo__boton { margin-top: 1.25rem; }
-  .tiempo__bajada { margin-top: 0.75rem; color: var(--tinta-suave); }
-  @media (min-width: 56em) {
-    .tiempo__cabeza { grid-template-columns: auto minmax(0, 40rem); justify-content: center; grid-gap: 3rem; gap: 3rem; margin-bottom: 4rem; }
-    .tiempo__titulo { font-size: clamp(2.4rem, 1.2rem + 2.6vw, 4rem); line-height: 1.02; }
-  }
+  .tiempo__cifra { display: inline-block; margin-right: 0.12em; font-size: 2.3em; color: var(--rojo); line-height: 0.8; letter-spacing: -0.06em; vertical-align: -0.12em; }
+  .tiempo__arte { display: block; margin-top: 0.1em; font-size: 1.35em; line-height: 1; }
+  .tiempo__frase { margin: 1.5rem auto 0; font-size: 1.26rem; font-size: var(--t-lg); color: var(--tinta); }
+  .tiempo__boton { margin-top: 1.5rem; }
+  .tiempo__bajada { margin: 0.75rem auto 0; color: var(--tinta-suave); }
+  @media (min-width: 56em) { .tiempo__cabeza { margin-bottom: 4.5rem; } .tiempo__renglon { white-space: nowrap; } }
 
   .tiempo__cuerpo { position: relative; }
   .tiempo__hitos { position: relative; list-style: none; padding: 0 0 0 1.912rem; margin: 0; }

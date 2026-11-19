@@ -2,7 +2,6 @@
 // "Conocé nuestro Instagram": 4 reels de @la.escuelita.vea reproduciéndose sin sonido.
 // Al tocar uno, se activa el sonido y los controles. Los videos se cargan recién cuando la sección
 // se acerca a la pantalla. Botón "Conocenos" → Instagram.
-import Dibujito from './Dibujito.astro';
 import { acento } from '../lib/texto';
 const IG = 'https://www.instagram.com/la.escuelita.vea/';
 const reels = [
@@ -13,8 +12,6 @@ const reels = [
 ];
 ---
 <section class="ig" aria-labelledby="ig-titulo">
-  <Dibujito nombre="cara-orejas" lado="izq" top="12%" ancho="6rem" rot={-8} />
-  <Dibujito nombre="nena-vestido" lado="der" top="48%" ancho="4.5rem" rot={5} />
   <div class="contenedor">
     <div class="ig__cabeza">
       <div>
