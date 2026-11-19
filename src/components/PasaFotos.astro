@@ -25,11 +25,11 @@ const rot = (id: string, r?: string) => {
   </div>
   <div class="pasa__controles" data-pasa-controles hidden>
     <button type="button" class="pasa__flecha" data-pasa-prev aria-label="Anterior">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M20 12 C 15 12.2, 10 11.8, 5 12 M10 6 C 8 8.5, 6 10.6, 4.5 12 C 6 13.4, 8 15.5, 10 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20 12 C 15 12.2, 10 11.8, 5 12 M10 6 C 8 8.5, 6 10.6, 4.5 12 C 6 13.4, 8 15.5, 10 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
     </button>
-    <span class="pasa__cuenta" aria-hidden="true"><span data-pasa-n>1</span> / {items.length}</span>
+    <span class="pasa__cuenta" aria-hidden="true"><span data-pasa-n>1</span><span class="pasa__raya"></span>{items.length}</span>
     <button type="button" class="pasa__flecha" data-pasa-next aria-label="Siguiente">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 12.5 C 9 12, 14 12.2, 19 12 M14 6.5 C 16 9, 18 11, 19.5 12 C 18 13.2, 16 15, 14 17.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 12.5 C 9 12, 14 12.2, 19 12 M14 6.5 C 16 9, 18 11, 19.5 12 C 18 13.2, 16 15, 14 17.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
     </button>
   </div>
 </div>
@@ -82,15 +82,18 @@ const rot = (id: string, r?: string) => {
   .pasa.is-listo .pasa__item.is-activa { position: relative; opacity: 1; z-index: 1; }
   .pasa__item :global(.foto) { box-shadow: 0 24px 50px -30px rgba(35, 32, 28, 0.55); }
   .pasa__rotulo { margin-top: 0.75rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-suave); }
-  .pasa__controles { position: absolute; right: 0; bottom: -0.35rem; z-index: 2; display: flex; align-items: center; }
+  .pasa__controles { position: absolute; right: 0; bottom: -0.15rem; z-index: 2; display: flex; align-items: center; }
   .pasa__controles[hidden] { display: none; }
-  .pasa__cuenta { margin: 0 0.75rem; font-size: 0.8125rem; color: var(--tinta-suave); min-width: 2.6rem; text-align: center; }
+  .pasa__cuenta { display: inline-flex; align-items: center; margin: 0 0.6rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.06em; color: var(--tinta-suave); font-variant-numeric: tabular-nums; }
+  .pasa__raya { display: inline-block; width: 1.4rem; height: 1px; margin: 0 0.45rem; background: currentColor; opacity: 0.5; }
   .pasa__flecha {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 2.4rem; height: 2.4rem; flex: none;
-    border: 1.5px solid var(--tinta); border-radius: 50%;
+    width: 2rem; height: 2rem; flex: none; padding: 0;
+    border: 1px solid rgba(35, 32, 28, 0.28); border-radius: 50%;
     background: transparent; color: var(--tinta); cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
   }
-  @media (hover: hover) { .pasa__flecha:hover { background: var(--tinta); color: var(--papel); } }
+  .pasa__flecha path { stroke-width: 1.4; }
+  @media (hover: hover) { .pasa__flecha:hover { border-color: var(--tinta); background: var(--tinta); color: var(--papel); } }
+  .pasa__flecha:focus-visible { outline: 2px solid var(--rojo); outline-offset: 2px; }
 </style>
