@@ -25,9 +25,6 @@ import { comunidad } from '../content/comunidad';
 import { parrafos, acento } from '../lib/texto';
 
 const p = inicio;
-// "67 años en la educación por el arte": sin el 67 (va como cifra grande) y con la última palabra aparte
-const palabrasTiempo = p.lineaDeTiempo.titulo.replace(/^67\s+/, '').split(' ');
-const tituloTiempo = { resto: palabrasTiempo.slice(0, -1).join(' '), ultima: palabrasTiempo[palabrasTiempo.length - 1] };
 // Precarga de la foto del hero (mismos parámetros que <Foto prioridad>)
 const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
 const primera = masters[`../assets/fotos/${p.portadaFondo[0]}.jpg`].default;
@@ -162,62 +159,18 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     <p class="juego-arte__ayuda" aria-hidden="true">Arrastrá para girar</p>
   </section>
 
-  {/* ============ LÍNEA DE TIEMPO ============ */}
-  <section class="tiempo seccion" aria-labelledby="tiempo-titulo" data-linea-tiempo>
-    <Dibujito nombre="arbol" lado="der" top="6%" ancho="8rem" rot={3} opacidad={0.45} />
-    <div class="contenedor">
-      <div class="tiempo__cabeza">
-        {/* Todo el título en una línea (el "67" rojo grande es su comienzo) y "arte" sola abajo, centrada */}
-        <h2 id="tiempo-titulo" class="tiempo__titulo" data-revelar>
-          <span class="sr-only">67 </span><span class="tiempo__cifra t-cifra" aria-hidden="true"><span data-contador="67" data-desde="0">67</span></span>
-          <span class="tiempo__renglon">{tituloTiempo.resto}</span>
-          <em class="acento tiempo__arte">{tituloTiempo.ultima}</em>
-        </h2>
-        <p class="tiempo__frase t-frase" data-revelar>{p.lineaDeTiempo.frase}</p>
-        <p class="tiempo__bajada" data-revelar>{p.lineaDeTiempo.bajada}</p>
-        <div class="tiempo__boton" data-revelar><Boton href="/la-escuelita/historia/" variante="rojo">Conocé nuestra historia</Boton></div>
-      </div>
-
-      <div class="tiempo__cuerpo">
-      <span class="tiempo__linea" data-linea aria-hidden="true"></span>
-      <ol class="tiempo__hitos">
-        {p.lineaDeTiempo.hitos.map((h, i) => (
-          <li class:list={['hito', `hito--${i === 0 ? 'a' : 'b'}`]}>
-            <span class="hito__punto" aria-hidden="true"></span>
-            <div class="hito__texto" data-revelar>
-              <p class="hito__anio t-cifra"><span data-contador={h.anio} data-desde={i === 0 ? '1900' : '1959'}>{h.anio}</span></p>
-              <p class="hito__desc">{h.texto}</p>
-            </div>
-            <div class="hito__fotos">
-              {h.fotos.map((f, j) => (
-                <div class:list={['pegada', 'hito__foto', `hito__foto--${j}`]} style={`--rot:${j ? 2.4 : -1.8}deg`} data-revelar>
-                  <span class="cinta" aria-hidden="true"></span>
-                  <Foto id={f} ratio={j ? '4/3' : '4/5'} sizes="(min-width: 56em) 26vw, 70vw" />
-                </div>
-              ))}
-            </div>
-          </li>
-        ))}
-      </ol>
-      </div>
-    </div>
-  </section>
-
   <Telon foto="taller-pintura-mesa" rotulo="El taller, todos los días" alto="medio" />
 
   {/* ============ EJES PEDAGÓGICOS ============ */}
   <section class="ejes seccion seccion--papel-oscuro" aria-labelledby="ejes-titulo">
-    <Dibujito nombre="esqueleto" lado="izq" top="38%" ancho="5rem" rot={-4} />
     <div class="contenedor">
-      <div class="ejes__cabeza">
+      <div class="ejes__cabeza cabeza-regla">
         <h2 id="ejes-titulo" data-titulo-lineas set:html={acento(p.ejes.titulo)} />
-        <Trazo nombre="flecha-curva" class="ejes__flecha" grosor={2.4} />
       </div>
       {p.ejes.items.map((e, i) => (
         <article class:list={['eje', { 'eje--invertido': i % 2 === 1 }]}>
-          <div class="eje__foto con-mancha">
-            <Mancha forma={(['a', 'c', 'd', 'b'] as const)[i]} color={(['arena', 'verde', 'rosa', 'azul'] as const)[i]} class={`eje__mancha eje__mancha--${i % 2 ? 'b' : 'a'}`} />
-            <Foto id={e.foto} ratio={i % 2 ? '1/1' : '4/3'} sizes="(min-width: 56em) 34vw, 100vw" revelar class={i % 2 ? 'forma-arco' : ''} />
+          <div class="eje__foto">
+            <Foto id={e.foto} ratio="16/10" sizes="(min-width: 56em) 55vw, 100vw" revelar />
           </div>
           <div class="eje__texto">
             <span class="eje__marca" aria-hidden="true"><Trazo nombre={(['sol', 'lazos', 'espiral', 'hoja'] as const)[i]} grosor={2.4} color={i % 2 ? 'verde' : 'ocre'} /></span>
@@ -253,16 +206,14 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
 
   {/* ============ COMUNIDAD (ADELANTO) ============ */}
   <section class="adelanto seccion" aria-labelledby="adelanto-titulo">
-    <Dibujito nombre="paisaje-barco" lado="izq" top="8%" ancho="9rem" rot={-3} opacidad={0.5} />
-    <div class="contenedor">
-      <div class="adelanto__cabeza">
-        <h2 id="adelanto-titulo" data-titulo-lineas set:html={acento(comunidad.portada.titulo)} />
-        <p class="t-lead" data-revelar>{comunidad.portada.bajada}</p>
-        <div data-revelar><Boton href="/comunidad/">Conocé nuestra comunidad</Boton></div>
+    <div class="contenedor adelanto__grilla">
+      <div class="adelanto__fotos" data-revelar>
+        <PasaFotos items={p.comunidadFotos.map((id) => ({ id }))} etiqueta="La comunidad de La Escuelita" ratio="3/2" />
       </div>
-      <div class="adelanto__fotos con-mancha">
-        <Mancha forma="d" color="verde" class="adelanto__mancha" opacidad={0.7} />
-        <TarjetasRebote ids={p.comunidadFotos} ancho={540} alto={300} tamano={190} spread={95} />
+      <div class="adelanto__cabeza">
+        <h2 id="adelanto-titulo" class="adelanto__titulo" data-titulo-lineas set:html={acento(comunidad.portada.titulo)} />
+        <p class="t-lead" data-revelar>{comunidad.portada.bajada}</p>
+        <div class="adelanto__boton" data-revelar><Boton href="/comunidad/" variante="rojo">Conocé nuestra comunidad</Boton></div>
       </div>
     </div>
   </section>
@@ -464,76 +415,34 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .juego-arte :global(.cc-envoltura) { margin-top: 1rem; }
   .juego-arte :global(.cc-simple) { max-width: 76rem; margin: 2rem auto 0; padding: 0 var(--gutter); }
 
-  /* ---------- LÍNEA DE TIEMPO ---------- */
-  .tiempo { overflow: hidden; }
-  .tiempo__cabeza { margin: 0 auto 2.72rem; text-align: center; }
-  .tiempo__titulo { margin: 0 auto; font-size: 1.9rem; font-size: clamp(1.9rem, 0.9rem + 3vw, 4.2rem); line-height: 1.05; letter-spacing: -0.025em; }
-  .tiempo__titulo :global(.sr-only) { position: absolute; }
-  .tiempo__cifra { display: inline-block; margin-right: 0.12em; font-size: 2.3em; color: var(--rojo); line-height: 0.8; letter-spacing: -0.06em; vertical-align: -0.12em; }
-  .tiempo__arte { display: block; margin-top: 0.1em; font-size: 1.35em; line-height: 1; }
-  .tiempo__frase { margin: 1.5rem auto 0; font-size: 1.26rem; font-size: var(--t-lg); color: var(--tinta); }
-  .tiempo__boton { margin-top: 1.5rem; }
-  .tiempo__bajada { margin: 0.75rem auto 0; color: var(--tinta-suave); }
-  @media (min-width: 56em) { .tiempo__cabeza { margin-bottom: 4.5rem; } .tiempo__renglon { white-space: nowrap; } }
-
-  .tiempo__cuerpo { position: relative; }
-  .tiempo__hitos { position: relative; list-style: none; padding: 0 0 0 1.912rem; margin: 0; }
-  .tiempo__linea { position: absolute; left: 0.45rem; top: 0.5rem; bottom: 0; width: 2px; background: var(--rojo); transform-origin: 50% 0; border-radius: 2px; }
-  .hito { position: relative; display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
-  .hito + .hito { margin-top: 3.06rem; }
-  .hito__punto { position: absolute; left: -2.25rem; top: 0.9rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--papel); border: 2px solid var(--rojo); }
-  .hito__anio { font-size: 3.44rem; font-size: clamp(3.44rem, 1.64rem + 4.8vw, 5.4rem); color: var(--tinta); }
-  .hito__desc { margin-top: 0.75rem; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.25; max-width: 22ch; }
-  .hito__fotos { position: relative; display: flex; align-items: flex-start; }
-  .hito__foto { width: 58%; max-width: 13.5rem; }
-  .hito__foto--1 { width: 52%; margin-left: -10%; margin-top: 2.38rem; }
-  @media (min-width: 56em) {
-    .tiempo__hitos { padding-left: 0; }
-    .tiempo__cuerpo { padding-left: 0; }
-    .tiempo__linea { left: 50%; margin-left: -1px; }
-    .hito { grid-template-columns: 1fr 1fr; grid-gap: 4.08rem; gap: 4.08rem; align-items: center; }
-    .hito__punto { left: 50%; margin-left: -0.55rem; top: 50%; }
-    .hito--a .hito__texto { text-align: right; justify-self: end; }
-    .hito--a .hito__desc { margin-left: auto; }
-    .hito--b .hito__texto { order: 2; }
-    .hito--b .hito__fotos { order: 1; justify-content: flex-end; }
-  }
-
   /* ---------- EJES ---------- */
-  .ejes__cabeza { display: flex; align-items: flex-end; margin-bottom: 2.38rem; }
-  .ejes__cabeza h2 { max-width: 12ch; }
-  .ejes__flecha { width: 3.6rem; height: 3.6rem; margin-left: 1.275rem; flex: none; transform: rotate(-10deg); }
+  .ejes__cabeza { margin-bottom: 3.5rem; }
   .eje { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: center; }
   .eje + .eje { margin-top: 3.4rem; margin-top: clamp(2.72rem, 1.7rem + 4.2vw, 5.44rem); }
-  .eje__foto { border-radius: var(--radio); }
-  .eje__foto > :global(.foto) { border-radius: var(--radio); }
-  .eje__mancha { width: 62%; }
-  .eje__foto { max-width: 27rem; width: 100%; }
-  .eje--invertido .eje__foto { justify-self: end; }
-  .eje__mancha--a { left: -8%; bottom: -14%; }
-  .eje__mancha--b { right: -10%; top: -10%; }
+  .eje__foto { width: 100%; }
+  .eje__foto > :global(.foto) { border-radius: 3px; box-shadow: 0 30px 60px -40px rgba(35, 32, 28, 0.6); }
+  /* Los ejes pares: "pill" acostada que sale del borde derecho de la página (borde recto contra el borde) */
+  .eje--invertido .eje__foto { margin-right: calc(-1 * var(--gutter)); width: auto; }
+  .eje--invertido .eje__foto > :global(.foto) { border-radius: 999px 0 0 999px; }
   .bienvenida__mancha { width: 70%; right: -12%; bottom: -16%; }
   .adelanto__mancha { width: 80%; left: 8%; top: 12%; }
   .eje__marca { display: block; width: 2.4rem; height: 2.4rem; margin-bottom: 1.25rem; }
   .eje__marca :global(svg) { width: 100%; height: 100%; }
-  .eje__titulo { font-size: 1.387rem; font-size: var(--t-xl); max-width: 16ch; margin-bottom: 1.25rem; font-weight: 380; }
+  .eje__titulo { font-size: 1.387rem; font-size: var(--t-xl); max-width: 18ch; margin-bottom: 1.25rem; padding-bottom: 0.9rem; border-bottom: 1px solid rgba(35, 32, 28, 0.45); font-weight: 380; }
   .ejes__mas { margin-top: 3.06rem; text-align: center; }
   @media (min-width: 56em) {
-    .eje { grid-template-columns: 1fr 1fr; grid-gap: 4rem; gap: 4rem; }
-    .eje--invertido { grid-template-columns: 1fr 1fr; }
-    .eje--invertido .eje__foto { order: 2; }
-    .eje--invertido .eje__texto { padding-left: 1.7rem; }
-    .eje__texto { max-width: 28rem; }
+    .eje { grid-template-columns: 7fr 5fr; grid-gap: 4.5rem; gap: 4.5rem; }
+    .eje--invertido { grid-template-columns: 5fr 7fr; }
+    .eje--invertido .eje__foto { order: 2; margin-right: calc(-1 * (var(--gutter) + (100vw - min(100vw, var(--ancho-max))) / 2)); }
+    .eje__texto { max-width: 30rem; }
   }
 
   /* ---------- ADELANTO COMUNIDAD ---------- */
   .adelanto { overflow: hidden; }
-  .adelanto__cabeza { max-width: 36rem; }
-  .adelanto__cabeza > * + * { margin-top: 1.25rem; }
-  .adelanto__fotos { max-width: 36rem; justify-self: end; width: 100%; display: block; align-items: start; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem 1rem; gap: 1.25rem 1rem; margin-top: 2.04rem; }
-  .adelanto__foto--1, .adelanto__foto--3 { margin-top: 1.7rem; }
-  @media (min-width: 56em) {
-    .adelanto .contenedor { display: grid; grid-template-columns: 4fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; align-items: center; }
-    .adelanto__fotos { margin-top: 0; grid-gap: 1.7rem 1.275rem; gap: 1.7rem 1.275rem; }
-  }
+  .adelanto__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }
+  .adelanto__fotos { min-width: 0; }
+  .adelanto__titulo { padding-bottom: 1rem; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(35, 32, 28, 0.55); }
+  .adelanto__boton { margin-top: 1.75rem; }
+  @media (min-width: 56em) { .adelanto__grilla { grid-template-columns: 7fr 5fr; grid-gap: 4.5rem; gap: 4.5rem; } }
+
 </style>

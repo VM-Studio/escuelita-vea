@@ -1,12 +1,11 @@
 ---
+import { inicio } from '../../content/inicio';
 // NUESTRA HISTORIA — cronología completa (texto tal cual la web anterior) con diseño editorial y animado.
 import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
 import Trazo from '../../components/Trazo.astro';
 import Paleta from '../../components/Paleta.astro';
 import Sello from '../../components/Sello.astro';
-import SubNav from '../../components/SubNav.astro';
-import CurvaTexto from '../../components/CurvaTexto.astro';
 import RastroImagenes from '../../components/RastroImagenes.astro';
 import LlamadoEntrevista from '../../components/LlamadoEntrevista.astro';
 import Boton from '../../components/Boton.astro';
@@ -50,6 +49,8 @@ const ultimo = anios[anios.length - 1];
         <p class="t-volanta" data-hero-resto>La Escuelita · {primero} — {ultimo}</p>
         <h1 id="h-titulo" class="h-hero__titulo" data-hero-titular set:html={acento('Nuestra historia')} />
         <Paleta class="h-hero__paleta" />
+        <p class="h-hero__frase t-frase" data-hero-resto>{inicio.lineaDeTiempo.frase}</p>
+        <p class="h-hero__bajada" data-hero-resto>{inicio.lineaDeTiempo.bajada}</p>
         <p class="h-hero__parrafo" data-hero-resto>{laEscuelita.historia.texto}</p>
         <div class="h-hero__acciones" data-hero-resto>
           <Boton href="#decada-1950" variante="rojo">Recorrer la cronología</Boton>
@@ -66,9 +67,6 @@ const ultimo = anios[anios.length - 1];
     </div>
   </section>
 
-  <CurvaTexto items={anios} separador="✳" curva={120} tamano={64} velocidad={1.6} etiqueta={`Años de la cronología, de ${primero} a ${ultimo}`} />
-
-  <SubNav items={lista.map(([d]) => ({ href: `#decada-${d}`, texto: `${d.slice(2)}s` }))} etiqueta="Décadas" />
 
   <div class="cronologia">
     {lista.map(([d, hitos], di) => (
@@ -124,6 +122,8 @@ const ultimo = anios[anios.length - 1];
 </Base>
 
 <style>
+  .h-hero__frase { margin-top: 1.25rem; font-size: 1.26rem; font-size: var(--t-lg); color: var(--tinta); }
+  .h-hero__bajada { margin-top: 0.5rem; color: var(--tinta-suave); }
   /* ----- Portada ----- */
   .h-hero { position: relative; overflow: hidden; padding-top: calc(var(--header-h) + 2.5rem); padding-bottom: 2.5rem; background: radial-gradient(60vw 40vw at 85% 10%, rgba(242, 201, 168, 0.45), rgba(242, 201, 168, 0)), radial-gradient(50vw 40vw at 10% 90%, rgba(207, 224, 196, 0.5), rgba(207, 224, 196, 0)), var(--papel); }
   .h-hero__grilla { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }

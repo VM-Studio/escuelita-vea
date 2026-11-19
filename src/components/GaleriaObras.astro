@@ -9,10 +9,10 @@ const { titulo, acento, bajada, obras, enlace } = Astro.props;
 ---
 <section class="obras" aria-labelledby="obras-titulo">
   <Topografia semilla={11} opacidad={0.08} />
-  <div class="contenedor obras__cabeza">
+  <div class="contenedor"><div class="obras__cabeza cabeza-regla">
     <h2 id="obras-titulo" class="obras__titulo" data-revelar>{titulo}{acento && <>{" "}<em class="acento">{acento}</em></>}</h2>
     {bajada && <p class="obras__bajada" data-revelar>{bajada}</p>}
-  </div>
+  </div></div>
   <div class="contenedor">
     <ul class="obras__grilla">
       {obras.map((o) => (
@@ -30,8 +30,8 @@ const { titulo, acento, bajada, obras, enlace } = Astro.props;
 
 <style>
   .obras { position: relative; overflow: hidden; background: var(--piedra); color: var(--tinta); padding: 3.5rem 0; padding: clamp(3rem, 2rem + 3vw, 5rem) 0; }
-  .obras__cabeza { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
-  .obras__titulo { color: var(--tinta); font-size: 1.8rem; font-size: clamp(1.7rem, 1.1rem + 2vw, 2.8rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1; margin: 0 2rem 0.75rem 0; }
+  .obras__cabeza { position: relative; border-bottom-color: rgba(35, 32, 28, 0.55); }
+  .obras__titulo { color: var(--tinta); font-size: 1.8rem; font-size: clamp(1.7rem, 1.1rem + 2vw, 2.8rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1; margin: 0 2rem 0 0; }
   
   .obras__bajada { max-width: 24rem; font-size: 0.875rem; color: var(--tinta-suave); margin-bottom: 0.75rem; }
   .obras__grilla { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 0.75rem; gap: 0.75rem; align-items: stretch; }

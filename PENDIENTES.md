@@ -155,3 +155,8 @@ Referencias: Awwwards (Hatching Dragons, Fine Acts, London Film School, Departme
 - **Cierre "Vení a conocer La Escuelita":** foto y título más centrados, con dos dibujitos a los costados (solo en el Inicio).
 - Microcopy nuevo: aria-label "Bajar" en la flecha del hero principal.
 - **Bienvenida ("La escuela es un espacio…"):** fotos a la izquierda que pasan solas cada 4,5 s (con flechas y contador), texto al costado. El fondo ondulado pasó a "El juego y el arte son su lenguaje natural".
+- **Pasada de "seriedad" (19/11, inspirada en bedes.com.ar):** botones rectangulares en versalitas; títulos de sección con una línea fina debajo; "Jardín y Primaria" como banda roja a todo el ancho con muesca y título centrado; Comunidad en el Inicio con fotos que pasan + texto; esquinas más rectas en todo el sitio.
+- **Inicio:** se sacó la sección "67 años / cronología" (se llega a Historia desde el menú). La frase "Un espacio donde 'los sentidos' cobran sentido." y "Espacio educativo fundado por la profesora Marta Calvo en 1959." pasaron al encabezado de Nuestra historia. Ejes: fotos más apaisadas y la de los ejes pares sale del borde derecho.
+- **Historia:** se sacaron la cinta de años y la barra de décadas.
+- **Proyecto pedagógico:** hero con foto a sangre y "notita" con el primer párrafo; cada eje con foto grande y notita de color superpuesta.
+- Microcopy nuevo: título "Jardín y Primaria" visible en la banda del Inicio (antes solo era etiqueta accesible).

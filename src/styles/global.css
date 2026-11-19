@@ -121,8 +121,8 @@
   --ancho-texto: 36rem;     /* ≈ 66 caracteres a 16–17 px */
   --ancho-ancho: 58rem;
   --header-h: 3.75rem;
-  --radio: 0.25rem;
-  --radio-lg: 0.5rem;
+  --radio: 0.1875rem;
+  --radio-lg: 0.25rem;
 
   /* Movimiento */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -312,17 +312,18 @@ em { font-style: italic; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.625rem;
-  padding: 0.55rem 1.1rem 0.6rem;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.35rem 0.62rem;
   border: 1px solid var(--tinta);
-  border-radius: 999px;
+  border-radius: 2px;
   background: transparent;
   color: var(--tinta);
   font-family: var(--f-texto);
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 650;
   line-height: 1.2;
-  letter-spacing: 0.005em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   text-decoration: none;
   overflow: hidden;
   isolation: isolate;
@@ -334,21 +335,20 @@ em { font-style: italic; }
 .boton::before {
   content: '';
   position: absolute;
-  top: -10%; bottom: -10%; left: -12%; right: -12%;
+  top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
   background: var(--tinta);
-  border-radius: 40% 55% 45% 60% / 60% 40% 60% 40%;
-  transform: translateX(-102%) skewX(-12deg);
+  transform: translateX(-101%);
   transition: transform 0.55s var(--ease-out);
 }
 .boton__flecha { width: 1em; height: 1em; flex: none; transition: transform 0.45s var(--ease-out); }
 @media (hover: hover) {
   .boton:hover { color: var(--papel); }
-  .boton:hover::before { transform: translateX(0) skewX(-12deg); }
+  .boton:hover::before { transform: translateX(0); }
   .boton:hover .boton__flecha { transform: translateX(4px); }
 }
 .boton:focus-visible { color: var(--papel); }
-.boton:focus-visible::before { transform: translateX(0) skewX(-12deg); }
+.boton:focus-visible::before { transform: translateX(0); }
 .boton:active { transform: scale(0.97); }
 
 .boton--rojo { background: var(--rojo); border-color: var(--rojo); color: #fff; }
@@ -358,8 +358,13 @@ em { font-style: italic; }
 .boton--claro::before { background: var(--papel); }
 @media (hover: hover) { .boton--claro:hover { color: var(--tinta); } }
 .boton--claro:focus-visible { color: var(--tinta); }
-.boton--grande { min-height: 2.875rem; padding: 0.65rem 1.4rem 0.7rem; font-size: 0.9375rem; }
-.boton--chico { min-height: 2.375rem; padding: 0.4rem 0.95rem 0.45rem; font-size: 0.8125rem; }
+.boton--grande { min-height: 3.1rem; padding: 0.75rem 1.7rem 0.78rem; font-size: 0.8125rem; }
+.boton--chico { min-height: 2.375rem; padding: 0.45rem 1rem 0.5rem; font-size: 0.6875rem; }
+
+/* Encabezado de sección "serio": título y una línea fina debajo (con lugar para un texto o botón al costado) */
+.cabeza-regla { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; padding-bottom: 1.1rem; margin-bottom: 2.25rem; border-bottom: 1px solid rgba(35, 32, 28, 0.55); }
+.cabeza-regla > * { margin-bottom: 0; }
+.cabeza-regla > * + * { margin-top: 0.75rem; }
 
 /* Enlace con subrayado de crayón que se dibuja */
 .enlace-trazo {

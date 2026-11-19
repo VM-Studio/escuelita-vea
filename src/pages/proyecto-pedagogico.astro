@@ -1,13 +1,12 @@
 ---
-import Mancha from '../components/Mancha.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
-import Trazo from '../components/Trazo.astro';
 import Interludio from '../components/Interludio.astro';
 import Puertas from '../components/Puertas.astro';
 import { proyecto as p } from '../content/proyecto';
 import { parrafos, enLinea, acento } from '../lib/texto';
-const marcas = ['sol', 'espiral', 'lazos', 'hoja'] as const;
+// Color de la notita de cada eje (tonos suaves de la paleta)
+const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
 ---
 <Base
   titulo="Proyecto pedagógico"
@@ -15,69 +14,65 @@ const marcas = ['sol', 'espiral', 'lazos', 'hoja'] as const;
   fotoOg={p.fotoApertura}
   progreso
 >
-  {/* Apertura editorial */}
-  <section class="apertura" data-hero>
-    <div class="contenedor apertura__grilla">
-      <div class="apertura__texto">
-        <p class="t-volanta" data-hero-resto>La Escuelita</p>
-        <h1 class="apertura__titulo" data-hero-titular>{p.titulo}</h1>
-        <div class="apertura__trazo" data-hero-trazo aria-hidden="true"><Trazo nombre="subrayado" grosor={3.2} dibujar={false} /></div>
-      </div>
-      <div class="apertura__foto con-mancha" data-hero-resto>
-        <Mancha forma="a" color="rosa" class="apertura__mancha" />
-        <Foto id={p.fotoApertura} ratio="4/5" sizes="(min-width: 56em) 34vw, 90vw" prioridad class="forma-arco" />
-      </div>
+  {/* Apertura: foto a sangre con el título y una "notita" colgando con el primer párrafo de la introducción */}
+  <section class="apertura" data-hero aria-labelledby="apertura-titulo">
+    <div class="apertura__foto">
+      <Foto id={p.fotoApertura} sizes="100vw" prioridad foco="50% 16%" />
+    </div>
+    <div class="apertura__velo" aria-hidden="true"></div>
+    <div class="contenedor apertura__contenido">
+      <p class="apertura__volanta" data-hero-resto>La Escuelita</p>
+      <h1 id="apertura-titulo" class="apertura__titulo" data-hero-titular>{p.titulo}</h1>
     </div>
   </section>
+  <div class="contenedor apertura__nota-caja">
+    <div class="nota nota--verde apertura__nota" data-hero-resto>
+      <p class="apertura__lead" set:html={enLinea(p.intro[0])} />
+    </div>
+  </div>
 
   <section class="intro seccion" aria-labelledby="intro-titulo">
     <div class="contenedor intro__grilla">
       <h2 id="intro-titulo" class="intro__titulo" data-titulo-lineas set:html={acento(p.introTitulo)} />
-      <div class="intro__texto">
-        <p class="intro__lead" data-revelar set:html={enLinea(p.intro[0])} />
-        <div class="prosa" data-revelar set:html={parrafos(p.intro.slice(1))} />
-      </div>
+      <div class="prosa intro__texto" data-revelar set:html={parrafos(p.intro.slice(1))} />
     </div>
   </section>
 
   <section class="ejes-cabeza" aria-labelledby="ejes-titulo">
-    <div class="contenedor">
-      <div class="ejes-cabeza__caja">
-        <Trazo nombre="flecha-curva" class="ejes-cabeza__flecha" grosor={2.4} />
-        <h2 id="ejes-titulo" data-titulo-lineas set:html={acento(p.ejesTitulo)} />
-        <p class="t-lead" data-revelar>{p.ejesIntro}</p>
-        <nav class="ejes-indice" aria-label="Ejes" data-revelar>
-          {p.ejes.map((e) => <a href={`#${e.id}`} class="enlace-trazo">{e.titulo}</a>)}
-        </nav>
-      </div>
+    <div class="contenedor ejes-cabeza__caja">
+      <h2 id="ejes-titulo" data-titulo-lineas set:html={acento(p.ejesTitulo)} />
+      <p class="t-lead" data-revelar>{p.ejesIntro}</p>
+      <ol class="ejes-indice" data-revelar>
+        {p.ejes.map((e, i) => <li><a href={`#${e.id}`}><span class="ejes-indice__n">{String(i + 1).padStart(2, '0')}</span>{e.titulo}</a></li>)}
+      </ol>
     </div>
   </section>
 
   {p.ejes.map((e, i) => (
     <>
-      <article class:list={['capitulo seccion', { 'capitulo--invertido': i % 2 === 1, 'seccion--papel-oscuro': i === 3 }]} id={e.id} aria-labelledby={`${e.id}-titulo`}>
-        <div class="contenedor capitulo__grilla">
-          <header class="capitulo__cabeza">
-            <span class="capitulo__marca" aria-hidden="true"><Trazo nombre={marcas[i]} grosor={2.2} color={i % 2 ? 'verde' : 'ocre'} /></span>
-            <h2 id={`${e.id}-titulo`} class="capitulo__titulo" data-titulo-lineas set:html={acento(e.titulo)} />
-          </header>
-          <div class="capitulo__foto">
-            <Foto id={e.foto} ratio={i % 2 ? '1/1' : '4/5'} sizes="(min-width: 56em) 36vw, 92vw" revelar class={i % 2 ? '' : 'forma-arco'} />
+      <article class:list={['capitulo', { 'capitulo--invertido': i % 2 === 1 }]} id={e.id} aria-labelledby={`${e.id}-titulo`}>
+        <div class="contenedor capitulo__escena">
+          <div class="capitulo__foto" data-revelar>
+            <Foto id={e.foto} ratio="4/3" sizes="(min-width: 56em) 60vw, 100vw" foco={e.foto === 'juego-dramatico-capas' ? '50% 60%' : undefined} />
           </div>
-          <div class="capitulo__texto">
-            <div class="prosa capitulo__prosa" data-revelar set:html={parrafos(e.texto)} />
-            {'apartados' in e && e.apartados && (
-              <dl class="apartados">
-                {e.apartados.map((a) => (
-                  <div class="apartado" data-revelar>
-                    <dt class="apartado__titulo"><Trazo nombre="tilde" class="apartado__tilde" grosor={2.4} color="rojo" />{a.etiqueta}</dt>
-                    <dd class="apartado__texto">{a.texto}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
+          <div class:list={['nota', `nota--${notas[i]}`, 'capitulo__nota']} data-revelar>
+            <span class="capitulo__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h2 id={`${e.id}-titulo`} class="capitulo__titulo" set:html={acento(e.titulo)} />
+            <div class="prosa capitulo__prosa" set:html={parrafos(e.texto)} />
           </div>
         </div>
+        {'apartados' in e && e.apartados && (
+          <div class="contenedor">
+            <dl class="apartados">
+              {e.apartados.map((a) => (
+                <div class="apartado" data-revelar>
+                  <dt class="apartado__titulo">{a.etiqueta}</dt>
+                  <dd class="apartado__texto">{a.texto}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
       </article>
       {p.interludios.filter((x) => x.despuesDe === e.id).map((x, j) => (
         <Interludio foto={x.foto} frase={x.frase} variante={j % 2 || i > 1 ? 'lado' : 'sobre'} trazo="sol" />
@@ -89,46 +84,71 @@ const marcas = ['sol', 'espiral', 'lazos', 'hoja'] as const;
 </Base>
 
 <style>
-  .apertura { overflow: hidden; padding-top: calc(var(--header-h) + 2.04rem); padding-bottom: 1.7rem; }
-  .apertura__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: end; }
-  .apertura__titulo { font-size: 2.58rem; font-size: clamp(2.58rem, 1.312rem + 3.9vw, 4.8rem); font-weight: 300; line-height: 0.95; letter-spacing: -0.04em; max-width: 9ch; margin-top: 1rem; }
-  .apertura__trazo { width: 70%; max-width: 26rem; height: 1.4rem; margin-top: 1rem; }
-  .apertura__trazo :global(svg) { width: 100%; height: 100%; }
-  .apertura__mancha { width: 80%; left: -18%; bottom: -10%; }
-  @media (min-width: 56em) { .apertura__grilla { grid-template-columns: 7fr 5fr; grid-gap: 2.72rem; gap: 2.72rem; } }
+  /* ---------- Apertura ---------- */
+  .apertura { position: relative; overflow: hidden; height: 72vh; min-height: 28rem; max-height: 46rem; margin-top: var(--header-h); background: var(--tinta); color: #fff; display: flex; align-items: flex-end; }
+  .apertura__foto { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+  .apertura__foto :global(.foto) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  .apertura__foto :global(picture), .apertura__foto :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .apertura__velo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(20, 16, 12, 0.72) 0%, rgba(20, 16, 12, 0.45) 38%, rgba(20, 16, 12, 0) 70%), linear-gradient(0deg, rgba(20, 16, 12, 0.35), rgba(20, 16, 12, 0) 40%); }
+  .apertura__contenido { position: relative; z-index: 2; padding-bottom: 7.5rem; }
+  .apertura__volanta { margin: 0; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.85); }
+  .apertura__titulo { margin-top: 0.9rem; max-width: 11ch; color: #fff; font-size: 2.8rem; font-size: clamp(2.8rem, 1.4rem + 4.4vw, 5.6rem); font-weight: 320; line-height: 0.98; letter-spacing: -0.035em; text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); }
+  @media (min-width: 56em) { .apertura__contenido { padding-bottom: 9rem; } .apertura__titulo { max-width: 14ch; } }
 
-  .intro__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
-  .intro__titulo { font-size: 1.387rem; font-size: var(--t-xl); max-width: 12ch; }
-  .intro__lead { font-family: var(--f-titulo); font-size: 1.265rem; font-size: clamp(1.265rem, 0.861rem + 1.092vw, 1.785rem); line-height: 1.3; letter-spacing: -0.01em; font-weight: 350; max-width: 30ch; margin-bottom: 1.7rem; }
-  @media (min-width: 56em) { .intro__grilla { grid-template-columns: 4fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; } }
+  /* ---------- Notita "enganchada": caja de color con borde inferior ondulado ---------- */
+  .nota { position: relative; padding: 1.6rem 1.5rem 1.4rem; color: var(--tinta); background: var(--papel); box-shadow: 0 24px 50px -32px rgba(35, 32, 28, 0.55); }
+  .nota::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 1.1rem; margin-top: -1px; background: inherit; -webkit-mask: url('/onda-nota.svg') 0 0 / 100% 100% no-repeat; mask: url('/onda-nota.svg') 0 0 / 100% 100% no-repeat; }
+  @media (min-width: 56em) { .nota { padding: 2.2rem 2.4rem 2rem; } }
+  .nota--verde { background: var(--verde); color: #fff; }
+  .nota--arena { background: var(--arena-claro); }
+  .nota--verde-claro { background: var(--verde-claro); }
+  .nota--rosa { background: #f4dfd6; }
+  .nota--azul { background: #dce5ee; }
 
-  .ejes-cabeza { padding: 1rem 0 1.7rem; }
-  .ejes-cabeza__caja { border-top: 1px solid rgba(35, 32, 28, 0.15); padding-top: 2.04rem; max-width: 52rem; }
-  .ejes-cabeza__caja > * + * { margin-top: 1.25rem; }
-  .ejes-cabeza__flecha { width: 2.8rem; height: 2.8rem; transform: scaleX(-1) rotate(-20deg); }
-  .ejes-indice { display: flex; flex-wrap: wrap; margin-top: 1.7rem !important; }
-  .ejes-indice a { margin: 0 1.488rem 0.75rem 0; font-family: var(--f-titulo); font-size: 1.25rem; font-style: italic; text-decoration: none; }
+  .apertura__nota-caja { position: relative; z-index: 3; margin-top: -5.5rem; }
+  .apertura__nota { max-width: 36rem; }
+  .apertura__lead { margin: 0; max-width: none; font-family: var(--f-titulo); font-style: italic; font-size: 1.2rem; font-size: clamp(1.15rem, 0.95rem + 0.7vw, 1.55rem); line-height: 1.38; color: #fff; }
+  .apertura__lead :global(a) { color: inherit; }
 
-  .capitulo__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
-  .capitulo__marca { display: block; width: 2.6rem; height: 2.6rem; margin-bottom: 1rem; }
-  .capitulo__marca :global(svg) { width: 100%; height: 100%; }
-  .capitulo__titulo { font-size: 2.15rem; font-size: clamp(2.15rem, 1.148rem + 2.76vw, 3.3rem); font-weight: 320; letter-spacing: -0.03em; max-width: 12ch; }
-  .capitulo__foto > :global(.foto) { border-radius: var(--radio); }
-  .capitulo__prosa { font-size: 1.0625rem; font-size: var(--t-base); }
-  .apartados { margin-top: 1.7rem; display: grid; grid-template-columns: 1fr; grid-gap: 1.488rem; gap: 1.488rem; }
-  .apartado { padding-top: 1.25rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
-  .apartado__titulo { display: flex; align-items: center; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); margin-bottom: 0.6rem; }
-  .apartado__tilde { width: 1.5rem; height: 1.25rem; margin-right: 0.6rem; flex: none; }
-  .apartado__texto { margin: 0; max-width: 38rem; color: var(--tinta); }
+  /* ---------- Introducción ---------- */
+  .intro__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+  .intro__titulo { font-size: 1.6rem; font-size: clamp(1.6rem, 1.1rem + 1.6vw, 2.5rem); font-weight: 330; letter-spacing: -0.025em; max-width: 12ch; }
+  .intro__texto { font-size: 1.0625rem; }
+  @media (min-width: 56em) { .intro__grilla { grid-template-columns: 4fr 7fr; grid-gap: 4rem; gap: 4rem; } }
+
+  /* ---------- Índice de ejes ---------- */
+  .ejes-cabeza { padding: 0 0 3rem; }
+  .ejes-cabeza__caja { border-top: 1px solid rgba(35, 32, 28, 0.15); padding-top: 2.5rem; }
+  .ejes-cabeza__caja > * + * { margin-top: 1.1rem; }
+  .ejes-indice { list-style: none; padding: 0; margin: 2rem 0 0 !important; display: grid; grid-template-columns: 1fr; border-top: 1px solid rgba(35, 32, 28, 0.12); }
+  @media (min-width: 48em) { .ejes-indice { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64em) { .ejes-indice { grid-template-columns: repeat(4, 1fr); } }
+  .ejes-indice li { border-bottom: 1px solid rgba(35, 32, 28, 0.12); }
+  .ejes-indice a { display: flex; align-items: baseline; padding: 1rem 1rem 1rem 0; font-family: var(--f-titulo); font-size: 1.2rem; text-decoration: none; transition: color 0.3s; }
+  .ejes-indice a:hover { color: var(--rojo); }
+  .ejes-indice__n { margin-right: 0.75rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--tinta-suave); }
+
+  /* ---------- Capítulos: foto grande + notita superpuesta ---------- */
+  .capitulo { padding: 3rem 0 4.5rem; }
+  .capitulo__escena { position: relative; }
+  .capitulo__foto :global(.foto) { box-shadow: 0 30px 60px -40px rgba(35, 32, 28, 0.6); }
+  .capitulo__nota { margin: -3rem 1rem 0; z-index: 2; }
+  .capitulo__n { display: block; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--tinta-suave); }
+  .capitulo__titulo { margin-top: 0.6rem; font-size: 1.9rem; font-size: clamp(1.9rem, 1.2rem + 1.9vw, 2.9rem); font-weight: 320; letter-spacing: -0.03em; line-height: 1.02; max-width: 14ch; }
+  .capitulo__prosa { margin-top: 1.1rem; font-size: 1rem; line-height: 1.6; }
   @media (min-width: 56em) {
-    .capitulo__grilla { grid-template-columns: 5fr 6fr; grid-template-areas: 'cabeza cabeza' 'foto texto'; grid-gap: 2.04rem 3.4rem; gap: 2.04rem 3.4rem; align-items: start; }
-    .capitulo__cabeza { grid-area: cabeza; }
-    .capitulo__foto { grid-area: foto; position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 2rem); }
-    .capitulo__texto { grid-area: texto; padding-top: 1rem; }
-    .capitulo--invertido .capitulo__grilla { grid-template-columns: 6fr 5fr; grid-template-areas: 'cabeza cabeza' 'texto foto'; }
-    .capitulo--invertido .capitulo__cabeza { text-align: right; }
-    .capitulo--invertido .capitulo__titulo { margin-left: auto; }
-    .capitulo--invertido .capitulo__marca { margin-left: auto; }
-    .apartados { grid-template-columns: 1fr; }
+    .capitulo { padding: 4.5rem 0 6rem; }
+    .capitulo__escena { display: grid; grid-template-columns: repeat(12, 1fr); align-items: start; }
+    .capitulo__foto { grid-column: 5 / 13; grid-row: 1; }
+    .capitulo__nota { grid-column: 1 / 7; grid-row: 1; margin: 5rem 0 0; }
+    .capitulo--invertido .capitulo__foto { grid-column: 1 / 9; }
+    .capitulo--invertido .capitulo__nota { grid-column: 7 / 13; }
   }
+
+  /* ---------- Apartados del rol docente ---------- */
+  .apartados { margin: 3.5rem 0 0; display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; }
+  @media (min-width: 56em) { .apartados { grid-template-columns: repeat(3, 1fr); grid-gap: 2.5rem; gap: 2.5rem; } }
+  .apartado { padding-top: 1.1rem; border-top: 2px solid var(--tinta); }
+  .apartado__titulo { font-family: var(--f-titulo); font-size: 1.3rem; margin-bottom: 0.7rem; }
+  .apartado__texto { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--tinta-suave); }
 </style>

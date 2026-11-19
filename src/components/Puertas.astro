@@ -1,8 +1,6 @@
 ---
-import { acento } from '../lib/texto';
 // Dos puertas: Jardín y Primaria. Paneles grandes con foto, una línea (texto institucional) y botón.
 import Foto from './Foto.astro';
-import Trazo from './Trazo.astro';
 import { jardin } from '../content/jardin';
 import { primaria } from '../content/primaria';
 interface Props { titulo?: string; fotoJardin?: string; fotoPrimaria?: string }
@@ -12,9 +10,9 @@ const puertas = [
   { nivel: 'primaria', nombre: 'Primaria', linea: primaria.portada.subtitulo, href: '/primaria/', boton: 'Conocé la Primaria', foto: fotoPrimaria, trazo: 'hoja' as const, color: 'verde' as const },
 ];
 ---
-<section class="puertas seccion" aria-label={titulo ?? 'Jardín y Primaria'}>
+<section class="puertas seccion" aria-labelledby="puertas-titulo">
   <div class="contenedor">
-    {titulo && <h2 class="puertas__titulo" data-titulo-lineas set:html={acento(titulo)} />}
+    <h2 id="puertas-titulo" class="puertas__titulo" data-revelar>{titulo ?? 'Jardín y Primaria'}</h2>
     <div class="puertas__grilla">
       {puertas.map((p) => (
         <a href={p.href} class:list={['puerta', `puerta--${p.nivel}`]} data-revelar>
@@ -24,7 +22,6 @@ const puertas = [
           <div class="puerta__velo" aria-hidden="true"></div>
           <div class="puerta__brillo" aria-hidden="true"></div>
           <div class="puerta__texto">
-            <Trazo nombre={p.trazo} color="arena" class="puerta__trazo" grosor={2.2} />
             <span class="puerta__nivel">{p.nombre}</span>
             <span class="puerta__linea">{p.linea}</span>
             <span class="boton boton--claro puerta__boton">
@@ -40,12 +37,15 @@ const puertas = [
 
 
 <style>
-  .puertas__titulo { margin-bottom: 1.7rem; max-width: 18ch; }
+  /* Banda de color a todo el ancho con una muesca arriba (idea de bedes.com.ar) */
+  .puertas { position: relative; background: var(--rojo); color: #fff; }
+  .puertas::before { content: ''; position: absolute; left: 50%; top: -15px; margin-left: -17px; border-left: 17px solid transparent; border-right: 17px solid transparent; border-bottom: 16px solid var(--rojo); }
+  .puertas__titulo { margin: 0 auto 2.25rem; text-align: center; color: #fff; font-size: 1.9rem; font-size: clamp(1.9rem, 1.2rem + 2vw, 3rem); font-weight: 350; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1; }
   .puertas__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.25rem; gap: 1.25rem; }
   @media (min-width: 48em) { .puertas__grilla { grid-template-columns: 1fr 1fr; grid-gap: 1.275rem; gap: 1.275rem; } }
   .puerta {
     position: relative; display: block; overflow: hidden;
-    border-radius: var(--radio-lg);
+    border-radius: 0;
     color: var(--papel); text-decoration: none;
     isolation: isolate;
   }
@@ -64,28 +64,28 @@ const puertas = [
     padding: clamp(1.25rem, 2.1vw, 1.7rem);
     display: flex; flex-direction: column; align-items: flex-start;
   }
-  .puerta__trazo { width: 2.4rem; height: 2.4rem; margin-bottom: 0.5rem; }
   .puerta__nivel {
     font-family: var(--f-titulo);
     font-size: 2.15rem;
-    font-size: clamp(2.15rem, 1.312rem + 2.376vw, 3.135rem);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
+    font-size: clamp(1.9rem, 1.2rem + 2vw, 2.8rem);
+    line-height: 1;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
   .puerta__linea { margin-top: 0.6rem; max-width: 28ch; font-family: var(--f-frase); font-style: italic; font-size: 0.978rem; font-size: clamp(0.978rem, 0.779rem + 0.42vw, 1.155rem); line-height: 1.35; }
   .puerta__boton { margin-top: 1.25rem; }
   @media (hover: hover) {
     .puerta:hover .puerta__foto :global(img) { transform: scale(1.045); }
     .puerta:hover .puerta__boton { color: var(--tinta); }
-    .puerta:hover .puerta__boton::before { transform: translateX(0) skewX(-12deg); }
+    .puerta:hover .puerta__boton::before { transform: translateX(0); }
     .puerta:hover .boton__flecha { transform: translateX(4px); }
   }
   .puerta:focus-visible .puerta__boton { color: var(--tinta); }
-  .puerta:focus-visible .puerta__boton::before { transform: translateX(0) skewX(-12deg); }
+  .puerta:focus-visible .puerta__boton::before { transform: translateX(0); }
 
   /* Puertas divididas (idea "on track / off track" de landonorris.com): la que se mira se expande */
   @media (min-width: 64em) {
-    .puertas__grilla { display: flex; height: 26rem; }
+    .puertas__grilla { display: flex; height: 28rem; }
     .puerta { flex: 1 1 0; min-width: 0; transition: flex-grow 0.8s var(--ease-out); }
     .puerta + .puerta { margin-left: 1rem; }
     .puertas__grilla:hover .puerta { flex-grow: 0.75; }
