@@ -80,21 +80,20 @@ async function iniciar() {
 
     html.classList.add('anim-ready');
 
-    /* ---- Loader: el sol se dibuja, aparece el logo y la hoja se levanta ---- */
+    /* ---- Loader: los dos logos entran de costado y la hoja se levanta ---- */
     const tlEntrada = gsap.timeline({ paused: true });
     const cargador = document.querySelector<HTMLElement>('[data-cargador]');
     if (conCargador && cargador) {
       html.classList.add('cargador-js');
-      const circulo = cargador.querySelector('.cargador__circulo');
-      const logo = cargador.querySelector('[data-cargador-logo]');
+      const izq = cargador.querySelector('[data-cargador-logo="izq"]');
+      const der = cargador.querySelector('[data-cargador-logo="der"]');
       const hoja = cargador.querySelector('[data-cargador-hoja]');
-      const sol = cargador.querySelector('[data-cargador-sol]');
-      gsap.set(circulo, { drawSVG: '0%' });
+      gsap.set(izq, { autoAlpha: 0, x: -120 });
+      gsap.set(der, { autoAlpha: 0, x: 120 });
       const tl = gsap.timeline({ onComplete: () => { html.classList.remove('con-cargador'); } });
-      tl.to(circulo, { drawSVG: '100%', duration: 0.75, ease: 'power2.inOut' })
-        .to(sol, { scale: 0.86, duration: 0.6, ease: 'power2.inOut' }, '-=0.1')
-        .fromTo(logo, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.45 }, '-=0.45')
-        .to(hoja, { yPercent: -104, rotate: -1.5, duration: 0.85, ease: 'expo.inOut' }, '+=0.15')
+      tl.to(izq, { autoAlpha: 1, x: 0, duration: 1, ease: 'expo.out' }, 0.1)
+        .to(der, { autoAlpha: 1, x: 0, duration: 1, ease: 'expo.out' }, 0.25)
+        .to(hoja, { yPercent: -104, rotate: -1.5, duration: 0.85, ease: 'expo.inOut' }, '+=0.45')
         .add(() => { tlEntrada.play(); }, '-=0.45');
     } else {
       requestAnimationFrame(() => tlEntrada.play());
