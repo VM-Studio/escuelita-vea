@@ -160,3 +160,4 @@ Referencias: Awwwards (Hatching Dragons, Fine Acts, London Film School, Departme
 - **Historia:** se sacaron la cinta de años y la barra de décadas.
 - **Proyecto pedagógico:** hero con foto a sangre y "notita" con el primer párrafo; cada eje con foto grande y notita de color superpuesta.
 - Microcopy nuevo: título "Jardín y Primaria" visible en la banda del Inicio (antes solo era etiqueta accesible).
+- **Jardín rediseñado (19/11):** presentación como notita colgando del hero; "¿Qué nos diferencia?" en tarjetas sobrias (3 + 2); propuesta en 4 bloques numerados; "El gesto espontáneo" con fotos que pasan; salas y lenguajes con foto grande + notita y sus apartados en bloques numerados (los lenguajes ya no están en desplegables); patio y pasos de adaptación en bloques; horarios con la notita del beneficio al costado. Se sacaron la cinta de materiales y los dibujitos de esta página.

@@ -1,23 +1,16 @@
 ---
-import Dibujito from '../components/Dibujito.astro';
 import Telon from '../components/Telon.astro';
-import Paleta from '../components/Paleta.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
-import Trazo from '../components/Trazo.astro';
 import PortadaPagina from '../components/PortadaPagina.astro';
-import ListaFoto from '../components/ListaFoto.astro';
-import Constelacion from '../components/Constelacion.astro';
 import SubNav from '../components/SubNav.astro';
 import Tabs from '../components/Tabs.astro';
-import Acordeon from '../components/Acordeon.astro';
 import Desplegable from '../components/Desplegable.astro';
 import Interludio from '../components/Interludio.astro';
 import Galeria from '../components/Galeria.astro';
-import CurvaTexto from '../components/CurvaTexto.astro';
+import PasaFotos from '../components/PasaFotos.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import { jardin as j } from '../content/jardin';
-import { inicio } from '../content/inicio';
 import { parrafos, acento } from '../lib/texto';
 
 const subnav = [
@@ -45,120 +38,132 @@ const subnav = [
     </figure>
   </PortadaPagina>
 
-  <section class="seccion intro-nivel" aria-label="Presentación del Jardín">
-    <div class="contenedor intro-nivel__grilla">
-      <Paleta class="intro-nivel__sol" />
-      <p class="intro-nivel__texto" data-revelar>{j.portada.texto}</p>
+  {/* Presentación: notita colgando del hero */}
+  <div class="contenedor intro-nivel">
+    <div class="nota nota--arena intro-nivel__nota" data-revelar>
+      <p class="intro-nivel__texto">{j.portada.texto}</p>
     </div>
-  </section>
+  </div>
 
   <SubNav items={subnav} etiqueta="Secciones del Jardín" />
 
-  {/* ¿Qué nos diferencia? */}
+  {/* ¿Qué nos diferencia? — tarjetas sobrias */}
   <section class="seccion ancla" id="que-nos-diferencia" aria-labelledby="dif-titulo">
     <div class="contenedor">
-      <div class="cabecera-seccion">
-        <h2 id="dif-titulo" data-titulo-lineas set:html={acento(j.diferencias.titulo)} />
-        <p class="t-lead" data-revelar>{j.diferencias.intro}</p>
+      <div class="cabeza-regla cabeza">
+        <h2 id="dif-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.diferencias.titulo)} />
+        <p class="cabeza__bajada" data-revelar>{j.diferencias.intro}</p>
       </div>
-      {/* "donde priorizamos:" — la palabra sale del propio texto de la escuela */}
-      <ListaFoto palabra="priorizamos" id="priorizamos" items={j.diferencias.items.map((d) => ({ titulo: d.etiqueta, texto: d.texto, foto: d.foto }))} />
+      <ul class="dif">
+        {j.diferencias.items.map((d) => (
+          <li class="dif__item" data-revelar>
+            <article class="tarjeta">
+              <div class="tarjeta__foto"><Foto id={d.foto} ratio="4/3" sizes="(min-width: 64em) 30vw, (min-width: 48em) 46vw, 92vw" /></div>
+              <div class="tarjeta__cuerpo">
+                <h3 class="tarjeta__titulo">{d.etiqueta}</h3>
+                <p class="tarjeta__texto">{d.texto}</p>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  {/* Propuesta pedagógica */}
-  <section class="seccion seccion--acento ancla" id="propuesta" aria-labelledby="prop-titulo">
+  {/* Propuesta pedagógica — cuatro conceptos numerados + el gesto espontáneo con fotos que pasan */}
+  <section class="seccion seccion--papel-oscuro ancla" id="propuesta" aria-labelledby="prop-titulo">
     <div class="contenedor">
-      <div class="cabecera-seccion">
-        <h2 id="prop-titulo" data-titulo-lineas set:html={acento(j.propuesta.titulo)} />
+      <div class="cabeza-regla cabeza">
+        <h2 id="prop-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.propuesta.titulo)} />
       </div>
-      <div class="conceptos">
+      <ol class="bloques bloques--4">
         {j.propuesta.items.map((c, i) => (
-          <article class="concepto" data-revelar>
-            <span class="concepto__num" aria-hidden="true"><Trazo nombre={(['espiral', 'sol', 'lazos', 'ronda'] as const)[i]} grosor={2.2} color="ocre" /></span>
-            <h3 class="concepto__titulo">{c.etiqueta}</h3>
-            <p>{c.texto}</p>
-          </article>
+          <li class="bloque" data-revelar>
+            <span class="bloque__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="bloque__titulo">{c.etiqueta}</h3>
+            <p class="bloque__texto">{c.texto}</p>
+          </li>
         ))}
-      </div>
+      </ol>
       <div class="gesto">
-        <Constelacion items={[
-          { id: 'jardin-hojas-crayon' }, { id: 'jardin-arcilla-figuras' }, { id: 'jardin-tiza-negro' }, { id: 'jardin-collage-corazon' },
-          { id: 'jardin-pintura-mesa-azul' }, { id: 'jardin-tiza-piso' }, { id: 'jardin-mesa-roja-masa' }, { id: 'jardin-construccion-amarilla' },
-        ]} etiqueta="Las materias del taller">
+        <div class="gesto__fotos" data-revelar>
+          <PasaFotos items={[
+            { id: 'jardin-hojas-crayon' }, { id: 'jardin-arcilla-figuras' }, { id: 'jardin-tiza-negro' }, { id: 'jardin-collage-corazon' },
+            { id: 'jardin-pintura-mesa-azul' }, { id: 'jardin-tiza-piso' }, { id: 'jardin-mesa-roja-masa' }, { id: 'jardin-construccion-amarilla' },
+          ]} etiqueta="Las materias del taller" />
+        </div>
+        <div class="gesto__texto">
           <h3 class="gesto__titulo" data-revelar>{j.propuesta.gesto.titulo}</h3>
-          <div class="prosa gesto__texto" data-revelar set:html={parrafos(j.propuesta.gesto.texto)} />
-        </Constelacion>
+          <div class="prosa" data-revelar set:html={parrafos(j.propuesta.gesto.texto)} />
+        </div>
       </div>
     </div>
   </section>
-  <CurvaTexto items={inicio.materiales} curva={-140} etiqueta="Materiales del taller: crayones, masa, témpera, arcilla, tinta china, anilinas y collage" />
 
   <Interludio foto={j.interludioSocial.foto} frase={j.interludioSocial.frase} />
 
   {/* Nuestras salas */}
   <section class="seccion ancla" id="salas" aria-labelledby="salas-titulo">
-    <Dibujito nombre="nena-vestido" lado="der" top="6%" ancho="4.5rem" rot={4} />
     <div class="contenedor">
-      <div class="cabecera-seccion">
-        <h2 id="salas-titulo" data-titulo-lineas set:html={acento(j.salas.titulo)} />
+      <div class="cabeza-regla cabeza">
+        <h2 id="salas-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.salas.titulo)} />
       </div>
       <Tabs items={j.salas.items.map((s) => ({ id: s.id, texto: s.nombre, sub: s.subtitulo }))} etiqueta="Salas del Jardín">
-        {j.salas.items.map((s, i) => (
+        {j.salas.items.map((s) => (
           <section class="tabs__panel sala" id={s.id} data-panel aria-labelledby={`${s.id}-h`}>
-            <div class="sala__grilla">
-              <div class="sala__foto pegada" style={`--rot:${i % 2 ? 1.4 : -1.4}deg`}>
-                <span class="cinta" aria-hidden="true"></span>
-                <Foto id={s.foto} ratio="4/5" sizes="(min-width: 56em) 32vw, 86vw" />
-              </div>
-              <div class="sala__texto">
-                <h3 class="sala__titulo" id={`${s.id}-h`}>{s.nombre} <span class="sala__sub">— {s.subtitulo}</span></h3>
-                <p class="sala__intro">{s.intro}</p>
-                <dl class="sala__apartados">
-                  {s.apartados.map((a) => (
-                    <div class="sala__apartado">
-                      <dt>{a.etiqueta}</dt>
-                      <dd>{a.texto}</dd>
-                    </div>
-                  ))}
-                </dl>
+            <div class="escena sala__escena">
+              <div class="escena__foto"><Foto id={s.foto} ratio="4/3" sizes="(min-width: 56em) 60vw, 100vw" /></div>
+              <div class="nota nota--arena escena__nota">
+                <h3 class="escena__titulo" id={`${s.id}-h`}>{s.nombre}</h3>
+                <p class="sala__sub">{s.subtitulo}</p>
+                <p class="escena__texto">{s.intro}</p>
               </div>
             </div>
+            <dl class:list={['bloques', s.apartados.length === 5 ? 'bloques--5' : 'bloques--4', 'sala__bloques']}>
+              {s.apartados.map((a, i) => (
+                <div class="bloque">
+                  <dt class="bloque__titulo"><span class="bloque__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{a.etiqueta}</dt>
+                  <dd class="bloque__texto">{a.texto}</dd>
+                </div>
+              ))}
+            </dl>
           </section>
         ))}
       </Tabs>
     </div>
   </section>
 
-  {/* Nuestros lenguajes */}
+  {/* Nuestros lenguajes — cada taller: foto grande + notita, y sus apartados numerados */}
   <section class="seccion seccion--papel-oscuro ancla" id="lenguajes" aria-labelledby="leng-titulo">
-    <Dibujito nombre="cara-pestanas" lado="izq" top="14%" ancho="6.5rem" rot={-6} />
-    <div class="contenedor contenedor--ancho">
-      <div class="cabecera-seccion">
-        <h2 id="leng-titulo" data-titulo-lineas set:html={acento(j.lenguajes.titulo)} />
+    <div class="contenedor">
+      <div class="cabeza-regla cabeza">
+        <h2 id="leng-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.lenguajes.titulo)} />
+        <nav class="leng-indice" aria-label="Talleres" data-revelar>
+          {j.lenguajes.items.map((l) => <a href={`#${l.id}`}>{l.titulo}</a>)}
+        </nav>
       </div>
-      <div class="lenguajes">
-        {j.lenguajes.items.map((l) => (
-          <Acordeon id={l.id} titulo={l.titulo} grupo="lenguajes">
-            <div class="lenguaje">
-              <div class="lenguaje__foto">
-                <Foto id={l.foto} ratio="4/3" sizes="(min-width: 56em) 30vw, 90vw" pie={'frase' in l ? l.frase : undefined} />
-              </div>
-              <div class="lenguaje__texto">
-                <p class="lenguaje__intro">{l.intro}</p>
-                <dl class="lenguaje__apartados">
-                  {l.apartados.map((a) => (
-                    <div>
-                      <dt>{a.etiqueta}</dt>
-                      <dd>{a.texto}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
+      {j.lenguajes.items.map((l, i) => (
+        <article class="lenguaje ancla" id={l.id} aria-labelledby={`${l.id}-t`}>
+          <div class:list={['escena', { 'escena--invertida': i % 2 === 1 }]}>
+            <div class="escena__foto" data-revelar>
+              <Foto id={l.foto} ratio="4/3" sizes="(min-width: 56em) 60vw, 100vw" pie={'frase' in l ? l.frase : undefined} />
             </div>
-          </Acordeon>
-        ))}
-      </div>
+            <div class:list={['nota', 'escena__nota', `nota--${(['blanca', 'verde-claro', 'rosa', 'azul', 'arena'] as const)[i % 5]}`]} data-revelar>
+              <span class="escena__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="escena__titulo" id={`${l.id}-t`}>{l.titulo}</h3>
+              <p class="escena__texto">{l.intro}</p>
+            </div>
+          </div>
+          <dl class:list={['bloques', ({ 3: 'bloques--3', 4: 'bloques--4', 5: 'bloques--5' } as Record<number, string>)[l.apartados.length] ?? 'bloques--3', 'lenguaje__bloques']}>
+            {l.apartados.map((a) => (
+              <div class="bloque" data-revelar>
+                <dt class="bloque__titulo">{a.etiqueta}</dt>
+                <dd class="bloque__texto">{a.texto}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -167,32 +172,27 @@ const subnav = [
   {/* El patio */}
   <section class="seccion patio ancla" id="patio" aria-labelledby="patio-titulo">
     <div class="contenedor">
-      <div class="patio__cabeza">
-        <h2 id="patio-titulo" data-titulo-lineas set:html={acento(j.patio.titulo)} />
-        <p class="t-lead" data-revelar>{j.patio.intro}</p>
+      <div class="cabeza-regla cabeza">
+        <h2 id="patio-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.patio.titulo)} />
+        <p class="cabeza__bajada" data-revelar>{j.patio.intro}</p>
       </div>
     </div>
     <div class="patio__galeria">
       <div class="contenedor">
         <Galeria ids={j.patio.galeria} variante="tira" sizes="(min-width: 64em) 26vw, (min-width: 48em) 36vw, 72vw" />
-        <p class="patio__frase t-frase" data-revelar>
-          <Trazo nombre="hoja" class="patio__hoja" grosor={2} color="verde" />
-          {j.patio.frase}
-        </p>
+        <p class="patio__frase t-frase" data-revelar>{j.patio.frase}</p>
       </div>
     </div>
     <div class="contenedor">
-      <ul class="patio__lista">
+      <ol class="bloques bloques--5 patio__bloques">
         {j.patio.items.map((it, i) => (
-          <li class="patio__item" data-revelar>
-            <span class="patio__vineta" aria-hidden="true"><Trazo nombre={(['hoja', 'ola', 'ronda', 'lazos', 'sol'] as const)[i]} grosor={2.2} color={i % 2 ? 'verde' : 'ocre'} /></span>
-            <div>
-              <h3 class="patio__item-titulo">{it.etiqueta}</h3>
-              <p>{it.texto}</p>
-            </div>
+          <li class="bloque" data-revelar>
+            <span class="bloque__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="bloque__titulo">{it.etiqueta}</h3>
+            <p class="bloque__texto">{it.texto}</p>
           </li>
         ))}
-      </ul>
+      </ol>
     </div>
   </section>
 
@@ -202,61 +202,58 @@ const subnav = [
   <Telon foto="patio-abrazo-arbol" rotulo="El patio · naturaleza y encuentro" alto="medio" />
 
   <section class="seccion ancla" id="adaptacion" aria-labelledby="adap-titulo">
-    <Dibujito nombre="cara-orejas" lado="der" top="10%" ancho="6rem" rot={6} />
-    <div class="contenedor contenedor--ancho">
-      <div class="cabecera-seccion">
-        <h2 id="adap-titulo" data-titulo-lineas set:html={acento(j.adaptacion.titulo)} />
-      </div>
-      <div class="adaptacion__intro prosa" data-revelar set:html={parrafos(j.adaptacion.intro)} />
-      <div class="adaptacion__desplegable" data-revelar>
-        <Desplegable id="adaptacion-en-detalle" boton={j.adaptacion.boton} botonCerrar="Cerrar el detalle">
-          <ol class="adaptacion__pasos">
-            {j.adaptacion.detalle.map((d, i) => (
-              <li class="paso">
-                <span class="paso__marca" aria-hidden="true"><Trazo nombre={(['lazos', 'corazon', 'sol', 'hoja', 'espiral'] as const)[i]} grosor={2} color="ocre" crayon={false} /></span>
-                <div>
-                  <h3 class="paso__titulo">{d.etiqueta}</h3>
-                  <p>{d.texto}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Desplegable>
+    <div class="contenedor adaptacion">
+      <h2 id="adap-titulo" class="adaptacion__titulo" data-titulo-lineas set:html={acento(j.adaptacion.titulo)} />
+      <div class="adaptacion__cuerpo">
+        <div class="adaptacion__intro prosa" data-revelar set:html={parrafos(j.adaptacion.intro)} />
+        <div class="adaptacion__desplegable" data-revelar>
+          <Desplegable id="adaptacion-en-detalle" boton={j.adaptacion.boton} botonCerrar="Cerrar el detalle">
+            <ol class="bloques adaptacion__pasos">
+              {j.adaptacion.detalle.map((d, i) => (
+                <li class="bloque">
+                  <span class="bloque__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 class="bloque__titulo">{d.etiqueta}</h3>
+                  <p class="bloque__texto">{d.texto}</p>
+                </li>
+              ))}
+            </ol>
+          </Desplegable>
+        </div>
       </div>
     </div>
   </section>
 
   {/* Horarios */}
-  <section class="seccion seccion--acento ancla" id="horarios" aria-labelledby="hor-titulo">
-    <Dibujito nombre="arbol" lado="izq" top="20%" ancho="7rem" rot={-3} opacidad={0.4} />
-    <div class="contenedor contenedor--ancho">
-      <div class="cabecera-seccion">
-        <h2 id="hor-titulo" data-titulo-lineas set:html={acento(j.horarios.titulo)} />
+  <section class="seccion seccion--papel-oscuro ancla" id="horarios" aria-labelledby="hor-titulo">
+    <div class="contenedor">
+      <div class="cabeza-regla cabeza">
+        <h2 id="hor-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.horarios.titulo)} />
       </div>
-      <table class="horarios" data-revelar>
-        <thead>
-          <tr>{j.horarios.columnas.map((c) => <th scope="col">{c}</th>)}</tr>
-        </thead>
-        <tbody>
-          {j.horarios.filas.map((f) => (
-            <tr>
-              <th scope="row" data-etiqueta={j.horarios.columnas[0]}>{f[0]}</th>
-              <td data-etiqueta={j.horarios.columnas[1]}>{f[1]}</td>
-              <td data-etiqueta={j.horarios.columnas[2]}>{f[2]}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <aside class="beneficio" data-revelar aria-labelledby="beneficio-titulo">
-        <Trazo nombre="corazon" class="beneficio__trazo" grosor={2.2} />
-        <h3 id="beneficio-titulo" class="beneficio__titulo">{j.horarios.beneficio.titulo}</h3>
-        <p>{j.horarios.beneficio.intro}</p>
-        <ul class="beneficio__lista">
-          {j.horarios.beneficio.items.map((b) => (
-            <li><strong class="beneficio__etiqueta">{b.etiqueta}:</strong> <span>{b.texto}</span></li>
-          ))}
-        </ul>
-      </aside>
+      <div class="horarios-grilla">
+        <table class="horarios" data-revelar>
+          <thead>
+            <tr>{j.horarios.columnas.map((c) => <th scope="col">{c}</th>)}</tr>
+          </thead>
+          <tbody>
+            {j.horarios.filas.map((f) => (
+              <tr>
+                <th scope="row" data-etiqueta={j.horarios.columnas[0]}>{f[0]}</th>
+                <td data-etiqueta={j.horarios.columnas[1]}>{f[1]}</td>
+                <td data-etiqueta={j.horarios.columnas[2]}>{f[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <aside class="nota nota--arena beneficio" data-revelar aria-labelledby="beneficio-titulo">
+          <h3 id="beneficio-titulo" class="beneficio__titulo">{j.horarios.beneficio.titulo}</h3>
+          <p class="beneficio__intro">{j.horarios.beneficio.intro}</p>
+          <ul class="beneficio__lista">
+            {j.horarios.beneficio.items.map((b) => (
+              <li><strong class="beneficio__etiqueta">{b.etiqueta}</strong> <span>{b.texto}</span></li>
+            ))}
+          </ul>
+        </aside>
+      </div>
     </div>
   </section>
 
@@ -272,114 +269,82 @@ const subnav = [
   .portada-cita__texto { font-size: 1.093rem; font-size: clamp(1.093rem, 0.779rem + 0.84vw, 1.47rem); max-width: 36ch; color: #f6efe3; }
   .portada-cita__firma { margin-top: 0.6rem; font-weight: 600; font-size: 0.9375rem; color: var(--arena); }
 
-  .intro-nivel__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
-  .intro-nivel__sol { width: 7rem; margin-top: 0.6rem; }
-  .intro-nivel__texto { font-family: var(--f-titulo); font-size: 1.288rem; font-size: clamp(1.288rem, 0.861rem + 1.26vw, 1.995rem); line-height: 1.3; font-weight: 340; letter-spacing: -0.012em; max-width: 34ch; }
-  @media (min-width: 56em) { .intro-nivel__grilla { grid-template-columns: auto 1fr; grid-gap: 2.04rem; gap: 2.04rem; } }
+  /* Presentación: notita centrada colgando del hero */
+  .intro-nivel { position: relative; z-index: 3; margin-top: -3rem; margin-bottom: 3.5rem; }
+  .intro-nivel__nota { max-width: 40rem; margin: 0 auto; text-align: center; }
+  .intro-nivel__texto { margin: 0 auto; max-width: none; font-family: var(--f-titulo); font-size: 1.06rem; font-size: clamp(1.02rem, 0.9rem + 0.4vw, 1.25rem); line-height: 1.5; }
 
-  /* Tarjetas de diferencias: carrusel en mobile, grilla de 3 en desktop */
-  .tarjeta-dif {
-    display: flex; flex-direction: column;
-    height: 100%;
-    background: #fffdf8;
-    border-radius: var(--radio-lg);
-    overflow: hidden;
-    box-shadow: 0 1px 0 rgba(35, 32, 28, 0.06);
-    transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
-  }
-  .tarjeta-dif__foto :global(img) { transition: transform 1.6s var(--ease-out), opacity 0.7s var(--ease-suave); }
-  .tarjeta-dif__cuerpo { padding: 1.25rem 1.25rem 1.275rem; }
-  .tarjeta-dif__icono { display: block; width: 2.2rem; height: 2.2rem; margin-top: -1.768rem; margin-bottom: 0.75rem; padding: 0.35rem; background: #fffdf8; border-radius: 50%; position: relative; }
-  .tarjeta-dif__icono :global(svg) { width: 100%; height: 100%; }
-  .tarjeta-dif__titulo { font-size: 1.26rem; margin-bottom: 0.6rem; }
-  .tarjeta-dif__texto { font-size: 0.9875rem; line-height: 1.6; }
-  @media (hover: hover) {
-    .tarjeta-dif:hover { transform: translateY(-4px); box-shadow: var(--sombra-papel-alta); }
-    .tarjeta-dif:hover .tarjeta-dif__foto :global(img) { transform: scale(1.04); }
-  }
+  /* Encabezado de cada sección: título + bajada al costado, con la línea fina debajo */
+  .cabeza__titulo { max-width: 18ch; font-size: 1.9rem; font-size: clamp(1.8rem, 1.2rem + 1.9vw, 3rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1.04; margin-right: 2rem; }
+  .cabeza__bajada { max-width: 30rem; font-size: 0.9875rem; line-height: 1.6; color: var(--tinta-suave); }
+
+  /* Diferencias: 3 + 2 tarjetas */
+  .dif { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1.25rem; gap: 1.25rem; }
+  @media (min-width: 48em) { .dif { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 64em) {
-    .diferencias :global(.carrusel__pista) { display: grid; grid-template-columns: repeat(6, 1fr); grid-gap: 1.275rem; gap: 1.275rem; }
-    .diferencias :global(.carrusel__pista > *) { margin: 0; grid-column: span 2; }
-    .diferencias :global(.carrusel__pista > *:nth-child(4)) { grid-column: 2 / span 2; }
+    .dif { grid-template-columns: repeat(6, 1fr); grid-gap: 1.5rem; gap: 1.5rem; }
+    .dif__item { grid-column: span 2; }
+    .dif__item:nth-child(4) { grid-column: 2 / span 2; }
   }
 
-  .conceptos { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; }
-  .concepto__num { display: block; width: 2.2rem; height: 2.2rem; margin-bottom: 0.9rem; }
-  .concepto__num :global(svg) { width: 100%; height: 100%; }
-  .concepto__titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
-  @media (min-width: 48em) { .conceptos { grid-template-columns: 1fr 1fr; grid-gap: 2.04rem 2.72rem; gap: 2.04rem 2.72rem; } }
-  .gesto { margin-top: 3rem; }
-  .gesto__texto { text-align: left; font-size: 0.95rem; }
-  .gesto__foto { position: relative; width: 82%; max-width: 26rem; margin: 0 auto; }
-  .gesto__titulo { font-size: 1.6rem; font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.3rem); margin-bottom: 1rem; font-style: italic; font-weight: 320; }
+  /* El gesto espontáneo: fotos que pasan + texto al costado */
+  .gesto { display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; align-items: center; margin-top: 4.5rem; padding-top: 3.5rem; border-top: 1px solid rgba(35, 32, 28, 0.18); }
+  .gesto__fotos { min-width: 0; }
+  .gesto__titulo { font-size: 1.6rem; font-size: clamp(1.5rem, 1.1rem + 1.3vw, 2.3rem); font-style: italic; font-weight: 320; margin-bottom: 1.1rem; padding-bottom: 0.9rem; border-bottom: 1px solid rgba(35, 32, 28, 0.45); }
+  .gesto__texto .prosa { font-size: 0.975rem; }
+  @media (min-width: 56em) { .gesto { grid-template-columns: 7fr 5fr; grid-gap: 4.5rem; gap: 4.5rem; } }
 
-  .sala__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
-  .sala__foto { position: relative; width: 82%; max-width: 24rem; margin: 0 auto; }
-  .sala__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1rem; }
-  .sala__sub { display: block; margin-top: 0.3rem; font-style: italic; font-weight: 300; color: var(--acento-texto); font-size: 0.75em; }
-  .sala__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 1.7rem; }
-  .sala__apartados { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
-  .sala__apartado { padding-top: 1rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
-  .sala__apartado dt { font-weight: 700; margin-bottom: 0.35rem; }
-  .sala__apartado dd { margin: 0; }
-  :global(.tabs.is-js) .sala__titulo { font-size: 1.26rem; }
-  @media (min-width: 56em) {
-    .sala__grilla { grid-template-columns: 4fr 7fr; grid-gap: 3.06rem; gap: 3.06rem; }
-    .sala__foto { width: 100%; position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 5rem); }
-    .sala__apartados { grid-template-columns: 1fr 1fr; grid-gap: 1.488rem 1.7rem; gap: 1.488rem 1.7rem; }
-  }
+  /* Salas */
+  .sala__sub { margin: 0.35rem 0 0; font-family: var(--f-titulo); font-style: italic; color: var(--acento-texto); }
+  .sala__escena { margin-top: 1.5rem; }
+  .sala__bloques { margin-top: 5rem; }
+  .sala__bloques .bloque__n { display: block; }
 
-  .lenguaje { display: grid; grid-template-columns: 1fr; grid-gap: 1.488rem; gap: 1.488rem; padding-top: 0.5rem; }
-  .lenguaje__foto :global(.foto) { border-radius: var(--radio); }
-  .lenguaje__foto :global(figcaption) { margin-top: 0.75rem; font-size: 1.125rem; color: var(--tinta); }
-  .lenguaje__intro { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.55; margin-bottom: 1.275rem; }
-  .lenguaje__apartados > div + div { margin-top: 1.25rem; }
-  .lenguaje__apartados dt { font-weight: 700; margin-bottom: 0.3rem; }
-  .lenguaje__apartados dd { margin: 0; }
-  @media (min-width: 56em) { .lenguaje { grid-template-columns: 5fr 7fr; grid-gap: 2.04rem; gap: 2.04rem; } }
+  /* Lenguajes */
+  .leng-indice { display: flex; flex-wrap: wrap; }
+  .leng-indice a { margin: 0 1.25rem 0.35rem 0; font-size: 0.875rem; text-decoration: none; border-bottom: 1px solid rgba(35, 32, 28, 0.3); }
+  .leng-indice a:hover { color: var(--acento-texto); border-color: currentColor; }
+  .lenguaje + .lenguaje { margin-top: 6rem; }
+  .lenguaje__bloques { margin-top: 5rem; }
 
+  /* Patio */
   .patio { overflow: hidden; }
-  .patio__cabeza { max-width: 46rem; margin-bottom: 2.04rem; }
-  .patio__cabeza > * + * { margin-top: 1.25rem; }
-  .patio__galeria { margin-bottom: 2.72rem; }
-  .patio__frase { display: flex; align-items: center; margin-top: 1.275rem; font-size: 1.26rem; font-size: var(--t-lg); color: var(--verde-texto); }
-  .patio__hoja { width: 1.6rem; height: 2.2rem; margin-right: 0.9rem; flex: none; }
-  .patio__lista { display: grid; grid-template-columns: 1fr; grid-gap: 1.912rem; gap: 1.912rem; }
-  .patio__item { display: flex; align-items: flex-start; }
-  .patio__vineta { flex: none; width: 2.2rem; height: 2.2rem; margin-right: 1.1rem; margin-top: 0.15rem; }
-  .patio__vineta :global(svg) { width: 100%; height: 100%; }
-  .patio__item-titulo { font-size: 1.375rem; font-size: var(--t-lg); margin-bottom: 0.5rem; }
-  @media (min-width: 56em) { .patio__lista { grid-template-columns: 1fr 1fr; grid-gap: 2.04rem 3.4rem; gap: 2.04rem 3.4rem; } }
+  .patio__galeria { margin-bottom: 3rem; }
+  .patio__frase { margin-top: 1.5rem; text-align: center; font-size: 1.26rem; font-size: var(--t-lg); color: var(--verde-texto); }
+  .patio__frase { max-width: none; }
 
-  .adaptacion__intro { font-size: 1.125rem; font-size: var(--t-md); }
-  .adaptacion__intro :global(p) { max-width: 44rem; }
-  .adaptacion__desplegable { margin-top: 2.04rem; }
-  .adaptacion__pasos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
-  .paso { display: flex; align-items: flex-start; padding: 1.275rem; background: #fffdf8; border-radius: var(--radio-lg); box-shadow: 0 1px 0 rgba(35, 32, 28, 0.06); }
-  .paso__marca { flex: none; width: 2rem; height: 2rem; margin-right: 1.1rem; }
-  .paso__marca :global(svg) { width: 100%; height: 100%; }
-  .paso__titulo { font-size: 1.25rem; margin-bottom: 0.4rem; }
-  @media (min-width: 56em) { .adaptacion__pasos { grid-template-columns: 1fr 1fr; } }
+  /* Adaptación: título a la izquierda, texto a la derecha */
+  .adaptacion { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
+  .adaptacion__titulo { font-size: 1.9rem; font-size: clamp(1.8rem, 1.2rem + 1.9vw, 3rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1.04; padding-bottom: 1rem; border-bottom: 1px solid rgba(35, 32, 28, 0.55); align-self: start; }
+  .adaptacion__intro { font-size: 1.0625rem; }
+  .adaptacion__desplegable { margin-top: 2rem; }
+  .adaptacion__pasos { margin-top: 1.5rem; }
+  @media (min-width: 56em) {
+    .adaptacion { grid-template-columns: 4fr 7fr; grid-gap: 4.5rem; gap: 4.5rem; }
+    .adaptacion__titulo { position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 4rem); }
+  }
 
-  .horarios { width: 100%; border-collapse: collapse; background: #fffdf8; border-radius: var(--radio-lg); overflow: hidden; }
+  /* Horarios: tabla + notita del beneficio */
+  .horarios-grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  @media (min-width: 64em) { .horarios-grilla { grid-template-columns: 8fr 4fr; grid-gap: 3rem; gap: 3rem; } }
+  .horarios { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 18px 40px -30px rgba(35, 32, 28, 0.45); }
   .horarios th, .horarios td { text-align: left; padding: 1.1rem 1.25rem; border-bottom: 1px solid rgba(35, 32, 28, 0.1); vertical-align: top; }
-  .horarios thead th { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 700; background: var(--papel-oscuro); }
-  .horarios tbody th { font-family: var(--f-titulo); font-weight: 400; font-size: 1.25rem; white-space: nowrap; }
+  .horarios thead th { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 700; border-bottom: 2px solid var(--tinta); }
+  .horarios tbody th { font-family: var(--f-titulo); font-weight: 400; font-size: 1.2rem; white-space: nowrap; }
+  @media (min-width: 48em) { .horarios td:nth-of-type(1) { white-space: nowrap; } }
   .horarios tbody tr:last-child th, .horarios tbody tr:last-child td { border-bottom: 0; }
   @media (max-width: 47.99em) {
     .horarios, .horarios tbody, .horarios tr, .horarios th, .horarios td { display: block; width: 100%; }
-    .horarios { background: none; }
+    .horarios { background: none; box-shadow: none; }
     .horarios thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    .horarios tr { background: #fffdf8; border-radius: var(--radio-lg); margin-bottom: 1rem; padding: 0.5rem 0; }
+    .horarios tr { background: #fff; margin-bottom: 1rem; padding: 0.5rem 0; }
     .horarios th, .horarios td { border: 0; padding: 0.5rem 1.25rem; }
-    .horarios td::before { content: attr(data-etiqueta); display: block; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 700; margin-bottom: 0.15rem; }
-    .horarios tbody th { font-size: 1.26rem; padding-top: 0.9rem; }
+    .horarios td::before { content: attr(data-etiqueta); display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 700; margin-bottom: 0.15rem; }
+    .horarios tbody th { font-size: 1.2rem; padding-top: 0.9rem; }
   }
-  .beneficio { position: relative; margin-top: 1.7rem; padding: 1.7rem; padding: clamp(1.275rem, 2.8vw, 1.87rem); border: 2px dashed var(--ocre); border-radius: var(--radio-lg); background: var(--papel); }
-  .beneficio__trazo { width: 2.2rem; height: 2rem; margin-bottom: 0.75rem; }
-  .beneficio__titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 0.75rem; }
-  .beneficio__lista { list-style: none; padding: 0; margin-top: 1.25rem; display: grid; grid-template-columns: 1fr; grid-gap: 0.75rem; gap: 0.75rem; }
-  .beneficio__lista li { font-size: 1.125rem; }
-  .beneficio__etiqueta { color: var(--ocre-texto); }
-  @media (min-width: 40em) { .beneficio__lista { grid-template-columns: 1fr 1fr; } }
+  .beneficio__titulo { font-size: 1.2rem; line-height: 1.25; margin-bottom: 0.75rem; }
+  .beneficio__intro { font-size: 0.9375rem; color: var(--tinta-suave); }
+  .beneficio__lista { list-style: none; padding: 0; margin: 1.1rem 0 0; }
+  .beneficio__lista li { padding: 0.7rem 0; border-top: 1px solid rgba(35, 32, 28, 0.18); font-size: 0.9375rem; }
+  .beneficio__etiqueta { display: block; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ocre-texto); }
 </style>
