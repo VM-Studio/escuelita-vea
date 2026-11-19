@@ -4,8 +4,10 @@ export const inicio = {
     titular: 'El niño es cuerpo que siente y al sentir, piensa.',
     bajada:
       'Mirar la educación desde la sensibilidad del arte es mirarla como un despertar. Es habitar un lugar donde la mirada y la acción propician llegar a ser quien se es.',
-    fotos: ['patio-abrazo-arbol', 'jardin-ronda-arena-arboles', 'jardin-hojas-al-aire', 'primaria-leyenda-bajo-arboles'],
+    fotos: ['patio-abrazo-arbol', 'jardin-hojas-al-aire', 'jardin-ronda-arena-arboles'],
   },
+  // Hero principal a pantalla completa: fotos que se van pasando (Jardín y Primaria conviven en el Inicio)
+  portadaFondo: ['primaria-leyenda-bajo-arboles', 'musica-ronda-manos', 'primaria-leyenda-quillangos', 'primaria-primer-dia', 'taller-construccion-pintada'],
   presentacion: {
     nombre: 'La Escuelita',
     fundada: 'Fundada por la profesora Marta Calvo en 1959',

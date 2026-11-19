@@ -337,11 +337,12 @@ function heroSecuencia() {
   let visible = true;
   document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
   // Las capas 2..n tienen las fotos con loading=lazy: se cargan recién cuando arranca la secuencia
-  const hero = caja.closest('[data-hero]');
+  const hero = caja.closest('section');
   const cargar = (c: HTMLElement) => $$<HTMLImageElement>('img', c).forEach((im) => { im.loading = 'eager'; });
   setTimeout(() => { if (hero) hero.classList.add('is-secuencia'); cargar(capas[1]); }, 2500);
   setInterval(() => {
-    if (!visible || window.pageYOffset > window.innerHeight) return;
+    const r = caja.getBoundingClientRect();
+    if (!visible || r.bottom < 0 || r.top > window.innerHeight) return;
     const sig = (i + 1) % capas.length;
     cargar(capas[(sig + 1) % capas.length]);
     const img = $<HTMLImageElement>('img', capas[sig]);
@@ -350,6 +351,38 @@ function heroSecuencia() {
     capas[sig].classList.add('is-activa');
     i = sig;
   }, 7000);
+}
+
+/* ---------- Hero principal: fotos a pantalla completa que pasan cada 4 segundos ---------- */
+function portadaSecuencia() {
+  const portada = $('[data-portada]');
+  if (!portada || reducido()) return;
+  const capas = $$('[data-portada-capa]', portada);
+  const marcas = $$('[data-portada-marca]', portada);
+  if (capas.length < 2) return;
+  let i = 0;
+  let visible = true;
+  document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
+  const cargar = (c: HTMLElement) => $$<HTMLImageElement>('img', c).forEach((im) => { im.loading = 'eager'; });
+  portada.classList.add('is-secuencia');
+  cargar(capas[1]);
+  setInterval(() => {
+    if (!visible || window.pageYOffset > window.innerHeight) return;
+    const sig = (i + 1) % capas.length;
+    cargar(capas[(sig + 1) % capas.length]);
+    const img = $<HTMLImageElement>('img', capas[sig]);
+    if (img && !(img.complete && img.naturalWidth)) return; // esperar a que esté cargada
+    capas[i].classList.remove('is-activa');
+    capas[sig].classList.add('is-activa');
+    if (marcas.length) {
+      if (sig === 0) marcas.forEach((m) => m.classList.remove('is-hecha', 'is-activa'));
+      else marcas[i].classList.add('is-hecha');
+      marcas[i].classList.remove('is-activa');
+      void marcas[sig].offsetWidth;
+      marcas[sig].classList.add('is-activa');
+    }
+    i = sig;
+  }, 4000);
 }
 
 /* ---------- Volver arriba ---------- */
@@ -375,6 +408,7 @@ function iniciar() {
   whatsapp();
   progreso();
   heroSecuencia();
+  portadaSecuencia();
   volverArriba();
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);

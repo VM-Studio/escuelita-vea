@@ -145,3 +145,12 @@ Referencias: Awwwards (Hatching Dragons, Fine Acts, London Film School, Departme
 - **Efecto bedes.com.ar:** al pasar de sección, la foto queda quieta debajo y la página se desliza por encima (todas las frases con foto + nuevas bandas de foto en Inicio, Jardín y Primaria). Las fotos se ponen en blanco y negro al pasar el mouse.
 - **"Conocé nuestro Instagram":** fila de 4 reels de @la.escuelita.vea que se reproducen sin sonido (se activa al tocar) y botón "Conocenos". Reels usados: Bienvenida a la primavera (Jardín), Taller de 2, 2do grado · Los Pueblos, Los recreos en nuestro fondo. Recortados a 20 s y comprimidos (`public/reels/`). **Confirmar** que se pueden publicar en la web y cuáles prefieren; se cambian reemplazando 4 archivos.
 - Microcopy nuevo: "Conocé nuestro Instagram", "Conocenos", títulos de los reels, rótulos de las bandas de foto ("El patio de La Escuelita", "El taller, todos los días", "El patio · naturaleza y encuentro", "Recreo en el fondo de la escuela").
+
+## 13. Inicio rediseñado (19/11/2026)
+
+- **Hero principal nuevo:** fotos a pantalla completa que pasan cada 4 segundos, con "La Escuelita" y "67 años en la Educación por el Arte" encima (textos tal cual del documento). Fotos: Leyenda bajo los árboles, ronda de música, quillangos, primer día de Primaria y taller de construcción. **Confirmar** que les gustan para la portada.
+- **Debajo, "El niño es cuerpo que siente…"** con la foto en forma de "pill" que sale del borde derecho. Sin dibujitos en esa sección.
+- **Se sacó la cinta de materiales** del Inicio (los materiales siguen en la página del Jardín).
+- **Obras del taller:** tarjetas con foto arriba y panel blanco con el nombre del taller y el grado.
+- **Cierre "Vení a conocer La Escuelita":** foto y título más centrados, con dos dibujitos a los costados (solo en el Inicio).
+- Microcopy nuevo: aria-label "Bajar" en la flecha del hero principal.

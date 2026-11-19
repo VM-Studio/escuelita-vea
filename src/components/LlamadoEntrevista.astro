@@ -3,13 +3,16 @@
 import Foto from './Foto.astro';
 import Trazo from './Trazo.astro';
 import Boton from './Boton.astro';
+import Dibujito from './Dibujito.astro';
 import { NIVELES } from '../config/sitio';
 import { acento } from '../lib/texto';
-interface Props { nivel?: 'jardin' | 'primaria'; foto?: string; titulo?: string }
-const { nivel, foto, titulo = 'Vení a conocer La Escuelita' } = Astro.props;
+interface Props { nivel?: 'jardin' | 'primaria'; foto?: string; titulo?: string; dibujos?: boolean }
+const { nivel, foto, titulo = 'Vení a conocer La Escuelita', dibujos = false } = Astro.props;
 const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrevista';
 ---
 <section class:list={['llamado seccion', { 'llamado--sin-foto': !foto }]} aria-labelledby="llamado-titulo">
+  {dibujos && <Dibujito nombre="cara-pestanas" lado="izq" top="14%" ancho="7rem" rot={-6} />}
+  {dibujos && <Dibujito nombre="cara-anteojos" lado="der" top="40%" ancho="7rem" rot={6} />}
   <div class="contenedor llamado__grilla">
     {foto && (
       <div class="llamado__foto pegada" style="--rot:2deg" data-revelar>
@@ -34,7 +37,7 @@ const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrev
 </section>
 
 <style>
-  .llamado { background: var(--acento-suave); overflow: hidden; }
+  .llamado { position: relative; background: var(--acento-suave); overflow: hidden; }
   .llamado__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; }
   .llamado__foto { position: relative; width: 60%; max-width: 15rem; margin: 0 auto; }
   .llamado__titulo { font-size: 1.665rem; font-size: var(--t-2xl); max-width: 16ch; }
@@ -49,7 +52,7 @@ const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrev
   .llamado--sin-foto .llamado__acciones { justify-content: center; }
   .llamado--sin-foto .llamado__acciones > :global(*) { margin: 0 0.75rem 0.75rem; }
   @media (min-width: 56em) {
-    .llamado:not(.llamado--sin-foto) .llamado__grilla { grid-template-columns: 4fr 7fr; grid-gap: 3.4rem; gap: 3.4rem; }
+    .llamado:not(.llamado--sin-foto) .llamado__grilla { grid-template-columns: minmax(0, 20rem) minmax(0, 30rem); justify-content: center; grid-gap: 4.5rem; gap: 4.5rem; }
     .llamado__foto { width: 100%; }
   }
 </style>

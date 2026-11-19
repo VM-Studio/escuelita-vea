@@ -17,9 +17,9 @@ const { titulo, acento, bajada, obras, enlace } = Astro.props;
     <ul class="obras__grilla">
       {obras.map((o, i) => (
         <li class:list={['obra', { 'obra--alta': i % 5 === 1 }]} data-revelar>
-          <figure>
+          <figure class="obra__tarjeta">
             <div class="obra__marco"><Foto id={o.id} ratio={i % 5 === 1 ? '3/4' : '1/1'} sizes="(min-width: 64em) 22vw, 46vw" /></div>
-            <figcaption class="obra__pie"><span>{o.rotulo}</span>{o.detalle && <span class="obra__det">{o.detalle}</span>}</figcaption>
+            <figcaption class="obra__pie"><span class="obra__rotulo">{o.rotulo}</span>{o.detalle && <span class="obra__det">{o.detalle}</span>}</figcaption>
           </figure>
         </li>
       ))}
@@ -37,14 +37,14 @@ const { titulo, acento, bajada, obras, enlace } = Astro.props;
   .obras__grilla { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 0.75rem; gap: 0.75rem; align-items: start; }
   @media (min-width: 48em) { .obras__grilla { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width: 64em) { .obras__grilla { grid-template-columns: repeat(4, 1fr); grid-gap: 1rem; gap: 1rem; } .obra:nth-child(4n + 2) { margin-top: 2.5rem; } .obra:nth-child(4n + 4) { margin-top: 1.25rem; } }
-  .obra figure { margin: 0; }
-  .obra__marco { padding: 0.6rem; border: 1px solid rgba(35, 32, 28, 0.08); border-radius: 6px; background: #f8f5ef; box-shadow: 0 10px 24px -18px rgba(35, 32, 28, 0.5); transition: transform 0.5s var(--ease-out), border-color 0.3s, background-color 0.3s; }
-  .obra__marco :global(.foto) { border-radius: 3px; }
+  .obra__tarjeta { margin: 0; overflow: hidden; background: #fff; box-shadow: 0 1px 2px rgba(35, 32, 28, 0.06), 0 18px 40px -26px rgba(35, 32, 28, 0.45); transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out); }
+  .obra__marco { overflow: hidden; }
   .obra__marco :global(img) { transition: transform 0.8s var(--ease-out); }
-  .obra__pie { display: flex; justify-content: space-between; margin-top: 0.5rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.5625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-suave); }
-  .obra__det { color: var(--rojo); }
+  .obra__pie { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1rem 0.75rem 1.15rem; }
+  .obra__rotulo { font-family: var(--f-titulo); font-size: 1rem; font-size: clamp(0.95rem, 0.8rem + 0.5vw, 1.3rem); font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.15; color: var(--tinta); }
+  .obra__det { margin-top: 0.35rem; font-size: 0.8125rem; color: var(--tinta-suave); }
   @media (hover: hover) {
-    .obra:hover .obra__marco { transform: translateY(-4px) rotate(-0.6deg); border-color: rgba(35, 32, 28, 0.2); background: #fff; }
+    .obra:hover .obra__tarjeta { transform: translateY(-4px); box-shadow: 0 1px 2px rgba(35, 32, 28, 0.06), 0 26px 50px -28px rgba(35, 32, 28, 0.55); }
     .obra:hover .obra__marco :global(img) { transform: scale(1.04); }
   }
   .obras__mas { margin-top: 2rem; }

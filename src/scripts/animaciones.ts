@@ -129,16 +129,6 @@ async function iniciar() {
         gsap.set(trazos, { drawSVG: '0%' });
         tlEntrada.to(trazos, { drawSVG: '100%', duration: 0.9, stagger: 0.2, ease: 'power2.inOut' }, 0.9);
       }
-      // Dibujos sueltos: se "dibujan" de abajo hacia arriba y después flotan a distinta velocidad al bajar
-      const dibujos = q('[data-hero-dibujo]', hero);
-      if (dibujos.length) {
-        gsap.set(dibujos, { clipPath: 'inset(100% 0% 0% 0%)', webkitClipPath: 'inset(100% 0% 0% 0%)' });
-        tlEntrada.to(dibujos, { clipPath: 'inset(0% 0% 0% 0%)', webkitClipPath: 'inset(0% 0% 0% 0%)', duration: 1.6, stagger: 0.35, ease: 'power2.inOut' }, 1.1);
-        dibujos.forEach((d) => {
-          const vel = parseFloat(d.getAttribute('data-vel') || '0');
-          if (vel) gsap.to(d, { yPercent: vel, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
-        });
-      }
       // parallax muy leve de la foto del hero
       if (fondo) gsap.to(hero.querySelector('[data-hero-parallax]') || fondo, { yPercent: 10, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
       // Marcar los elementos del hero como "ya revelados" para que no los tome el batch general
