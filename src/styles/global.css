@@ -315,7 +315,7 @@ em { font-style: italic; }
   min-height: 2.75rem;
   padding: 0.6rem 1.35rem 0.62rem;
   border: 1px solid var(--tinta);
-  border-radius: 2px;
+  border-radius: 999px;
   background: transparent;
   color: var(--tinta);
   font-family: var(--f-texto);

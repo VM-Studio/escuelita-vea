@@ -11,6 +11,9 @@ interface Props {
   trazo?: 'sol' | 'hoja' | 'espiral' | 'estrella' | 'garabato' | 'corazon';
 }
 const { foto, frase, firma, variante = 'sobre', ratio, trazo = 'hoja' } = Astro.props;
+// Dibujo de fondo (PNG/WebP sin fondo) elegido de forma estable según la foto
+const DIBUJOS = ['cara-pestanas', 'cuerpo-musculos', 'cara-anteojos', 'arbol', 'cara-mujer', 'cara-pelo-largo'];
+const dibujo = DIBUJOS[[...foto].reduce((a, c) => a + c.charCodeAt(0), 0) % DIBUJOS.length];
 ---
 <section class:list={['interludio', `interludio--${variante}`]} aria-label="Frase">
   {variante === 'sobre' ? (
@@ -28,6 +31,7 @@ const { foto, frase, firma, variante = 'sobre', ratio, trazo = 'hoja' } = Astro.
     </div>
   ) : (
     <div class="contenedor interludio__grilla">
+      <div class="interludio__fondo" aria-hidden="true" data-parallax="-14"><img src={`/dibujos/${dibujo}.webp`} alt="" loading="lazy" decoding="async" /></div>
       <div class="pegada interludio__pegada" style="--rot:-1.6deg" data-revelar>
         <span class="cinta" aria-hidden="true"></span>
         <Foto id={foto} ratio={ratio ?? '4/5'} sizes="(min-width: 64em) 40vw, 90vw" />
@@ -70,8 +74,15 @@ const { foto, frase, firma, variante = 'sobre', ratio, trazo = 'hoja' } = Astro.
 
   .interludio--lado, .interludio--centro { padding-top: 2.72rem; padding-bottom: 2.72rem; padding-top: var(--seccion); padding-bottom: var(--seccion); }
   .interludio__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; }
-  .interludio__pegada { position: relative; max-width: 30rem; margin: 0 auto; width: 88%; }
-  .interludio__lado { position: relative; }
+  .interludio__grilla { position: relative; }
+  .interludio__pegada { position: relative; z-index: 1; max-width: 30rem; margin: 0 auto; width: 88%; }
+  .interludio__fondo { position: absolute; z-index: 0; right: -1%; top: 42%; width: 20rem; max-width: 50%; transform: translateY(-50%); pointer-events: none; }
+  .interludio__fondo img { display: block; width: 100%; height: auto; opacity: 0.13; mix-blend-mode: multiply; animation: interludio-flota 9s ease-in-out infinite; }
+  @keyframes interludio-flota { 0%, 100% { transform: rotate(-3deg) translate3d(0, 0, 0); } 50% { transform: rotate(2deg) translate3d(0, -14px, 0); } }
+  @media (prefers-reduced-motion: reduce) { .interludio__fondo img { animation: none; } }
+  :global(html.liviano) .interludio__fondo img { animation: none; }
+  .interludio--centro .interludio__fondo { right: auto; left: 2%; }
+  .interludio__lado { position: relative; z-index: 1; }
   .interludio__trazo { width: 2.8rem; height: 2.8rem; margin-bottom: 1.25rem; }
   .interludio__frase--tinta {
     color: var(--tinta);
