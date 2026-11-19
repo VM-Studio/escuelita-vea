@@ -627,8 +627,9 @@ body.nivel-primaria .acento { color: var(--verde-texto); }
 
 /* Bloques numerados con una línea arriba (apartados, conceptos, pasos) */
 .bloques { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; }
-@media (min-width: 48em) { .bloques { grid-template-columns: repeat(2, 1fr); grid-gap: 2.25rem 2.5rem; gap: 2.25rem 2.5rem; } }
-@media (min-width: 64em) { .bloques--3 { grid-template-columns: repeat(3, 1fr); } .bloques--4 { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 48em) { .bloques { grid-template-columns: repeat(2, 1fr); grid-gap: 2.5rem 3rem; gap: 2.5rem 3rem; } }
+@media (min-width: 64em) { .bloques--3 { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 75em) { .bloques--4 { grid-template-columns: repeat(4, 1fr); } }
 .bloque { padding-top: 1rem; border-top: 2px solid var(--tinta); margin: 0; }
 .bloque__n { display: block; margin-bottom: 0.6rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.1em; color: var(--tinta-suave); }
 .bloque__titulo { font-family: var(--f-titulo); font-size: 1.25rem; font-weight: 400; line-height: 1.2; margin: 0 0 0.6rem; }

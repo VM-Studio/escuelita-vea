@@ -76,7 +76,8 @@ const dibujo = DIBUJOS[[...foto].reduce((a, c) => a + c.charCodeAt(0), 0) % DIBU
   .interludio__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.04rem; gap: 2.04rem; align-items: center; }
   .interludio__grilla { position: relative; }
   .interludio__pegada { position: relative; z-index: 1; max-width: 30rem; margin: 0 auto; width: 88%; }
-  .interludio__fondo { position: absolute; z-index: 0; right: -1%; top: 42%; width: 20rem; max-width: 50%; transform: translateY(-50%); pointer-events: none; }
+  .interludio--lado, .interludio--centro { overflow: hidden; }
+  .interludio__fondo { position: absolute; z-index: 0; right: 0; top: 42%; width: 20rem; max-width: 50%; transform: translateY(-50%); pointer-events: none; }
   .interludio__fondo img { display: block; width: 100%; height: auto; opacity: 0.13; mix-blend-mode: multiply; animation: interludio-flota 9s ease-in-out infinite; }
   @keyframes interludio-flota { 0%, 100% { transform: rotate(-3deg) translate3d(0, 0, 0); } 50% { transform: rotate(2deg) translate3d(0, -14px, 0); } }
   @media (prefers-reduced-motion: reduce) { .interludio__fondo img { animation: none; } }

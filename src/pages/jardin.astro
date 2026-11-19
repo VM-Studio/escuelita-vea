@@ -1,5 +1,4 @@
 ---
-import Telon from '../components/Telon.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import PortadaPagina from '../components/PortadaPagina.astro';
@@ -112,7 +111,7 @@ const subnav = [
         {j.salas.items.map((s) => (
           <section class="tabs__panel sala" id={s.id} data-panel aria-labelledby={`${s.id}-h`}>
             <div class="escena sala__escena">
-              <div class="escena__foto"><Foto id={s.foto} ratio="4/3" sizes="(min-width: 56em) 60vw, 100vw" /></div>
+              <div class="escena__foto"><Foto id={s.foto} ratio="16/9" sizes="(min-width: 56em) 60vw, 100vw" /></div>
               <div class="nota nota--arena escena__nota">
                 <h3 class="escena__titulo" id={`${s.id}-h`}>{s.nombre}</h3>
                 <p class="sala__sub">{s.subtitulo}</p>
@@ -146,7 +145,7 @@ const subnav = [
         <article class="lenguaje ancla" id={l.id} aria-labelledby={`${l.id}-t`}>
           <div class:list={['escena', { 'escena--invertida': i % 2 === 1 }]}>
             <div class="escena__foto" data-revelar>
-              <Foto id={l.foto} ratio="4/3" sizes="(min-width: 56em) 60vw, 100vw" pie={'frase' in l ? l.frase : undefined} />
+              <Foto id={l.foto} ratio="16/9" sizes="(min-width: 56em) 60vw, 100vw" pie={'frase' in l ? l.frase : undefined} />
             </div>
             <div class:list={['nota', 'escena__nota', `nota--${(['blanca', 'verde-claro', 'rosa', 'azul', 'arena'] as const)[i % 5]}`]} data-revelar>
               <span class="escena__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
@@ -199,7 +198,6 @@ const subnav = [
   <Interludio foto={j.interludioAdaptacion.foto} frase={j.interludioAdaptacion.frase} />
 
   {/* Adaptación */}
-  <Telon foto="patio-abrazo-arbol" rotulo="El patio · naturaleza y encuentro" alto="medio" />
 
   <section class="seccion ancla" id="adaptacion" aria-labelledby="adap-titulo">
     <div class="contenedor adaptacion">
@@ -297,15 +295,15 @@ const subnav = [
   /* Salas */
   .sala__sub { margin: 0.35rem 0 0; font-family: var(--f-titulo); font-style: italic; color: var(--acento-texto); }
   .sala__escena { margin-top: 1.5rem; }
-  .sala__bloques { margin-top: 5rem; }
+  .sala__bloques { margin-top: 6.5rem; margin-bottom: 1.5rem; }
   .sala__bloques .bloque__n { display: block; }
 
   /* Lenguajes */
   .leng-indice { display: flex; flex-wrap: wrap; }
   .leng-indice a { margin: 0 1.25rem 0.35rem 0; font-size: 0.875rem; text-decoration: none; border-bottom: 1px solid rgba(35, 32, 28, 0.3); }
   .leng-indice a:hover { color: var(--acento-texto); border-color: currentColor; }
-  .lenguaje + .lenguaje { margin-top: 6rem; }
-  .lenguaje__bloques { margin-top: 5rem; }
+  .lenguaje + .lenguaje { margin-top: 7.5rem; }
+  .lenguaje__bloques { margin-top: 6.5rem; }
 
   /* Patio */
   .patio { overflow: hidden; }
