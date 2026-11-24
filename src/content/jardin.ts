@@ -9,9 +9,9 @@ export const jardin = {
     foto: 'taller-construccion-pintada',
   },
   diferencias: {
-    titulo: 'La vida en el Jardín: ¿qué nos diferencia?',
+    titulo: 'La vida en el Jardín',
     intro:
-      'Nuestra identidad se vive día a día en el taller. Nos alejamos de las estructuras tradicionales y de las corrientes alternativas habituales. Centramos la propuesta en una mirada singular de las infancias, donde priorizamos:',
+      'Nuestra identidad se vive día a día en el taller. Nos alejamos de las estructuras tradicionales y de las corrientes alternativas habituales. Centramos la propuesta en una mirada singular de las infancias, donde priorizamos el juego, la expresión, los vínculos, la exploración y la autonomía.',
     items: [
       { etiqueta: 'El juego', icono: 'ronda', foto: 'juego-paracaidas', texto: 'Lo planteamos como una experiencia organizada de búsqueda y descubrimiento colectivos. Es el acto simbólico por el cual niños y niñas canalizan sus emociones y construyen saberes profundos junto a sus pares.' },
       { etiqueta: 'La expresión', icono: 'sol', foto: 'plastica-tinta-pez', texto: 'El arte es el lenguaje natural de la niñez. Colocamos el eje en el disfrute del proceso creativo más que en la búsqueda de un resultado final. Esto permite que cada uno despliegue su potencial sin moldes.' },
@@ -58,7 +58,7 @@ export const jardin = {
         nombre: 'Taller de 3',
         subtitulo: 'Autoafirmación y rutina confiable',
         intro: 'Al comenzar el taller de tres años, los niños y niñas repiten procesos anteriores. La repetición organizada a través de la rutina les da seguridad y les permite conocerse en un ámbito predecible y confiable.',
-        foto: 'sala3-espiral-tierra',
+        foto: 'jardin-tiza-negro', // enviada por la escuela (JARDIN/6-T3)
         apartados: [
           { etiqueta: 'Nuevos Vínculos', texto: 'Cambia la maestra y se integran nuevos compañeros. Si bien la relación con el docente sigue un sentido radial, el par va cobrando un mayor protagonismo.' },
           { etiqueta: 'Ampliación del Juego', texto: 'Se suman más días de Taller de Música y de Juego Dramático, junto con la incorporación del Taller de Educación Física. Estos espacios enriquecen el desarrollo de la percepción y el descubrimiento del entorno a través del juego.' },
@@ -85,7 +85,7 @@ export const jardin = {
         nombre: 'Taller de 5',
         subtitulo: 'Consolidación y corolario del Jardín',
         intro: 'En el taller de cinco años se afianza el trabajo compartido y los niños se consolidan como grupo, lo que profundiza su conciencia singular y social.',
-        foto: 'sala5-pintura-grupal',
+        foto: 'sala5-ronda-sala', // enviada por la escuela (JARDIN/8-T5)
         apartados: [
           { etiqueta: 'Esquema Corporal Consolidado', texto: 'A los cinco años se logra el esquema corporal propio, un hito que se traslada de forma directa al grafismo. El niño se representa a sí mismo solo, con otros y dentro de un entorno determinado.' },
           { etiqueta: 'Leyes Internas y Proporciones', texto: 'En un principio, el ordenamiento de sus dibujos está sujeto a la afectividad. Una casita, un árbol o una nena no se relacionan por leyes de proporciones externas, sino internas.' },
@@ -140,7 +140,7 @@ export const jardin = {
       {
         id: 'taller-de-educacion-fisica',
         titulo: 'Taller de Educación Física',
-        foto: 'edfisica-pelota-palmeras',
+        foto: 'jardin-edfisica-cancha', // enviada por la escuela (JARDIN/2-ED-FISICA)
         intro: 'Entendemos que la primera forma de comunicación y expresión humana es el lenguaje corporal. Nuestro objetivo es ampliar este lenguaje mediante herramientas de juego para que los niños y niñas descubran sus posibilidades, construyan estrategias para superar obstáculos y desarrollen destrezas.',
         apartados: [
           { etiqueta: 'Interacción Cooperativa', texto: 'Favorecemos el encuentro cooperativo entre pares desde muy pequeños. Al interactuar, los chicos se enfrentan a desafíos cotidianos que se transforman en oportunidades para acceder a nuevos conocimientos y enriquecer su desarrollo afectivo, cognitivo y social.' },

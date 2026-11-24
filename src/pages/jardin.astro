@@ -5,6 +5,8 @@ import PortadaPagina from '../components/PortadaPagina.astro';
 import SubNav from '../components/SubNav.astro';
 import Tabs from '../components/Tabs.astro';
 import Desplegable from '../components/Desplegable.astro';
+import Acordeon from '../components/Acordeon.astro';
+import Telon from '../components/Telon.astro';
 import Interludio from '../components/Interludio.astro';
 import Galeria from '../components/Galeria.astro';
 import PasaFotos from '../components/PasaFotos.astro';
@@ -13,7 +15,7 @@ import { jardin as j } from '../content/jardin';
 import { parrafos, acento } from '../lib/texto';
 
 const subnav = [
-  { href: '#que-nos-diferencia', texto: '¿Qué nos diferencia?' },
+  { href: '#la-vida-en-el-jardin', texto: 'La vida en el Jardín' },
   { href: '#propuesta', texto: 'Propuesta pedagógica' },
   { href: '#salas', texto: 'Nuestras salas' },
   { href: '#lenguajes', texto: 'Nuestros lenguajes' },
@@ -46,8 +48,8 @@ const subnav = [
 
   <SubNav items={subnav} etiqueta="Secciones del Jardín" />
 
-  {/* ¿Qué nos diferencia? — tarjetas sobrias */}
-  <section class="seccion ancla" id="que-nos-diferencia" aria-labelledby="dif-titulo">
+  {/* La vida en el Jardín — tarjetas sobrias que desarrollan lo que priorizamos */}
+  <section class="seccion ancla" id="la-vida-en-el-jardin" aria-labelledby="dif-titulo">
     <div class="contenedor">
       <div class="cabeza-regla cabeza">
         <h2 id="dif-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.diferencias.titulo)} />
@@ -87,7 +89,7 @@ const subnav = [
       <div class="gesto">
         <div class="gesto__fotos" data-revelar>
           <PasaFotos items={[
-            { id: 'jardin-hojas-crayon' }, { id: 'jardin-arcilla-figuras' }, { id: 'jardin-tiza-negro' }, { id: 'jardin-collage-corazon' },
+            { id: 'jardin-hojas-crayon' }, { id: 'jardin-arcilla-figuras' }, { id: 'plastica-masa-figura' }, { id: 'jardin-collage-corazon' },
             { id: 'jardin-pintura-mesa-azul' }, { id: 'jardin-tiza-piso' }, { id: 'jardin-mesa-roja-masa' }, { id: 'jardin-construccion-amarilla' },
           ]} etiqueta="Las materias del taller" />
         </div>
@@ -101,7 +103,9 @@ const subnav = [
 
   <Interludio foto={j.interludioSocial.foto} frase={j.interludioSocial.frase} />
 
-  {/* Nuestras salas */}
+  <Telon foto="sala-taller-sillas" rotulo="Las salas del Jardín" alto="bajo" />
+
+  {/* Nuestras salas: pestañas interactivas (una por taller) */}
   <section class="seccion ancla" id="salas" aria-labelledby="salas-titulo">
     <div class="contenedor">
       <div class="cabeza-regla cabeza">
@@ -132,35 +136,30 @@ const subnav = [
     </div>
   </section>
 
-  {/* Nuestros lenguajes — cada taller: foto grande + notita, y sus apartados numerados */}
+  {/* Nuestros lenguajes — sin botonera de filtros: los cinco talleres uno debajo del otro en zigzag
+      (foto a un lado, al otro el número, el nombre, la introducción y sus tópicos desplegables con +) */}
   <section class="seccion seccion--papel-oscuro ancla" id="lenguajes" aria-labelledby="leng-titulo">
     <div class="contenedor">
       <div class="cabeza-regla cabeza">
         <h2 id="leng-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.lenguajes.titulo)} />
-        <nav class="leng-indice" aria-label="Talleres" data-revelar>
-          {j.lenguajes.items.map((l) => <a href={`#${l.id}`}>{l.titulo}</a>)}
-        </nav>
       </div>
       {j.lenguajes.items.map((l, i) => (
-        <article class="lenguaje ancla" id={l.id} aria-labelledby={`${l.id}-t`}>
-          <div class:list={['escena', { 'escena--invertida': i % 2 === 1 }]}>
-            <div class="escena__foto" data-revelar>
-              <Foto id={l.foto} ratio="16/9" sizes="(min-width: 56em) 60vw, 100vw" pie={'frase' in l ? l.frase : undefined} />
-            </div>
-            <div class:list={['nota', 'escena__nota', `nota--${(['blanca', 'verde-claro', 'rosa', 'azul', 'arena'] as const)[i % 5]}`]} data-revelar>
-              <span class="escena__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <h3 class="escena__titulo" id={`${l.id}-t`}>{l.titulo}</h3>
-              <p class="escena__texto">{l.intro}</p>
+        <article class:list={['zigzag', { 'zigzag--invertido': i % 2 === 1 }]} id={l.id} aria-labelledby={`${l.id}-t`}>
+          <div class="zigzag__foto" data-revelar>
+            <Foto id={l.foto} ratio="4/5" sizes="(min-width: 56em) 44vw, 100vw" pie={'frase' in l ? l.frase : undefined} />
+          </div>
+          <div class="zigzag__texto">
+            <span class="zigzag__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="zigzag__titulo" id={`${l.id}-t`}>{l.titulo}</h3>
+            <p class="zigzag__intro">{l.intro}</p>
+            <div class="zigzag__topicos">
+              {l.apartados.map((a, k) => (
+                <Acordeon id={`${l.id}-${k + 1}`} titulo={a.etiqueta} grupo={l.id} nivelTitulo="h4" class="topico">
+                  <p class="topico__texto">{a.texto}</p>
+                </Acordeon>
+              ))}
             </div>
           </div>
-          <dl class:list={['bloques', ({ 3: 'bloques--3', 4: 'bloques--4', 5: 'bloques--5' } as Record<number, string>)[l.apartados.length] ?? 'bloques--3', 'lenguaje__bloques']}>
-            {l.apartados.map((a) => (
-              <div class="bloque" data-revelar>
-                <dt class="bloque__titulo">{a.etiqueta}</dt>
-                <dd class="bloque__texto">{a.texto}</dd>
-              </div>
-            ))}
-          </dl>
         </article>
       ))}
     </div>
@@ -298,12 +297,27 @@ const subnav = [
   .sala__bloques { margin-top: 6.5rem; margin-bottom: 1.5rem; }
   .sala__bloques .bloque__n { display: block; }
 
-  /* Lenguajes */
-  .leng-indice { display: flex; flex-wrap: wrap; }
-  .leng-indice a { margin: 0 1.25rem 0.35rem 0; font-size: 0.875rem; text-decoration: none; border-bottom: 1px solid rgba(35, 32, 28, 0.3); }
-  .leng-indice a:hover { color: var(--acento-texto); border-color: currentColor; }
-  .lenguaje + .lenguaje { margin-top: 7.5rem; }
-  .lenguaje__bloques { margin-top: 6.5rem; }
+  /* Lenguajes: zigzag foto / texto con tópicos en acordeón */
+  .zigzag { display: grid; grid-template-columns: 1fr; grid-gap: 1.75rem; gap: 1.75rem; align-items: start; }
+  .zigzag + .zigzag { margin-top: 4.5rem; padding-top: 4.5rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
+  .zigzag__foto { min-width: 0; }
+  .zigzag__foto :global(.foto) { box-shadow: 0 30px 60px -40px rgba(35, 32, 28, 0.6); }
+  .zigzag__foto :global(figcaption) { margin-top: 0.8rem; font-size: 1.0625rem; color: var(--tinta); }
+  .zigzag__n { display: block; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--bordo); }
+  .zigzag__titulo { margin-top: 0.5rem; font-size: 1.8rem; font-size: clamp(1.8rem, 1.3rem + 1.5vw, 2.7rem); font-weight: 320; letter-spacing: -0.03em; line-height: 1.04; }
+  .zigzag__intro { margin-top: 1rem; font-size: 1.0625rem; line-height: 1.6; }
+  .zigzag__topicos { margin-top: 1.75rem; }
+  .zigzag__topicos :global(.topico .acordeon__resumen) { padding: 0.95rem 0; }
+  .zigzag__topicos :global(.topico .acordeon__titulo) { font-size: 1.125rem; font-size: clamp(1.1rem, 1rem + 0.35vw, 1.3rem); }
+  .zigzag__topicos :global(.topico .acordeon__signo) { width: 1.9rem; height: 1.9rem; }
+  .zigzag__topicos :global(.topico .acordeon__interior) { padding-bottom: 1.25rem; }
+  .topico__texto { font-size: 0.975rem; line-height: 1.65; color: var(--tinta-suave); }
+  @media (min-width: 56em) {
+    .zigzag { grid-template-columns: 5fr 6fr; grid-gap: 4rem; gap: 4rem; }
+    .zigzag--invertido { grid-template-columns: 6fr 5fr; }
+    .zigzag--invertido .zigzag__foto { order: 2; }
+    .zigzag__foto { position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 5rem); }
+  }
 
   /* Patio */
   .patio { overflow: hidden; }
