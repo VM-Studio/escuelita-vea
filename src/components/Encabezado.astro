@@ -7,6 +7,7 @@ interface Props { sobreHero?: boolean }
 const { sobreHero = false } = Astro.props;
 const ruta = Astro.url.pathname.replace(/\/?$/, '/');
 const activo = (href: string) => (href === '/' ? ruta === '/' : ruta.startsWith(href));
+const idSub = (href: string) => `submenu-${href.replace(/[^a-z]/g, '')}`;
 ---
 <header class:list={['encabezado', { 'encabezado--hero': sobreHero }]} data-encabezado>
   <div class="encabezado__barra contenedor">
@@ -23,11 +24,11 @@ const activo = (href: string) => (href === '/' ? ruta === '/' : ruta.startsWith(
                 <a href={item.href} class="nav__enlace enlace-trazo" aria-current={activo(item.href) ? 'page' : undefined} data-submenu-disparador>
                   {item.texto}
                 </a>
-                <button class="nav__flechita" type="button" aria-expanded="false" aria-controls="submenu-escuelita" data-submenu-boton>
+                <button class="nav__flechita" type="button" aria-expanded="false" aria-controls={idSub(item.href)} data-submenu-boton>
                   <span class="sr-only">Abrir submenú de {item.texto}</span>
                   <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="M1 1.5 L6 6.5 L11 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
                 </button>
-                <ul class="submenu" id="submenu-escuelita" data-submenu>
+                <ul class="submenu" id={idSub(item.href)} data-submenu>
                   {item.hijos.map((h) => (
                     <li><a href={h.href} class="submenu__enlace" aria-current={ruta === h.href ? 'page' : undefined}>{h.texto}</a></li>
                   ))}

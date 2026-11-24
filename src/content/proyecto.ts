@@ -1,7 +1,6 @@
 // PROYECTO PEDAGÓGICO — textos tal cual CONTENIDO-WEB.md. Corazón del sitio.
 export const proyecto = {
   titulo: 'Proyecto pedagógico',
-  introTitulo: 'Introducción y metodología',
   intro: [
     'Cuando una familia se acerca a La Escuelita por primera vez, descubre que nuestra propuesta busca utilizar el arte como el medio más potente para el desarrollo humano. Traducimos nuestra mirada en una experiencia cotidiana pensada por y para las infancias.',
     // "la profesora Marta Calvo" enlaza a la historia (nota de diseño de la escuela).
@@ -9,7 +8,12 @@ export const proyecto = {
     'Esta propuesta se extendió luego a la etapa escolar. De este modo dio lugar, hace 30 años, a nuestra escuela primaria. La institución conjuga la estructura curricular oficial con los principios básicos de La Escuelita, y los adapta a las necesidades propias de estas edades junto a sus posibilidades concretas.',
     'Lo que distingue nuestro trabajo es el empleo de la dinámica de taller como forma cotidiana del aprendizaje. Concebimos al arte como una actividad transversal y nodal, inherente a nuestra condición de seres humanos. Hoy, el deseo de su fundadora y su equipo interdisciplinario es que este modelo siga en crecimiento y expansión hacia sectores cada vez más amplios y variados de la sociedad, para potenciar su lazo y cercanía con la comunidad.',
   ],
-  fotoApertura: 'plastica-masa-muchas-manos',
+  fotoApertura: 'fachada-mural-calle',
+  // Fondo de la portada: fotos que van pasando (carpeta PROYECTO PEDAGOGICO enviada por la escuela, rev. 19-11-2026)
+  fotosApertura: [
+    'fachada-mural-calle', 'taller-maestra-mural-retratos', 'jardin-musica-guitarra', 'patio-regando-cantero', 'plastica-retratos-tinta',
+    'jardin-pintura-murales', 'literatura-libros-mesa', 'taller-maestras-dibujos', 'plastica-masa-figura',
+  ],
   ejesTitulo: 'Ejes fundamentales',
   ejesIntro: 'Nuestra propuesta pedagógica cotidiana se estructura y despliega bajo los siguientes ejes fundamentales:',
   ejes: [

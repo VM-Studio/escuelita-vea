@@ -66,7 +66,17 @@ export const NAV = [
       { texto: 'Nuestro Equipo', href: '/la-escuelita/equipo/' },
     ],
   },
-  { texto: 'Proyecto Pedagógico', href: '/proyecto-pedagogico/' },
+  {
+    texto: 'Proyecto Pedagógico',
+    href: '/proyecto-pedagogico/',
+    // Desplegables pedidos por la escuela (rev. 19-11-2026): los cuatro ejes fundamentales
+    hijos: [
+      { texto: 'Concepción del niño', href: '/proyecto-pedagogico/#la-concepcion-del-nino' },
+      { texto: 'Educación por el arte', href: '/proyecto-pedagogico/#educacion-por-el-arte' },
+      { texto: 'Expresión/aprendizaje', href: '/proyecto-pedagogico/#expresion-aprendizaje' },
+      { texto: 'Rol del docente', href: '/proyecto-pedagogico/#el-rol-del-docente' },
+    ],
+  },
   { texto: 'Jardín', href: '/jardin/' },
   { texto: 'Primaria', href: '/primaria/' },
   { texto: 'Nuestra Comunidad', href: '/comunidad/' },

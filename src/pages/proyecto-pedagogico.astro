@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Interludio from '../components/Interludio.astro';
 import Puertas from '../components/Puertas.astro';
+import Acordeon from '../components/Acordeon.astro';
 import { proyecto as p } from '../content/proyecto';
 import { parrafos, enLinea, acento } from '../lib/texto';
 // Color de la notita de cada eje (tonos suaves de la paleta)
@@ -14,10 +15,14 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
   fotoOg={p.fotoApertura}
   progreso
 >
-  {/* Apertura: foto a sangre con el título y una "notita" colgando con el primer párrafo de la introducción */}
-  <section class="apertura" data-hero aria-labelledby="apertura-titulo">
-    <div class="apertura__foto">
-      <Foto id={p.fotoApertura} sizes="100vw" prioridad foco="50% 16%" />
+  {/* Apertura: fotos que van pasando detrás del título (pedido de la escuela) y una "notita" colgando con el primer párrafo */}
+  <section class="apertura" data-hero data-portada data-portada-intervalo="4500" aria-labelledby="apertura-titulo">
+    <div class="apertura__foto" aria-hidden="true">
+      {p.fotosApertura.map((id, i) => (
+        <div class:list={['apertura__capa', { 'is-activa': i === 0 }]} data-portada-capa>
+          <Foto id={id} sizes="100vw" prioridad={i === 0} alt="" />
+        </div>
+      ))}
     </div>
     <div class="apertura__velo" aria-hidden="true"></div>
     <div class="contenedor apertura__contenido">
@@ -31,20 +36,17 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
     </div>
   </div>
 
-  <section class="intro seccion" aria-labelledby="intro-titulo">
+  {/* Sin el título "Introducción y metodología": los párrafos a la izquierda y, a la derecha, la botonera de los ejes */}
+  <section class="intro seccion" aria-label="Nuestra metodología">
     <div class="contenedor intro__grilla">
-      <h2 id="intro-titulo" class="intro__titulo" data-titulo-lineas set:html={acento(p.introTitulo)} />
       <div class="prosa intro__texto" data-revelar set:html={parrafos(p.intro.slice(1))} />
-    </div>
-  </section>
-
-  <section class="ejes-cabeza" aria-labelledby="ejes-titulo">
-    <div class="contenedor ejes-cabeza__caja">
-      <h2 id="ejes-titulo" data-titulo-lineas set:html={acento(p.ejesTitulo)} />
-      <p class="t-lead" data-revelar>{p.ejesIntro}</p>
-      <ol class="ejes-indice" data-revelar>
-        {p.ejes.map((e, i) => <li><a href={`#${e.id}`}><span class="ejes-indice__n">{String(i + 1).padStart(2, '0')}</span>{e.titulo}</a></li>)}
-      </ol>
+      <nav class="ejes-caja" aria-labelledby="ejes-titulo">
+        <h2 id="ejes-titulo" class="ejes-caja__titulo" data-titulo-lineas set:html={acento(p.ejesTitulo)} />
+        <p class="ejes-caja__intro" data-revelar>{p.ejesIntro}</p>
+        <ol class="ejes-indice" data-revelar>
+          {p.ejes.map((e, i) => <li><a href={`#${e.id}`}><span class="ejes-indice__n">{String(i + 1).padStart(2, '0')}</span>{e.titulo}<span class="ejes-indice__flecha" aria-hidden="true">→</span></a></li>)}
+        </ol>
+      </nav>
     </div>
   </section>
 
@@ -61,16 +63,14 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
             <div class="prosa capitulo__prosa" set:html={parrafos(e.texto)} />
           </div>
         </div>
+        {/* Rol del docente: las tres partes en acordeón interactivo (pedido de la escuela) */}
         {'apartados' in e && e.apartados && (
-          <div class="contenedor">
-            <dl class="apartados">
-              {e.apartados.map((a) => (
-                <div class="apartado" data-revelar>
-                  <dt class="apartado__titulo">{a.etiqueta}</dt>
-                  <dd class="apartado__texto">{a.texto}</dd>
-                </div>
-              ))}
-            </dl>
+          <div class="contenedor apartados">
+            {e.apartados.map((a, k) => (
+              <Acordeon id={`${e.id}-${k + 1}`} titulo={a.etiqueta} grupo="rol-docente" abierto={k === 0}>
+                <p class="apartado__texto">{a.texto}</p>
+              </Acordeon>
+            ))}
           </div>
         )}
       </article>
@@ -87,8 +87,18 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
   /* ---------- Apertura ---------- */
   .apertura { position: relative; overflow: hidden; height: 72vh; min-height: 28rem; max-height: 46rem; margin-top: var(--header-h); background: var(--tinta); color: #fff; display: flex; align-items: flex-end; }
   .apertura__foto { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
-  .apertura__foto :global(.foto) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-  .apertura__foto :global(picture), .apertura__foto :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .apertura__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; will-change: opacity; }
+  .apertura__capa.is-previa { z-index: 1; opacity: 1; }
+  .apertura__capa.is-activa { z-index: 2; opacity: 1; transition: opacity 2s cubic-bezier(0.45, 0, 0.55, 1); }
+  .apertura__capa + .apertura__capa { display: none; }
+  .apertura.is-secuencia .apertura__capa { display: block; }
+  .apertura__capa :global(.foto) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  .apertura__capa :global(picture), .apertura__capa :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .apertura__capa :global(img) { transform: scale(1.02); transition: transform 7s linear; }
+  .apertura__capa.is-activa :global(img), .apertura__capa.is-previa :global(img) { transform: scale(1.08); }
+  .apertura__capa:not(.is-activa):not(.is-previa) :global(img) { transition: none; }
+  .apertura__capa :global(.foto__lqip) { display: none; }
+  :global(html.reducido) .apertura__capa :global(img), :global(html.liviano) .apertura__capa :global(img) { transform: none; transition: none; }
   .apertura__velo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(20, 16, 12, 0.72) 0%, rgba(20, 16, 12, 0.45) 38%, rgba(20, 16, 12, 0) 70%), linear-gradient(0deg, rgba(20, 16, 12, 0.35), rgba(20, 16, 12, 0) 40%); }
   .apertura__contenido { position: relative; z-index: 2; padding-bottom: 5.5rem; }
   .apertura__volanta { margin: 0; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.85); }
@@ -110,23 +120,20 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
   .apertura__lead { margin: 0 auto; max-width: none; font-family: var(--f-titulo); font-style: italic; font-size: 1.02rem; font-size: clamp(1rem, 0.9rem + 0.35vw, 1.2rem); line-height: 1.45; color: #fff; }
   .apertura__lead :global(a) { color: inherit; }
 
-  /* ---------- Introducción ---------- */
-  .intro__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.5rem; gap: 1.5rem; }
-  .intro__titulo { font-size: 1.6rem; font-size: clamp(1.6rem, 1.1rem + 1.6vw, 2.5rem); font-weight: 330; letter-spacing: -0.025em; max-width: 12ch; }
-  .intro__texto { font-size: 1.0625rem; }
-  @media (min-width: 56em) { .intro__grilla { grid-template-columns: 4fr 7fr; grid-gap: 4rem; gap: 4rem; } }
-
-  /* ---------- Índice de ejes ---------- */
-  .ejes-cabeza { padding: 0 0 3rem; }
-  .ejes-cabeza__caja { border-top: 1px solid rgba(35, 32, 28, 0.15); padding-top: 2.5rem; }
-  .ejes-cabeza__caja > * + * { margin-top: 1.1rem; }
-  .ejes-indice { list-style: none; padding: 0; margin: 2rem 0 0 !important; display: grid; grid-template-columns: 1fr; border-top: 1px solid rgba(35, 32, 28, 0.12); }
-  @media (min-width: 48em) { .ejes-indice { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 64em) { .ejes-indice { grid-template-columns: repeat(4, 1fr); } }
-  .ejes-indice li { border-bottom: 1px solid rgba(35, 32, 28, 0.12); }
-  .ejes-indice a { display: flex; align-items: baseline; padding: 1rem 1rem 1rem 0; font-family: var(--f-titulo); font-size: 1.2rem; text-decoration: none; transition: color 0.3s; }
-  .ejes-indice a:hover { color: var(--rojo); }
-  .ejes-indice__n { margin-right: 0.75rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--tinta-suave); }
+  /* ---------- Introducción: párrafos a la izquierda, botonera de ejes a la derecha ---------- */
+  .intro__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .intro__texto { font-size: 1.0625rem; font-size: var(--t-md); }
+  @media (min-width: 56em) { .intro__grilla { grid-template-columns: 7fr 5fr; grid-gap: 4.5rem; gap: 4.5rem; } .ejes-caja { position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 2rem); } }
+  .ejes-caja { padding: 1.75rem 1.5rem 1.25rem; background: var(--papel-oscuro); }
+  .ejes-caja__titulo { font-size: 1.8rem; font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.6rem); font-weight: 330; letter-spacing: -0.025em; }
+  .ejes-caja__intro { margin-top: 0.9rem; font-size: 0.975rem; color: var(--tinta-suave); }
+  .ejes-indice { list-style: none; padding: 0; margin: 1.25rem 0 0 !important; border-top: 1px solid rgba(35, 32, 28, 0.16); }
+  .ejes-indice li { border-bottom: 1px solid rgba(35, 32, 28, 0.16); }
+  .ejes-indice a { display: flex; align-items: baseline; padding: 1rem 0; font-family: var(--f-titulo); font-size: 1.25rem; font-size: clamp(1.2rem, 1.05rem + 0.4vw, 1.45rem); text-decoration: none; transition: color 0.3s; }
+  .ejes-indice a:hover { color: var(--bordo); }
+  .ejes-indice__n { margin-right: 0.85rem; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.75rem; letter-spacing: 0.08em; color: var(--tinta-suave); }
+  .ejes-indice__flecha { margin-left: auto; padding-left: 0.75rem; transition: transform 0.4s var(--ease-out); }
+  .ejes-indice a:hover .ejes-indice__flecha { transform: translateX(4px); }
 
   /* ---------- Capítulos: foto grande + notita superpuesta ---------- */
   .capitulo { padding: 3rem 0 4.5rem; }
@@ -146,10 +153,7 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
     .capitulo--invertido .capitulo__nota { grid-column: 8 / 13; }
   }
 
-  /* ---------- Apartados del rol docente ---------- */
-  .apartados { margin: 3.5rem 0 0; display: grid; grid-template-columns: 1fr; grid-gap: 2rem; gap: 2rem; }
-  @media (min-width: 56em) { .apartados { grid-template-columns: repeat(3, 1fr); grid-gap: 2.5rem; gap: 2.5rem; } }
-  .apartado { padding-top: 1.1rem; border-top: 2px solid var(--tinta); }
-  .apartado__titulo { font-family: var(--f-titulo); font-size: 1.3rem; margin-bottom: 0.7rem; }
-  .apartado__texto { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--tinta-suave); }
+  /* ---------- Rol docente: acordeón ---------- */
+  .apartados { margin-top: 4.5rem; max-width: 58rem; }
+  .apartado__texto { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--tinta-suave); max-width: 46rem; }
 </style>
