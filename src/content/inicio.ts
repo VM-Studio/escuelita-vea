@@ -6,13 +6,15 @@ export const inicio = {
       'Mirar la educación desde la sensibilidad del arte es mirarla como un despertar. Es habitar un lugar donde la mirada y la acción propician llegar a ser quien se es.',
     fotos: ['patio-abrazo-arbol', 'jardin-hojas-al-aire', 'jardin-ronda-arena-arboles'],
   },
-  // Hero principal a pantalla completa: fotos que se van pasando (Jardín y Primaria conviven en el Inicio)
-  portadaFondo: ['primaria-leyenda-bajo-arboles', 'musica-ronda-manos', 'primaria-leyenda-quillangos', 'primaria-primer-dia', 'taller-construccion-pintada'],
+  // Hero principal a pantalla completa: fotos que se van pasando (Jardín y Primaria conviven en el Inicio).
+  // Las cinco que la escuela marcó con "SI" en la carpeta FOTOS PARA EL INICIO (rev. 19-11-2026).
+  portadaFondo: ['fachada-mural-entrada', 'primaria-aula-tercero', 'sala5-ronda-sala', 'sala4-dibujo-arbol', 'jardin-pintura-murales'],
   presentacion: {
     nombre: 'La Escuelita',
     fundada: 'Fundada por la profesora Marta Calvo en 1959',
+    // Se publica una sola vez, en la portada (la escuela pidió no repetir los 67 años; rev. 19-11-2026)
     trayectoria: '67 años en la Educación por el Arte',
-    descripcion: 'Centro de expresión infantil y Espacio de formación docente continua',
+    descripcion: 'Centro de expresión infantil y espacio de formación docente continua.',
     jardin: { texto: 'Primer Jardín Argentino de Educación por el Arte', anio: '1959' },
     primaria: { texto: 'Instituto La Escuelita, Escuela Primaria de Educación a través del Arte', anio: '1997' },
   },
@@ -45,23 +47,25 @@ export const inicio = {
       {
         titulo: 'Una mirada sobre las infancias',
         texto: [
-          'La Escuelita es una forma de entender la educación. Desarrollamos una mirada construida a lo largo de sesenta y siete años, basada en la experiencia y en la observación constante de los niños, las niñas y sus necesidades.',
-          'Nuestra propuesta genera un ambiente propicio para su expresión, crecimiento y aprendizaje en el hacer junto con otros. En este proceso, el acompañamiento de los adultos —familias y maestros— que se ocupan de su crianza es una condición indispensable.',
+          'La Escuelita es una forma de entender la educación que reconoce a cada niño y cada niña como una persona singular, con sus propios tiempos, intereses, necesidades y maneras de descubrir el mundo.',
+          'Desde esta mirada, el acompañamiento de los adultos —familias y maestros— es fundamental. La educación se construye en el encuentro con otros, a través de vínculos que sostienen y enriquecen el crecimiento de cada niño y cada niña.',
         ],
-        foto: 'patio-sonrisa-arena',
+        // Una de las opciones enviadas por la escuela (carpeta EJES PEDAGÓGICOS: 4-PLAST)
+        foto: 'jardin-pintura-mesa-azul',
       },
       {
         titulo: 'Del Jardín a la Escuela Primaria',
         texto: [
-          'Nuestra metodología de trabajo nació hace 67 años como una dinámica de taller en el jardín. El modelo creado por Marta Calvo y sus equipos de trabajo se extendió luego a la etapa escolar.',
-          'Esto dio lugar, hace 30 años, a nuestra escuela primaria. La institución conjuga la estructura curricular con los principios básicos de la escuelita, y los adapta a las necesidades propias de estas edades.',
+          'La propuesta pedagógica desarrollada originalmente en el Jardín se extendió a la Escuela Primaria en 1997, dando continuidad a una misma manera de concebir la educación.',
+          'Esta ampliación permitió integrar los contenidos curriculares de la enseñanza primaria con los principios pedagógicos que dieron origen a La Escuelita, acompañando a los chicos en nuevas etapas de su desarrollo y aprendizaje.',
         ],
         foto: 'primaria-septimo-y-primero',
       },
       {
         titulo: 'El taller como forma de cotidianidad',
         texto: [
-          'Nuestro trabajo se distingue por el uso de la dinámica de taller como forma cotidiana de aprendizaje. De esta manera, concebimos el arte dentro de la educación como una actividad transversal y nodal, inherente a nuestra condición de seres humanos.',
+          'El taller es nuestra forma cotidiana de enseñar y aprender. Un espacio donde los chicos exploran, experimentan, crean, se hacen preguntas y buscan respuestas, poniendo en juego sus ideas, sus emociones y sus conocimientos.',
+          'En esta dinámica, el arte no constituye una actividad aislada, sino que atraviesa las distintas experiencias educativas. El hacer, el sentir y el pensar se integran en procesos de aprendizaje que promueven la participación, el intercambio y la construcción colectiva del conocimiento.',
         ],
         foto: 'taller-pintura-mesa',
       },
