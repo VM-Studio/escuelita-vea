@@ -795,6 +795,154 @@ export const fotos = [
     id: 'jardin-disfraces', nivel: 'jardin', carpeta: 'JUEGO DRAMÁTICO', archivo: 'jardin/JUEGO DRAMÁTICO/5-JUEG-DRAM.jpeg',
     ve: 'Chicos disfrazados de animales y personajes sentados en el patio.', alt: 'Chicos disfrazados de animales y personajes sentados en el patio.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
   },
+
+  // ── REVISIÓN DE LA ESCUELA (19-11-2026): fotos enviadas en la carpeta "FOTOS" ──────────────
+  // Las que ya estaban en el material original se reutilizan con su id (no se duplican).
+  // Las nuevas viven en _material/fotos/revision-19-11/ (nunca se publican los originales).
+  {
+    id: 'fachada-mural-entrada', nivel: 'jardin', carpeta: 'FOTOS PARA EL INICIO (marcada “SI”)', archivo: 'revision-19-11/inicio/fachada1.jpg',
+    ve: 'Frente de la escuela pintado con un mural de hojas verdes; en la puerta, el cartel de inscripciones abiertas y una familia entrando.',
+    alt: 'Frente de La Escuelita pintado con un mural de hojas verdes y la puerta de entrada abierta.',
+    usos: ['Inicio · portada a pantalla completa (1ª foto)'], porque: 'Elegida por la escuela para el Inicio (carpeta FOTOS PARA EL INICIO, marcada “SI”).', foco: '50% 55%',
+  },
+  {
+    id: 'primaria-aula-tercero', nivel: 'primaria', carpeta: 'FOTOS PARA EL INICIO (marcada “SI”) / PRIMARIA', archivo: 'revision-19-11/primaria/grado2.jpg',
+    ve: 'Aula de primaria con guirnalda de bienvenida; chicos y chicas trabajan en mesas compartidas.',
+    alt: 'Aula de la Primaria con una guirnalda de bienvenida; chicos y chicas trabajan en mesas compartidas.',
+    usos: ['Inicio · portada a pantalla completa (2ª foto)', 'Primaria · Cómo aprendemos (galería)'], porque: 'Elegida por la escuela para el Inicio y enviada también en la carpeta PRIMARIA.', foco: '50% 55%',
+  },
+  {
+    id: 'sala5-ronda-sala', nivel: 'jardin', carpeta: 'FOTOS PARA EL INICIO (marcada “SI”) / JARDIN', archivo: 'jardin/TALLER DE 5/8-T5.jpeg',
+    ve: 'Ronda de chicos sentados en sillitas rojas dentro de la sala, con la maestra; ventanales al patio.',
+    alt: 'Ronda de chicos y chicas en sillitas rojas dentro de la sala, junto a la maestra, con ventanales al patio.',
+    usos: ['Inicio · portada a pantalla completa (3ª foto)', 'Jardín · Taller de 5'], porque: 'Elegida por la escuela para el Inicio y enviada en la carpeta JARDIN.', foco: '50% 60%',
+  },
+  {
+    id: 'sala4-dibujo-arbol', nivel: 'jardin', carpeta: 'FOTOS PARA EL INICIO (marcada “SI”)', archivo: 'jardin/TALLER DE 4/3-T4.jpeg',
+    ve: 'Chicos de pie alrededor de una mesa miran un gran dibujo de un árbol hecho entre todos.',
+    alt: 'Chicos y chicas del jardín miran, alrededor de una mesa, un gran dibujo de un árbol hecho entre todos.',
+    usos: ['Inicio · portada a pantalla completa (4ª foto)'], porque: 'Elegida por la escuela para el Inicio (carpeta FOTOS PARA EL INICIO, marcada “SI”).', foco: '50% 58%',
+  },
+  {
+    id: 'plastica-masa-figura', nivel: 'jardin', carpeta: 'PROYECTO PEDAGOGICO', archivo: 'jardin/PLÁSTICA/13-PLAST.jpeg',
+    ve: 'Sobre una mesa roja, una figura humana armada con tiras de masa celeste; una mano la termina.',
+    alt: 'Figura humana armada con tiras de masa celeste sobre una mesa roja.',
+    usos: ['Proyecto pedagógico · fotos de la portada', 'Jardín · el gesto espontáneo (fotos que pasan)'], porque: 'Enviada por la escuela para la portada de Proyecto pedagógico.', foco: '50% 45%',
+  },
+  {
+    id: 'plastica-retratos-tinta', nivel: 'jardin', carpeta: 'PROYECTO PEDAGOGICO', archivo: 'jardin/PLÁSTICA/14-PLAST.jpeg',
+    ve: 'Vista desde arriba de dos chicos que pintan retratos de cuerpo entero con tinta y témpera.',
+    alt: 'Vista desde arriba de dos chicos que pintan figuras de cuerpo entero con tinta y témpera.',
+    usos: ['Proyecto pedagógico · fotos de la portada'], porque: 'Enviada por la escuela para la portada de Proyecto pedagógico.', foco: '50% 50%',
+  },
+  {
+    id: 'literatura-libros-mesa', nivel: 'jardin', carpeta: 'PROYECTO PEDAGOGICO', archivo: 'jardin/LITERATURA/6-LITERATURA.jpg',
+    ve: 'Chicos de espaldas eligen libros ilustrados desplegados sobre una mesa.',
+    alt: 'Chicos y chicas eligen libros ilustrados desplegados sobre una mesa.',
+    usos: ['Proyecto pedagógico · fotos de la portada'], porque: 'Enviada por la escuela para la portada de Proyecto pedagógico.', foco: '50% 50%',
+  },
+  {
+    id: 'taller-maestra-mural-retratos', nivel: 'jardin', carpeta: 'PROYECTO PEDAGOGICO', archivo: 'revision-19-11/proyecto/taller18.jpeg',
+    ve: 'Una maestra, de espaldas, cuelga un gran mural de retratos pintados por los chicos.',
+    alt: 'Una maestra, de espaldas, acomoda un gran mural de retratos pintados por los chicos.',
+    usos: ['Proyecto pedagógico · fotos de la portada'], porque: 'Enviada por la escuela para la portada de Proyecto pedagógico.', foco: '50% 40%',
+  },
+  {
+    id: 'taller-maestras-dibujos', nivel: 'jardin', carpeta: 'PROYECTO PEDAGOGICO', archivo: 'revision-19-11/proyecto/taller19.jpeg',
+    ve: 'Tres maestras sonrientes sostienen una gran tela con dibujos de los chicos.',
+    alt: 'Tres maestras sostienen una gran tela con dibujos hechos por los chicos.',
+    usos: ['Proyecto pedagógico · fotos de la portada'], porque: 'Enviada por la escuela para la portada de Proyecto pedagógico.', foco: '50% 45%',
+  },
+  {
+    id: 'fachada-mural-calle', nivel: 'jardin', carpeta: 'PROYECTO PEDAGOGICO', archivo: 'revision-19-11/proyecto/fachada8.jpeg',
+    ve: 'Frente de la escuela desde la vereda: mural de hojas y flores amarillas, un árbol grande y la puerta abierta.',
+    alt: 'Frente de La Escuelita desde la vereda, con un mural de hojas y flores amarillas y un árbol grande.',
+    usos: ['Proyecto pedagógico · fotos de la portada (1ª foto)'], porque: 'Enviada por la escuela para la portada de Proyecto pedagógico.', foco: '50% 50%',
+  },
+  {
+    id: 'fachada-mural-arbol', nivel: 'jardin', carpeta: 'FOTOS PARA EL INICIO (sin marcar)', archivo: 'revision-19-11/inicio/fachada7.jpeg',
+    ve: 'Frente de la escuela con mural de hojas y flores amarillas, carteles con los logos y una maestra en la puerta.',
+    alt: 'Frente de La Escuelita con un mural de hojas y flores amarillas y los carteles de la escuela sobre la puerta.',
+    usos: ['La Escuelita · Nuestra identidad (collage)'], porque: 'Foto institucional: el lugar y su identidad visual. En el Inicio se usaron solo las marcadas “SI”.', foco: '50% 50%',
+  },
+  {
+    id: 'fondo-mural-la-escuelita', nivel: 'primaria', carpeta: 'FOTOS PARA EL INICIO (sin marcar)', archivo: 'revision-19-11/inicio/fachada4.jpeg',
+    ve: 'El fondo de la escuela: mural “la escuelita” sobre la pared, palmeras y árboles altos, cielo con nubes.',
+    alt: 'Mural con la palabra “la escuelita” en la pared del fondo de la escuela, entre palmeras y árboles altos.',
+    usos: ['La Escuelita · Nuestra identidad (collage)'], porque: 'Foto institucional del fondo de la escuela. En el Inicio se usaron solo las marcadas “SI”.', foco: '50% 60%',
+  },
+  {
+    id: 'sala-taller-obras', nivel: 'jardin', carpeta: 'JARDIN', archivo: 'revision-19-11/jardin/taller12.jpeg',
+    ve: 'Sala vacía del jardín con las paredes cubiertas de pinturas de los chicos, una guitarra y una mesa roja.',
+    alt: 'Sala del jardín con las paredes cubiertas de pinturas de los chicos, una guitarra colgada y una mesa roja.',
+    usos: ['La Escuelita · Nuestra identidad (collage)'], porque: 'Muestra el taller como espacio: la sala habitada por las producciones de los chicos.', foco: '50% 50%',
+  },
+  {
+    id: 'sala-taller-sillas', nivel: 'jardin', carpeta: 'JARDIN', archivo: 'revision-19-11/jardin/taller6.jpg',
+    ve: 'Sala del jardín con sillitas rojas en ronda, mochilas colgadas y ventanales hacia los árboles.',
+    alt: 'Sala del jardín con sillitas rojas en ronda, mochilas colgadas y ventanales hacia los árboles.',
+    usos: ['Jardín · banda antes de Nuestras salas'], porque: 'Foto apaisada de una sala: presenta el bloque de las salas.', foco: '50% 55%',
+  },
+  {
+    id: 'jardin-edfisica-cancha', nivel: 'jardin', carpeta: 'JARDIN', archivo: 'jardin/ED FÍSICA/2-ED-FISICA.jpeg',
+    ve: 'Clase de educación física en la cancha al aire libre: colchonetas, aros y chicos en fila, con palmeras de fondo.',
+    alt: 'Clase de educación física del jardín en una cancha al aire libre, con colchonetas, aros y palmeras de fondo.',
+    usos: ['Jardín · Taller de Educación Física'], porque: 'Enviada por la escuela en la carpeta JARDIN (2-ED-FISICA).', foco: '50% 55%',
+  },
+  {
+    id: 'marta-calvo-con-nena', nivel: 'jardin', carpeta: 'MARTA CALVO', archivo: 'revision-19-11/marta-calvo/20-HISTORICAS.png',
+    ve: 'Foto en blanco y negro: Marta Calvo joven sonríe a una nena que tiene en brazos.',
+    alt: 'Marta Calvo, joven, sonríe a una nena en una foto de archivo en blanco y negro.',
+    usos: ['Nuestra historia · Reconocimiento (fotos de Marta Calvo)'], porque: 'Enviada por la escuela para acompañar el reconocimiento a Marta Calvo.', foco: '50% 40%',
+  },
+  {
+    id: 'marta-calvo-sonrie', nivel: 'jardin', carpeta: 'MARTA CALVO', archivo: 'revision-19-11/marta-calvo/10-HISTORICAS.jpeg',
+    ve: 'Foto en blanco y negro: Marta Calvo, con anteojos, sonríe rodeada de gente.',
+    alt: 'Marta Calvo, con anteojos, sonríe en una foto de archivo en blanco y negro.',
+    usos: ['Nuestra historia · Reconocimiento (fotos de Marta Calvo)'], porque: 'Enviada por la escuela para acompañar el reconocimiento a Marta Calvo.', foco: '50% 30%',
+  },
+  {
+    id: 'marta-calvo-con-alumnos', nivel: 'primaria', carpeta: 'MARTA CALVO', archivo: 'revision-19-11/marta-calvo/18-HISTORICAS.jpeg',
+    ve: 'Marta Calvo en la puerta de la escuela, bajo el cartel “la escuelita”, rodeada por alumnos de primaria.',
+    alt: 'Marta Calvo en la puerta de la escuela, bajo el cartel de La Escuelita, rodeada por alumnos de la Primaria.',
+    usos: ['Nuestra historia · Reconocimiento (fotos de Marta Calvo)'], porque: 'Enviada por la escuela para acompañar el reconocimiento a Marta Calvo.', foco: '50% 45%',
+  },
+  {
+    id: 'marta-calvo-sentada', nivel: 'jardin', carpeta: 'MARTA CALVO', archivo: 'revision-19-11/marta-calvo/23-HISTORICAS.jpg',
+    ve: 'Marta Calvo sentada en un sillón, con pañuelo y bastón, delante de un dibujo de una casa.',
+    alt: 'Marta Calvo sentada en un sillón, con pañuelo y bastón, delante de un dibujo hecho por chicos.',
+    usos: ['Nuestra historia · Reconocimiento (fotos de Marta Calvo)'], porque: 'Enviada por la escuela para acompañar el reconocimiento a Marta Calvo.', foco: '50% 35%',
+  },
+  {
+    id: 'historica-dos-maestras', nivel: 'jardin', carpeta: 'MARTA CALVO', archivo: 'revision-19-11/marta-calvo/11-HISTORICAS.jpeg',
+    ve: 'Foto de archivo en color: dos mujeres conversan delante de una pared con dibujos de chicos.',
+    alt: 'Foto de archivo: dos mujeres conversan delante de una pared con dibujos de chicos.',
+    usos: ['Nuestra historia · archivo fotográfico'], porque: 'Enviada en la carpeta MARTA CALVO; no se sabe con certeza quién es cada una, por eso va en el archivo sin nombre.', foco: '50% 40%',
+  },
+  {
+    id: 'historica-equipo-1997', nivel: 'jardin', carpeta: 'MARTA CALVO', archivo: 'revision-19-11/marta-calvo/16-HISTORICAS.jpeg',
+    ve: 'Foto de archivo de un grupo de mujeres del equipo, abrazadas, junto a un afiche que dice “97”.',
+    alt: 'Foto de archivo de un grupo de mujeres del equipo de la escuela, abrazadas, en 1997.',
+    usos: ['Nuestra historia · archivo fotográfico'], porque: 'Enviada en la carpeta MARTA CALVO; va en el archivo, sin nombres.', foco: '50% 45%',
+  },
+  {
+    id: 'equipo-docente-hoy', nivel: 'jardin', carpeta: 'MARTA CALVO', archivo: 'revision-19-11/marta-calvo/17-HISTORICAS.jpeg',
+    ve: 'El equipo docente posa en grupo delante de un gran mural de retratos pintados por los chicos.',
+    alt: 'El equipo docente de La Escuelita posa en grupo delante de un gran mural de retratos pintados por los chicos.',
+    usos: ['Nuestro equipo · foto del equipo'], porque: 'Enviada en la carpeta MARTA CALVO; es una foto del equipo, por eso acompaña la página del equipo.', foco: '50% 45%',
+  },
+  {
+    id: 'comunidad-ronda-terraza', nivel: 'primaria', carpeta: 'COMUNIDAD (“SI PUEDE SERVIR PARA COMUNIDAD”)', archivo: 'revision-19-11/comunidad/terraza3.jpeg',
+    ve: 'Vista desde arriba de una gran ronda de familias, chicos y docentes en el patio de arena; una nena en el centro.',
+    alt: 'Gran ronda de familias, chicos y docentes en el patio de arena, vista desde arriba.',
+    usos: ['Comunidad · introducción (fotos)'], porque: 'Indicada por la escuela para Comunidad.', foco: '50% 50%',
+  },
+  {
+    id: 'comunidad-ronda-fondo', nivel: 'primaria', carpeta: 'COMUNIDAD', archivo: 'revision-19-11/comunidad/fondo13.jpeg',
+    ve: 'Vista desde arriba del fondo de la escuela: una ronda enorme de familias y chicos alrededor de la arena, entre árboles.',
+    alt: 'Ronda enorme de familias y chicos alrededor de la arena en el fondo de la escuela, entre árboles.',
+    usos: ['Comunidad · introducción (fotos)'], porque: 'Enviada por la escuela en la carpeta COMUNIDAD.', foco: '50% 55%',
+  },
 ].filter((f) => f.usos.length > 0);
 
 /** Fotos revisadas y NO usadas (o descartadas) — van al manifest para que la escuela sepa qué se miró. */
