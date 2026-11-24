@@ -888,7 +888,7 @@ export const fotos = [
     id: 'jardin-edfisica-cancha', nivel: 'jardin', carpeta: 'ED FÍSICA', archivo: 'jardin/ED FÍSICA/2-ED-FISICA.jpeg',
     ve: 'Clase de educación física en la cancha al aire libre: colchonetas, aros y chicos en fila, con palmeras de fondo.',
     alt: 'Clase de educación física del jardín en una cancha al aire libre, con colchonetas, aros y palmeras de fondo.',
-    usos: ['Jardín · Taller de Educación Física'], porque: 'Enviada por la escuela en la carpeta JARDIN (2-ED-FISICA).', foco: '50% 55%',
+    usos: ['Jardín · Taller de Educación Física'], porque: 'Enviada por la escuela en la carpeta JARDIN (2-ED-FISICA).', foco: '28% 60%',
   },
   {
     id: 'marta-calvo-con-nena', nivel: 'jardin', carpeta: 'HISTÓRICAS', archivo: 'revision-19-11/marta-calvo/20-HISTORICAS.png',

@@ -568,6 +568,7 @@ html.reducido .menu-movil .menu-movil__papel, html.liviano .menu-movil .menu-mov
   font-size: 1.3em;
   line-height: 0.8;
   letter-spacing: 0.01em;
+  margin-left: 0.1em; /* la letra manuscrita arranca muy pegada a la palabra anterior */
   color: var(--bordo);
 }
 /* Pedido de la escuela (rev. 19-11-2026): las palabras destacadas van siempre en bordó, también en Jardín y Primaria */

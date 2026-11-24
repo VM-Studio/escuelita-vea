@@ -86,7 +86,7 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
 <style>
   /* ---------- Apertura ---------- */
   .apertura { position: relative; overflow: hidden; height: 72vh; min-height: 28rem; max-height: 46rem; margin-top: var(--header-h); background: var(--tinta); color: #fff; display: flex; align-items: flex-end; }
-  .apertura__foto { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+  .apertura__foto { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; } /* las capas quedan debajo del velo */
   .apertura__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; will-change: opacity; }
   .apertura__capa.is-previa { z-index: 1; opacity: 1; }
   .apertura__capa.is-activa { z-index: 2; opacity: 1; transition: opacity 2s cubic-bezier(0.45, 0, 0.55, 1); }
@@ -99,7 +99,7 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
   .apertura__capa:not(.is-activa):not(.is-previa) :global(img) { transition: none; }
   .apertura__capa :global(.foto__lqip) { display: none; }
   :global(html.reducido) .apertura__capa :global(img), :global(html.liviano) .apertura__capa :global(img) { transform: none; transition: none; }
-  .apertura__velo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(20, 16, 12, 0.72) 0%, rgba(20, 16, 12, 0.45) 38%, rgba(20, 16, 12, 0) 70%), linear-gradient(0deg, rgba(20, 16, 12, 0.35), rgba(20, 16, 12, 0) 40%); }
+  .apertura__velo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background: linear-gradient(90deg, rgba(20, 16, 12, 0.72) 0%, rgba(20, 16, 12, 0.45) 40%, rgba(20, 16, 12, 0) 72%), linear-gradient(0deg, rgba(20, 16, 12, 0.4), rgba(20, 16, 12, 0) 42%); }
   .apertura__contenido { position: relative; z-index: 2; padding-bottom: 5.5rem; }
   .apertura__volanta { margin: 0; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.85); }
   .apertura__titulo { margin-top: 0.9rem; max-width: 11ch; color: #fff; font-size: 2.8rem; font-size: clamp(2.8rem, 1.4rem + 4.4vw, 5.6rem); font-weight: 320; line-height: 0.98; letter-spacing: -0.035em; text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); }
