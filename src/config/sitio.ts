@@ -49,6 +49,19 @@ export const REDES: { nombre: 'Instagram' | 'Facebook' | 'YouTube'; url: string 
   { nombre: 'YouTube', url: '' },
 ];
 
+// Videos de Instagram que la escuela pidió sumar a la web (documento "Contenido de Inst que puede servir
+// para la web", nov. 2026). Se alojan en public/videos/ (portada .jpg + .mp4). Los títulos son los textos
+// que aparecen en el propio video o en su publicación.
+export const VIDEOS = {
+  conocenos: { archivo: 'conocenos', titulo: '¿Querés saber más de nosotros?', instagram: 'https://www.instagram.com/reel/DFtXQ3TMltf/' },
+  desde1959: { archivo: 'desde-1959', titulo: '1959 · Hoy · Y seguimos creciendo', instagram: 'https://www.instagram.com/reel/DPM1PGaEvvk/' },
+  primerDiaJardin: { archivo: 'primer-dia-jardin', titulo: 'Primer día en el Jardín', instagram: 'https://www.instagram.com/reel/DGi8-qlB-Q1/' },
+  jardin: { archivo: 'jardin-educar-es-sacar', titulo: 'La Escuelita Jardín, desde 1959', instagram: 'https://www.instagram.com/reel/DVRh47SDAkw/' },
+  comunidad: { archivo: 'comunidad-cierre-ciclo', titulo: 'Cerrando el ciclo lectivo Nº 65', instagram: 'https://www.instagram.com/reel/DEGYuaatcOo/' },
+  // Historia destacada de Instagram: no se puede descargar ni insertar sin iniciar sesión; va como enlace.
+  reconocimientoMartaCalvo: 'https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDA5MjcyMjA3NDc3MTc5?story_media_id=3475384103585750305_44949379596',
+} as const;
+
 // Interruptores de contenido pendiente de aprobación.
 export const PUBLICAR = {
   videoRapDelLitio: false, // hasta confirmar autorización y grado

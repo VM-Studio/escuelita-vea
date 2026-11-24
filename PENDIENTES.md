@@ -205,3 +205,36 @@ Aplicado todo lo pedido en "Revisión de la primera maqueta página web 19-11-20
   Expresión/aprendizaje / Rol del docente" (desplegable de Proyecto Pedagógico), títulos de módulo
   "Saberes Curriculares e Idiomas" y "Lenguajes Artísticos y Expresión", "Algunas de nuestras
   actividades", "Efemérides", "Vida en comunidad, actividades y viajes" (textos del documento).
+
+## 15. Videos de Instagram (documento "Contenido de Inst que puede servir para la web", 24-11-2026)
+
+Los reels se descargaron de @la.escuelita.vea y se alojan en la propia web (`public/videos/`, portada `.jpg`
++ `.mp4`; datos en `VIDEOS` de `src/config/sitio.ts`). Se ven con una portada y un botón rojo de
+reproducir; el video se descarga recién al tocarlo y suena desde el principio. Al reproducir uno se pausan
+los demás. Cada uno tiene "Ver en Instagram ↗".
+
+| Video | Dónde quedó |
+| --- | --- |
+| "Saber más sobre nosotros" (DFtXQ3TMltf) | **Inicio**, sección nueva justo después de la portada ("parte inicial de la web"). |
+| "Podría ser para el principio" (DPM1PGaEvvk: 1959 · Hoy · Y seguimos creciendo) | **Inicio**, al lado del anterior. |
+| "Primer día en el Jardín" (DGi8-qlB-Q1) | **Jardín → Propuesta de adaptación**, debajo del título. |
+| Reel sin indicación (DVRh47SDAkw: "La Escuelita Jardín, desde 1959… talleres de 2 a 5 años") | **Jardín → Nuestra propuesta pedagógica**, al lado de los cuatro conceptos (habla de "educar es sacar", el niño es cuerpo, los sentidos). |
+| "Para Comunidad" (DEGYuaatcOo: cierre del ciclo lectivo Nº 65) | **Comunidad**, en la puerta de entrada, debajo del texto. Era un video horizontal con franjas negras: se recortó a 16:9. |
+| "Reconocimiento a Marta Calvo" (historia destacada) | **Nuestra historia → Reconocimiento**, como enlace "Ver el video del reconocimiento ↗". Instagram no deja descargar ni insertar historias sin iniciar sesión: **si mandan el archivo del video, se suma igual que los otros.** |
+
+Para confirmar:
+- **Autorización** para publicar los videos en la web (aparecen chicos y chicas; ya son públicos en Instagram).
+- En los primeros segundos del reel del Jardín (DVRh47SDAkw) se lee **el nombre de una nena** escrito en su
+  hoja. La portada se eligió sin ese cuadro, pero el video lo muestra. Si prefieren, se recorta ese tramo.
+- Los videos de Instagram vienen en baja resolución (360–480 px de ancho); por eso se muestran chicos. Si
+  tienen los originales, se ven mejor.
+
+Microcopy nuevo (para aprobar): "En video", "¿Querés saber más de nosotros?" (texto del propio reel),
+"@la.escuelita.vea", títulos de los videos ("¿Querés saber más de nosotros?", "1959 · Hoy · Y seguimos
+creciendo", "Primer día en el Jardín", "La Escuelita Jardín, desde 1959", "Cerrando el ciclo lectivo Nº 65"
+— tomados del video o de su publicación), "Ver en Instagram", "Reproducir el video: …", "Ver el video del
+reconocimiento".
+
+Fotos: el zip de fotos del 24-11 es idéntico al del 19-11 (mismos 38 archivos). Todas están ubicadas según su
+carpeta; además, **taller12** (carpeta JARDIN) ahora también aparece en Jardín (fotos que pasan de "El gesto
+espontáneo y sus materias").

@@ -876,7 +876,7 @@ export const fotos = [
     id: 'sala-taller-obras', nivel: 'jardin', carpeta: 'SALAS', archivo: 'revision-19-11/jardin/taller12.jpeg',
     ve: 'Sala vacía del jardín con las paredes cubiertas de pinturas de los chicos, una guitarra y una mesa roja.',
     alt: 'Sala del jardín con las paredes cubiertas de pinturas de los chicos, una guitarra colgada y una mesa roja.',
-    usos: ['La Escuelita · Nuestra identidad (collage)'], porque: 'Muestra el taller como espacio: la sala habitada por las producciones de los chicos.', foco: '50% 50%',
+    usos: ['La Escuelita · Nuestra identidad (collage)', 'Jardín · el gesto espontáneo (fotos que pasan)'], porque: 'Enviada en la carpeta JARDIN: muestra el taller como espacio, la sala habitada por las producciones de los chicos.', foco: '50% 50%',
   },
   {
     id: 'sala-taller-sillas', nivel: 'jardin', carpeta: 'SALAS', archivo: 'revision-19-11/jardin/taller6.jpg',

@@ -1,0 +1,110 @@
+---
+// Video vertical (reel de @la.escuelita.vea) alojado en la web: muestra la portada y un botón de reproducir;
+// el video se descarga recién al tocarlo y suena desde el principio. Sin JS, el navegador muestra sus controles.
+// Archivos en public/videos/ (portada .jpg + video .mp4). Al reproducir uno, se pausan los demás de la página.
+interface Props {
+  archivo: string; // nombre base en public/videos/
+  titulo: string; // nombre accesible y pie
+  instagram?: string; // enlace al reel original
+  ancho?: string; // ancho máximo del marco
+  rot?: number; // inclinación del marco (grados)
+  pie?: boolean;
+  horizontal?: boolean; // 16:9 en lugar de 9:16
+  class?: string;
+}
+const { archivo, titulo, instagram, ancho = '17rem', rot = 0, pie = true, horizontal = false, class: clase } = Astro.props;
+---
+<figure class:list={['vreel', { 'vreel--horizontal': horizontal }, clase]} style={`--vreel-ancho:${ancho};--vreel-rot:${rot}deg`} data-vreel>
+  <div class="vreel__marco">
+    <span class="cinta vreel__cinta" aria-hidden="true"></span>
+    <video
+      class="vreel__video"
+      controls
+      playsinline
+      preload="none"
+      poster={`/videos/${archivo}.jpg`}
+      aria-label={`Video: ${titulo}`}
+    >
+      <source src={`/videos/${archivo}.mp4`} type="video/mp4" />
+    </video>
+    <button type="button" class="vreel__play" data-vreel-play hidden>
+      <span class="vreel__circulo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+      </span>
+      <span class="sr-only">Reproducir el video: {titulo}</span>
+    </button>
+  </div>
+  {pie && (
+    <figcaption class="vreel__pie">
+      <span class="vreel__titulo">{titulo}</span>
+      {instagram && (
+        <a class="vreel__ig" href={instagram} target="_blank" rel="noopener">
+          Ver en Instagram <span aria-hidden="true">↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span>
+        </a>
+      )}
+    </figcaption>
+  )}
+</figure>
+
+<script>
+  const todos = Array.prototype.slice.call(document.querySelectorAll<HTMLElement>('[data-vreel]')) as HTMLElement[];
+  const videos = todos.map((f) => f.querySelector('video') as HTMLVideoElement);
+  todos.forEach((fig, i) => {
+    const v = videos[i];
+    const b = fig.querySelector<HTMLButtonElement>('[data-vreel-play]');
+    if (!v || !b) return;
+    // Con JS: portada limpia y un solo botón de reproducir; los controles aparecen al empezar.
+    v.controls = false;
+    b.hidden = false;
+    b.addEventListener('click', () => {
+      fig.classList.add('is-reproduciendo');
+      v.controls = true;
+      v.play().catch(() => {});
+    });
+    v.addEventListener('play', () => {
+      fig.classList.add('is-reproduciendo');
+      v.controls = true;
+      videos.forEach((o, j) => { if (j !== i && !o.paused) o.pause(); });
+    });
+  });
+</script>
+
+<style>
+  .vreel { margin: 0; width: 100%; max-width: var(--vreel-ancho); }
+  .vreel__marco {
+    position: relative; padding: 0.55rem; background: #fff;
+    box-shadow: 0 2px 3px rgba(35, 32, 28, 0.12), 0 26px 48px -26px rgba(35, 32, 28, 0.55);
+    transform: rotate(var(--vreel-rot)); transition: transform 0.6s var(--ease-out);
+  }
+  .vreel.is-reproduciendo .vreel__marco { transform: rotate(0); }
+  .vreel__cinta { z-index: 3; }
+  /* 9:16 con respaldo para navegadores sin aspect-ratio */
+  .vreel__marco::before { content: ''; display: block; padding-top: 177.78%; }
+  .vreel--horizontal .vreel__marco::before { padding-top: 56.25%; }
+  .vreel__video, .vreel__play {
+    position: absolute; top: 0.55rem; left: 0.55rem;
+    width: calc(100% - 1.1rem); height: calc(100% - 1.1rem);
+  }
+  .vreel__video { object-fit: cover; background: var(--tinta); display: block; }
+  .vreel.is-reproduciendo .vreel__video { object-fit: contain; }
+  .vreel__play {
+    z-index: 2; display: flex; align-items: flex-end; justify-content: flex-end;
+    border: 0; padding: 0; margin: 0; cursor: pointer; color: #fff;
+    background: linear-gradient(180deg, rgba(20, 16, 12, 0) 62%, rgba(20, 16, 12, 0.4) 100%);
+  }
+  .vreel__play[hidden], .vreel.is-reproduciendo .vreel__play { display: none; }
+  .vreel__circulo {
+    display: flex; align-items: center; justify-content: center;
+    width: 3.6rem; height: 3.6rem; margin: 0 0.9rem 0.9rem 0; border-radius: 50%;
+    background: var(--rojo); color: #fff; padding-left: 0.2rem;
+    box-shadow: 0 10px 26px -8px rgba(20, 16, 12, 0.6);
+    transition: transform 0.4s var(--ease-out);
+  }
+  @media (hover: hover) { .vreel__play:hover .vreel__circulo { transform: scale(1.08); } }
+  .vreel__play:focus-visible { outline: 2px solid var(--rojo); outline-offset: -4px; }
+  .vreel__pie { margin-top: 0.85rem; font-size: 0.875rem; line-height: 1.4; color: var(--tinta-suave); }
+  .vreel__titulo { display: block; font-family: var(--f-titulo); font-style: italic; font-size: 1rem; color: var(--tinta); }
+  .vreel__ig { display: inline-block; margin-top: 0.25rem; color: var(--tinta-suave); text-decoration: none; font-size: 0.8125rem; }
+  .vreel__ig:hover { color: var(--rojo); }
+  :global(html.reducido) .vreel__marco, :global(html.liviano) .vreel__marco { transition: none; }
+</style>

@@ -9,8 +9,9 @@ import Acordeon from '../components/Acordeon.astro';
 import Carrusel from '../components/Carrusel.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import Interludio from '../components/Interludio.astro';
+import VideoReel from '../components/VideoReel.astro';
 import { comunidad as c } from '../content/comunidad';
-import { PUBLICAR } from '../config/sitio';
+import { PUBLICAR, VIDEOS } from '../config/sitio';
 import { parrafos, enLinea, acento } from '../lib/texto';
 
 // Las seis actividades del carrusel, cada una con su foto y su texto actual
@@ -36,7 +37,13 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
   <section class="seccion intro-com" aria-label="Nuestra comunidad">
     <Dibujito nombre="paisaje-barco" lado="der" top="6%" ancho="9rem" rot={3} opacidad={0.5} />
     <div class="contenedor intro-com__grilla">
-      <div class="prosa intro-com__texto" data-revelar set:html={parrafos(c.introduccion.texto)} />
+      <div class="intro-com__izq">
+        <div class="prosa intro-com__texto" data-revelar set:html={parrafos(c.introduccion.texto)} />
+        {/* Video enviado por la escuela para Comunidad (Instagram): cierre del ciclo lectivo */}
+        <div class="intro-com__video" data-revelar>
+          <VideoReel {...VIDEOS.comunidad} ancho="34rem" rot={-1} horizontal />
+        </div>
+      </div>
       <div class="intro-com__lado">
         <p class="t-frase intro-com__frase" data-revelar>{c.introduccion.frase}</p>
         <div class="intro-com__fotos">
@@ -158,6 +165,7 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
   .intro-com { overflow: hidden; }
   .intro-com__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
   .intro-com__texto { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.65; }
+  .intro-com__video { margin-top: 2.5rem; }
   .intro-com__frase { font-size: 1.15rem; font-size: clamp(1.1rem, 0.98rem + 0.45vw, 1.4rem); line-height: 1.35; max-width: 30ch; color: var(--tinta); }
   .intro-com__fotos { position: relative; margin-top: 1.5rem; display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; }
   .intro-com__fotos .pegada { position: relative; }

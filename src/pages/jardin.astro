@@ -11,6 +11,8 @@ import Interludio from '../components/Interludio.astro';
 import Galeria from '../components/Galeria.astro';
 import PasaFotos from '../components/PasaFotos.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
+import VideoReel from '../components/VideoReel.astro';
+import { VIDEOS } from '../config/sitio';
 import { jardin as j } from '../content/jardin';
 import { parrafos, acento } from '../lib/texto';
 
@@ -77,20 +79,26 @@ const subnav = [
       <div class="cabeza-regla cabeza">
         <h2 id="prop-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.propuesta.titulo)} />
       </div>
-      <ol class="bloques bloques--4">
-        {j.propuesta.items.map((c, i) => (
-          <li class="bloque" data-revelar>
-            <span class="bloque__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <h3 class="bloque__titulo">{c.etiqueta}</h3>
-            <p class="bloque__texto">{c.texto}</p>
-          </li>
-        ))}
-      </ol>
+      <div class="propuesta__grilla">
+        <ol class="bloques propuesta__bloques">
+          {j.propuesta.items.map((c, i) => (
+            <li class="bloque" data-revelar>
+              <span class="bloque__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="bloque__titulo">{c.etiqueta}</h3>
+              <p class="bloque__texto">{c.texto}</p>
+            </li>
+          ))}
+        </ol>
+        {/* Video enviado por la escuela (Instagram): La Escuelita Jardín, desde 1959 */}
+        <div class="propuesta__video" data-revelar>
+          <VideoReel {...VIDEOS.jardin} ancho="18rem" rot={1.4} />
+        </div>
+      </div>
       <div class="gesto">
         <div class="gesto__fotos" data-revelar>
           <PasaFotos items={[
             { id: 'jardin-hojas-crayon' }, { id: 'jardin-arcilla-figuras' }, { id: 'plastica-masa-figura' }, { id: 'jardin-collage-corazon' },
-            { id: 'jardin-pintura-mesa-azul' }, { id: 'jardin-tiza-piso' }, { id: 'jardin-mesa-roja-masa' }, { id: 'jardin-construccion-amarilla' },
+            { id: 'jardin-pintura-mesa-azul' }, { id: 'jardin-tiza-piso' }, { id: 'jardin-mesa-roja-masa' }, { id: 'jardin-construccion-amarilla' }, { id: 'sala-taller-obras' },
           ]} etiqueta="Las materias del taller" />
         </div>
         <div class="gesto__texto">
@@ -200,7 +208,13 @@ const subnav = [
 
   <section class="seccion ancla" id="adaptacion" aria-labelledby="adap-titulo">
     <div class="contenedor adaptacion">
-      <h2 id="adap-titulo" class="adaptacion__titulo" data-titulo-lineas set:html={acento(j.adaptacion.titulo)} />
+      <div class="adaptacion__lado">
+        <h2 id="adap-titulo" class="adaptacion__titulo" data-titulo-lineas set:html={acento(j.adaptacion.titulo)} />
+        {/* Video enviado por la escuela (Instagram): Primer día en el Jardín */}
+        <div class="adaptacion__video" data-revelar>
+          <VideoReel {...VIDEOS.primerDiaJardin} ancho="16rem" rot={-1.6} />
+        </div>
+      </div>
       <div class="adaptacion__cuerpo">
         <div class="adaptacion__intro prosa" data-revelar set:html={parrafos(j.adaptacion.intro)} />
         <div class="adaptacion__desplegable" data-revelar>
@@ -330,10 +344,20 @@ const subnav = [
   .adaptacion__titulo { font-size: 1.9rem; font-size: clamp(1.8rem, 1.2rem + 1.9vw, 3rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1.04; padding-bottom: 1rem; border-bottom: 1px solid rgba(35, 32, 28, 0.55); align-self: start; }
   .adaptacion__intro { font-size: 1.0625rem; }
   .adaptacion__desplegable { margin-top: 2rem; }
+  .adaptacion__video { margin-top: 2rem; display: flex; justify-content: center; }
+  .adaptacion__video :global(.vreel) { max-width: 14rem; }
+  @media (min-width: 56em) { .adaptacion__video { justify-content: flex-start; } .adaptacion__video :global(.vreel) { max-width: 16rem; } }
+  .propuesta__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 3rem; gap: 3rem; align-items: center; }
+  .propuesta__video { display: flex; justify-content: center; }
+  .propuesta__video :global(.vreel) { max-width: 15rem; }
+  @media (min-width: 64em) {
+    .propuesta__grilla { grid-template-columns: 8fr 4fr; grid-gap: 4.5rem; gap: 4.5rem; }
+    .propuesta__video :global(.vreel) { max-width: 18rem; }
+  }
   .adaptacion__pasos { margin-top: 1.5rem; }
   @media (min-width: 56em) {
     .adaptacion { grid-template-columns: 4fr 7fr; grid-gap: 4.5rem; gap: 4.5rem; }
-    .adaptacion__titulo { position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 4rem); }
+    .adaptacion__lado { align-self: start; }
   }
 
   /* Horarios: tabla + notita del beneficio */
