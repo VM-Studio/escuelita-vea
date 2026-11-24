@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Trazo from '../../components/Trazo.astro';
+import Foto from '../../components/Foto.astro';
 import LlamadoEntrevista from '../../components/LlamadoEntrevista.astro';
 import { equipo as e } from '../../content/equipo';
 import { parrafos, acento } from '../../lib/texto';
@@ -13,6 +14,9 @@ import { parrafos, acento } from '../../lib/texto';
     <div class="contenedor">
       <p class="t-volanta" data-hero-resto>La Escuelita</p>
       <h1 class="cabeza__titulo" data-hero-titular>{e.titulo}</h1>
+      <div class="cabeza__foto" data-hero-resto>
+        <Foto id="equipo-docente-hoy" ratio="21/9" sizes="(min-width: 76em) 72rem, 94vw" prioridad />
+      </div>
     </div>
   </section>
 
@@ -104,6 +108,8 @@ import { parrafos, acento } from '../../lib/texto';
   .cabeza { padding-top: calc(var(--header-h) + 2.72rem); }
   .cabeza__titulo { margin-top: 1rem; font-size: 2.58rem; font-size: clamp(2.58rem, 1.312rem + 3.6vw, 4.5rem); font-weight: 300; letter-spacing: -0.04em; }
   .cabeza__paleta { margin-top: 1rem; }
+  .cabeza__foto { margin-top: 2rem; }
+  .cabeza__foto :global(.foto) { border-radius: 3px; box-shadow: 0 30px 60px -40px rgba(35, 32, 28, 0.6); }
   .cabeza__trazo { width: 60%; max-width: 24rem; height: 1.3rem; margin-top: 0.75rem; }
   .cabeza__trazo :global(svg) { width: 100%; height: 100%; }
 

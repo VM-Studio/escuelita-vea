@@ -4,13 +4,17 @@ export const laEscuelita = {
     titulo: 'Nuestra historia',
     texto:
       'La Escuelita nació en 1959 como un proyecto innovador de la profesora Marta Calvo. Surgió como una experiencia piloto de talleres de plástica y música que revolucionó la mirada sobre las infancias. A lo largo de casi siete décadas, consolidamos un modelo educativo singular donde el juego y el arte se conjugan para propiciar el desarrollo humano integral.',
-    fotos: ['historica-dibujo-pared', 'historica-ronda-taller', 'historica-flautas', 'historica-manos-pintura', 'historica-mesa', 'historica-aros', 'historica-rincon'],
+    fotos: ['historica-dibujo-pared', 'historica-ronda-taller', 'historica-flautas', 'historica-manos-pintura', 'historica-mesa', 'historica-aros', 'historica-rincon', 'historica-dos-maestras', 'historica-equipo-1997'],
+    // Collage de la portada de Nuestra historia (fotos de archivo)
+    collage: ['historica-dibujo-pared', 'historica-flautas', 'historica-manos-pintura'],
   },
   reconocimiento: {
     titulo: 'Reconocimiento a una trayectoria singular',
     texto:
       'El 22 de agosto de 2024, la profesora Marta Calvo fue distinguida como “Personalidad Ilustre dentro del Ámbito de la Educación” por la Legislatura Porteña y la Junta Comunal. Este hito celebra el alma, el recorrido y las convicciones profundas de nuestra institución.',
     boton: 'Leer la Carta de Agradecimiento de Marta Calvo',
+    // Cuatro fotos de Marta Calvo enviadas por la escuela (carpeta MARTA CALVO), al lado del texto
+    fotos: ['marta-calvo-con-nena', 'marta-calvo-sonrie', 'marta-calvo-con-alumnos', 'marta-calvo-sentada'],
   },
   carta: {
     lugarFecha: 'Ciudad de Buenos Aires, 22 de agosto de 2024',
@@ -45,7 +49,6 @@ export const laEscuelita = {
         etiqueta: 'Aporte a la Educación Pública',
         texto:
           'En 1979, nuestra directora fundadora fue convocada para organizar el nivel inicial en el Instituto Vocacional de Arte Manuel de Labardén. Esta iniciativa dio origen a los primeros jardines de educación por el arte en el ámbito público, coordinados hasta 1990 junto a Ana D\'Andrea de Pirotzky.',
-        anios: ['1979', '1990'],
       },
       {
         etiqueta: 'Innovación en Espacios Nacionales',
@@ -76,8 +79,13 @@ export const laEscuelita = {
   },
   identidad: {
     titulo: 'Nuestra identidad',
+    // Frase de Marta Calvo que la escuela pidió sumar acá (rev. 19-11-2026), siempre con su firma
+    frase: '“Preservamos lo que entendemos por educación: el lugar para que la palabra se convierta en acción, unión entre el hacer, el sentir y el pensar”.',
+    fraseFirma: 'Marta Calvo',
     texto:
-      'La Escuelita es una institución de educación por el arte centrada en el desarrollo integral y humano de cada niño y niña. Concebimos la enseñanza como un espacio creado y pensado en función de las infancias, así como de sus necesidades de crecimiento individual y social.',
+      'La Escuelita es una institución de educación por el arte centrada en el desarrollo integral y humano de cada niño y niña. Concebimos la enseñanza como un espacio creado y pensado en función de las infancias y de sus necesidades de crecimiento individual y social.',
+    // Collage de fotos representativas (Jardín, Primaria, el lugar y el taller)
+    collage: ['fachada-mural-arbol', 'plastica-hojas-cenital', 'patio-ronda-arena-sombra', 'sala-taller-obras', 'fondo-mural-la-escuelita'],
     pilaresIntro: 'Nuestros pilares fundamentales se sostienen en:',
     pilares: [
       { etiqueta: 'Educación por el Arte', texto: 'El arte concebido como el medio primordial para el despliegue del potencial humano.' },
