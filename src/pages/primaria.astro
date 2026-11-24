@@ -1,12 +1,12 @@
 ---
-import Dibujito from '../components/Dibujito.astro';
 import Telon from '../components/Telon.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
 import PortadaPagina from '../components/PortadaPagina.astro';
 import SubNav from '../components/SubNav.astro';
-import Tabs from '../components/Tabs.astro';
+import Acordeon from '../components/Acordeon.astro';
+import PasaFotos from '../components/PasaFotos.astro';
 import Desplegable from '../components/Desplegable.astro';
 import Interludio from '../components/Interludio.astro';
 import Galeria from '../components/Galeria.astro';
@@ -36,13 +36,18 @@ const subnav = [
     <p class="portada-sub">{p.portada.subtitulo}</p>
   </PortadaPagina>
 
-  <section class="seccion cita-nivel" aria-label="Presentación de la Primaria">
-    <div class="contenedor cita-nivel__grilla">
-      <figure class="cita-nivel__cita">
-        <blockquote><p class="t-frase cita-nivel__texto" data-frase>{p.portada.cita}</p></blockquote>
-        <figcaption class="cita-nivel__firma" data-revelar>— {p.portada.citaFirma}</figcaption>
-      </figure>
-      <p class="cita-nivel__parrafo" data-revelar>{p.portada.texto}</p>
+  {/* Frase de Marta Calvo en un recuadro colgando de la portada, como el párrafo del Jardín */}
+  <div class="contenedor intro-nivel">
+    <figure class="nota nota--verde-claro intro-nivel__nota" data-revelar>
+      <blockquote><p class="t-frase intro-nivel__cita">{p.portada.cita}</p></blockquote>
+      <figcaption class="intro-nivel__firma">— {p.portada.citaFirma}</figcaption>
+    </figure>
+  </div>
+
+  {/* El párrafo centrado y, debajo, las solapas */}
+  <section class="parrafo-nivel" aria-label="Presentación de la Primaria">
+    <div class="contenedor">
+      <p class="parrafo-nivel__texto" data-revelar>{p.portada.texto}</p>
     </div>
   </section>
 
@@ -52,8 +57,8 @@ const subnav = [
   <Telon foto="primaria-recreo-sombra-arena" rotulo="Recreo en el fondo de la escuela" alto="bajo" />
 
   <section class="seccion ancla" id="como-aprendemos" aria-labelledby="ca-titulo">
-    <Dibujito nombre="cara-anteojos" lado="der" top="10%" ancho="6.5rem" rot={5} />
-    <div class="contenedor contenedor--ancho">
+    <div class="contenedor ca__grilla">
+      <div class="ca__texto">
       <div class="cabecera-seccion">
         <h2 id="ca-titulo" data-titulo-lineas set:html={acento(p.comoAprendemos.titulo)} />
       </div>
@@ -74,6 +79,11 @@ const subnav = [
             </aside>
           </div>
         </Desplegable>
+      </div>
+      </div>
+      {/* Más fotos al lado de "Cómo aprendemos" (pedido de la escuela): galería que pasa */}
+      <div class="ca__fotos" data-revelar>
+        <PasaFotos items={p.comoAprendemos.fotos.map((id) => ({ id }))} etiqueta="La vida en la Primaria" ratio="4/5" />
       </div>
     </div>
   </section>
@@ -98,14 +108,19 @@ const subnav = [
         </div>
       </div>
 
-      <div class="areas-botonera">
-        <Tabs items={p.areas.items.map((a) => ({ id: a.id, texto: a.boton }))} etiqueta="Áreas" variante="chips">
-          {p.areas.items.map((a) => (
-            <section class="tabs__panel area" id={a.id} data-panel aria-labelledby={`${a.id}-h`}>
-              <div class:list={['area__grilla', { 'area__grilla--sin-foto': !a.fotos.length && !('penas' in a) }]}>
-                <div class="area__texto">
-                  <h3 class="area__titulo" id={`${a.id}-h`}>{a.titulo}</h3>
-                  <div class="prosa" set:html={parrafos(a.texto)} />
+      {/* Misma lógica que los lenguajes del Jardín: zigzag con las áreas desplegables (+) */}
+      {p.areas.modulos.map((m, mi) => (
+        <article class:list={['modulo', { 'modulo--invertido': mi % 2 === 1 }]} aria-labelledby={`modulo-${mi + 1}`}>
+          <div class="modulo__foto" data-revelar>
+            <Foto id={m.foto} ratio="4/5" sizes="(min-width: 56em) 42vw, 100vw" />
+          </div>
+          <div class="modulo__texto">
+            <span class="modulo__n" aria-hidden="true">{String(mi + 1).padStart(2, '0')}</span>
+            <h3 class="modulo__titulo" id={`modulo-${mi + 1}`}>{m.titulo}</h3>
+            <div class="modulo__areas">
+              {m.areas.map((aid) => p.areas.items.find((x) => x.id === aid)!).map((a) => (
+                <Acordeon id={a.id} titulo={a.titulo} grupo={`modulo-${mi + 1}`} nivelTitulo="h4" class="area-ac">
+                  <div class="prosa area__prosa" set:html={parrafos(a.texto)} />
                   {'lista' in a && a.lista && (
                     <ul class="area__lista">
                       {a.lista.map((l) => <li><strong>{l.etiqueta}:</strong> <span set:html={enLinea(l.texto)} /></li>)}
@@ -117,25 +132,25 @@ const subnav = [
                       <VideoLitio titulo={a.rap.etiqueta} />
                     </div>
                   )}
-                </div>
-                {a.fotos.length > 0 && (
-                  <div class:list={['area__fotos', { 'area__fotos--dos': a.fotos.length > 1 }]}>
-                    {a.fotos.map((f, k) => (
-                      <Foto id={f} ratio={a.fotos.length > 1 ? (k ? '4/3' : '4/5') : '4/3'} sizes="(min-width: 56em) 40vw, 90vw" pie={k === 0 && 'frase' in a ? a.frase : undefined} />
-                    ))}
-                  </div>
-                )}
-                {'penas' in a && a.penas && (
-                  <div class="area__penas">
-                    <h4 class="area__penas-titulo">{a.penas.titulo}</h4>
-                    <Galeria ids={a.penas.fotos} variante="pegadas" sizes="(min-width: 56em) 20vw, 45vw" ratio="4/3" class="area__penas-galeria" />
-                  </div>
-                )}
-              </div>
-            </section>
-          ))}
-        </Tabs>
-      </div>
+                  {a.fotos.filter((f) => f !== m.foto).length > 0 && (
+                    <div class="area__fotos">
+                      {a.fotos.filter((f) => f !== m.foto).map((f) => <Foto id={f} ratio="4/3" sizes="(min-width: 56em) 18vw, 45vw" />)}
+                    </div>
+                  )}
+                  {'penas' in a && a.penas && (
+                    <div class="area__penas">
+                      <h5 class="area__penas-titulo">{a.penas.titulo}</h5>
+                      <div class="area__fotos">
+                        {a.penas.fotos.map((f) => <Foto id={f} ratio="4/3" sizes="(min-width: 56em) 18vw, 45vw" />)}
+                      </div>
+                    </div>
+                  )}
+                </Acordeon>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -159,7 +174,6 @@ const subnav = [
 
   {/* Proyectos destacados */}
   <section class="seccion ancla" id="proyectos" aria-labelledby="proy-titulo">
-    <Dibujito nombre="cuerpo-musculos" lado="izq" top="4%" ancho="6rem" rot={-4} opacidad={0.45} />
     <div class="contenedor">
       <div class="cabecera-seccion">
         <h2 id="proy-titulo" data-titulo-lineas set:html={acento(p.proyectos.titulo)} />
@@ -174,7 +188,6 @@ const subnav = [
 
   {/* Preparación para la secundaria */}
   <section class="seccion ancla" id="secundaria" aria-labelledby="sec-titulo">
-    <Dibujito nombre="cara-mujer" lado="der" top="8%" ancho="6rem" rot={4} />
     <div class="contenedor">
       <div class="secundaria">
         <h2 id="sec-titulo" class="secundaria__h2" data-titulo-lineas set:html={acento(p.secundaria.titulo)} />
@@ -196,14 +209,19 @@ const subnav = [
 <style>
   .portada-sub { font-family: var(--f-frase); font-style: italic; font-size: 1.15rem; font-size: clamp(1.15rem, 0.82rem + 1.008vw, 1.68rem); color: #f6efe3; max-width: 30ch; line-height: 1.3; }
 
-  .cita-nivel__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
-  .cita-nivel__paleta { margin-bottom: 1.25rem; }
-  .cita-nivel__trazo { width: 2rem; height: 2.8rem; margin-bottom: 1rem; }
-  .cita-nivel__texto { font-size: 1.397rem; font-size: clamp(1.397rem, 0.902rem + 1.702vw, 2.22rem); max-width: 24ch; }
-  .cita-nivel__firma { margin-top: 1rem; font-weight: 650; color: var(--bordo); }
-  .cita-nivel__parrafo { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
-  @media (min-width: 56em) { .cita-nivel__grilla { grid-template-columns: 7fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } .cita-nivel__parrafo { margin-top: 3.4rem; } }
+  /* Recuadro con la frase de Marta Calvo, colgando de la portada (como en el Jardín) */
+  .intro-nivel { position: relative; z-index: 3; margin-top: -3rem; }
+  .intro-nivel__nota { max-width: 42rem; margin: 0 auto; text-align: center; }
+  .intro-nivel__cita { margin: 0 auto; max-width: none; font-size: 1.15rem; font-size: clamp(1.1rem, 0.95rem + 0.6vw, 1.5rem); line-height: 1.4; }
+  .intro-nivel__firma { margin-top: 0.8rem; font-weight: 650; color: var(--bordo); }
+  /* Párrafo centrado, antes de las solapas */
+  .parrafo-nivel { padding: 3.5rem 0 3rem; text-align: center; }
+  .parrafo-nivel__texto { margin: 0 auto; max-width: 44rem; font-family: var(--f-titulo); font-size: 1.2rem; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.55rem); line-height: 1.5; font-weight: 350; }
 
+  /* Cómo aprendemos: texto + galería al costado */
+  .ca__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .ca__texto, .ca__fotos { min-width: 0; }
+  @media (min-width: 56em) { .ca__grilla { grid-template-columns: 7fr 5fr; grid-gap: 4rem; gap: 4rem; } .ca__fotos { position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 5rem); } }
   .copete { max-width: 44rem; }
   .copete__titulo { font-size: 1.26rem; font-size: var(--t-lg); margin-bottom: 1rem; }
   .copete__texto { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.6; }
@@ -224,23 +242,32 @@ const subnav = [
   .ciclo__titulo { font-size: 1.25rem; margin-bottom: 0.5rem; }
   @media (min-width: 56em) { .areas-intro { grid-template-columns: 6fr 5fr; grid-gap: 2.72rem; gap: 2.72rem; } }
 
-  .area__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; padding: 1.7rem; padding: clamp(1.25rem, 2.1vw, 1.87rem); background: var(--papel); border-radius: var(--radio-lg); }
-  .area__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1.25rem; }
-  .area__lista { margin-top: 1.25rem; padding-left: 1.1rem; }
+  /* Áreas: dos módulos en zigzag con acordeones */
+  .modulo { display: grid; grid-template-columns: 1fr; grid-gap: 1.75rem; gap: 1.75rem; align-items: start; }
+  .modulo + .modulo { margin-top: 4.5rem; padding-top: 4.5rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
+  .modulo__foto { min-width: 0; }
+  .modulo__foto :global(.foto) { box-shadow: 0 30px 60px -40px rgba(35, 32, 28, 0.6); }
+  .modulo__n { display: block; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--bordo); }
+  .modulo__titulo { margin-top: 0.5rem; font-size: 1.8rem; font-size: clamp(1.8rem, 1.3rem + 1.5vw, 2.7rem); font-weight: 320; letter-spacing: -0.03em; line-height: 1.04; }
+  .modulo__areas { margin-top: 1.5rem; }
+  .modulo__areas :global(.area-ac .acordeon__resumen) { padding: 1rem 0; }
+  .modulo__areas :global(.area-ac .acordeon__titulo) { font-size: 1.15rem; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.35rem); }
+  .modulo__areas :global(.area-ac .acordeon__signo) { width: 1.9rem; height: 1.9rem; }
+  .modulo__areas :global(.area-ac .acordeon__interior) { padding-bottom: 1.5rem; }
+  .area__prosa { font-size: 0.975rem; line-height: 1.65; }
+  .area__lista { margin-top: 1rem; padding-left: 1.1rem; font-size: 0.975rem; }
   .area__lista li + li { margin-top: 0.6rem; }
-  .area__rap { margin-top: 1.488rem; padding-top: 1.25rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
+  .area__rap { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(35, 32, 28, 0.14); }
   .area__rap > * + * { margin-top: 1rem; }
-  .area__fotos :global(.foto) { border-radius: var(--radio); }
-  .area__fotos :global(figcaption) { margin-top: 0.6rem; font-size: 1.125rem; color: var(--tinta); }
-  .area__fotos--dos { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1rem; gap: 1rem; align-items: start; }
-  .area__fotos--dos > :global(*:nth-child(3)) { grid-column: 1 / -1; margin-top: 0; }
-  .area__fotos--dos > :global(*:nth-child(2)) { margin-top: 1.7rem; }
-  .area__penas-titulo { font-family: var(--f-titulo); font-weight: 400; font-size: 1.375rem; margin-bottom: 1.25rem; }
-  .area__penas :global(.galeria--pegadas) { grid-template-columns: 1fr 1fr; }
+  .area__fotos { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 0.75rem; gap: 0.75rem; margin-top: 1.25rem; }
+  .area__fotos :global(.foto) { border-radius: 3px; }
+  .area__penas { margin-top: 1.5rem; }
+  .area__penas-titulo { font-family: var(--f-titulo); font-weight: 400; font-size: 1.2rem; }
   @media (min-width: 56em) {
-    .area__grilla { grid-template-columns: 6fr 5fr; grid-gap: 2.38rem; gap: 2.38rem; }
-    .area__grilla--sin-foto { grid-template-columns: 1fr; }
-    .area__grilla--sin-foto .area__texto { max-width: 44rem; }
+    .modulo { grid-template-columns: 5fr 6fr; grid-gap: 4rem; gap: 4rem; }
+    .modulo--invertido { grid-template-columns: 6fr 5fr; }
+    .modulo--invertido .modulo__foto { order: 2; }
+    .modulo__foto { position: -webkit-sticky; position: sticky; top: calc(var(--header-h) + 5rem); }
   }
 
   .proyectos { display: grid; grid-template-columns: 1fr; grid-gap: 1.275rem; gap: 1.275rem; align-items: start; }

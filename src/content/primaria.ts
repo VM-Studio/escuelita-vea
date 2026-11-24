@@ -2,7 +2,7 @@
 export const primaria = {
   portada: {
     titulo: 'Instituto La Escuelita: Escuela Primaria',
-    subtitulo: 'El encuentro en torno al conocimiento y la creación',
+    subtitulo: 'Un encuentro con otros en torno al conocimiento y la creación', // rev. 19-11-2026
     cita: '“Preservamos lo que entendemos por educación: el lugar para que la palabra se convierta en acción, unión entre el hacer, el sentir y el pensar”.',
     citaFirma: 'Marta Calvo',
     texto:
@@ -20,6 +20,8 @@ export const primaria = {
       'Cuidamos las interacciones cotidianas para que la potencia grupal se transforme en una oportunidad de crecimiento y en una beneficiosa oportunidad para todos. Sentirse aceptado por pares y adultos es fundamental. Por eso, garantizamos una confianza que asegura que mostrarse en el aspecto más genuino y creativo sea plenamente valorado.',
       'A través de propuestas colaborativas, la polifonía de voces y la diversidad de miradas enriquecen el quehacer diario. Los acuerdos y las normas se construyen de forma fundamentada, y nos distanciamos de los rituales estereotipados.',
     ],
+    // Galería al lado de "Cómo aprendemos" (pedido de la escuela, rev. 19-11-2026)
+    fotos: ['primaria-aula-tercero', 'primaria-lectura-leyenda', 'primaria-leyenda-ronda', 'primaria-muestra-estepa', 'primaria-muestra-mesa', 'primaria-construccion-arena'],
     ronda: {
       etiqueta: 'La Ronda Pedagógica',
       texto: 'La ronda es nuestra práctica de encuentro grupal habitual. Mediada por adultos que escuchan para devolver preguntas y moderar los intercambios, constituye el espacio común para manifestar diferencias y trabajar los conflictos. Alojar la posibilidad del conflicto y destinar tiempo para su resolución abona de manera directa a la buena convivencia.',
@@ -30,6 +32,11 @@ export const primaria = {
     titulo: 'Áreas de aprendizaje',
     intro:
       'Nuestra propuesta brinda a los niños y las niñas todos los saberes necesarios para continuar la trayectoria educativa en la escuela media de la modalidad que prefieran. La interacción con expresiones artísticas y la experiencia del arte como modo de expresión aportan un aspecto sensible que redunda en un conocimiento profundo de los contenidos. Potenciamos la capacidad de interrogación y el asombro frente al descubrimiento respetuoso. Las áreas no aparecen separadas: se entrelazan de forma orgánica en el marco de proyectos integrales.',
+    // Dos módulos en zigzag con las áreas desplegables (pedido de la escuela, rev. 19-11-2026)
+    modulos: [
+      { titulo: 'Saberes Curriculares e Idiomas', foto: 'primaria-escribiendo-juntos', areas: ['lengua', 'matematica', 'ciencias-sociales', 'ciencias-naturales', 'ingles', 'esi'] },
+      { titulo: 'Lenguajes Artísticos y Expresión', foto: 'primaria-leyenda-teatro', areas: ['artes-visuales', 'cine-y-foto', 'musica', 'teatro', 'educacion-fisica'] },
+    ],
     ciclos: [
       { etiqueta: 'Primer Ciclo (1°, 2° y 3° grado)', texto: 'Propiciamos una modalidad donde el aprendizaje tiene un carácter vivencial. La investigación, la literatura, el encuentro directo con las fuentes, el juego dramático y las visitas a museos habilitan puentes para llegar a tiempos remotos y, de alguna manera, habitarlos de forma colectiva.' },
       { etiqueta: 'Segundo Ciclo (4° a 7° grado)', texto: 'La base adquirida opera como matriz para atravesar proyectos grupales que proponen mayores niveles de abstracción, análisis y síntesis.' },
