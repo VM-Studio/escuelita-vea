@@ -354,37 +354,51 @@ function heroSecuencia() {
   }, 7000);
 }
 
-/* ---------- Hero principal: fotos a pantalla completa que pasan cada 4 segundos ---------- */
+/* ---------- Portadas con fotos a pantalla completa que pasan (Inicio, Proyecto pedagógico) ---------- */
+// Fundido cruzado sin "corte": la foto que entra se decodifica antes de mostrarse y la que sale queda
+// quieta y opaca debajo hasta que la nueva terminó de aparecer.
 function portadaSecuencia() {
-  const portada = $('[data-portada]');
-  if (!portada || reducido()) return;
-  const capas = $$('[data-portada-capa]', portada);
-  const marcas = $$('[data-portada-marca]', portada);
-  if (capas.length < 2) return;
-  let i = 0;
-  let visible = true;
-  document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
-  const cargar = (c: HTMLElement) => $$<HTMLImageElement>('img', c).forEach((im) => { im.loading = 'eager'; });
-  portada.classList.add('is-secuencia');
-  cargar(capas[1]);
-  setInterval(() => {
-    if (!visible || window.pageYOffset > window.innerHeight) return;
-    const sig = (i + 1) % capas.length;
-    cargar(capas[(sig + 1) % capas.length]);
-    const img = $<HTMLImageElement>('img', capas[sig]);
-    if (img && !(img.complete && img.naturalWidth)) return; // esperar a que esté cargada
-    capas.forEach((c) => c.classList.remove('is-previa'));
-    capas[i].classList.replace('is-activa', 'is-previa');
-    capas[sig].classList.add('is-activa');
-    if (marcas.length) {
-      if (sig === 0) marcas.forEach((m) => m.classList.remove('is-hecha', 'is-activa'));
-      else marcas[i].classList.add('is-hecha');
-      marcas[i].classList.remove('is-activa');
-      void marcas[sig].offsetWidth;
-      marcas[sig].classList.add('is-activa');
-    }
-    i = sig;
-  }, 4000);
+  if (reducido()) return;
+  $$('[data-portada]').forEach((portada) => {
+    const capas = $$('[data-portada-capa]', portada);
+    const marcas = $$('[data-portada-marca]', portada);
+    if (capas.length < 2) return;
+    const intervalo = Number(portada.getAttribute('data-portada-intervalo')) || 4000;
+    let i = 0;
+    let ocupado = false;
+    const cargar = (c: HTMLElement) => $$<HTMLImageElement>('img', c).forEach((im) => { im.loading = 'eager'; });
+    portada.classList.add('is-secuencia');
+    cargar(capas[1]);
+    setInterval(() => {
+      if (ocupado || document.hidden) return;
+      const r = portada.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      const sig = (i + 1) % capas.length;
+      cargar(capas[(sig + 1) % capas.length]);
+      const img = $<HTMLImageElement>('img', capas[sig]);
+      if (img && !(img.complete && img.naturalWidth)) return; // esperar a que esté cargada
+      ocupado = true;
+      const decodificar = img && typeof img.decode === 'function' ? img.decode().catch(() => undefined) : Promise.resolve();
+      decodificar.then(() => {
+        requestAnimationFrame(() => {
+          capas.forEach((c, k) => { if (k !== i && k !== sig) c.classList.remove('is-previa', 'is-activa'); });
+          capas[i].classList.remove('is-activa');
+          capas[i].classList.add('is-previa');
+          capas[sig].classList.remove('is-previa');
+          capas[sig].classList.add('is-activa');
+          if (marcas.length) {
+            if (sig === 0) marcas.forEach((m) => m.classList.remove('is-hecha', 'is-activa'));
+            else marcas[i].classList.add('is-hecha');
+            marcas[i].classList.remove('is-activa');
+            void marcas[sig].offsetWidth;
+            marcas[sig].classList.add('is-activa');
+          }
+          i = sig;
+          ocupado = false;
+        });
+      });
+    }, intervalo);
+  });
 }
 
 /* ---------- Volver arriba ---------- */

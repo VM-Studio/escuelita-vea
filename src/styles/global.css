@@ -73,6 +73,7 @@
   --rojo: #d23334;          /* rojo Escuelita: cuentagotas del logo VEA (#D23334) — AA sobre papel */
   --rojo-vivo: #e30613;     /* rojo del dibujo "la escuelita" — solo trazos y acentos grandes */
   --rojo-hondo: #a8231f;
+  --bordo: #7a1f2b;         /* bordó: palabras destacadas de los títulos (pedido de la escuela, nov. 2026) */
   --arena: #e3c79b;
   --ocre: #c4872e;
   --ocre-texto: #8c5a12;    /* ocre oscurecido para texto AA */
@@ -84,7 +85,7 @@
 
   /* Acento por nivel (se redefine en body.nivel-jardin / body.nivel-primaria) */
   --acento: var(--rojo);
-  --acento-texto: var(--rojo);
+  --acento-texto: var(--bordo);
   --acento-suave: var(--papel-oscuro);
 
   /* Tipografía */
@@ -120,7 +121,7 @@
   --ancho-max: 76rem;
   --ancho-texto: 36rem;     /* ≈ 66 caracteres a 16–17 px */
   --ancho-ancho: 58rem;
-  --header-h: 4.75rem;
+  --header-h: 4.75rem;      /* en pantallas medianas y grandes: 6.25rem (logos más grandes) */
   --radio: 0.1875rem;
   --radio-lg: 0.25rem;
 
@@ -135,6 +136,7 @@
 
   color-scheme: light;
 }
+@media (min-width: 48em) { :root { --header-h: 6.25rem; } }
 @supports (width: clamp(1px, 1vw, 2px)) {
   :root {
     --t-base: clamp(0.96875rem, 0.93rem + 0.15vw, 1.0625rem);
@@ -150,12 +152,12 @@
 
 body.nivel-jardin {
   --acento: var(--ocre);
-  --acento-texto: var(--ocre-texto);
+  --acento-texto: var(--bordo);
   --acento-suave: var(--arena-claro);
 }
 body.nivel-primaria {
   --acento: var(--verde);
-  --acento-texto: var(--verde-texto);
+  --acento-texto: var(--bordo);
   --acento-suave: var(--verde-claro);
 }
 
@@ -473,6 +475,9 @@ html.anim-ready [data-dibujar] ellipse,
 html.anim-ready [data-dibujar] polyline { visibility: hidden; }
 html.anim-ready [data-titulo-lineas],
 html.anim-ready [data-frase] { visibility: hidden; }
+/* Máscara de los titulares que entran por líneas: lugar para los trazos que bajan (g, j, y, p, q)
+   y para la letra manuscrita, que es más alta que la línea. Sin esto se cortaban "pedagógicos", "siente"… */
+.linea-mask { padding: 0.12em 0.08em 0.26em; margin: -0.12em -0.08em -0.26em; }
 /* Respaldo: si por algo la animación no corre, a los 4 s todo aparece */
 html.anim-ready.anim-rescate [data-revelar],
 html.anim-ready.anim-rescate [data-revelar-img],
@@ -530,7 +535,8 @@ html.reducido .menu-movil .menu-movil__papel, html.liviano .menu-movil .menu-mov
 /* ---------- Lenguaje gráfico "escuela de arte" ---------- */
 /* Acento editorial: una parte del titular en cursiva liviana y color */
 .acento { font-style: italic; font-weight: 300; color: var(--acento-texto); letter-spacing: -0.02em; padding-right: 0.04em; }
-.seccion--tinta .acento, .pie-sitio .acento { color: var(--arena); }
+.seccion--tinta .acento { color: var(--bordo); }
+.pie-sitio .acento { color: var(--arena); }
 /* Recortes orgánicos para algunas fotos (como formas recortadas en papel) */
 .forma-1 { border-radius: 46% 54% 42% 58% / 38% 44% 56% 62% !important; overflow: hidden; }
 .forma-2 { border-radius: 62% 38% 55% 45% / 52% 60% 40% 48% !important; overflow: hidden; }
@@ -562,10 +568,10 @@ html.reducido .menu-movil .menu-movil__papel, html.liviano .menu-movil .menu-mov
   font-size: 1.3em;
   line-height: 0.8;
   letter-spacing: 0.01em;
-  color: var(--rojo);
+  color: var(--bordo);
 }
-body.nivel-jardin .acento { color: var(--ocre-texto); }
-body.nivel-primaria .acento { color: var(--verde-texto); }
+/* Pedido de la escuela (rev. 19-11-2026): las palabras destacadas van siempre en bordó, también en Jardín y Primaria */
+body.nivel-jardin .acento, body.nivel-primaria .acento { color: var(--bordo); }
 
 /* Fondos apastelados / color piedra: la foto y los dibujos de los chicos son los protagonistas */
 :root {

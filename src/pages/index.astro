@@ -220,15 +220,19 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   /* ---------- HERO PRINCIPAL ---------- */
   .portada { position: relative; overflow: hidden; height: 100vh; height: 100svh; min-height: 32rem; max-height: 68rem; background: var(--tinta); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; }
   .portada__fondo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
-  .portada__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; }
+  .portada__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; will-change: opacity; }
   .portada__capa.is-previa { z-index: 1; opacity: 1; }
-  .portada__capa.is-activa { z-index: 2; opacity: 1; transition: opacity 1.8s ease-in-out; }
+  .portada__capa.is-activa { z-index: 2; opacity: 1; transition: opacity 2s cubic-bezier(0.45, 0, 0.55, 1); }
   .portada__capa + .portada__capa { display: none; }
   .portada.is-secuencia .portada__capa { display: block; }
   .portada__capa :global(.foto) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
   .portada__capa :global(picture), .portada__capa :global(img) { width: 100%; height: 100%; }
   .portada__capa :global(img) { object-fit: cover; transform: scale(1.02); transition: transform 6s linear; }
-  .portada__capa.is-activa :global(img) { transform: scale(1.08); }
+  /* La que sale queda quieta en su zoom (antes volvía a achicarse mientras entraba la nueva: "efecto de corte") */
+  .portada__capa.is-activa :global(img), .portada__capa.is-previa :global(img) { transform: scale(1.08); }
+  .portada__capa:not(.is-activa):not(.is-previa) :global(img) { transition: none; }
+  /* La foto de la portada aparece sin el fundido de carga de las demás fotos */
+  .portada__capa :global(.foto__lqip) { display: none; }
   :global(html.reducido) .portada__capa :global(img), :global(html.liviano) .portada__capa :global(img) { transform: none; transition: none; }
   /* Velo: oscurece apenas el centro y la base para que el nombre se lea sobre cualquier foto */
   .portada__velo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse 70% 55% at 50% 50%, rgba(20, 16, 12, 0.38), rgba(20, 16, 12, 0) 75%), linear-gradient(180deg, rgba(20, 16, 12, 0.18) 0%, rgba(20, 16, 12, 0.08) 40%, rgba(20, 16, 12, 0.45) 100%); }
@@ -280,7 +284,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     letter-spacing: -0.035em;
     color: var(--tinta);
   }
-  .hero__titular .acento { color: var(--rojo); font-weight: 300; }
+  .hero__titular .acento { color: var(--bordo); font-weight: 300; }
   .hero__bajada { margin-top: 1.4rem; max-width: 34rem; font-size: 1.0625rem; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.55; color: var(--tinta-suave); }
   .hero__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.9rem; }
   .hero__acciones > :global(*) { margin: 0 0.75rem 0.75rem 0; }
@@ -311,9 +315,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     font-family: 'Manuscrita', var(--f-titulo); font-size: 1.6rem; line-height: 1; color: var(--tinta);
     animation: palabra-flota 6s ease-in-out infinite;
   }
-  .hero__palabra--a { color: var(--ocre-texto); }
-  .hero__palabra--b { color: var(--rojo); }
-  .hero__palabra--c { color: var(--verde-texto); }
+  .hero__palabra--a, .hero__palabra--b, .hero__palabra--c { color: var(--bordo); }
   .hero__palabra--a { left: 4%; top: 4%; animation-delay: -1s; }
   .hero__palabra--b { left: -4%; top: 44%; animation-delay: -3s; }
   .hero__palabra--c { left: 6%; bottom: 6%; animation-delay: -5s; }

@@ -114,8 +114,9 @@ async function iniciar() {
       if (titular && titularAnimado) {
         const st = SplitText.create(titular, { type: 'lines', mask: 'lines', linesClass: 'linea' });
         gsap.set(titular, { visibility: 'visible' });
-        gsap.set(st.lines, { yPercent: 105 });
-        tlEntrada.to(st.lines, { yPercent: 0, duration: 1.2, stagger: 0.12, ease: 'expo.out' }, 0.1);
+        gsap.set(st.lines, { yPercent: 135 });
+        // Al terminar se deshace el corte en líneas: la máscara no puede quedar recortando g, j, y
+        tlEntrada.to(st.lines, { yPercent: 0, duration: 1.2, stagger: 0.12, ease: 'expo.out', onComplete: () => st.revert() }, 0.1);
       }
       if (fondo) tlEntrada.fromTo(fondo, { scale: 1.08 }, { scale: 1, duration: 2.4, ease: 'power2.out' }, 0);
       if (resto.length) {
@@ -144,11 +145,12 @@ async function iniciar() {
       const st = SplitText.create(el, { type: 'lines', mask: 'lines', linesClass: 'linea', aria: el.matches('h1,h2,h3,h4,h5,h6') ? 'auto' : 'none' });
       gsap.set(el, { visibility: 'visible' });
       gsap.from(st.lines, {
-        yPercent: 105,
+        yPercent: 135, // más que la altura de la línea: la máscara tiene margen abajo para los trazos
         duration: 1.1,
         stagger: 0.1,
         ease: 'expo.out',
         scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        onComplete: () => st.revert(), // sin máscara al terminar: no se cortan las letras con trazo hacia abajo
       });
     });
 
@@ -157,12 +159,13 @@ async function iniciar() {
       const st = SplitText.create(el, { type: 'words,lines', mask: 'lines', linesClass: 'linea', aria: el.matches('h1,h2,h3,h4') ? 'auto' : 'none' });
       gsap.set(el, { visibility: 'visible' });
       gsap.from(st.words, {
-        yPercent: 110,
+        yPercent: 135,
         opacity: 0,
         duration: 1.3,
         stagger: 0.045,
         ease: 'expo.out',
         scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        onComplete: () => st.revert(),
       });
     });
 

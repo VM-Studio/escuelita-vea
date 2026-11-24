@@ -2,13 +2,11 @@
 // Cierre con llamado a entrevista. Texto de interfaz (microcopy) a aprobar por la escuela.
 import Foto from './Foto.astro';
 import Trazo from './Trazo.astro';
-import Boton from './Boton.astro';
 import Dibujito from './Dibujito.astro';
 import { NIVELES } from '../config/sitio';
 import { acento } from '../lib/texto';
 interface Props { nivel?: 'jardin' | 'primaria'; foto?: string; titulo?: string; dibujos?: boolean }
 const { nivel, foto, titulo = 'Vení a conocer La Escuelita', dibujos = false } = Astro.props;
-const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrevista';
 ---
 <section class:list={['llamado seccion', { 'llamado--sin-foto': !foto }]} aria-labelledby="llamado-titulo">
   {dibujos && <Dibujito nombre="cara-pestanas" lado="izq" top="14%" ancho="7rem" rot={-6} />}
@@ -25,10 +23,10 @@ const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrev
       <p class="llamado__bajada t-lead" data-revelar>
         Escribinos y coordinamos una entrevista{nivel ? ` en el ${NIVELES[nivel].nombre === 'Jardín' ? 'Jardín' : 'nivel Primario'}` : ''}.
       </p>
+      {/* Sin botón "Pedí una entrevista" (pedido de la escuela, rev. 19-11-2026): queda el camino a WhatsApp / contacto */}
       <div class="llamado__acciones" data-revelar>
-        <Boton href={href} variante="rojo" tamano="grande">Pedí una entrevista</Boton>
         <a class="enlace-trazo llamado__wa" href={nivel ? NIVELES[nivel].whatsapp : '/contacto/'} target={nivel ? '_blank' : undefined} rel={nivel ? 'noopener' : undefined}>
-          {nivel ? `O escribinos por WhatsApp` : 'Ver datos de contacto'}
+          {nivel ? `Escribinos por WhatsApp` : 'Ver datos de contacto'}
         </a>
       </div>
     </div>
@@ -44,7 +42,7 @@ const href = nivel ? `/contacto/?nivel=${nivel}#entrevista` : '/contacto/#entrev
   .llamado__bajada { max-width: 34ch; }
   .llamado__acciones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 1.7rem; }
   .llamado__acciones > :global(*) { margin: 0 1.275rem 0.75rem 0; }
-  .llamado__wa { font-weight: 600; padding: 0.5rem 0; }
+  .llamado__wa { font-weight: 600; font-size: 1.0625rem; padding: 0.5rem 0; }
   .llamado--sin-foto .llamado__grilla { text-align: center; }
   .llamado--sin-foto .llamado__titulo, .llamado--sin-foto .llamado__bajada { margin-left: auto; margin-right: auto; }
   .llamado--sin-foto .llamado__trazo { margin-left: auto; margin-right: auto; }
