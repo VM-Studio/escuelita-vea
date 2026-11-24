@@ -34,9 +34,11 @@ donde la mirada y la acción propician llegar a ser quien se es.
 
 Fundada por la profesora Marta Calvo en 1959
 
-**67 años en la Educación por el Arte**
+Centro de expresión infantil y espacio de formación docente continua.
 
-Centro de expresión infantil y Espacio de formación docente continua
+> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): se elimina la repetición de los 67 años de
+> trayectoria en este bloque, conservando la referencia a la fundación. "67 años en la Educación por el
+> Arte" queda una sola vez, en la portada a pantalla completa.
 
 - **Primer Jardín Argentino de Educación por el Arte** — 1959
 - **Instituto La Escuelita, Escuela Primaria de Educación a través del Arte** — 1997
@@ -70,28 +72,33 @@ Espacio educativo fundado por la profesora Marta Calvo en 1959.
 
 ### Una mirada sobre las infancias
 
-La Escuelita es una forma de entender la educación. Desarrollamos una mirada construida a lo largo
-de sesenta y siete años, basada en la experiencia y en la observación constante de los niños, las
-niñas y sus necesidades.
+La Escuelita es una forma de entender la educación que reconoce a cada niño y cada niña como una
+persona singular, con sus propios tiempos, intereses, necesidades y maneras de descubrir el mundo.
 
-Nuestra propuesta genera un ambiente propicio para su expresión, crecimiento y aprendizaje en el
-hacer junto con otros. En este proceso, el acompañamiento de los adultos —familias y maestros— que
-se ocupan de su crianza es una condición indispensable.
+Desde esta mirada, el acompañamiento de los adultos —familias y maestros— es fundamental. La
+educación se construye en el encuentro con otros, a través de vínculos que sostienen y enriquecen
+el crecimiento de cada niño y cada niña.
 
 ### Del Jardín a la Escuela Primaria
 
-Nuestra metodología de trabajo nació hace 67 años como una dinámica de taller en el jardín. El
-modelo creado por Marta Calvo y sus equipos de trabajo se extendió luego a la etapa escolar.
+La propuesta pedagógica desarrollada originalmente en el Jardín se extendió a la Escuela Primaria en
+1997, dando continuidad a una misma manera de concebir la educación.
 
-Esto dio lugar, hace 30 años, a nuestra escuela primaria. La institución conjuga la estructura
-curricular con los principios básicos de la escuelita, y los adapta a las necesidades propias de
-estas edades.
+Esta ampliación permitió integrar los contenidos curriculares de la enseñanza primaria con los
+principios pedagógicos que dieron origen a La Escuelita, acompañando a los chicos en nuevas etapas
+de su desarrollo y aprendizaje.
 
 ### El taller como forma de cotidianidad
 
-Nuestro trabajo se distingue por el uso de la dinámica de taller como forma cotidiana de
-aprendizaje. De esta manera, concebimos el arte dentro de la educación como una actividad
-transversal y nodal, inherente a nuestra condición de seres humanos.
+El taller es nuestra forma cotidiana de enseñar y aprender. Un espacio donde los chicos exploran,
+experimentan, crean, se hacen preguntas y buscan respuestas, poniendo en juego sus ideas, sus
+emociones y sus conocimientos.
+
+En esta dinámica, el arte no constituye una actividad aislada, sino que atraviesa las distintas
+experiencias educativas. El hacer, el sentir y el pensar se integran en procesos de aprendizaje que
+promueven la participación, el intercambio y la construcción colectiva del conocimiento.
+
+> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): textos nuevos de los tres primeros ejes.
 
 ### Hitos culturales y huella en la comunidad
 
@@ -226,9 +233,17 @@ educativo.
 
 ## Nuestra identidad
 
+“Preservamos lo que entendemos por educación: el lugar para que la palabra se convierta en acción,
+unión entre el hacer, el sentir y el pensar”.
+— Marta Calvo
+
 La Escuelita es una institución de educación por el arte centrada en el desarrollo integral y
 humano de cada niño y niña. Concebimos la enseñanza como un espacio creado y pensado en función de
-las infancias, así como de sus necesidades de crecimiento individual y social.
+las infancias y de sus necesidades de crecimiento individual y social.
+
+> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): la frase de Marta Calvo se suma acá y el texto
+> queda como lo pasó la escuela. "Nuestra Identidad" es el primer desplegable de La Escuelita
+> (después Nuestra Historia y Nuestro Equipo) y lleva un collage de fotos.
 
 Nuestros pilares fundamentales se sostienen en:
 
@@ -353,7 +368,8 @@ entrevistas, grupos de reflexión, asesoramiento y reuniones individuales o grup
 > NOTA DE DISEÑO: esta página es **el corazón del sitio**. Jardín y Primaria son dos expresiones
 > concretas de esta misma mirada.
 
-## Introducción y metodología
+> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): se saca el título "Introducción y metodología";
+> los párrafos van a la izquierda y la botonera de los ejes fundamentales a la derecha.
 
 Cuando una familia se acerca a La Escuelita por primera vez, descubre que nuestra propuesta busca
 utilizar el arte como el medio más potente para el desarrollo humano. Traducimos nuestra mirada en
@@ -452,11 +468,14 @@ cultura de las infancias.
 > NOTA DE DISEÑO: este bloque ocupa toda la pantalla inicial, con una foto de las niñas y los niños
 > en el taller. La cita de Marta Calvo va destacada.
 
-## La vida en el Jardín: ¿qué nos diferencia?
+## La vida en el Jardín
 
 Nuestra identidad se vive día a día en el taller. Nos alejamos de las estructuras tradicionales y
 de las corrientes alternativas habituales. Centramos la propuesta en una mirada singular de las
-infancias, donde priorizamos:
+infancias, donde priorizamos el juego, la expresión, los vínculos, la exploración y la autonomía.
+
+> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): sale "¿qué nos diferencia?" del título y se
+> nombran los cinco conceptos en la oración; abajo se desarrollan.
 
 **El juego:** Lo planteamos como una experiencia organizada de búsqueda y descubrimiento
 colectivos. Es el acto simbólico por el cual niños y niñas canalizan sus emociones y construyen
@@ -842,7 +861,12 @@ acceder a:
 
 **Instituto La Escuelita: Escuela Primaria**
 
-El encuentro en torno al conocimiento y la creación
+Un encuentro con otros en torno al conocimiento y la creación
+
+> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): nueva bajada. Áreas de aprendizaje en dos
+> módulos: **Saberes Curriculares e Idiomas** (Lengua y Literatura, Matemática, Ciencias Sociales,
+> Ciencias Naturales, Inglés y ESI) y **Lenguajes Artísticos y Expresión** (Artes Visuales / Plástica,
+> Fotografía y Cine, Música, Juego Dramático y Educación Física).
 
 “Preservamos lo que entendemos por educación: el lugar para que la palabra se convierta en acción,
 unión entre el hacer, el sentir y el pensar”.
@@ -1115,21 +1139,22 @@ Poder reconocerse brinda autonomía y seguridad.
 
 ## Portada de Comunidad
 
-**Nuestra Comunidad**
+**Nuestra comunidad**
 
-En nuestra institución, la comunidad se encuentra para celebrar, jugar, crear, viajar y compartir.
+Descubrimos que, al compartir una experiencia entre varios, la escuela se transforma en un lugar
+más significativo.
 
-Al compartir una experiencia entre varios, la escuela se transforma en un lugar más significativo.
-Conformamos esta comunidad viva que se renueva cada año con la llegada de cada uno de sus nuevos
-integrantes.
+> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): sobre la foto va "Nuestra comunidad" y esta
+> frase. La introducción es la puerta de entrada (no forma parte de la botonera): texto a la
+> izquierda; a la derecha, fotos y la frase "Una escuela también se construye…" en letra más chica.
+> Botonera: **Vida en comunidad, actividades y viajes** / **Talleres extracurriculares**.
 
 ## Introducción
 
-Una escuela también se construye alrededor de una mesa, una ronda, un paseo y un hacer en común. En
-nuestra institución, la comunidad se encuentra para celebrar, jugar, crear, viajar y compartir.
-Reunirnos es una forma de hacer lugar, escuchar, imaginar y armar algo entre muchos. Descubrimos
-que, al compartir una experiencia entre varios, la escuela se transforma en un lugar más
-significativo.
+Una escuela también se construye alrededor de una mesa, una ronda, un paseo y un hacer en común.
+
+En nuestra institución, la comunidad se encuentra para celebrar, jugar, crear, viajar y compartir.
+Reunirnos es una forma de hacer lugar, escuchar, imaginar y armar algo entre muchos.
 
 Tanto los niños como los adultos aprenden al formar parte de un grupo de pertenencia. Por eso,
 consideramos fundamental construir un vínculo de confianza indestructible entre las familias y la
@@ -1143,9 +1168,18 @@ de cada uno de sus nuevos integrantes.
 > (La portada y la introducción repiten algunas frases: usar la portada como titular + bajada y no
 > duplicar visualmente la misma oración dos veces seguidas.)
 
-## Talleres y Muestras
+## Vida en comunidad, actividades y viajes
 
-Efemérides y fechas que la escuela trabaja con identidad propia.
+> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): sección unificada en dos partes. Parte 1:
+> carrusel "Algunas de nuestras actividades" (Viaje a Rosario, Las Peñas, Campamentos, Kermese de
+> 7mo, Feria de Libros y Muestras Didácticas, cada una con su foto y su texto). Parte 2: tres
+> columnas: Efemérides, Salidas Educativas (con las cuatro áreas desplegables) y Actividades con
+> familias. Ya no se publican los títulos "Talleres y Muestras", "Salidas y Celebraciones" ni
+> "Hitos anuales y viajes", ni sus bajadas.
+
+### Algunas de nuestras actividades
+
+### Efemérides
 
 El 24 de marzo, el 2 de abril, el 25 de mayo y el 9 de julio son momentos en los que familias,
 estudiantes y docentes nos reconocemos como parte de una misma historia y tejido social. Las
@@ -1162,9 +1196,6 @@ realizado por cada grupo. Compartimos de forma transparente las estrategias, los
 técnicas y los procesos creativos que amalgaman la información de los talleres cotidianos para
 compartirlos con la comunidad.
 
-## Salidas y Celebraciones
-
-Eventos anuales, jornadas especiales y articulaciones institucionales.
 
 **Salidas Educativas:** Forma parte de la agenda anual visitar un gran número de museos y espacios
 de nuestra Ciudad, en consonancia con el contenido de cada grado. Nos interesa interactuar tanto
@@ -1200,7 +1231,6 @@ Enlaces externos que el documento original incluye (abrir en pestaña nueva):
 - Museo Nacional de Bellas Artes → https://www.bellasartes.gob.ar/
 - Monumento a la Bandera → https://www.monumentoalabandera.gob.ar/
 
-### Hitos anuales y viajes
 
 **Viaje a Rosario (4to grado):** El grupo de cuarto grado promete lealtad a la bandera en un
 proyecto nacional profundo. Los estudiantes investigan, leen y representan una obra de teatro que

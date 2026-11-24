@@ -161,3 +161,47 @@ Referencias: Awwwards (Hatching Dragons, Fine Acts, London Film School, Departme
 - **Proyecto pedagógico:** hero con foto a sangre y "notita" con el primer párrafo; cada eje con foto grande y notita de color superpuesta.
 - Microcopy nuevo: título "Jardín y Primaria" visible en la banda del Inicio (antes solo era etiqueta accesible).
 - **Jardín rediseñado (19/11):** presentación como notita colgando del hero; "¿Qué nos diferencia?" en tarjetas sobrias (3 + 2); propuesta en 4 bloques numerados; "El gesto espontáneo" con fotos que pasan; salas y lenguajes con foto grande + notita y sus apartados en bloques numerados (los lenguajes ya no están en desplegables); patio y pasos de adaptación en bloques; horarios con la notita del beneficio al costado. Se sacaron la cinta de materiales y los dibujitos de esta página.
+
+## 14. Revisión de la primera maqueta (documento de la escuela del 19-11-2026)
+
+Aplicado todo lo pedido en "Revisión de la primera maqueta página web 19-11-2026". Para confirmar:
+
+- **Frase de Marta Calvo "Preservamos lo que entendemos por educación…":** el documento la suma a
+  **Nuestra Identidad** (y dice que en Primaria se sugería sacarla), pero en la sección Primaria pide
+  "frase de Marta Calvo con un recuadro como el párrafo del Jardín". Se hicieron las dos cosas: va en
+  Identidad y en Primaria en un recuadro colgando de la portada. **Confirmar si en Primaria se quita.**
+- **"La Escuelita" con la letra del logo (portada del Inicio):** se usa la palabra "la escuelita" recortada
+  del logo original (sin redibujar ni recolorear: `public/logos/la-escuelita-palabra.png`), en negro sobre
+  una etiqueta de papel para que se lea sobre las fotos. Si prefieren la palabra en blanco directamente
+  sobre la foto, hace falta su aprobación para usar el logo en negativo.
+- **67 años:** quedan una sola vez, en la portada a pantalla completa ("67 años en la Educación por el
+  Arte"). Se sacó de la presentación y de los textos de los ejes.
+- **Botón "Pedí una entrevista":** se sacó del encabezado, del menú del celular, del Inicio y del cierre de
+  las páginas. El cierre conserva el enlace "Escribinos por WhatsApp" / "Ver datos de contacto" (y el botón
+  flotante de WhatsApp). El formulario de entrevista sigue en Contacto / Admisión.
+- **Nuestra Historia:** se sacaron el 1959 gigante de fondo y los años del rótulo superior; el sello
+  circular ("Primer Jardín Argentino de Educación por el Arte · 1959") se mantuvo. La cronología completa
+  quedó en `/la-escuelita/cronologia/` y se llega con el botón "Recorrer la cronología".
+- **Fotos de Marta Calvo:** de las 7 de la carpeta, las 4 del reconocimiento son 20, 10, 18 y 23. La 11
+  y la 16 (no se sabe con certeza quién es cada persona) van al archivo fotográfico sin nombres; la 17 (el
+  equipo) va en Nuestro Equipo. **Confirmar** que en la 10 y la 18 es Marta Calvo.
+- **Collage de Identidad:** el documento dice "se adjuntan algunas representativas" pero no había carpeta
+  para Identidad; se usaron fachada7 y fachada4 (de FOTOS PARA EL INICIO, no marcadas "SI"), taller12
+  (JARDIN), la ronda del patio (2-PATIO) y la mesa con hojas. **Confirmar.**
+- **Proyecto pedagógico:** a la derecha de los párrafos se eligió la opción "subir la botonera de los
+  ejes fundamentales con los 4 enlaces" (la otra opción era fotos). Rol del docente en acordeón.
+- **Jardín:** "Nuestras salas" ya eran pestañas interactivas; se mantienen. Fotos nuevas: Taller de 3
+  (6-T3), Taller de 5 (8-T5), Educación Física (2-ED-FISICA); taller6 abre el bloque de salas y taller12
+  va en el collage de Identidad.
+- **Primaria:** las fotos de cada área quedan dentro de su desplegable. Módulo 1 con la foto de 7° y 1°
+  escribiendo; módulo 2 con la leyenda actuada por 2° grado.
+- **Comunidad:** la tarjeta "Feria de Libros y Palabras" usa la foto de la visita del escritor (no hay
+  fotos de la feria). Las fotos de Salidas (Caminito, Museo de Ciencias) y la segunda de la Kermese ya no
+  se muestran.
+- Microcopy nuevo (para aprobar): "Escribinos por WhatsApp" (antes "O escribinos por WhatsApp"),
+  "Recorrer la cronología", "← Nuestra historia", "Cronología", "Nuestra historia" / "Nuestro equipo"
+  (botones al final de Identidad), "Las salas del Jardín" (banda de foto), menú "Nuestra Identidad /
+  Nuestra Historia / Nuestro Equipo" y "Concepción del niño / Educación por el arte /
+  Expresión/aprendizaje / Rol del docente" (desplegable de Proyecto Pedagógico), títulos de módulo
+  "Saberes Curriculares e Idiomas" y "Lenguajes Artísticos y Expresión", "Algunas de nuestras
+  actividades", "Efemérides", "Vida en comunidad, actividades y viajes" (textos del documento).
