@@ -4,9 +4,8 @@ import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
 import PortadaPagina from '../components/PortadaPagina.astro';
-import SubNav from '../components/SubNav.astro';
+import Boton from '../components/Boton.astro';
 import Acordeon from '../components/Acordeon.astro';
-import Galeria from '../components/Galeria.astro';
 import Carrusel from '../components/Carrusel.astro';
 import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import Interludio from '../components/Interludio.astro';
@@ -14,10 +13,11 @@ import { comunidad as c } from '../content/comunidad';
 import { PUBLICAR } from '../config/sitio';
 import { parrafos, enLinea, acento } from '../lib/texto';
 
-const subnav = [
-  { href: '#vida-en-comunidad', texto: 'Vida en comunidad' },
-  { href: '#hitos-anuales', texto: 'Hitos anuales y viajes' },
-  { href: '#talleres', texto: 'Talleres extracurriculares' },
+// Las seis actividades del carrusel, cada una con su foto y su texto actual
+const actividades = [
+  ...c.salidas.hitos.map((h) => ({ id: h.id, titulo: h.etiqueta, texto: h.texto, foto: h.fotos[0] })),
+  { id: 'feria-de-libros', titulo: c.talleresMuestras.items[0].etiqueta, texto: c.talleresMuestras.items[0].texto, foto: c.vida.feriaFoto },
+  { id: 'muestras-didacticas', titulo: c.talleresMuestras.items[1].etiqueta, texto: c.talleresMuestras.items[1].texto, foto: c.talleresMuestras.foto },
 ];
 const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 ---
@@ -30,88 +30,72 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 >
   <PortadaPagina titulo={c.portada.titulo} foto={c.portada.foto} volanta="La Escuelita">
     <p class="portada-bajada">{c.portada.bajada}</p>
-    <p class="portada-texto">{c.portada.texto}</p>
   </PortadaPagina>
 
-  <SubNav items={subnav} etiqueta="Secciones de Comunidad" />
-
-  {/* Introducción: la frase de la escuela destacada como apertura (sin repetirla) */}
-  <section class="seccion intro-com ancla" id="vida-en-comunidad" aria-label="Introducción">
-    <Dibujito nombre="paisaje-barco" lado="der" top="10%" ancho="9rem" rot={3} opacidad={0.5} />
+  {/* Puerta de entrada: texto a la izquierda; a la derecha, la frase (más chica) y fotos */}
+  <section class="seccion intro-com" aria-label="Nuestra comunidad">
+    <Dibujito nombre="paisaje-barco" lado="der" top="6%" ancho="9rem" rot={3} opacidad={0.5} />
     <div class="contenedor intro-com__grilla">
-      <div>
-        <p class="t-frase intro-com__frase" data-frase>{c.introduccion.frase}</p>
-      </div>
       <div class="prosa intro-com__texto" data-revelar set:html={parrafos(c.introduccion.texto)} />
-    </div>
-  </section>
-
-  <section class="seccion seccion--papel-oscuro" aria-label="Talleres, salidas y familias">
-    <div class="contenedor contenedor--ancho">
-      {/* Talleres y Muestras */}
-      <Acordeon id={c.talleresMuestras.id} titulo={c.talleresMuestras.titulo} subtitulo={c.talleresMuestras.bajada} grupo="comunidad">
-        <div class="bloque-com">
-          <div class="fechas" aria-hidden="true">
-            {c.talleresMuestras.fechas.map((f) => <span class="fecha">{f}</span>)}
-          </div>
-          <p class="bloque-com__lead">{c.talleresMuestras.texto}</p>
-          <div class="bloque-com__grilla">
-            <dl class="bloque-com__items">
-              {c.talleresMuestras.items.map((it) => (
-                <div><dt>{it.etiqueta}</dt><dd>{it.texto}</dd></div>
-              ))}
-            </dl>
-            <Foto id={c.talleresMuestras.foto} ratio="4/3" sizes="(min-width: 56em) 34vw, 90vw" class="bloque-com__foto" />
-          </div>
-        </div>
-      </Acordeon>
-
-      {/* Salidas y Celebraciones */}
-      <Acordeon id={c.salidas.id} titulo={c.salidas.titulo} subtitulo={c.salidas.bajada} grupo="comunidad">
-        <div class="bloque-com">
-          <p class="bloque-com__lead"><strong>{c.salidas.salidasEducativas.etiqueta}:</strong> {c.salidas.salidasEducativas.texto}</p>
-          {c.salidas.areas.map((a) => (
-            <p class="bloque-com__lead salidas-area"><strong>{a.etiqueta}:</strong> {a.texto}</p>
-          ))}
-          <div class="salidas-fotos">
-            {c.salidas.fotos.map((f, i) => (
-              <div class="pegada" style={`--rot:${i ? 1.6 : -1.4}deg`}>
-                <Foto id={f} ratio="4/5" sizes="(min-width: 56em) 22vw, 44vw" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </Acordeon>
-
-      {/* Actividades con familias */}
-      <Acordeon id={c.familias.id} titulo={c.familias.titulo} subtitulo={c.familias.bajada} grupo="comunidad">
-        <div class="bloque-com bloque-com__grilla">
-          <p class="bloque-com__lead">{c.familias.texto}</p>
-          <Foto id={c.familias.foto} ratio="4/3" sizes="(min-width: 56em) 34vw, 90vw" class="bloque-com__foto" />
-        </div>
-      </Acordeon>
-    </div>
-  </section>
-
-  {/* Hitos anuales y viajes */}
-  <section class="seccion ancla" id="hitos-anuales" aria-labelledby="hitos-titulo">
-    <Dibujito nombre="cara-perfil" lado="izq" top="6%" ancho="6.5rem" rot={-5} />
-    <div class="contenedor">
-      <div class="cabecera-seccion">
-        <h2 id="hitos-titulo" data-titulo-lineas set:html={acento(c.salidas.hitosTitulo)} />
-      </div>
-      <div class="hitos-anuales">
-        {c.salidas.hitos.map((h, i) => (
-          <article class:list={['hito-a', { 'hito-a--b': i % 2 }]} id={h.id} data-revelar>
-            <div class="hito-a__fotos">
-              <Galeria ids={h.fotos} variante={h.fotos.length > 1 ? 'pegadas' : 'mosaico'} sizes="(min-width: 56em) 40vw, 90vw" ratio="4/3" class={h.fotos.length > 1 ? 'hito-a__galeria--dos' : 'hito-a__galeria--una'} />
+      <div class="intro-com__lado">
+        <p class="t-frase intro-com__frase" data-revelar>{c.introduccion.frase}</p>
+        <div class="intro-com__fotos">
+          {c.introduccion.fotos.map((f, i) => (
+            <div class:list={['pegada', `intro-com__foto--${i + 1}`]} style={`--rot:${i ? 2 : -1.6}deg`} data-revelar>
+              <Foto id={f} ratio={i ? '3/4' : '4/3'} sizes="(min-width: 56em) 26vw, 80vw" />
             </div>
-            <div class="hito-a__texto">
-              <h3 class="hito-a__titulo">{h.etiqueta}</h3>
-              <p set:html={enLinea(h.texto)} />
+          ))}
+        </div>
+      </div>
+    </div>
+    <nav class="contenedor botonera" aria-label="Secciones de Comunidad">
+      {c.botones.map((b, i) => <Boton href={b.href} variante={i === 0 ? 'rojo' : 'base'} tamano="grande">{b.texto}</Boton>)}
+    </nav>
+  </section>
+
+  {/* Vida en comunidad, actividades y viajes: carrusel de actividades + tres columnas fijas */}
+  <section class="seccion seccion--papel-oscuro ancla" id="vida-en-comunidad" aria-labelledby="vida-titulo">
+    <div class="contenedor">
+      <div class="cabeza-regla">
+        <h2 id="vida-titulo" class="vida__titulo" data-titulo-lineas set:html={acento(c.vida.titulo)} />
+      </div>
+      <h3 class="vida__sub" data-revelar>{c.vida.actividadesTitulo}</h3>
+      <Carrusel etiqueta={c.vida.actividadesTitulo} class="actividades">
+        {actividades.map((a) => (
+          <article class="actividad" id={a.id} aria-labelledby={`${a.id}-t`}>
+            <div class="actividad__foto"><Foto id={a.foto} ratio="4/3" sizes="(min-width: 64em) 30vw, (min-width: 40em) 46vw, 82vw" /></div>
+            <div class="actividad__cuerpo">
+              <h4 class="actividad__titulo" id={`${a.id}-t`}>{a.titulo}</h4>
+              <p class="actividad__texto" set:html={enLinea(a.texto)} />
             </div>
           </article>
         ))}
+      </Carrusel>
+
+      <div class="columnas">
+        <section class="columna" aria-labelledby="efemerides-t" data-revelar>
+          <h3 class="columna__titulo" id="efemerides-t">{c.vida.efemeridesTitulo}</h3>
+          <div class="fechas" aria-hidden="true">
+            {c.talleresMuestras.fechas.map((f) => <span class="fecha">{f}</span>)}
+          </div>
+          <p class="columna__texto">{c.talleresMuestras.texto}</p>
+        </section>
+        <section class="columna" aria-labelledby="salidas-t" data-revelar>
+          <h3 class="columna__titulo" id="salidas-t">{c.salidas.salidasEducativas.etiqueta}</h3>
+          <p class="columna__texto">{c.salidas.salidasEducativas.texto}</p>
+          <div class="columna__acordeones">
+            {c.salidas.areas.map((a, i) => (
+              <Acordeon id={`salidas-${i + 1}`} titulo={a.etiqueta} grupo="salidas" nivelTitulo="h4" class="salida-ac">
+                <p class="columna__texto">{a.texto}</p>
+              </Acordeon>
+            ))}
+          </div>
+        </section>
+        <section class="columna" aria-labelledby="familias-t" data-revelar>
+          <h3 class="columna__titulo" id="familias-t">{c.familias.titulo}</h3>
+          <p class="columna__bajada">{c.familias.bajada}</p>
+          <p class="columna__texto">{c.familias.texto}</p>
+        </section>
       </div>
     </div>
   </section>
@@ -169,39 +153,42 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 
 <style>
   .portada-bajada { font-family: var(--f-frase); font-style: italic; font-size: 1.15rem; font-size: clamp(1.15rem, 0.82rem + 1.008vw, 1.68rem); line-height: 1.3; color: #f6efe3; max-width: 30ch; }
-  .portada-texto { margin-top: 1rem; color: #ece4d6; max-width: 40ch; }
 
-  .intro-com__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; align-items: start; }
-  .intro-com__trazo { width: 2.8rem; height: 2.8rem; margin-bottom: 1.25rem; }
-  .intro-com__frase { font-size: 1.505rem; font-size: clamp(1.505rem, 0.902rem + 1.848vw, 2.31rem); max-width: 18ch; }
-  .intro-com__texto { font-size: 1.125rem; font-size: var(--t-md); }
-  @media (min-width: 56em) { .intro-com__grilla { grid-template-columns: 6fr 5fr; grid-gap: 3.4rem; gap: 3.4rem; } .intro-com__texto { margin-top: 3.4rem; } }
-
-  .bloque-com { padding-top: 0.5rem; }
-  .bloque-com__lead { font-size: 1.0625rem; font-size: var(--t-base); max-width: 46rem; }
-  .bloque-com__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; margin-top: 1.275rem; align-items: start; }
-  .bloque-com__items > div + div { margin-top: 1.275rem; }
-  .bloque-com__items dt { font-family: var(--f-titulo); font-size: 1.25rem; margin-bottom: 0.4rem; }
-  .bloque-com__items dd { margin: 0; }
-  .bloque-com :global(.bloque-com__foto) { border-radius: var(--radio); }
-  @media (min-width: 56em) { .bloque-com__grilla { grid-template-columns: 7fr 5fr; grid-gap: 2.04rem; gap: 2.04rem; } }
-  .fechas { display: flex; flex-wrap: wrap; margin-bottom: 1.25rem; }
-  .fecha { margin: 0 0.6rem 0.6rem 0; padding: 0.35rem 0.9rem; border-radius: 999px; background: var(--rojo); color: #fff; font-weight: 650; font-size: 0.875rem; }
-
-  .salidas-area { margin-top: 1.1rem; }
-  .salidas-fotos { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1.25rem; gap: 1.25rem; max-width: 36rem; margin-top: 1.7rem; }
-
-  .hitos-anuales { display: grid; grid-template-columns: 1fr; grid-gap: 2.72rem; gap: 2.72rem; }
-  .hito-a { display: grid; grid-template-columns: 1fr; grid-gap: 1.488rem; gap: 1.488rem; align-items: center; }
-  .hito-a__titulo { font-size: 1.387rem; font-size: var(--t-xl); margin-bottom: 1rem; }
-  .hito-a__frase { margin-top: 1.275rem; font-size: 1.26rem; font-size: var(--t-lg); color: var(--rojo); max-width: 22ch; }
-  .hito-a__fotos :global(.galeria--mosaico) { column-count: 1; }
-  .hito-a__fotos :global(.galeria--pegadas) { grid-template-columns: 1fr 1fr !important; }
-  .hito-a__fotos :global(.galeria__item) { border-radius: var(--radio); }
-  @media (min-width: 56em) {
-    .hito-a { grid-template-columns: 6fr 5fr; grid-gap: 3.06rem; gap: 3.06rem; }
-    .hito-a--b .hito-a__fotos { order: 2; }
+  /* Introducción */
+  .intro-com { overflow: hidden; }
+  .intro-com__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: start; }
+  .intro-com__texto { font-size: 1.125rem; font-size: var(--t-md); line-height: 1.65; }
+  .intro-com__frase { font-size: 1.15rem; font-size: clamp(1.1rem, 0.98rem + 0.45vw, 1.4rem); line-height: 1.35; max-width: 30ch; color: var(--tinta); }
+  .intro-com__fotos { position: relative; margin-top: 1.5rem; display: grid; grid-template-columns: 1fr; grid-gap: 1rem; gap: 1rem; }
+  .intro-com__fotos .pegada { position: relative; }
+  @media (min-width: 40em) {
+    .intro-com__fotos { grid-template-columns: 7fr 5fr; align-items: start; }
+    .intro-com__foto--2 { margin-top: 2.5rem; }
   }
+  @media (min-width: 56em) { .intro-com__grilla { grid-template-columns: 6fr 6fr; grid-gap: 4rem; gap: 4rem; } }
+  .botonera { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(35, 32, 28, 0.15); }
+  .botonera > :global(*) { margin: 0 0.5rem 0.9rem; }
+
+  /* Vida en comunidad */
+  .vida__titulo { max-width: 22ch; font-size: 1.9rem; font-size: clamp(1.8rem, 1.2rem + 1.9vw, 3rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1.04; }
+  .vida__sub { margin-bottom: 1.5rem; font-family: var(--f-titulo); font-style: italic; font-weight: 350; font-size: 1.35rem; font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.8rem); }
+  .actividad { display: flex; flex-direction: column; height: 100%; background: #fffdf8; box-shadow: 0 1px 2px rgba(35, 32, 28, 0.06), 0 18px 40px -26px rgba(35, 32, 28, 0.45); }
+  .actividad__cuerpo { padding: 1.25rem 1.25rem 1.5rem; }
+  .actividad__titulo { font-family: var(--f-titulo); font-weight: 400; font-size: 1.25rem; line-height: 1.2; margin-bottom: 0.6rem; }
+  .actividad__texto { font-size: 0.9375rem; line-height: 1.6; color: var(--tinta-suave); }
+  .columnas { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; margin-top: 4rem; }
+  @media (min-width: 64em) { .columnas { grid-template-columns: repeat(3, 1fr); grid-gap: 2.5rem; gap: 2.5rem; } }
+  .columna { padding-top: 1.25rem; border-top: 2px solid var(--tinta); }
+  .columna__titulo { font-size: 1.5rem; font-size: clamp(1.4rem, 1.2rem + 0.6vw, 1.85rem); font-weight: 380; margin-bottom: 1rem; }
+  .columna__bajada { font-family: var(--f-titulo); font-style: italic; font-size: 1.0625rem; margin-bottom: 0.8rem; }
+  .columna__texto { font-size: 0.975rem; line-height: 1.65; color: var(--tinta-suave); }
+  .columna__acordeones { margin-top: 1.25rem; }
+  .columna__acordeones :global(.salida-ac .acordeon__resumen) { padding: 0.9rem 0; }
+  .columna__acordeones :global(.salida-ac .acordeon__titulo) { font-size: 1.1rem; }
+  .columna__acordeones :global(.salida-ac .acordeon__signo) { width: 1.8rem; height: 1.8rem; }
+  .columna__acordeones :global(.salida-ac .acordeon__interior) { padding-bottom: 1.1rem; }
+  .fechas { display: flex; flex-wrap: wrap; margin-bottom: 1rem; }
+  .fecha { margin: 0 0.5rem 0.5rem 0; padding: 0.3rem 0.85rem; border-radius: 999px; background: var(--bordo); color: #fff; font-weight: 650; font-size: 0.875rem; }
 
   .testimonio { padding: 1.7rem; background: var(--papel); border-radius: var(--radio-lg); }
   .testimonio p { font-size: 1.375rem; }

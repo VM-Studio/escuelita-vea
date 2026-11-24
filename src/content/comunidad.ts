@@ -1,18 +1,30 @@
 // NUESTRA COMUNIDAD — textos tal cual CONTENIDO-WEB.md.
 export const comunidad = {
+  // Rev. 19-11-2026: sobre la foto, "Nuestra comunidad" y esta frase
   portada: {
-    titulo: 'Nuestra Comunidad',
-    bajada: 'En nuestra institución, la comunidad se encuentra para celebrar, jugar, crear, viajar y compartir.',
-    texto: 'Al compartir una experiencia entre varios, la escuela se transforma en un lugar más significativo. Conformamos esta comunidad viva que se renueva cada año con la llegada de cada uno de sus nuevos integrantes.',
-    foto: 'primaria-pena-banderines',
+    titulo: 'Nuestra comunidad',
+    bajada: 'Descubrimos que, al compartir una experiencia entre varios, la escuela se transforma en un lugar más significativo.',
+    foto: 'mural-la-escuelita', // "SI PUEDE SERVIR COMO FOTO PRINCIPAL" (carpeta COMUNIDAD)
   },
+  // Puerta de entrada (no forma parte de la botonera): texto a la izquierda; a la derecha, la frase en letra más chica y fotos
   introduccion: {
-    // La primera oración es también una de las "frases" de la escuela: se destaca en cursiva, sin repetirla.
     frase: 'Una escuela también se construye alrededor de una mesa, una ronda, un paseo y un hacer en común.',
+    fotos: ['comunidad-ronda-terraza', 'comunidad-ronda-fondo'],
     texto: [
-      'En nuestra institución, la comunidad se encuentra para celebrar, jugar, crear, viajar y compartir. Reunirnos es una forma de hacer lugar, escuchar, imaginar y armar algo entre muchos. Descubrimos que, al compartir una experiencia entre varios, la escuela se transforma en un lugar más significativo.',
+      'En nuestra institución, la comunidad se encuentra para celebrar, jugar, crear, viajar y compartir. Reunirnos es una forma de hacer lugar, escuchar, imaginar y armar algo entre muchos.',
       'Tanto los niños como los adultos aprenden al formar parte de un grupo de pertenencia. Por eso, consideramos fundamental construir un vínculo de confianza indestructible entre las familias y la escuela para que cada niño y niña se sienta seguro y contenido. Entre todos —infancias, familias, equipo docente y no docente— conformamos esta comunidad viva que se renueva cada año con la llegada de cada uno de sus nuevos integrantes.',
     ],
+  },
+  // Botonera: dos botones (rev. 19-11-2026)
+  botones: [
+    { href: '#vida-en-comunidad', texto: 'Vida en comunidad, actividades y viajes' },
+    { href: '#talleres', texto: 'Talleres extracurriculares' },
+  ],
+  vida: {
+    titulo: 'Vida en comunidad, actividades y viajes',
+    actividadesTitulo: 'Algunas de nuestras actividades',
+    efemeridesTitulo: 'Efemérides',
+    feriaFoto: 'primaria-visita-escritor',
   },
   talleresMuestras: {
     id: 'talleres-y-muestras',
