@@ -17,7 +17,7 @@ const cel = versiones[`../assets/fotos-portada/${id}-celular.jpg`]?.default;
 
 const juego = async (src: ImageMetadata, anchos: number[], format: 'avif' | 'webp' | 'jpg') => {
   const w = anchos.filter((a) => a <= src.width);
-  const r = await getImage({ src, widths: w, format, quality: format === 'avif' ? 62 : 82 });
+  const r = await getImage({ src, widths: w, format, quality: format === 'avif' ? 68 : 86 });
   return r.srcSet.attribute;
 };
 let fuentes: { media?: string; type: string; srcset: string; sizes: string }[] = [];
@@ -32,7 +32,7 @@ if (esc && cel) {
     { type: 'image/avif', srcset: await juego(esc, AE, 'avif'), sizes: '100vw' },
     { type: 'image/webp', srcset: await juego(esc, AE, 'webp'), sizes: '100vw' },
   ];
-  respaldo = (await getImage({ src: esc, width: 1920, format: 'jpg', quality: 82 })).src;
+  respaldo = (await getImage({ src: esc, width: 1920, format: 'jpg', quality: 86 })).src;
 }
 ---
 {esc && cel ? (

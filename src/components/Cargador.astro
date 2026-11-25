@@ -1,25 +1,17 @@
 ---
-// Loader: los dos logos entran de costado (Jardín desde la izquierda, Primaria desde la derecha),
-// se encuentran en el centro y la pantalla se levanta como una hoja de papel.
+// Loader: el logo circular de La Escuelita aparece centrado y la pantalla se levanta como una hoja de papel.
 // · Solo en la primera visita de la sesión (sessionStorage) — lo decide el script del <head>.
 // · Sin JS no existe (display:none salvo html.con-cargador).
-// · Si el JS de animación falla o tarda: la animación CSS de respaldo lo retira sola a los 3 s.
-// · Logos: Jardín y Primaria; sin V.E.A. (rev. 25-11-2026). El de la Primaria aparece cuando está su archivo.
-import Logo from './Logo.astro';
-import { hayLogoPrimaria } from '../lib/logos';
-const conPrimaria = hayLogoPrimaria();
+// · Si el JS de animación falla o tarda: la animación CSS de respaldo lo retira sola.
+// · Un solo logo, centrado (rev. 25-11-2026).
+import LogoCircular from './LogoCircular.astro';
 ---
 <div class="cargador" data-cargador aria-hidden="true">
   <div class="cargador__hoja" data-cargador-hoja>
     <div class="cargador__logos">
-      <div class="cargador__logo cargador__logo--izq" data-cargador-logo="izq">
-        <Logo nivel="jardin" alto={150} decorativo prioridad />
+      <div class="cargador__logo" data-cargador-logo="centro">
+        <LogoCircular alto={240} decorativo prioridad />
       </div>
-      {conPrimaria && (
-        <div class="cargador__logo cargador__logo--der" data-cargador-logo="der">
-          <Logo nivel="primaria" alto={130} decorativo prioridad />
-        </div>
-      )}
     </div>
   </div>
 </div>
@@ -47,19 +39,14 @@ const conPrimaria = hayLogoPrimaria();
   }
   .cargador__logos { display: flex; align-items: center; justify-content: center; }
   .cargador__logo { opacity: 0; }
-  .cargador__logo + .cargador__logo { margin-left: 4rem; }
-  /* En celulares: logos más chicos para que entren los dos con aire a los costados */
+  /* En celulares, un poco más chico */
   @media (max-width: 600px) {
-    .cargador__logo :global(img) { height: 96px !important; }
-    .cargador__logo--der :global(img) { height: 84px !important; }
-    .cargador__logo + .cargador__logo { margin-left: 2rem; }
+    .cargador__logo :global(img) { height: 180px !important; width: 180px !important; }
   }
   /* Respaldo CSS de la entrada (por si el JS tarda): */
-  .cargador__logo--izq { animation: cargador-izq 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards; }
-  .cargador__logo--der { animation: cargador-der 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards; }
+  .cargador__logo { animation: cargador-entra 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards; }
   :global(html.con-cargador.cargador-js) .cargador__logo { animation: none; }
-  @keyframes cargador-izq { from { opacity: 0; transform: translateX(-80px); } to { opacity: 1; transform: none; } }
-  @keyframes cargador-der { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: none; } }
+  @keyframes cargador-entra { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: none; } }
   @keyframes cargador-respaldo { to { opacity: 0; visibility: hidden; } }
   @media (prefers-reduced-motion: reduce) {
     :global(html.con-cargador) .cargador { animation: cargador-respaldo 0.4s ease 0.5s forwards; }

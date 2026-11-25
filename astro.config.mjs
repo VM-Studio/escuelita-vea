@@ -19,9 +19,10 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/sharp',
       config: {
         // Calidad por formato (no se pasa `quality` en los componentes para que esto aplique)
-        jpeg: { quality: 74, mozjpeg: true },
-        webp: { quality: 72, effort: 5 },
-        avif: { quality: 48, effort: 4, chromaSubsampling: '4:2:0' },
+        // Rev. 25-11-2026: más calidad (en el celular las fotos se veían blandas y oscuras)
+        jpeg: { quality: 85, mozjpeg: true },
+        webp: { quality: 84, effort: 5 },
+        avif: { quality: 64, effort: 4, chromaSubsampling: '4:4:4' },
       },
     },
   },

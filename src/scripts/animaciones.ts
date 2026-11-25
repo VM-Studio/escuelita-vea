@@ -80,20 +80,19 @@ async function iniciar() {
 
     html.classList.add('anim-ready');
 
-    /* ---- Loader: los dos logos entran de costado y la hoja se levanta ---- */
+    /* ---- Loader: el logo circular aparece centrado y la hoja se levanta ---- */
     const tlEntrada = gsap.timeline({ paused: true });
     const cargador = document.querySelector<HTMLElement>('[data-cargador]');
     if (conCargador && cargador) {
       html.classList.add('cargador-js');
-      const izq = cargador.querySelector('[data-cargador-logo="izq"]');
-      const der = cargador.querySelector('[data-cargador-logo="der"]');
+      const logo = cargador.querySelector('[data-cargador-logo]');
       const hoja = cargador.querySelector('[data-cargador-hoja]');
-      // Menos tiempo de los logos solos (pedido rev. 25-11-2026): ~1,8 s en total
-      if (izq) gsap.set(izq, { autoAlpha: 0, x: -90 });
-      if (der) gsap.set(der, { autoAlpha: 0, x: 90 });
+      // Poco tiempo del logo solo (pedido rev. 25-11-2026): ~1,8 s en total
+      if (logo) {
+        gsap.set(logo, { autoAlpha: 0, scale: 0.92 });
+      }
       const tl = gsap.timeline({ onComplete: () => { html.classList.remove('con-cargador'); } });
-      if (izq) tl.to(izq, { autoAlpha: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 0.05);
-      if (der) tl.to(der, { autoAlpha: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 0.15);
+      if (logo) tl.to(logo, { autoAlpha: 1, scale: 1, duration: 0.9, ease: 'power3.out' }, 0.05);
       tl.to(hoja, { yPercent: -104, rotate: -1.5, duration: 0.75, ease: 'expo.inOut' }, '+=0.15')
         .add(() => { tlEntrada.play(); }, '-=0.4');
     } else {

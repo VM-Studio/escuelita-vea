@@ -32,9 +32,9 @@ cálido, artesanal, humano. Nada corporativo, nada de plantilla de colegio, nada
 - Video del Rap del Litio: componente listo, apagado (`PUBLICAR.videoRapDelLitio`).
 
 ## Logos
-- Rev. 25-11-2026: se sacó la presentación con logos del Inicio. Navbar: logos de Jardín y Primaria juntos
-  (llevan al Inicio) y V.E.A. al final de la botonera, sin enlace. Loader: Jardín y Primaria, sin V.E.A.
-  El logo propio de la Primaria va en `public/logos/primaria-sinfondo.png` (aparece solo cuando existe).
+- Rev. 25-11-2026: navbar y loader usan un solo logo, el circular de La Escuelita (Jardín + Primaria):
+  `src/components/LogoCircular.astro` → `public/logos/logo-circular(-sm).{webp,png}` (original en
+  `_material/logos/originales/`). En el navbar lleva al Inicio; en el loader va centrado. Se sacó V.E.A. del navbar.
 - No redibujar, recolorear ni deformar logos. Hoy son provisorios (`public/logos/`, `src/components/Logo.astro`).
 
 ## Técnica

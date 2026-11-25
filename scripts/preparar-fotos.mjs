@@ -39,10 +39,16 @@ for (const f of fotos) {
     } catch { rehacer = true; }
   }
   if (rehacer) {
+    // Brillo: las fotos oscuras se levantan un poco (rev. 25-11-2026: "en el celu se ven oscuras"); las demás quedan igual
+    const st = await sharp(origen).rotate().stats();
+    const [r, g, b] = st.channels;
+    const L = (0.2126 * r.mean + 0.7152 * g.mean + 0.0722 * b.mean) / 255;
+    const brillo = L < 0.5 ? Math.min(1.2, 0.5 / L) : 1;
     await sharp(origen)
       .rotate() // respeta orientación EXIF y la descarta
       .resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true })
       .toColorspace('srgb')
+      .modulate({ brightness: brillo })
       .jpeg({ quality: 86, mozjpeg: true, chromaSubsampling: '4:4:4' })
       .toFile(destino);
     process.stdout.write(`✓ ${f.id}\n`);

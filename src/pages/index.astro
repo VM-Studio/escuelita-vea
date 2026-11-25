@@ -25,7 +25,7 @@ const p = inicio;
 const versiones = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos-portada/*.jpg', { eager: true });
 const esc = versiones[`../assets/fotos-portada/${p.portadaFondo[0]}-escritorio.jpg`]?.default;
 const cel = versiones[`../assets/fotos-portada/${p.portadaFondo[0]}-celular.jpg`]?.default;
-const juego = async (src: ImageMetadata, anchos: number[]) => (await getImage({ src, widths: anchos.filter((a) => a <= src.width), format: 'avif', quality: 62 })).srcSet.attribute;
+const juego = async (src: ImageMetadata, anchos: number[]) => (await getImage({ src, widths: anchos.filter((a) => a <= src.width), format: 'avif', quality: 68 })).srcSet.attribute;
 const precargar = esc && cel ? [
   { srcset: await juego(cel, [600, 828, 1080, 1200]), sizes: '100vw', type: 'image/avif', media: '(max-aspect-ratio: 3/4)' },
   { srcset: await juego(esc, [960, 1280, 1600, 1920, 2560]), sizes: '100vw', type: 'image/avif', media: '(min-aspect-ratio: 3.0001/4)' },

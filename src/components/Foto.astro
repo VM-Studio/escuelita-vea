@@ -20,7 +20,7 @@ interface Props {
   pie?: string;
 }
 
-const { id, ratio, sizes = '100vw', alt, prioridad = false, class: clase = '', foco, revelar = false, anchoMax = 2000, pie } = Astro.props;
+const { id, ratio, sizes = '100vw', alt, prioridad = false, class: clase = '', foco, revelar = false, anchoMax = 2400, pie } = Astro.props;
 const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
 const img = masters[`../assets/fotos/${id}.jpg`]?.default;
 const meta = fotos.find((f) => f.id === id);
@@ -29,7 +29,7 @@ const esDev = import.meta.env.DEV;
 
 if (!meta && esDev) console.warn(`[Foto] id no registrado: ${id}`);
 
-const widths = [480, 720, 960, 1280, 1600, 2000].filter((w) => w <= Math.min(anchoMax, img?.width ?? 2000));
+const widths = [480, 720, 960, 1280, 1600, 2000, 2400].filter((w) => w <= Math.min(anchoMax, img?.width ?? 2400));
 if (img && !widths.includes(Math.min(img.width, anchoMax)) && img.width < anchoMax) widths.push(img.width);
 
 let pt: string | undefined;

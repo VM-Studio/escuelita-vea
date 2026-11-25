@@ -1,0 +1,25 @@
+---
+// Logo circular de La Escuelita (Jardín + Primaria, rev. 25-11-2026): único logo del navbar y del loader.
+// Original en _material/logos/originales/Logo circular de La Escuelita.png → optimizado en public/logos/logo-circular(-sm).{webp,png}.
+interface Props { alto?: number; class?: string; decorativo?: boolean; prioridad?: boolean }
+const { alto = 64, class: clase = '', decorativo = false, prioridad = false } = Astro.props;
+const base = alto <= 128 ? '/logos/logo-circular-sm' : '/logos/logo-circular';
+---
+<picture class:list={['logo-circular', clase]}>
+  <source type="image/webp" srcset={`${base}.webp`} />
+  <img
+    src={`${base}.png`}
+    width={alto}
+    height={alto}
+    alt={decorativo ? '' : 'La Escuelita — Jardín e Instituto La Escuelita, Escuela Primaria'}
+    decoding="async"
+    loading={prioridad ? 'eager' : 'lazy'}
+    fetchpriority={prioridad ? 'high' : 'auto'}
+    style={`height:${alto}px;width:${alto}px`}
+  />
+</picture>
+
+<style>
+  .logo-circular { display: block; line-height: 0; }
+  .logo-circular img { display: block; max-width: none; }
+</style>

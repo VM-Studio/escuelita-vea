@@ -4,9 +4,10 @@
 // Así en el celular no se usa la foto horizontal "estirada" (mucho zoom y poca calidad), y en la compu
 // las fotos verticales no se recortan a una franja.
 //
-// Calidad: si existe una versión ampliada con IA en _material/fotos-ia/<id>.png se parte de esa (más
-// definición); si no, del original con remuestreo Lanczos y un enfoque suave. Para generar las versiones
-// con IA (Real-ESRGAN, x4) pasá la ruta del programa realesrgan-ncnn-vulkan:
+// Calidad: si existe una versión mejorada en _material/fotos-mejoradas/<id>.(jpg|jpeg|png|webp|tif) se
+// parte de esa (más definición); si no, del original con remuestreo Lanczos y un enfoque suave.
+// Las copias de los originales para mejorar están en _material/fotos-para-mejorar/<id>.jpg.
+// Opcional, generar las versiones con IA local (Real-ESRGAN, x4):
 //     npm run fotos:portada -- --ia /ruta/a/realesrgan-ncnn-vulkan
 // Brillo: se levanta un poco cada foto hasta un brillo medio parejo (pedido de la escuela: "lograr brillo").
 //
@@ -21,16 +22,17 @@ import { fotos } from '../src/data/fotos.mjs';
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const ORIG = path.join(RAIZ, '_material/fotos');
-const IA = path.join(RAIZ, '_material/fotos-ia');
+const IA = path.join(RAIZ, '_material/fotos-mejoradas');
+const EXT = ['jpg', 'jpeg', 'png', 'webp', 'tif', 'tiff', 'JPG', 'JPEG', 'PNG'];
 const SALIDA = path.join(RAIZ, 'src/assets/fotos-portada');
 const iArg = process.argv.indexOf('--ia');
-const binIA = iArg > -1 ? process.argv[iArg + 1] : '';
+const binIA = iArg > -1 ? path.resolve(process.argv[iArg + 1]) : '';
 
 const FORMATOS = {
   escritorio: { w: 2560, h: 1600 },
   celular: { w: 1200, h: 2400 },
 };
-const BRILLO_OBJETIVO = 0.56;
+const BRILLO_OBJETIVO = 0.6;
 
 await fs.mkdir(SALIDA, { recursive: true });
 await fs.mkdir(IA, { recursive: true });
@@ -41,7 +43,8 @@ const deLaPortada = fotos.filter((x) => x.recorte);
 for (const f of deLaPortada) {
   const { id } = f;
   const original = path.join(ORIG, f.archivo);
-  const ampliada = path.join(IA, `${id}.png`);
+  const mejorada = EXT.map((e) => path.join(IA, `${id}.${e}`)).find((a) => existsSync(a));
+  const ampliada = mejorada || path.join(IA, `${id}.png`);
 
   // 1) Ampliación con IA (opcional)
   if (binIA && !existsSync(ampliada)) {
@@ -62,7 +65,7 @@ for (const f of deLaPortada) {
   const st = await sharp(fuente).rotate().stats();
   const [r, g, b] = st.channels;
   const L = (0.2126 * r.mean + 0.7152 * g.mean + 0.0722 * b.mean) / 255;
-  const brillo = Math.min(1.18, Math.max(1.03, BRILLO_OBJETIVO / L));
+  const brillo = Math.min(1.22, Math.max(1.03, BRILLO_OBJETIVO / L));
 
   for (const [nombre, { w, h }] of Object.entries(FORMATOS)) {
     const [fx, fy] = pct(f.recorte[nombre]);
@@ -79,7 +82,7 @@ for (const f of deLaPortada) {
       .sharpen(escala > 1.3 ? { sigma: 0.9, m1: 0.6, m2: 2 } : { sigma: 0.6 })
       .jpeg({ quality: 90, mozjpeg: true, chromaSubsampling: '4:4:4' })
       .toFile(path.join(SALIDA, `${id}-${nombre}.jpg`));
-    console.log(`✓ ${id}-${nombre}  recorte ${cw}×${ch} de ${W}×${H}${fuente === ampliada ? ' (IA)' : ''} → ${w}×${h} (×${escala.toFixed(2)}), brillo ×${brillo.toFixed(2)}`);
+    console.log(`✓ ${id}-${nombre}  recorte ${cw}×${ch} de ${W}×${H}${fuente === ampliada ? ' (mejorada)' : ''} → ${w}×${h} (×${escala.toFixed(2)}), brillo ×${brillo.toFixed(2)}`);
   }
 }
 // limpiar las que ya no están en la portada
