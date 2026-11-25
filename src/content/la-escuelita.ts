@@ -36,7 +36,7 @@ export const laEscuelita = {
     ],
   },
   hitos: {
-    titulo: 'Una propuesta en permanente crecimiento que deja huella en la comunidad',
+    titulo: 'Trayectoria y reconocimientos',
     intro:
       'Desde sus inicios, La Escuelita cuenta con un amplio reconocimiento y distinciones en el ámbito de la cultura y la educación pública:',
     items: [

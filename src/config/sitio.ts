@@ -76,8 +76,8 @@ export const NAV = [
     activoEn: ['/', '/la-escuelita/'],
     hijos: [
       // Orden pedido por la escuela (rev. 19-11-2026). La cronología queda como botón opcional dentro de Nuestra historia.
-      { texto: 'Nuestra Identidad', href: '/la-escuelita/' },
       { texto: 'Nuestra Historia', href: '/la-escuelita/historia/' },
+      { texto: 'Nuestra Identidad', href: '/la-escuelita/' },
       { texto: 'Nuestro Equipo', href: '/la-escuelita/equipo/' },
     ],
   },

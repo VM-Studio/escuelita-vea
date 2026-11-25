@@ -729,7 +729,7 @@ export const fotos = [
   },
   {
     id: 'jardin-tiza-negro', nivel: 'jardin', carpeta: 'TALLER DE 3', archivo: 'jardin/TALLER DE 3/6-T3.jpeg',
-    ve: 'Chicos dibujan con tiza blanca sobre hojas negras en una mesa compartida.', alt: 'Chicos dibujan con tiza blanca sobre hojas negras en una mesa compartida.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+    ve: 'Chicos dibujan con tiza blanca sobre hojas negras en una mesa compartida.', alt: 'Chicos dibujan con tiza blanca sobre hojas negras en una mesa compartida.', usos: ['Jardín · foto de «Vení a conocer el Jardín» (rev. 25-11-2026)', 'Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
   },
   {
     id: 'jardin-mesa-roja-masa', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/1-T2.png',
