@@ -15,7 +15,7 @@ const { titulo, volanta, foto, alto = 'completo' } = Astro.props;
   {foto && (
     <div class="portada__fondo" data-hero-fondo>
       <div class="portada__parallax" data-hero-parallax>
-        <Foto id={foto} ratio="16/9" sizes="100vw" prioridad class="portada__foto" />
+        <Foto id={foto} ratio="16/9" sizes="100vw" prioridad class="portada__foto" celular />
       </div>
     </div>
   )}

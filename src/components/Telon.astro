@@ -8,7 +8,7 @@ const { foto, frase, firma, rotulo, alto = 'medio', foco } = Astro.props;
 ---
 <section class:list={['telon', `telon--${alto}`]} aria-label={frase ? 'Frase' : 'Foto'} data-telon>
   <div class="telon__fijo" aria-hidden={frase ? 'true' : undefined}>
-    <Foto id={foto} ratio="16/9" sizes="100vw" foco={foco} />
+    <Foto id={foto} ratio="16/9" sizes="100vw" foco={foco} celular />
   </div>
   {(frase || rotulo) && <div class="telon__velo" aria-hidden="true"></div>}
   {frase && (

@@ -22,7 +22,7 @@ const dibujo = DIBUJOS[[...foto].reduce((a, c) => a + c.charCodeAt(0), 0) % DIBU
     <div class="interludio__marco">
       <div class="interludio__foto">
         <div class="interludio__parallax">
-          <Foto id={foto} ratio={ratio ?? '16/9'} sizes="100vw" class="interludio__img" />
+          <Foto id={foto} ratio={ratio ?? '16/9'} sizes="100vw" class="interludio__img" celular />
         </div>
       </div>
       <div class="interludio__velo" aria-hidden="true"></div>

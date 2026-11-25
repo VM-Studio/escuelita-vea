@@ -30,7 +30,26 @@ for (const f of fotos) {
   if (ids.has(f.id)) throw new Error(`id duplicado: ${f.id}`);
   ids.add(f.id);
   // Si la escuela entregó una versión mejorada (_material/fotos-mejoradas/<id>.jpg|png|…), se usa esa.
-  const mejorada = ['jpg', 'jpeg', 'png', 'webp', 'tif', 'tiff', 'JPG', 'JPEG', 'PNG'].map((e) => path.join(RAIZ, '_material/fotos-mejoradas', `${f.id}.${e}`)).find((a) => existsSync(a));
+  // Si además hay "<id>-celu.*", se genera la versión para celular (src/assets/fotos-celular/<id>.jpg), que Foto usa
+  // en pantallas verticales donde se lo pide (fondos fijos, portadas).
+  const EXTS = ['jpg', 'jpeg', 'png', 'webp', 'tif', 'tiff', 'JPG', 'JPEG', 'PNG'];
+  const buscar = (suf) => EXTS.map((e) => path.join(RAIZ, '_material/fotos-mejoradas', `${f.id}${suf}.${e}`)).find((a) => existsSync(a));
+  const mejorada = buscar('') || buscar('-compu');
+  const celu = buscar('-celu');
+  const destinoCel = path.join(RAIZ, 'src/assets/fotos-celular', `${f.id}.jpg`);
+  if (celu) {
+    let rehacerCel = todo || !existsSync(destinoCel);
+    if (!rehacerCel) rehacerCel = (await fs.stat(celu)).mtimeMs > (await fs.stat(destinoCel)).mtimeMs;
+    if (rehacerCel) {
+      await fs.mkdir(path.dirname(destinoCel), { recursive: true });
+      const sc = await sharp(celu).rotate().stats();
+      const Lc = (0.2126 * sc.channels[0].mean + 0.7152 * sc.channels[1].mean + 0.0722 * sc.channels[2].mean) / 255;
+      await sharp(celu).rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true }).toColorspace('srgb').removeAlpha()
+        .modulate({ brightness: Lc < 0.5 ? Math.min(1.2, 0.5 / Lc) : 1 })
+        .jpeg({ quality: 90, mozjpeg: true, chromaSubsampling: '4:4:4' }).toFile(destinoCel);
+      process.stdout.write(`✓ ${f.id} (celular)\n`);
+    }
+  } else if (existsSync(destinoCel)) { await fs.unlink(destinoCel); }
   const origen = mejorada || path.join(ORIG, f.archivo);
   const destino = path.join(SALIDA, `${f.id}.jpg`);
   try { await fs.access(origen); } catch { faltantes.push(f); continue; }
@@ -51,6 +70,7 @@ for (const f of fotos) {
       .rotate() // respeta orientación EXIF y la descarta
       .resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true })
       .toColorspace('srgb')
+      .removeAlpha()
       .modulate({ brightness: brillo })
       .jpeg({ quality: 86, mozjpeg: true, chromaSubsampling: '4:4:4' })
       .toFile(destino);
