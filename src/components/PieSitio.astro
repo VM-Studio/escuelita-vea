@@ -1,6 +1,7 @@
 ---
 import { NIVELES, REDES, SITIO } from '../config/sitio';
 import Logo from './Logo.astro';
+import LogoCircular from './LogoCircular.astro';
 import IconoRed from './IconoRed.astro';
 import { hayLogoPrimaria } from '../lib/logos';
 const redes = REDES.filter((r) => r.url);
@@ -14,6 +15,8 @@ const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURICompone
       <span class="pie-sitio__logo"><Logo nivel="jardin" alto={78} /></span>
       {hayLogoPrimaria() && <span class="pie-sitio__logo"><Logo nivel="primaria" alto={64} /></span>}
       <span class="pie-sitio__logo"><Logo nivel="vea" alto={60} /></span>
+      {/* Tercer logo: el circular del navbar (rev. 25-11-2026, solo acá en el pie) */}
+      <span class="pie-sitio__logo pie-sitio__logo--circular"><LogoCircular alto={76} /></span>
     </div>
     <div class="pie-sitio__frase">
       <p class="t-frase">El niño es cuerpo que siente y al sentir, piensa.</p>
@@ -68,6 +71,13 @@ const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURICompone
   .pie-sitio__arriba { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding-bottom: 1.75rem; border-bottom: 1px solid rgba(35, 32, 28, 0.12); }
   .pie-sitio__marca { display: flex; align-items: center; margin: 0 2rem 1rem 0; }
   .pie-sitio__logo { display: block; margin-right: 1.25rem; }
+  .pie-sitio__logo:last-child { margin-right: 0; }
+  /* Los tres logos uno al lado del otro, siempre en la misma fila */
+  .pie-sitio__marca { flex-wrap: nowrap; }
+  @media (max-width: 26em) {
+    .pie-sitio__logo { margin-right: 0.9rem; }
+    .pie-sitio__logo--circular :global(img) { width: 64px !important; height: 64px !important; }
+  }
   .pie-sitio__frase { margin-bottom: 1rem; }
   .pie-sitio__frase .t-frase { font-size: 1.25rem; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem); max-width: 26ch; color: var(--tinta); }
   .pie-sitio__paleta { width: 6rem; margin-bottom: 0.6rem; }
