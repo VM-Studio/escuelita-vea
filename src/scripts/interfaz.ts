@@ -407,11 +407,13 @@ function portadaSecuencia() {
 function portadaTexto() {
   const cont = $('[data-portada] [data-portada-texto]');
   const header = $('[data-encabezado]');
-  if (!cont || !header) return;
+  // Se mide el cartel "la escuelita" (no el bloque, que arranca debajo del header por su padding)
+  const ref = cont && (cont.querySelector<HTMLElement>('.portada__etiqueta') || cont.firstElementChild as HTMLElement);
+  if (!cont || !header || !ref) return;
   let pendiente = false;
   const act = () => {
     pendiente = false;
-    const r = cont.getBoundingClientRect();
+    const r = ref.getBoundingClientRect();
     const limite = header.offsetHeight + 8;
     const tramo = Math.max(90, window.innerHeight * 0.18);
     const o = Math.min(1, Math.max(0, (r.top - limite) / tramo));
