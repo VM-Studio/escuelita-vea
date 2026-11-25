@@ -171,7 +171,9 @@ Fundadora de La Escuelita, Primer Jardín Argentino de Educación por el Arte, C
 Investigación del Niño y su Proceso Creador, y Espacio de Formación Docente Continua.
 Fundadora de V.E.A. (Visión Educacional Antropológica).
 
-## Hitos culturales y huella en la comunidad
+## Una propuesta en permanente crecimiento que deja huella en la comunidad
+
+> REVISIÓN DE LA ESCUELA (25-11-2026): antes se titulaba "Hitos culturales y huella en la comunidad".
 
 Desde sus inicios, La Escuelita cuenta con un amplio reconocimiento y distinciones en el ámbito de
 la cultura y la educación pública:
