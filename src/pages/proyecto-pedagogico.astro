@@ -6,6 +6,9 @@ import Puertas from '../components/Puertas.astro';
 import Acordeon from '../components/Acordeon.astro';
 import { proyecto as p } from '../content/proyecto';
 import { parrafos, enLinea, acento } from '../lib/texto';
+import lqipData from '../data/fotos-lqip.json';
+// Fondo desenfocado de cada foto (la miniatura LQIP, sin descargas extra) para que la foto se vea entera
+const fondoDe = (id: string) => (lqipData as Record<string, { lqip: string }>)[id]?.lqip;
 // Color de la notita de cada eje (tonos suaves de la paleta)
 const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
 ---
@@ -20,6 +23,7 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
     <div class="apertura__foto" aria-hidden="true">
       {p.fotosApertura.map((id, i) => (
         <div class:list={['apertura__capa', { 'is-activa': i === 0 }]} data-portada-capa>
+          {fondoDe(id) && <span class="apertura__difuso" style={`background-image:url(${fondoDe(id)})`}></span>}
           <Foto id={id} sizes="100vw" prioridad={i === 0} alt="" />
         </div>
       ))}
@@ -87,18 +91,22 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
   /* ---------- Apertura ---------- */
   .apertura { position: relative; overflow: hidden; height: 72vh; min-height: 28rem; max-height: 46rem; margin-top: var(--header-h); background: var(--tinta); color: #fff; display: flex; align-items: flex-end; }
   .apertura__foto { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; } /* las capas quedan debajo del velo */
-  .apertura__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; will-change: opacity; }
-  .apertura__capa.is-previa { z-index: 1; opacity: 1; }
-  .apertura__capa.is-activa { z-index: 2; opacity: 1; transition: opacity 2s cubic-bezier(0.45, 0, 0.55, 1); }
+  .apertura__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; visibility: hidden; overflow: hidden; }
+  .apertura__capa.is-previa { z-index: 1; opacity: 1; visibility: visible; will-change: opacity; }
+  .apertura__capa.is-activa { z-index: 2; opacity: 1; visibility: visible; will-change: opacity; transition: opacity 2.2s cubic-bezier(0.37, 0, 0.63, 1); }
   .apertura__capa + .apertura__capa { display: none; }
   .apertura.is-secuencia .apertura__capa { display: block; }
   .apertura__capa :global(.foto) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-  .apertura__capa :global(picture), .apertura__capa :global(img) { width: 100%; height: 100%; object-fit: cover; }
-  .apertura__capa :global(img) { transform: scale(1.02); transition: transform 7s linear; }
-  .apertura__capa.is-activa :global(img), .apertura__capa.is-previa :global(img) { transform: scale(1.08); }
-  .apertura__capa:not(.is-activa):not(.is-previa) :global(img) { transition: none; }
+  /* La foto se ve entera (pedido rev. 25-11-2026); a los costados, la misma foto desenfocada */
+  .apertura__capa :global(.foto) { background: transparent; }
+  .apertura__capa :global(picture), .apertura__capa :global(img) { width: 100%; height: 100%; object-fit: contain; }
+  @media (max-aspect-ratio: 3/4) { .apertura__capa :global(img) { object-position: 50% 28%; } }
+  .apertura__difuso { position: absolute; top: -8%; left: -8%; right: -8%; bottom: -8%; background-size: cover; background-position: 50% 50%; filter: blur(28px) saturate(1.1); opacity: 0.9; }
+  .apertura__capa :global(img) { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+  .apertura__capa.is-activa :global(img), .apertura__capa.is-previa :global(img) { will-change: transform; animation: apertura-zoom 8s linear both; }
+  @keyframes apertura-zoom { from { transform: scale(1.001); } to { transform: scale(1.035); } }
   .apertura__capa :global(.foto__lqip) { display: none; }
-  :global(html.reducido) .apertura__capa :global(img), :global(html.liviano) .apertura__capa :global(img) { transform: none; transition: none; }
+  :global(html.reducido) .apertura__capa :global(img), :global(html.liviano) .apertura__capa :global(img) { animation: none; transform: none; }
   .apertura__velo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background: linear-gradient(90deg, rgba(20, 16, 12, 0.72) 0%, rgba(20, 16, 12, 0.45) 40%, rgba(20, 16, 12, 0) 72%), linear-gradient(0deg, rgba(20, 16, 12, 0.4), rgba(20, 16, 12, 0) 42%); }
   .apertura__contenido { position: relative; z-index: 2; padding-bottom: 5.5rem; }
   .apertura__volanta { margin: 0; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.85); }

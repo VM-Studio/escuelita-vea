@@ -12,7 +12,7 @@
 // · Ningún nombre de chico/a en `alt`, ni en `id`, ni en pies de foto.
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** @typedef {{id:string,nivel:'jardin'|'primaria',carpeta:string,archivo:string,ve:string,alt:string,usos:string[],porque:string,obs?:string,foco?:string}} Foto */
+/** @typedef {{id:string,nivel:'jardin'|'primaria',carpeta:string,archivo:string,ve:string,alt:string,usos:string[],porque:string,obs?:string,foco?:string,recorte?:{escritorio:string,celular:string}}} Foto */
 
 /** @type {Foto[]} */
 export const fotos = [
@@ -327,7 +327,7 @@ export const fotos = [
   {
     id: 'jardin-abrazo-piso', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/5-T2.jpg',
     ve: 'Dos chicos de 2 años acostados en el piso, abrazados.',
-    alt: 'Dos chicos de la sala de dos se abrazan acostados en el piso.',
+    alt: 'Dos chicos del Taller de 2 se abrazan acostados en el piso.',
     usos: ['Jardín · ¿Qué nos diferencia? — Los vínculos'],
     porque: 'Confianza y afecto entre pares.',
     foco: '50% 50%',
@@ -359,7 +359,7 @@ export const fotos = [
   {
     id: 'sala2-tunel-arena', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/10-T2.jpg',
     ve: 'Dos chicos de 2 años asoman sonriendo desde un túnel rojo en la arena.',
-    alt: 'Dos chicos de la sala de dos asoman sonriendo desde un túnel en la arena.',
+    alt: 'Dos chicos del Taller de 2 asoman sonriendo desde un túnel en la arena.',
     usos: ['Jardín · Nuestras salas — Taller de 2', 'Inicio · carrusel circular (“El juego y el arte son su lenguaje natural.”)'],
     porque: 'Foto de la carpeta TALLER DE 2; juego y descubrimiento.',
     foco: '50% 50%',
@@ -383,7 +383,7 @@ export const fotos = [
   {
     id: 'sala5-pintura-grupal', nivel: 'jardin', carpeta: 'TALLER DE 5', archivo: 'jardin/TALLER DE 5/6-T5.jpeg',
     ve: 'Chicos de 5 pintan juntos un paisaje grande con pinceles y frascos de tinta.',
-    alt: 'Chicos y chicas de la sala de cinco pintan juntos un paisaje grande con pinceles.',
+    alt: 'Chicos y chicas del Taller de 5 pintan juntos un paisaje grande con pinceles.',
     usos: ['Jardín · Nuestras salas — Taller de 5'],
     porque: 'Foto de la carpeta TALLER DE 5; el trabajo compartido se afianza.',
     foco: '50% 50%',
@@ -508,7 +508,7 @@ export const fotos = [
     id: 'primaria-tehuelches-papel', nivel: 'primaria', carpeta: 'PRIMARIA-2DO-TEHUELCHES (dentro de la carpeta de Jardín)', archivo: 'jardin/PRIMARIA-2DO-TEHUELCHES/2-Quillangos.jpg',
     ve: 'Chicos de 2° pintan en el piso grandes papeles madera con guardas y símbolos tehuelches.',
     alt: 'Chicos y chicas de segundo grado pintan en el piso grandes papeles con guardas y símbolos tehuelches.',
-    usos: ['Primaria · Ciencias Sociales (foto sugerida por la escuela: Tehuelches)'],
+    usos: ['Primaria · Ciencias Sociales (foto sugerida por la escuela: Tehuelches)', 'Proyecto pedagógico · fotos de la portada (rev. 25-11-2026)'],
     porque: 'Foto sugerida por la escuela para Sociales (“Tehuelches”).',
     obs: 'Está en la carpeta de Jardín pero es de Primaria (2° grado). Se usa solo en Primaria.',
     foco: '50% 50%',
@@ -733,15 +733,15 @@ export const fotos = [
   },
   {
     id: 'jardin-mesa-roja-masa', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/1-T2.png',
-    ve: 'Ronda de chicos de la sala de dos amasando sobre una mesa roja larga.', alt: 'Ronda de chicos de la sala de dos amasando sobre una mesa roja larga.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+    ve: 'Ronda de chicos del Taller de 2 amasando sobre una mesa roja larga.', alt: 'Ronda de chicos del Taller de 2 amasando sobre una mesa roja larga.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
   },
   {
     id: 'jardin-papel-grande', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/8-T2.jpeg',
-    ve: 'Chicos de la sala de dos dibujan juntos sobre un papel grande que cubre la mesa.', alt: 'Chicos de la sala de dos dibujan juntos sobre un papel grande que cubre la mesa.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+    ve: 'Chicos del Taller de 2 dibujan juntos sobre un papel grande que cubre la mesa.', alt: 'Chicos del Taller de 2 dibujan juntos sobre un papel grande que cubre la mesa.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
   },
   {
     id: 'jardin-arena-cocina', nivel: 'jardin', carpeta: 'TALLER DE 2', archivo: 'jardin/TALLER DE 2/9-T2.jpeg',
-    ve: 'Chicos de la sala de dos juegan con cuencos y arena en el arenero, con una maestra.', alt: 'Chicos de la sala de dos juegan con cuencos y arena en el arenero, con una maestra.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+    ve: 'Chicos del Taller de 2 juegan con cuencos y arena en el arenero, con una maestra.', alt: 'Chicos del Taller de 2 juegan con cuencos y arena en el arenero, con una maestra.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
   },
   {
     id: 'jardin-construccion-amarilla', nivel: 'jardin', carpeta: 'TALLER DE 5', archivo: 'jardin/TALLER DE 5/11-T5.jpeg',
@@ -750,6 +750,7 @@ export const fotos = [
   {
     id: 'jardin-pintura-murales', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/7-PLAST.jpeg',
     ve: 'Vista desde arriba de chicos pintando dibujos de figuras con témpera y pinceles.', alt: 'Vista desde arriba de chicos pintando dibujos de figuras con témpera y pinceles.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+    recorte: { escritorio: '50% 50%', celular: '50% 50%' }, // portada del Inicio: versiones horizontal y vertical (npm run fotos:portada)
   },
   {
     id: 'jardin-hojas-crayon', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/8-PLAST.jpeg',
@@ -777,7 +778,7 @@ export const fotos = [
   },
   {
     id: 'jardin-musica-guitarra', nivel: 'jardin', carpeta: 'MÚSICA', archivo: 'jardin/MÚSICA/2-MUSICA.jpeg',
-    ve: 'Ronda de chicos alrededor de una maestra con guitarra, en una sala con dibujos colgados.', alt: 'Ronda de chicos alrededor de una maestra con guitarra, en una sala con dibujos colgados.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
+    ve: 'Ronda de chicos alrededor de una maestra con guitarra, en un taller con dibujos colgados.', alt: 'Ronda de chicos alrededor de una maestra con guitarra, en un taller con dibujos colgados.', usos: ['Colección del taller'], porque: 'Ampliación del material visual pedido por la escuela (más fotos del taller y de las producciones de los chicos).', foco: '50% 50%',
   },
   {
     id: 'jardin-libros-ronda', nivel: 'jardin', carpeta: 'LITERATURA', archivo: 'jardin/LITERATURA/5-LITERATURA.png',
@@ -805,24 +806,28 @@ export const fotos = [
     ve: 'Frente de la escuela pintado con un mural de hojas verdes; en la puerta, el cartel de inscripciones abiertas y una familia entrando.',
     alt: 'Frente de La Escuelita pintado con un mural de hojas verdes y la puerta de entrada abierta.',
     usos: ['Inicio · portada a pantalla completa (1ª foto)'], porque: 'Elegida por la escuela para el Inicio (carpeta FOTOS PARA EL INICIO, marcada “SI”).', foco: '50% 55%',
+    recorte: { escritorio: '50% 50%', celular: '52% 50%' }, // portada del Inicio: versiones horizontal y vertical (npm run fotos:portada)
   },
   {
     id: 'primaria-aula-tercero', nivel: 'primaria', carpeta: 'AULAS', archivo: 'revision-19-11/primaria/grado2.jpg',
     ve: 'Aula de primaria con guirnalda de bienvenida; chicos y chicas trabajan en mesas compartidas.',
     alt: 'Aula de la Primaria con una guirnalda de bienvenida; chicos y chicas trabajan en mesas compartidas.',
     usos: ['Inicio · portada a pantalla completa (2ª foto)', 'Primaria · Cómo aprendemos (galería)'], porque: 'Elegida por la escuela para el Inicio y enviada también en la carpeta PRIMARIA.', foco: '50% 55%',
+    recorte: { escritorio: '50% 50%', celular: '56% 50%' }, // portada del Inicio: versiones horizontal y vertical (npm run fotos:portada)
   },
   {
     id: 'sala5-ronda-sala', nivel: 'jardin', carpeta: 'TALLER DE 5', archivo: 'jardin/TALLER DE 5/8-T5.jpeg',
-    ve: 'Ronda de chicos sentados en sillitas rojas dentro de la sala, con la maestra; ventanales al patio.',
-    alt: 'Ronda de chicos y chicas en sillitas rojas dentro de la sala, junto a la maestra, con ventanales al patio.',
+    ve: 'Ronda de chicos sentados en sillitas rojas dentro del taller, con la maestra; ventanales al patio.',
+    alt: 'Ronda de chicos y chicas en sillitas rojas dentro del taller, junto a la maestra, con ventanales al patio.',
     usos: ['Inicio · portada a pantalla completa (3ª foto)', 'Jardín · Taller de 5'], porque: 'Elegida por la escuela para el Inicio y enviada en la carpeta JARDIN.', foco: '50% 60%',
+    recorte: { escritorio: '50% 52%', celular: '60% 50%' }, // portada del Inicio: versiones horizontal y vertical (npm run fotos:portada)
   },
   {
     id: 'sala4-dibujo-arbol', nivel: 'jardin', carpeta: 'TALLER DE 4', archivo: 'jardin/TALLER DE 4/3-T4.jpeg',
     ve: 'Chicos de pie alrededor de una mesa miran un gran dibujo de un árbol hecho entre todos.',
     alt: 'Chicos y chicas del jardín miran, alrededor de una mesa, un gran dibujo de un árbol hecho entre todos.',
     usos: ['Inicio · portada a pantalla completa (4ª foto)'], porque: 'Elegida por la escuela para el Inicio (carpeta FOTOS PARA EL INICIO, marcada “SI”).', foco: '50% 58%',
+    recorte: { escritorio: '50% 46%', celular: '50% 50%' }, // portada del Inicio: versiones horizontal y vertical (npm run fotos:portada)
   },
   {
     id: 'plastica-masa-figura', nivel: 'jardin', carpeta: 'PLÁSTICA', archivo: 'jardin/PLÁSTICA/13-PLAST.jpeg',
@@ -874,14 +879,14 @@ export const fotos = [
   },
   {
     id: 'sala-taller-obras', nivel: 'jardin', carpeta: 'SALAS', archivo: 'revision-19-11/jardin/taller12.jpeg',
-    ve: 'Sala vacía del jardín con las paredes cubiertas de pinturas de los chicos, una guitarra y una mesa roja.',
-    alt: 'Sala del jardín con las paredes cubiertas de pinturas de los chicos, una guitarra colgada y una mesa roja.',
+    ve: 'Taller vacío del jardín con las paredes cubiertas de pinturas de los chicos, una guitarra y una mesa roja.',
+    alt: 'Taller del jardín con las paredes cubiertas de pinturas de los chicos, una guitarra colgada y una mesa roja.',
     usos: ['La Escuelita · Nuestra identidad (collage)', 'Jardín · el gesto espontáneo (fotos que pasan)'], porque: 'Enviada en la carpeta JARDIN: muestra el taller como espacio, la sala habitada por las producciones de los chicos.', foco: '50% 50%',
   },
   {
     id: 'sala-taller-sillas', nivel: 'jardin', carpeta: 'SALAS', archivo: 'revision-19-11/jardin/taller6.jpg',
-    ve: 'Sala del jardín con sillitas rojas en ronda, mochilas colgadas y ventanales hacia los árboles.',
-    alt: 'Sala del jardín con sillitas rojas en ronda, mochilas colgadas y ventanales hacia los árboles.',
+    ve: 'Taller del jardín con sillitas rojas en ronda, mochilas colgadas y ventanales hacia los árboles.',
+    alt: 'Taller del jardín con sillitas rojas en ronda, mochilas colgadas y ventanales hacia los árboles.',
     usos: ['Jardín · banda antes de Nuestras salas'], porque: 'Foto apaisada de una sala: presenta el bloque de las salas.', foco: '50% 55%',
   },
   {

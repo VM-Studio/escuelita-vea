@@ -10,7 +10,7 @@ const conCargador = html.classList.contains('con-cargador');
 const q = <T extends Element = HTMLElement>(s: string, c: ParentNode = document) => Array.prototype.slice.call(c.querySelectorAll<T>(s)) as T[];
 
 /* ---------- Loader en modo simple (sin GSAP) ---------- */
-function retirarCargadorSimple(demora = 900) {
+function retirarCargadorSimple(demora = 600) {
   const c = document.querySelector<HTMLElement>('[data-cargador]');
   if (!c || !conCargador) return;
   html.classList.add('cargador-js');
@@ -88,13 +88,14 @@ async function iniciar() {
       const izq = cargador.querySelector('[data-cargador-logo="izq"]');
       const der = cargador.querySelector('[data-cargador-logo="der"]');
       const hoja = cargador.querySelector('[data-cargador-hoja]');
-      gsap.set(izq, { autoAlpha: 0, x: -120 });
-      gsap.set(der, { autoAlpha: 0, x: 120 });
+      // Menos tiempo de los logos solos (pedido rev. 25-11-2026): ~1,8 s en total
+      if (izq) gsap.set(izq, { autoAlpha: 0, x: -90 });
+      if (der) gsap.set(der, { autoAlpha: 0, x: 90 });
       const tl = gsap.timeline({ onComplete: () => { html.classList.remove('con-cargador'); } });
-      tl.to(izq, { autoAlpha: 1, x: 0, duration: 1.7, ease: 'power3.out' }, 0.15)
-        .to(der, { autoAlpha: 1, x: 0, duration: 1.7, ease: 'power3.out' }, 0.45)
-        .to(hoja, { yPercent: -104, rotate: -1.5, duration: 0.9, ease: 'expo.inOut' }, '+=0.5')
-        .add(() => { tlEntrada.play(); }, '-=0.45');
+      if (izq) tl.to(izq, { autoAlpha: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 0.05);
+      if (der) tl.to(der, { autoAlpha: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 0.15);
+      tl.to(hoja, { yPercent: -104, rotate: -1.5, duration: 0.75, ease: 'expo.inOut' }, '+=0.15')
+        .add(() => { tlEntrada.play(); }, '-=0.4');
     } else {
       requestAnimationFrame(() => tlEntrada.play());
     }

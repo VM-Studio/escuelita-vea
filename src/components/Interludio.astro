@@ -9,10 +9,10 @@ interface Props {
   variante?: 'sobre' | 'lado' | 'centro';
   ratio?: string;
   trazo?: 'sol' | 'hoja' | 'espiral' | 'estrella' | 'garabato' | 'corazon';
-  /** Sin el dibujo de fondo tipo marca de agua (Primaria, pedido de la escuela) */
+  /** Dibujo de fondo tipo marca de agua: apagado en todo el sitio (pedido de la escuela, rev. 25-11-2026) */
   sinDibujo?: boolean;
 }
-const { foto, frase, firma, variante = 'sobre', ratio, trazo = 'hoja', sinDibujo = false } = Astro.props;
+const { foto, frase, firma, variante = 'sobre', ratio, trazo = 'hoja', sinDibujo = true } = Astro.props;
 // Dibujo de fondo (PNG/WebP sin fondo) elegido de forma estable según la foto
 const DIBUJOS = ['cara-pestanas', 'cuerpo-musculos', 'cara-anteojos', 'arbol', 'cara-mujer', 'cara-pelo-largo'];
 const dibujo = DIBUJOS[[...foto].reduce((a, c) => a + c.charCodeAt(0), 0) % DIBUJOS.length];

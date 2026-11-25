@@ -12,9 +12,9 @@ export const inicio = {
   presentacion: {
     nombre: 'La Escuelita',
     fundada: 'Fundada por la profesora Marta Calvo en 1959',
-    // Se publica una sola vez, en la portada (la escuela pidió no repetir los 67 años; rev. 19-11-2026)
-    trayectoria: '67 años en la Educación por el Arte',
-    descripcion: 'Centro de expresión infantil y espacio de formación docente continua.',
+    // Portada (rev. 25-11-2026: se saca «67 años en la Educación por el Arte»; queda La Escuelita, la bajada y la frase)
+    bajadaPortada: 'Centro de expresión infantil y espacio de formación continua',
+    frasePortada: 'Un espacio donde los sentidos cobran sentido',
     jardin: { texto: 'Primer Jardín Argentino de Educación por el Arte', anio: '1959' },
     primaria: { texto: 'Instituto La Escuelita, Escuela Primaria de Educación a través del Arte', anio: '1997' },
   },
@@ -34,7 +34,6 @@ export const inicio = {
   },
   lineaDeTiempo: {
     titulo: '67 años en la educación por el arte',
-    frase: 'Un espacio donde “los sentidos” cobran sentido.',
     bajada: 'Espacio educativo fundado por la profesora Marta Calvo en 1959.',
     hitos: [
       { anio: '1959', texto: 'Primer Jardín Argentino de Educación por el Arte', fotos: ['historica-dibujo-pared', 'historica-manos-pintura'] },
@@ -70,7 +69,7 @@ export const inicio = {
         foto: 'taller-pintura-mesa',
       },
       {
-        titulo: 'Hitos culturales y huella en la comunidad',
+        titulo: 'Una propuesta en permanente crecimiento que deja huella en la comunidad',
         texto: [
           'Hoy, el deseo de su fundadora y de su equipo interdisciplinario es que este modelo pedagógico propio, singular e innovador siga en crecimiento. Buscamos que se expanda hacia sectores cada vez más amplios y variados de la sociedad para potenciar su lazo y cercanía con la comunidad.',
         ],

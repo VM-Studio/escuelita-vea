@@ -2,15 +2,12 @@
 // Cierre con llamado a entrevista. Texto de interfaz (microcopy) a aprobar por la escuela.
 import Foto from './Foto.astro';
 import Trazo from './Trazo.astro';
-import Dibujito from './Dibujito.astro';
 import { NIVELES } from '../config/sitio';
 import { acento } from '../lib/texto';
-interface Props { nivel?: 'jardin' | 'primaria'; foto?: string; titulo?: string; dibujos?: boolean }
-const { nivel, foto, titulo = 'Vení a conocer La Escuelita', dibujos = false } = Astro.props;
+interface Props { nivel?: 'jardin' | 'primaria'; foto?: string; titulo?: string }
+const { nivel, foto, titulo = 'Vení a conocer La Escuelita' } = Astro.props;
 ---
 <section class:list={['llamado seccion', { 'llamado--sin-foto': !foto }]} aria-labelledby="llamado-titulo">
-  {dibujos && <Dibujito nombre="cara-pestanas" lado="izq" top="14%" ancho="7rem" rot={-6} />}
-  {dibujos && <Dibujito nombre="cara-anteojos" lado="der" top="40%" ancho="7rem" rot={6} />}
   <div class="contenedor llamado__grilla">
     {foto && (
       <div class="llamado__foto pegada" style="--rot:2deg" data-revelar>

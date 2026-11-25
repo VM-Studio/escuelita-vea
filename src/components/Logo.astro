@@ -1,10 +1,15 @@
 ---
 // Logos oficiales de la escuela (entregados en alta calidad, recortados y optimizados en public/logos/).
 //  · jardin   → La Escuelita (la nena con flores) — Primer Jardín Argentino de Educación por el Arte
-//  · primaria → Instituto La Escuelita · V.E.A. (Jardín - Primaria)
-//  · vea      → mismo logo V.E.A.
+//  · primaria → logo propio de la Primaria (pedido rev. 25-11-2026). Va en public/logos/primaria-sinfondo.png
+//               (y opcional primaria-blanco.png). Mientras no esté el archivo, este logo no se muestra.
+//  · vea      → Instituto La Escuelita · V.E.A. (Jardín - Primaria)
 // Versiones: "sinfondo" (transparente: navbar, secciones claras) y "blanco" (con fondo blanco: sobre fondos oscuros o fotos).
 // Originales en _material/logos/originales/. No redibujar, no recolorear, no deformar.
+import fs from 'node:fs';
+import path from 'node:path';
+import sharp from 'sharp';
+
 interface Props {
   nivel: 'jardin' | 'primaria' | 'vea';
   version?: 'sinfondo' | 'blanco';
@@ -15,24 +20,45 @@ interface Props {
 }
 const LOGOS = {
   jardin: { archivo: 'la-escuelita', w: 900, h: 1060, wb: 1116, hb: 1276, alt: 'La Escuelita — Primer Jardín Argentino de Educación por el Arte' },
-  primaria: { archivo: 'vea', w: 900, h: 717, wb: 1116, hb: 933, alt: 'Instituto La Escuelita — Jardín y Primaria (V.E.A.)' },
   vea: { archivo: 'vea', w: 900, h: 717, wb: 1116, hb: 933, alt: 'V.E.A. — Instituto La Escuelita, Jardín y Primaria' },
 } as const;
 const { nivel, version = 'sinfondo', alto = 64, class: clase = '', decorativo = false, prioridad = false } = Astro.props;
-const l = LOGOS[nivel];
-const [w, h] = version === 'blanco' ? [l.wb, l.hb] : [l.w, l.h];
-const ancho = Math.round((w / h) * alto);
+
+let src = '';
+let w = 0;
+let h = 0;
+let alt = '';
+if (nivel === 'primaria') {
+  // Logo de la Primaria: se toma del archivo si existe (medidas leídas del propio archivo)
+  const pub = path.join(process.cwd(), 'public/logos');
+  const archivo = fs.existsSync(path.join(pub, `primaria-${version}.png`)) ? `primaria-${version}.png` : fs.existsSync(path.join(pub, 'primaria-sinfondo.png')) ? 'primaria-sinfondo.png' : '';
+  if (archivo) {
+    const m = await sharp(path.join(pub, archivo)).metadata();
+    src = `/logos/${archivo}`;
+    w = m.width || 1;
+    h = m.height || 1;
+    alt = 'Instituto La Escuelita — Escuela Primaria de Educación a través del Arte';
+  }
+} else {
+  const l = LOGOS[nivel];
+  [w, h] = version === 'blanco' ? [l.wb, l.hb] : [l.w, l.h];
+  src = `/logos/${l.archivo}-${version}${version === 'sinfondo' && alto <= 60 ? '-sm' : ''}.png`;
+  alt = l.alt;
+}
+const ancho = h ? Math.round((w / h) * alto) : 0;
 ---
-<img
-  class:list={['logo', `logo--${nivel}`, `logo--${version}`, clase]}
-  src={`/logos/${l.archivo}-${version}${version === 'sinfondo' && alto <= 60 ? '-sm' : ''}.png`}
-  width={ancho}
-  height={alto}
-  alt={decorativo ? '' : l.alt}
-  decoding="async"
-  loading={prioridad ? 'eager' : 'lazy'}
-  style={`height:${alto}px;width:auto`}
-/>
+{src && (
+  <img
+    class:list={['logo', `logo--${nivel}`, `logo--${version}`, clase]}
+    src={src}
+    width={ancho}
+    height={alto}
+    alt={decorativo ? '' : alt}
+    decoding="async"
+    loading={prioridad ? 'eager' : 'lazy'}
+    style={`height:${alto}px;width:auto`}
+  />
+)}
 
 <style>
   .logo { display: block; max-width: 100%; }

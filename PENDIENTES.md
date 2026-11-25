@@ -1,5 +1,18 @@
 # Pendientes y supuestos
 
+## 0. Cambios del 25-11-2026 ("Nuevos cambios WEB") — falta material
+
+- **Logo de la Primaria** (el que se adjuntó en el Drive): no llegó. Dejarlo en `public/logos/primaria-sinfondo.png`
+  (PNG sin fondo) y aparece solo en el navbar (al lado del Jardín), el loader y el footer.
+- **Fotos adjuntas de Proyecto pedagógico**: no llegaron. Faltan las dos de «La concepción del niño» (cambio de foto)
+  y una para «Educación por el arte», «Expresión y aprendizaje» y «El rol del docente».
+- **Ampliación con IA de las fotos de la portada**: correr `npm run fotos:portada -- --ia /ruta/a/realesrgan-ncnn-vulkan`.
+  Hoy las versiones horizontal/vertical salen del original con remuestreo de alta calidad.
+- «Sala» → «taller»: no se cambió «salas independientes como Hasta Trilce» (Comunidad: es una sala de teatro) ni
+  «Sala de Educación Permanente» (cronología: nombre propio). Confirmar.
+- El video «¿Querés saber más de nosotros?» dice «de» dentro del propio video (no se puede editar); el título y el pie
+  de la web dicen «sobre».
+
 Primera versión completa. Lo de abajo está abierto: cada punto tiene el supuesto con el que se avanzó.
 
 ## 1. Consultas para la escuela
@@ -40,6 +53,7 @@ Primera versión completa. Lo de abajo está abierto: cada punto tiene el supues
 - "Seguir leyendo" / "Cerrar" (Cómo aprendemos) · "Cerrar el detalle" (adaptación) · "Cerrar la carta"
 - Título de sección sobre las puertas en Proyecto pedagógico: "Jardín y Primaria"
 - "Nuestro equipo" (enlace al final de La Escuelita)
+- Volanta "En video" sobre «¿Querés saber más sobre nosotros?» (ahora al final de Nuestra identidad)
 - "Ver el mapa" · "Abrir en Google Maps" · título "Cómo llegar"
 
 **Cierres con llamado a entrevista**

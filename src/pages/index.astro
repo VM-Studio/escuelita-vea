@@ -3,12 +3,11 @@ import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
+import FotoPortada from '../components/FotoPortada.astro';
 import Trazo from '../components/Trazo.astro';
-import Logo from '../components/Logo.astro';
 import Boton from '../components/Boton.astro';
 import Puertas from '../components/Puertas.astro';
 import Telon from '../components/Telon.astro';
-import Dibujito from '../components/Dibujito.astro';
 import Instagram from '../components/Instagram.astro';
 import PasaFotos from '../components/PasaFotos.astro';
 import Topografia from '../components/Topografia.astro';
@@ -17,19 +16,20 @@ import LlamadoEntrevista from '../components/LlamadoEntrevista.astro';
 import Sello from '../components/Sello.astro';
 import Mancha from '../components/Mancha.astro';
 import CarruselCircular from '../components/CarruselCircular.astro';
-import VideoReel from '../components/VideoReel.astro';
-import { VIDEOS } from '../config/sitio';
 import { inicio } from '../content/inicio';
 import { comunidad } from '../content/comunidad';
 import { parrafos, acento } from '../lib/texto';
 
 const p = inicio;
-// Precarga de la foto del hero (mismos parámetros que <Foto prioridad>)
-const masters = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos/*.jpg', { eager: true });
-const primera = masters[`../assets/fotos/${p.portadaFondo[0]}.jpg`].default;
-const anchos = [480, 720, 960, 1280, 1600, 2000].filter((w) => w <= primera.width);
-const pre = await getImage({ src: primera, widths: anchos, format: 'avif' });
-const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/avif' }];
+// Precarga de la primera foto del hero, en sus dos encuadres (mismos parámetros que <FotoPortada>)
+const versiones = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos-portada/*.jpg', { eager: true });
+const esc = versiones[`../assets/fotos-portada/${p.portadaFondo[0]}-escritorio.jpg`]?.default;
+const cel = versiones[`../assets/fotos-portada/${p.portadaFondo[0]}-celular.jpg`]?.default;
+const juego = async (src: ImageMetadata, anchos: number[]) => (await getImage({ src, widths: anchos.filter((a) => a <= src.width), format: 'avif', quality: 62 })).srcSet.attribute;
+const precargar = esc && cel ? [
+  { srcset: await juego(cel, [600, 828, 1080, 1200]), sizes: '100vw', type: 'image/avif', media: '(max-aspect-ratio: 3/4)' },
+  { srcset: await juego(esc, [960, 1280, 1600, 1920, 2560]), sizes: '100vw', type: 'image/avif', media: '(min-aspect-ratio: 3.0001/4)' },
+] : [];
 ---
 <Base
   titulo="Inicio"
@@ -39,16 +39,16 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   {/* ============ HERO PRINCIPAL ============ */}
   {/* Fotos a pantalla completa que se van pasando cada 4 segundos; el nombre arriba, con velo y sombra
       para que el texto se lea siempre. */}
-  <section class="portada" data-hero data-portada aria-labelledby="portada-titulo">
+  <section class="portada" data-hero data-portada data-portada-intervalo="5500" aria-labelledby="portada-titulo">
     <div class="portada__fondo" aria-hidden="true">
       {p.portadaFondo.map((id, i) => (
         <div class:list={['portada__capa', { 'is-activa': i === 0 }]} data-portada-capa>
-          <Foto id={id} sizes="100vw" prioridad={i === 0} alt="" />
+          <FotoPortada id={id} prioridad={i === 0} />
         </div>
       ))}
     </div>
     <div class="portada__velo" aria-hidden="true"></div>
-    <div class="portada__contenido contenedor">
+    <div class="portada__contenido contenedor" data-portada-texto>
       {/* "La Escuelita" con la letra del logo (pedido de la escuela): es la palabra del logo original, recortada sin
           redibujar ni recolorear, sobre una etiqueta de papel para que se lea sobre cualquier foto. */}
       <h1 id="portada-titulo" class="portada__titulo" data-hero-resto>
@@ -60,7 +60,8 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
           </picture>
         </span>
       </h1>
-      <p class="portada__bajada" data-hero-resto>{p.presentacion.trayectoria}</p>
+      <p class="portada__bajada" data-hero-resto>{p.presentacion.bajadaPortada}</p>
+      <p class="portada__frase" data-hero-resto>{p.presentacion.frasePortada}</p>
     </div>
     <ol class="portada__marcas" aria-hidden="true">
       {p.portadaFondo.map((_, i) => <li class:list={['portada__marca', { 'is-activa': i === 0 }]} data-portada-marca><span></span></li>)}
@@ -68,22 +69,6 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     <a href="#mirada" class="portada__bajar" aria-label="Bajar">
       <Trazo nombre="scroll" color="actual" grosor={2} dibujar={false} crayon={false} />
     </a>
-  </section>
-
-  {/* ============ VIDEOS (parte inicial) ============ */}
-  {/* Pedido de la escuela: "Saber más sobre nosotros" al comienzo de la web, junto con el de 1959 → hoy. */}
-  <section class="videos-inicio seccion seccion--papel-oscuro" aria-labelledby="videos-inicio-titulo">
-    <div class="contenedor videos-inicio__grilla">
-      <div class="videos-inicio__texto">
-        <p class="videos-inicio__volanta" data-revelar>En video</p>
-        <h2 id="videos-inicio-titulo" class="videos-inicio__titulo" data-titulo-lineas>¿Querés saber más de <em class="acento">nosotros?</em></h2>
-        <a class="enlace-trazo videos-inicio__ig" href="https://www.instagram.com/la.escuelita.vea/" target="_blank" rel="noopener" data-revelar>@la.escuelita.vea<span class="sr-only"> (Instagram, se abre en una pestaña nueva)</span></a>
-      </div>
-      <div class="videos-inicio__reels">
-        <VideoReel {...VIDEOS.conocenos} ancho="19rem" rot={-1.4} class="videos-inicio__reel videos-inicio__reel--a" />
-        <VideoReel {...VIDEOS.desde1959} ancho="16rem" rot={1.8} class="videos-inicio__reel videos-inicio__reel--b" />
-      </div>
-    </div>
   </section>
 
   {/* ============ MIRADA (antes hero) ============ */}
@@ -95,6 +80,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
       <div class="hero__texto">
         <h2 id="hero-titulo" class="hero__titular" data-titulo-lineas>El niño es cuerpo que siente y al <em class="acento">sentir, piensa.</em></h2>
         <p class="hero__bajada" data-revelar>{p.portada.bajada}</p>
+        <p class="hero__bajada hero__bajada--2" data-revelar>{p.bienvenida.texto}</p>
       </div>
     </div>
 
@@ -116,49 +102,17 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
     </div>
   </section>
 
-  {/* ============ PRESENTACIÓN CON LOGOS ============ */}
-  <section class="presentacion seccion" id="presentacion" aria-labelledby="presentacion-titulo">
-    <Dibujito nombre="cara-pelo-largo" lado="izq" top="10%" ancho="7rem" rot={-6} />
-    <Dibujito nombre="cara-ojos" lado="der" top="46%" ancho="6.5rem" rot={8} />
-    <div class="contenedor">
-      <div class="presentacion__cabeza">
-        <h2 id="presentacion-titulo" class="presentacion__nombre" data-titulo-lineas set:html={acento(p.presentacion.nombre)} />
-        <p class="presentacion__fundada" data-revelar>{p.presentacion.fundada}</p>
-        <p class="presentacion__descripcion" data-revelar>{p.presentacion.descripcion}</p>
-      </div>
-
-      {/* Orden expreso de la escuela: Jardín a la izquierda, Primaria a la derecha, VEA abajo. */}
-      <div class="presentacion__niveles">
-        <a href="/jardin/" class="nivel nivel--jardin" data-revelar>
-          <Logo nivel="jardin" alto={190} decorativo class="nivel__logo" />
-          <span class="nivel__texto">{p.presentacion.jardin.texto}</span>
-          <span class="nivel__anio t-cifra" data-contador={p.presentacion.jardin.anio} data-desde="1900">{p.presentacion.jardin.anio}</span>
-          <span class="nivel__ir">Conocé el Jardín <span aria-hidden="true">→</span></span>
-        </a>
-        <span class="presentacion__division" aria-hidden="true"></span>
-        <a href="/primaria/" class="nivel nivel--primaria" data-revelar>
-          <Logo nivel="primaria" alto={150} decorativo class="nivel__logo" />
-          <span class="nivel__texto">{p.presentacion.primaria.texto}</span>
-          <span class="nivel__anio t-cifra" data-contador={p.presentacion.primaria.anio} data-desde="1940">{p.presentacion.primaria.anio}</span>
-          <span class="nivel__ir">Conocé la Primaria <span aria-hidden="true">→</span></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
   <Telon foto="jardin-ronda-arena-arboles" rotulo="El patio de La Escuelita" alto="bajo" />
 
   {/* ============ BIENVENIDA ============ */}
-  <section class="bienvenida seccion seccion--papel-oscuro" aria-label="Bienvenida">
+  {/* El párrafo "La escuela es un espacio…" subió debajo de "El niño es cuerpo…" (rev. 25-11-2026); acá quedan las fotos que pasan. */}
+  <section class="bienvenida seccion seccion--papel-oscuro" aria-label="La vida en La Escuelita">
     <div class="contenedor bienvenida__grilla">
       <div class="bienvenida__fotos" data-revelar>
         <PasaFotos items={[
           { id: p.bienvenida.foto }, { id: 'jardin-hojas-crayon' }, { id: 'primaria-leyenda-ronda' }, { id: 'jardin-libro-cara' },
           { id: 'jardin-arcilla-figuras' }, { id: 'patio-tres-nenas-arena' }, { id: 'primaria-escribiendo-juntos' }, { id: 'jardin-musica-guitarra' },
         ]} etiqueta="La vida en La Escuelita" />
-      </div>
-      <div class="bienvenida__texto">
-        <p class="bienvenida__parrafo" data-revelar>{p.bienvenida.texto}</p>
       </div>
     </div>
   </section>
@@ -217,29 +171,33 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
 
   <Instagram />
 
-  <LlamadoEntrevista foto={p.cierreFoto} dibujos />
+  <LlamadoEntrevista foto={p.cierreFoto} />
 </Base>
 
 <style>
   /* ---------- HERO PRINCIPAL ---------- */
   .portada { position: relative; overflow: hidden; height: 100vh; height: 100svh; min-height: 32rem; max-height: 68rem; background: var(--tinta); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; }
   .portada__fondo { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; } /* las capas quedan debajo del velo */
-  .portada__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; will-change: opacity; }
-  .portada__capa.is-previa { z-index: 1; opacity: 1; }
-  .portada__capa.is-activa { z-index: 2; opacity: 1; transition: opacity 2s cubic-bezier(0.45, 0, 0.55, 1); }
+  /* Fundido cruzado (rev. 25-11-2026, "que sea fluido"):
+     · la que entra aparece encima en 2,4 s con una curva suave; la que sale queda quieta y opaca debajo;
+     · el zoom es una animación continua desde que la foto entra hasta que termina de taparla la siguiente
+       (misma velocidad todo el tiempo: no se frena ni salta al cambiar de foto);
+     · solo las dos capas visibles se componen en la GPU (en celulares, cinco capas a pantalla completa trababan). */
+  .portada__capa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; opacity: 0; visibility: hidden; }
+  .portada__capa.is-previa { z-index: 1; opacity: 1; visibility: visible; will-change: opacity; }
+  .portada__capa.is-activa { z-index: 2; opacity: 1; visibility: visible; will-change: opacity; transition: opacity 2.4s cubic-bezier(0.37, 0, 0.63, 1); }
   .portada__capa + .portada__capa { display: none; }
   .portada.is-secuencia .portada__capa { display: block; }
   .portada__capa :global(.foto) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-  .portada__capa :global(picture), .portada__capa :global(img) { width: 100%; height: 100%; }
-  .portada__capa :global(img) { object-fit: cover; transform: scale(1.02); transition: transform 6s linear; }
-  /* La que sale queda quieta en su zoom (antes volvía a achicarse mientras entraba la nueva: "efecto de corte") */
-  .portada__capa.is-activa :global(img), .portada__capa.is-previa :global(img) { transform: scale(1.08); }
-  .portada__capa:not(.is-activa):not(.is-previa) :global(img) { transition: none; }
+  .portada__capa :global(picture), .portada__capa :global(img) { display: block; width: 100%; height: 100%; }
+  .portada__capa :global(img) { object-fit: cover; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+  .portada__capa.is-activa :global(img), .portada__capa.is-previa :global(img) { will-change: transform; animation: portada-zoom 9s linear both; }
+  @keyframes portada-zoom { from { transform: scale(1.001); } to { transform: scale(1.07); } }
   /* La foto de la portada aparece sin el fundido de carga de las demás fotos */
   .portada__capa :global(.foto__lqip) { display: none; }
-  :global(html.reducido) .portada__capa :global(img), :global(html.liviano) .portada__capa :global(img) { transform: none; transition: none; }
-  /* Velo: oscurece apenas el centro y la base para que el nombre se lea sobre cualquier foto */
-  .portada__velo { position: absolute; z-index: 1; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse 70% 55% at 50% 50%, rgba(20, 16, 12, 0.38), rgba(20, 16, 12, 0) 75%), linear-gradient(180deg, rgba(20, 16, 12, 0.18) 0%, rgba(20, 16, 12, 0.08) 40%, rgba(20, 16, 12, 0.45) 100%); }
+  :global(html.reducido) .portada__capa :global(img), :global(html.liviano) .portada__capa :global(img) { animation: none; transform: none; }
+  /* Velo liviano (las fotos se veían oscuras en el celular): apenas en el centro y la base, para que el texto se lea */
+  .portada__velo { position: absolute; z-index: 1; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse 60% 45% at 50% 50%, rgba(20, 16, 12, 0.24), rgba(20, 16, 12, 0) 75%), linear-gradient(180deg, rgba(20, 16, 12, 0.12) 0%, rgba(20, 16, 12, 0) 30%, rgba(20, 16, 12, 0) 62%, rgba(20, 16, 12, 0.32) 100%); }
   .portada__contenido { position: relative; z-index: 2; padding-top: var(--header-h); }
   .portada__titulo { margin: 0; color: #fff; font-size: 3.4rem; font-size: clamp(3.4rem, 1.4rem + 8vw, 9rem); font-weight: 330; line-height: 0.95; letter-spacing: -0.035em; }
   /* Etiqueta de papel con la palabra del logo */
@@ -255,32 +213,19 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   }
   .portada__etiqueta img { display: block; width: 100%; height: auto; }
   .portada__etiqueta .cinta { top: -0.6rem; }
-  .portada__bajada { margin: 1.1rem auto 0; max-width: 30ch; color: #fff; font-family: var(--f-titulo); font-style: italic; font-size: 1.15rem; font-size: clamp(1.1rem, 0.9rem + 0.8vw, 1.6rem); line-height: 1.3; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 4px 24px rgba(0, 0, 0, 0.45); }
+  .portada__bajada { margin: 1.3rem auto 0; max-width: 34ch; color: #fff; font-size: 0.8125rem; font-size: clamp(0.8125rem, 0.72rem + 0.35vw, 1.0625rem); font-weight: 650; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.5; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 2px 18px rgba(0, 0, 0, 0.5); }
+  .portada__frase { margin: 0.8rem auto 0; max-width: 30ch; color: #fff; font-family: var(--f-titulo); font-style: italic; font-size: 1.2rem; font-size: clamp(1.2rem, 0.95rem + 0.9vw, 1.75rem); line-height: 1.3; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 24px rgba(0, 0, 0, 0.5); }
   /* Marcas de avance: una rayita por foto */
   .portada__marcas { position: absolute; z-index: 2; left: 50%; bottom: 2rem; transform: translateX(-50%); display: flex; list-style: none; margin: 0; padding: 0; }
   .portada__marca { width: 2.25rem; height: 2px; margin: 0 0.25rem; background: rgba(255, 255, 255, 0.35); overflow: hidden; }
   .portada__marca span { display: block; width: 100%; height: 100%; background: #fff; transform: scaleX(0); transform-origin: 0 50%; }
-  .portada__marca.is-activa span { transform: scaleX(1); transition: transform 4s linear; }
+  .portada__marca.is-activa span { transform: scaleX(1); transition: transform 5.5s linear; }
   .portada__marca.is-hecha span { transform: scaleX(1); }
   :global(html.reducido) .portada__marcas, :global(html.liviano) .portada__marcas { display: none; }
   .portada__bajar { position: absolute; z-index: 2; right: var(--gutter); bottom: 1.5rem; width: 1.2rem; height: 2.6rem; color: #fff; opacity: 0.85; }
   .portada__bajar :global(svg) { width: 100%; height: 100%; }
   @media (max-width: 47.99em) { .portada__bajar { display: none; } .portada__marcas { bottom: 1.5rem; } }
 
-
-  /* ---------- VIDEOS (parte inicial) ---------- */
-  .videos-inicio__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }
-  .videos-inicio__volanta { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rojo); margin-bottom: 0.9rem; }
-  .videos-inicio__titulo { font-size: 2.1rem; font-size: clamp(2rem, 1.2rem + 3vw, 4rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1.08; max-width: 12ch; padding-bottom: 0.08em; }
-  .videos-inicio__ig { display: inline-block; margin-top: 1.6rem; font-weight: 600; }
-  .videos-inicio__reels { display: flex; justify-content: center; align-items: flex-start; }
-  .videos-inicio__reels > :global(.vreel) { flex: 1 1 0; min-width: 0; }
-  .videos-inicio__reels > :global(.videos-inicio__reel--a) { flex-grow: 1.15; }
-  .videos-inicio__reels > :global(.videos-inicio__reel--b) { margin-left: 1.1rem; margin-top: 3rem; }
-  @media (min-width: 56em) {
-    .videos-inicio__grilla { grid-template-columns: 5fr 7fr; grid-gap: 4rem; gap: 4rem; }
-    .videos-inicio__reels > :global(.videos-inicio__reel--b) { margin-left: 3rem; margin-top: 5rem; }
-  }
 
   /* ---------- MIRADA (hero anterior) ---------- */
   .hero {
@@ -308,9 +253,9 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .hero__texto { max-width: 36rem; }
   @media (min-width: 64em) { .hero__texto { width: 48%; max-width: 40rem; } }
   .hero__titular {
-    max-width: 13ch;
-    font-size: 2.6rem;
-    font-size: clamp(2.6rem, 1.2rem + 4.6vw, 5.4rem);
+    max-width: 14ch;
+    font-size: 2.25rem;
+    font-size: clamp(2.25rem, 1.15rem + 3.5vw, 4.35rem);
     font-weight: 330;
     line-height: 0.98;
     letter-spacing: -0.035em;
@@ -318,6 +263,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   }
   .hero__titular .acento { color: var(--bordo); font-weight: 300; }
   .hero__bajada { margin-top: 1.4rem; max-width: 34rem; font-size: 1.0625rem; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.55; color: var(--tinta-suave); }
+  .hero__bajada.hero__bajada--2 { margin-top: 1rem; }
 
   /* Escena: "pill" acostada que sale del borde derecho (borde recto contra el borde de la página) */
   .hero__escena { position: relative; z-index: 1; width: 92%; margin: 2.5rem 0 0 auto; }
@@ -361,45 +307,6 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .hero__sello { position: absolute; left: 30%; bottom: -2.5rem; z-index: 4; padding: 6px; border-radius: 50%; background: rgba(250, 246, 238, 0.92); }
   @media (max-width: 47.99em) { .hero__sello { display: none; } }
 
-  /* ---------- PRESENTACIÓN ---------- */
-  .presentacion { text-align: center; }
-  .presentacion__cabeza { max-width: 44rem; margin: 0 auto; }
-  .presentacion__sol { width: 3.2rem; height: 3.2rem; margin: 0 auto 1.25rem; }
-  .presentacion__nombre { font-size: 2.58rem; font-size: clamp(2.58rem, 1.476rem + 3.6vw, 4.5rem); font-weight: 330; letter-spacing: -0.04em; line-height: 0.95; }
-  .presentacion__paleta { margin: 1.25rem auto 0; }
-  .presentacion__fundada { margin: 1.25rem auto 0; font-size: 1.125rem; font-size: var(--t-md); color: var(--tinta-suave); }
-  .presentacion__trayectoria { margin: 1.25rem auto 0; font-family: var(--f-titulo); font-size: 1.202rem; font-size: var(--t-xl); line-height: 1.2; }
-  .presentacion__cabeza p { max-width: none; }
-  .presentacion__trayectoria .subrayable { white-space: normal; }
-  .presentacion__descripcion { margin: 1.275rem auto 0; max-width: 30ch; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tinta-suave); line-height: 1.6; }
-  .presentacion__niveles { display: grid; grid-template-columns: 1fr; grid-gap: 1.7rem; gap: 1.7rem; margin-top: 2.72rem; align-items: stretch; }
-  .presentacion__division { display: none; }
-  .nivel {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 1.7rem 1.275rem 1.7rem;
-    border-radius: var(--radio-lg);
-    text-decoration: none;
-    transition: background-color 0.4s, transform 0.5s var(--ease-out);
-  }
-  .nivel--jardin { background: var(--arena-claro); }
-  .nivel--primaria { background: var(--verde-claro); }
-  .nivel__texto { margin-top: 1.275rem; max-width: 24ch; font-family: var(--f-titulo); font-size: 1.375rem; font-size: var(--t-lg); line-height: 1.2; }
-  .nivel__anio { margin-top: 1rem; font-size: 2.58rem; font-size: clamp(2.58rem, 1.64rem + 2.4vw, 3.3rem); }
-  .nivel--jardin .nivel__anio { color: var(--ocre-texto); }
-  .nivel--primaria .nivel__anio { color: var(--verde-texto); }
-  .nivel__ir { margin-top: 1.25rem; font-weight: 650; font-size: 0.9375rem; }
-  .nivel__ir span { display: inline-block; transition: transform 0.4s var(--ease-out); }
-  @media (hover: hover) {
-    .nivel:hover { transform: translateY(-4px); }
-    .nivel:hover .nivel__ir span { transform: translateX(5px); }
-  }
-  .presentacion__vea { display: inline-block; margin-top: 2.04rem; padding: 1rem 1.275rem; border-radius: var(--radio-lg); transition: background-color 0.3s; }
-  .presentacion__vea:hover { background: var(--papel-oscuro); }
-  @media (min-width: 48em) {
-    .presentacion__niveles { grid-template-columns: 1fr auto 1fr; grid-gap: 1.275rem; gap: 1.275rem; }
-    .presentacion__division { display: block; width: 1px; align-self: stretch; margin: 1.5rem 1.5rem; background: rgba(35, 32, 28, 0.2); }
-  }
-
   /* ---------- BIENVENIDA ---------- */
   .bienvenida { overflow: hidden; }
   .bienvenida__paleta { margin: 0 0 1.5rem; }
@@ -428,7 +335,7 @@ const precargar = [{ srcset: pre.srcSet.attribute, sizes: '100vw', type: 'image/
   .bienvenida__espiral { width: 2.6rem; height: 2.6rem; margin-bottom: 1.275rem; }
   .bienvenida__parrafo { font-family: var(--f-titulo); font-size: 1.265rem; font-size: clamp(1.265rem, 0.861rem + 1.092vw, 1.785rem); line-height: 1.35; letter-spacing: -0.01em; font-weight: 350; max-width: 28ch; }
   .bienvenida__fotos { min-width: 0; }
-  @media (min-width: 56em) { .bienvenida__grilla { grid-template-columns: 7fr 5fr; grid-gap: 4.5rem; gap: 4.5rem; } }
+  .bienvenida__fotos { width: 100%; max-width: 56rem; margin: 0 auto; }
 
   /* ---------- JUEGO Y ARTE (carrusel circular) ---------- */
   .juego-arte { position: relative; overflow: hidden; padding-bottom: 2.5rem; }

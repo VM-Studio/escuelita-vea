@@ -21,6 +21,7 @@ cálido, artesanal, humano. Nada corporativo, nada de plantilla de colegio, nada
 
 ## Fotos
 - Registro único: `src/data/fotos.mjs` → `npm run fotos` genera masters, LQIP y `_material/FOTOS-MANIFEST.md`.
+- Portada del Inicio: versiones horizontal y vertical con `npm run fotos:portada` (encuadres en `recorte`).
 - Mirar cada foto antes de usarla. Nunca por nombre de archivo ni al azar.
 - Jardín solo en contextos de Jardín; Primaria solo en Primaria. En Inicio, La Escuelita, Proyecto
   pedagógico y Comunidad pueden convivir con criterio. Ojo: `PRIMARIA-2DO-TEHUELCHES` está en la
@@ -31,7 +32,9 @@ cálido, artesanal, humano. Nada corporativo, nada de plantilla de colegio, nada
 - Video del Rap del Litio: componente listo, apagado (`PUBLICAR.videoRapDelLitio`).
 
 ## Logos
-- Presentación del Inicio: **Jardín a la izquierda, Primaria a la derecha, VEA abajo**. No cambiar.
+- Rev. 25-11-2026: se sacó la presentación con logos del Inicio. Navbar: logos de Jardín y Primaria juntos
+  (llevan al Inicio) y V.E.A. al final de la botonera, sin enlace. Loader: Jardín y Primaria, sin V.E.A.
+  El logo propio de la Primaria va en `public/logos/primaria-sinfondo.png` (aparece solo cuando existe).
 - No redibujar, recolorear ni deformar logos. Hoy son provisorios (`public/logos/`, `src/components/Logo.astro`).
 
 ## Técnica

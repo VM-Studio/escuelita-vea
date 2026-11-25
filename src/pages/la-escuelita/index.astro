@@ -1,11 +1,12 @@
 ---
 // NUESTRA IDENTIDAD — primer desplegable de "La Escuelita" (pedido de la escuela, rev. 19-11-2026):
 // frase de Marta Calvo (con su firma), texto de identidad, collage de fotos y los pilares fundamentales.
-import Dibujito from '../../components/Dibujito.astro';
 import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
 import Boton from '../../components/Boton.astro';
 import Interludio from '../../components/Interludio.astro';
+import VideoReel from '../../components/VideoReel.astro';
+import { VIDEOS } from '../../config/sitio';
 import { laEscuelita as e } from '../../content/la-escuelita';
 import { parrafos, acento } from '../../lib/texto';
 const id = e.identidad;
@@ -53,7 +54,6 @@ const id = e.identidad;
 
   {/* ¿Por qué educar a través del arte? */}
   <section class="seccion porque" aria-labelledby="porque-titulo">
-    <Dibujito nombre="esqueleto" lado="izq" top="10%" ancho="5rem" rot={-5} />
     <div class="contenedor contenedor--ancho porque__grilla">
       <h2 id="porque-titulo" class="porque__titulo" data-titulo-lineas set:html={acento(e.porQue.titulo)} />
       <div class="prosa porque__texto" data-revelar set:html={parrafos(e.porQue.texto)} />
@@ -61,6 +61,21 @@ const id = e.identidad;
   </section>
 
   <Interludio foto={e.interludioCierre.foto} frase={e.interludioCierre.frase} firma={e.interludioCierre.firma} variante="lado" trazo="sol" ratio="1/1" />
+
+  {/* «¿Querés saber más sobre nosotros?»: al final de Nuestra identidad (pedido de la escuela, rev. 25-11-2026) */}
+  <section class="videos-id seccion seccion--papel-oscuro" aria-labelledby="videos-id-titulo">
+    <div class="contenedor videos-id__grilla">
+      <div class="videos-id__texto">
+        <p class="videos-id__volanta" data-revelar>En video</p>
+        <h2 id="videos-id-titulo" class="videos-id__titulo" data-titulo-lineas>¿Querés saber más sobre <em class="acento">nosotros?</em></h2>
+        <a class="enlace-trazo videos-id__ig" href="https://www.instagram.com/la.escuelita.vea/" target="_blank" rel="noopener" data-revelar>@la.escuelita.vea<span class="sr-only"> (Instagram, se abre en una pestaña nueva)</span></a>
+      </div>
+      <div class="videos-id__reels">
+        <VideoReel {...VIDEOS.conocenos} ancho="19rem" rot={-1.4} class="videos-id__reel videos-id__reel--a" />
+        <VideoReel {...VIDEOS.desde1959} ancho="16rem" rot={1.8} class="videos-id__reel videos-id__reel--b" />
+      </div>
+    </div>
+  </section>
 
   <section class="seccion seccion--ceñida siguiente">
     <div class="contenedor siguiente__caja">
@@ -110,6 +125,19 @@ const id = e.identidad;
   .porque__titulo { max-width: 12ch; }
   .porque__texto { font-size: 1.125rem; font-size: var(--t-md); }
   @media (min-width: 56em) { .porque__grilla { grid-template-columns: 5fr 7fr; grid-gap: 2.72rem; gap: 2.72rem; } }
+
+  .videos-id__grilla { display: grid; grid-template-columns: 1fr; grid-gap: 2.5rem; gap: 2.5rem; align-items: center; }
+  .videos-id__volanta { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rojo); margin-bottom: 0.9rem; }
+  .videos-id__titulo { font-size: 2.1rem; font-size: clamp(2rem, 1.2rem + 3vw, 4rem); font-weight: 330; letter-spacing: -0.03em; line-height: 1.08; max-width: 12ch; padding-bottom: 0.08em; }
+  .videos-id__ig { display: inline-block; margin-top: 1.6rem; font-weight: 600; }
+  .videos-id__reels { display: flex; justify-content: center; align-items: flex-start; }
+  .videos-id__reels > :global(.vreel) { flex: 1 1 0; min-width: 0; }
+  .videos-id__reels > :global(.videos-id__reel--a) { flex-grow: 1.15; }
+  .videos-id__reels > :global(.videos-id__reel--b) { margin-left: 1.1rem; margin-top: 3rem; }
+  @media (min-width: 56em) {
+    .videos-id__grilla { grid-template-columns: 5fr 7fr; grid-gap: 4rem; gap: 4rem; }
+    .videos-id__reels > :global(.videos-id__reel--b) { margin-left: 3rem; margin-top: 5rem; }
+  }
 
   .siguiente__caja { display: flex; flex-wrap: wrap; justify-content: center; border-top: 1px solid rgba(35, 32, 28, 0.15); padding-top: 1.7rem; }
   .siguiente__caja > :global(*) { margin: 0 0.5rem 0.75rem; }

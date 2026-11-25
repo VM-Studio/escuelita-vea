@@ -19,7 +19,7 @@ import { parrafos, acento } from '../lib/texto';
 const subnav = [
   { href: '#la-vida-en-el-jardin', texto: 'La vida en el Jardín' },
   { href: '#propuesta', texto: 'Propuesta pedagógica' },
-  { href: '#salas', texto: 'Nuestras salas' },
+  { href: '#talleres', texto: 'Nuestros talleres' },
   { href: '#lenguajes', texto: 'Nuestros lenguajes' },
   { href: '#patio', texto: 'El patio' },
   { href: '#adaptacion', texto: 'Adaptación' },
@@ -111,15 +111,15 @@ const subnav = [
 
   <Interludio foto={j.interludioSocial.foto} frase={j.interludioSocial.frase} />
 
-  <Telon foto="sala-taller-sillas" rotulo="Las salas del Jardín" alto="bajo" />
+  <Telon foto="sala-taller-sillas" rotulo="Los talleres del Jardín" alto="bajo" />
 
-  {/* Nuestras salas: pestañas interactivas (una por taller) */}
-  <section class="seccion ancla" id="salas" aria-labelledby="salas-titulo">
+  {/* Nuestros talleres: pestañas interactivas (una por taller) */}
+  <section class="seccion ancla" id="talleres" aria-labelledby="talleres-titulo">
     <div class="contenedor">
       <div class="cabeza-regla cabeza">
-        <h2 id="salas-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.salas.titulo)} />
+        <h2 id="talleres-titulo" class="cabeza__titulo" data-titulo-lineas set:html={acento(j.salas.titulo)} />
       </div>
-      <Tabs items={j.salas.items.map((s) => ({ id: s.id, texto: s.nombre, sub: s.subtitulo }))} etiqueta="Salas del Jardín">
+      <Tabs items={j.salas.items.map((s) => ({ id: s.id, texto: s.nombre, sub: s.subtitulo }))} etiqueta="Talleres del Jardín">
         {j.salas.items.map((s) => (
           <section class="tabs__panel sala" id={s.id} data-panel aria-labelledby={`${s.id}-h`}>
             <div class="escena sala__escena">

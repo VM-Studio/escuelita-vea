@@ -53,7 +53,7 @@ export const REDES: { nombre: 'Instagram' | 'Facebook' | 'YouTube'; url: string 
 // para la web", nov. 2026). Se alojan en public/videos/ (portada .jpg + .mp4). Los títulos son los textos
 // que aparecen en el propio video o en su publicación.
 export const VIDEOS = {
-  conocenos: { archivo: 'conocenos', titulo: '¿Querés saber más de nosotros?', instagram: 'https://www.instagram.com/reel/DFtXQ3TMltf/' },
+  conocenos: { archivo: 'conocenos', titulo: '¿Querés saber más sobre nosotros?', instagram: 'https://www.instagram.com/reel/DFtXQ3TMltf/' },
   desde1959: { archivo: 'desde-1959', titulo: '1959 · Hoy · Y seguimos creciendo', instagram: 'https://www.instagram.com/reel/DPM1PGaEvvk/' },
   primerDiaJardin: { archivo: 'primer-dia-jardin', titulo: 'Primer día en el Jardín', instagram: 'https://www.instagram.com/reel/DGi8-qlB-Q1/' },
   jardin: { archivo: 'jardin-educar-es-sacar', titulo: 'La Escuelita Jardín, desde 1959', instagram: 'https://www.instagram.com/reel/DVRh47SDAkw/' },
@@ -71,7 +71,9 @@ export const PUBLICAR = {
 export const NAV = [
   {
     texto: 'La Escuelita',
-    href: '/la-escuelita/',
+    // «La Escuelita» lleva al Inicio; la flechita abre las páginas de La Escuelita (pedido rev. 25-11-2026)
+    href: '/',
+    activoEn: ['/', '/la-escuelita/'],
     hijos: [
       // Orden pedido por la escuela (rev. 19-11-2026). La cronología queda como botón opcional dentro de Nuestra historia.
       { texto: 'Nuestra Identidad', href: '/la-escuelita/' },

@@ -20,46 +20,37 @@ Cómo leerlo:
 
 ## Portada
 
+**La Escuelita**
+
+Centro de expresión infantil y espacio de formación continua
+
+Un espacio donde los sentidos cobran sentido
+
+> REVISIÓN DE LA ESCUELA (25-11-2026, "Nuevos cambios WEB"): se saca "67 años en la Educación por el Arte"
+> de la portada a pantalla completa; quedan La Escuelita, la bajada y la frase de arriba.
+
+## Mirada
+
 **El niño es cuerpo que siente y al sentir, piensa.**
 
 Mirar la educación desde la sensibilidad del arte es mirarla como un despertar. Es habitar un lugar
 donde la mirada y la acción propician llegar a ser quien se es.
 
-> NOTA DE DISEÑO: la frase principal es el titular de la portada, sobre foto a pantalla completa
-> (espacio físico, naturaleza, chicos haciendo y jugando). El párrafo va como bajada.
-
-## Presentación
-
-**La Escuelita**
-
-Fundada por la profesora Marta Calvo en 1959
-
-Centro de expresión infantil y espacio de formación docente continua.
-
-> REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): se elimina la repetición de los 67 años de
-> trayectoria en este bloque, conservando la referencia a la fundación. "67 años en la Educación por el
-> Arte" queda una sola vez, en la portada a pantalla completa.
-
-- **Primer Jardín Argentino de Educación por el Arte** — 1959
-- **Instituto La Escuelita, Escuela Primaria de Educación a través del Arte** — 1997
-
-> NOTA DE DISEÑO (indicación expresa de la dueña): en la presentación, **logo de Jardín a la
-> izquierda, logo de Primaria a la derecha y, abajo, el logo de VEA**. Cada logo acompaña su
-> leyenda y su año (Jardín 1959 / Primaria 1997).
-
-## Bienvenida institucional
-
 La escuela es un espacio donde las personas transcurren buena parte de sus vidas. Allí se despliegan
 modos de aprendizaje y de interacción que dejan huellas y marcas entrañables. Para nosotros, educar
 es una profunda responsabilidad social y humana. Este es nuestro compromiso.
 
-> NOTA DE DISEÑO: acompaña una foto institucional principal.
+> REVISIÓN DE LA ESCUELA (25-11-2026): el párrafo "La escuela es un espacio…" (antes "Bienvenida
+> institucional", más abajo junto a fotos que pasan) sube y va debajo de "El niño es cuerpo…" y su bajada.
+
+> REVISIÓN DE LA ESCUELA (25-11-2026): se sacan los recuadros de la presentación (La Escuelita, fundada
+> por la profesora Marta Calvo en 1959, centro de expresión…, y las tarjetas de Jardín 1959 y Primaria 1997).
 
 ## Línea de tiempo
 
-**67 años en la educación por el arte**
+> REVISIÓN DE LA ESCUELA (25-11-2026): se sacan "67 años en la educación por el arte" y la frase
+> "Un espacio donde “los sentidos” cobran sentido." de Nuestra historia.
 
-Un espacio donde “los sentidos” cobran sentido.
 Espacio educativo fundado por la profesora Marta Calvo en 1959.
 
 - **1959** | Primer Jardín Argentino de Educación por el Arte
@@ -100,7 +91,9 @@ promueven la participación, el intercambio y la construcción colectiva del con
 
 > REVISIÓN DE LA ESCUELA (19-11-2026, "Revisión de la primera maqueta"): textos nuevos de los tres primeros ejes.
 
-### Hitos culturales y huella en la comunidad
+### Una propuesta en permanente crecimiento que deja huella en la comunidad
+
+> REVISIÓN DE LA ESCUELA (25-11-2026): antes se titulaba "Hitos culturales y huella en la comunidad".
 
 Hoy, el deseo de su fundadora y de su equipo interdisciplinario es que este modelo pedagógico
 propio, singular e innovador siga en crecimiento. Buscamos que se expanda hacia sectores cada vez
@@ -217,8 +210,11 @@ paso asegura la continuidad del modelo que sostenemos desde hace casi 70 años.
 **Consolidación pedagógica:** Fortalecimiento continuo de la Educación por el Arte en el Nivel
 Inicial.
 
-**Escuela Primaria:** Consolidación de la Primera Escuela Primaria de Educación a través del Arte.
-Fundada en 1997, se encuentra pronta a celebrar sus 30 años de crecimiento institucional.
+**Escuela Primaria:** En 1997 se crea la Primera Escuela Primaria de Educación a través del Arte. Este
+espacio se fue consolidando en el tiempo.
+
+> REVISIÓN DE LA ESCUELA (25-11-2026): reemplaza "Consolidación de la Primera Escuela Primaria… pronta a
+> celebrar sus 30 años de crecimiento institucional".
 
 **Investigación y Comunidad:** Proyecto de creación de un Instituto Experimental de Formación
 Docente. El mismo está diseñado como un espacio abierto para investigar el proceso creador de la
@@ -380,7 +376,7 @@ modelo creado por la profesora Marta Calvo y sus equipos de trabajo surgió a pa
 observación y el respeto por el potencial creativo. Así se convirtió en un modelo pedagógico
 propio, singular e innovador.
 
-> NOTA DE DISEÑO: "la profesora Marta Calvo" enlaza a la historia (página La Escuelita).
+> NOTA DE DISEÑO: solo "Marta Calvo" enlaza a la historia (página La Escuelita; rev. 25-11-2026).
 
 Esta propuesta se extendió luego a la etapa escolar. De este modo dio lugar, hace 30 años, a
 nuestra escuela primaria. La institución conjuga la estructura curricular oficial con los
@@ -531,7 +527,9 @@ Materiales como crayones, masa, témpera, arcilla, tinta china, anilinas y la t�
 forman parte del taller cotidiano. Estos elementos se articulan de manera constante con los
 talleres específicos de Música, Juego Dramático, Educación Física y los espacios literarios.
 
-## Nuestras salas: la evolución del aprendizaje
+## Nuestros talleres: la evolución del aprendizaje
+
+> REVISIÓN DE LA ESCUELA (25-11-2026): "sala" se reemplaza por "taller" en todo el sitio.
 
 > NOTA DE DISEÑO: botonera de 4 pestañas horizontales limpias:
 > **Taller de 2** | **Taller de 3** | **Taller de 4** | **Taller de 5**.
@@ -819,7 +817,7 @@ maestras de taller, con el detalle del desarrollo de la adaptación. Más tarde,
 encuentro individual para confeccionar la historia familiar.
 
 **Acompañamiento Afectivo:** Durante este período, un miembro de la familia o referente afectivo
-acompaña en la sala. Acordamos la despedida recién cuando se consolida el vínculo entre el niño y
+acompaña en el taller. Acordamos la despedida recién cuando se consolida el vínculo entre el niño y
 sus maestras, y se construye un lazo de confianza firme entre los adultos. Entendemos la adaptación
 como la oportunidad de que las familias nos conozcan en el hacer cotidiano.
 
@@ -838,7 +836,7 @@ práctica con los materiales y las dinámicas cotidianas de La Escuelita.
 
 ## Horarios del Nivel Inicial
 
-| Sala | Horario de base | Opciones de extensión horaria |
+| Taller | Horario de base | Opciones de extensión horaria |
 | --- | --- | --- |
 | Taller de 2 | 08:30 a 12:30 hs. | Jornada Simple |
 | Taller de 3 | 08:30 a 12:30 hs. | Opción de lunes a viernes hasta las 14:30 hs. |
@@ -1329,7 +1327,7 @@ Generales / Inicio / Proyecto pedagógico:
 
 - El niño es cuerpo que siente y al sentir, piensa.
 - Mirar la educación desde la sensibilidad del arte es mirarla como un despertar.
-- Un espacio donde “los sentidos” cobran sentido.
+- Un espacio donde los sentidos cobran sentido. (portada del Inicio; ya no va en Nuestra historia)
 - Para nosotros, educar es una profunda responsabilidad social y humana.
 - El juego y el arte son su lenguaje natural.
 

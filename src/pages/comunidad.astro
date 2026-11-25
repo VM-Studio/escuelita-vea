@@ -1,5 +1,4 @@
 ---
-import Dibujito from '../components/Dibujito.astro';
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import Trazo from '../components/Trazo.astro';
@@ -35,7 +34,6 @@ const mostrarVoces = PUBLICAR.testimonios && c.voces.testimonios.length > 0;
 
   {/* Puerta de entrada: texto a la izquierda; a la derecha, la frase (más chica) y fotos */}
   <section class="seccion intro-com" aria-label="Nuestra comunidad">
-    <Dibujito nombre="paisaje-barco" lado="der" top="6%" ancho="9rem" rot={3} opacidad={0.5} />
     <div class="contenedor intro-com__grilla">
       <div class="intro-com__izq">
         <div class="prosa intro-com__texto" data-revelar set:html={parrafos(c.introduccion.texto)} />

@@ -401,6 +401,28 @@ function portadaSecuencia() {
   });
 }
 
+/* ---------- Portada: el texto se desvanece al acercarse al header ---------- */
+// En el celular, al scrollear, la etiqueta "la escuelita" de la portada pasaba por debajo del logo del header
+// y se superponían (rev. 25-11-2026). Ahora se va desvaneciendo antes de llegar.
+function portadaTexto() {
+  const cont = $('[data-portada] [data-portada-texto]');
+  const header = $('[data-encabezado]');
+  if (!cont || !header) return;
+  let pendiente = false;
+  const act = () => {
+    pendiente = false;
+    const r = cont.getBoundingClientRect();
+    const limite = header.offsetHeight + 8;
+    const tramo = Math.max(90, window.innerHeight * 0.18);
+    const o = Math.min(1, Math.max(0, (r.top - limite) / tramo));
+    cont.style.opacity = o >= 1 ? '' : o.toFixed(3);
+    cont.style.visibility = o <= 0 ? 'hidden' : '';
+  };
+  window.addEventListener('scroll', () => { if (!pendiente) { pendiente = true; requestAnimationFrame(act); } }, { passive: true });
+  window.addEventListener('resize', act);
+  act();
+}
+
 /* ---------- Volver arriba ---------- */
 function volverArriba() {
   $$<HTMLAnchorElement>('[data-volver-arriba]').forEach((a) => a.addEventListener('click', (e) => {
@@ -425,6 +447,7 @@ function iniciar() {
   progreso();
   heroSecuencia();
   portadaSecuencia();
+  portadaTexto();
   volverArriba();
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);

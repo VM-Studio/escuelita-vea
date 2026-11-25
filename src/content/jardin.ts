@@ -38,7 +38,7 @@ export const jardin = {
   },
   interludioSocial: { frase: 'Se es con otro.', foto: 'patio-ronda-baldes' },
   salas: {
-    titulo: 'Nuestras salas: la evolución del aprendizaje',
+    titulo: 'Nuestros talleres: la evolución del aprendizaje',
     items: [
       {
         id: 'taller-de-2',
@@ -194,7 +194,7 @@ export const jardin = {
     boton: 'Conocé en detalle nuestra propuesta de adaptación',
     detalle: [
       { etiqueta: 'Primeros Encuentros', texto: 'Una vez realizada la inscripción y antes del inicio del ciclo lectivo, invitamos a una reunión grupal. En este espacio presentamos al equipo de coordinación y a las maestras de taller, con el detalle del desarrollo de la adaptación. Más tarde, se organiza un encuentro individual para confeccionar la historia familiar.' },
-      { etiqueta: 'Acompañamiento Afectivo', texto: 'Durante este período, un miembro de la familia o referente afectivo acompaña en la sala. Acordamos la despedida recién cuando se consolida el vínculo entre el niño y sus maestras, y se construye un lazo de confianza firme entre los adultos. Entendemos la adaptación como la oportunidad de que las familias nos conozcan en el hacer cotidiano.' },
+      { etiqueta: 'Acompañamiento Afectivo', texto: 'Durante este período, un miembro de la familia o referente afectivo acompaña en el taller. Acordamos la despedida recién cuando se consolida el vínculo entre el niño y sus maestras, y se construye un lazo de confianza firme entre los adultos. Entendemos la adaptación como la oportunidad de que las familias nos conozcan en el hacer cotidiano.' },
       { etiqueta: 'Taller de 2', texto: 'Comienza con al menos dos encuentros individuales con la maestra. Luego se suman las instancias que el niño necesite para interactuar con ella. Más adelante, los encuentros se realizan en dúos o tríos, hasta la incorporación gradual de todo el grupo, respetando los ritmos singulares.' },
       { etiqueta: 'Taller de 3', texto: 'Tras los encuentros individuales para conocer a las maestras y el espacio, los chicos de nuevo ingreso concurren juntos durante unos días. De esta manera construyen un vínculo mutuo para fortalecerse antes de sumarse a los compañeros que vienen desde el taller de 2.' },
       { etiqueta: 'Taller de 4', texto: 'Además de los encuentros individuales para conocer a su maestra y la escuela, los niños realizan un breve taller específico. Este espacio les permite familiarizarse de forma práctica con los materiales y las dinámicas cotidianas de La Escuelita.' },
@@ -202,7 +202,7 @@ export const jardin = {
   },
   horarios: {
     titulo: 'Horarios del Nivel Inicial',
-    columnas: ['Sala', 'Horario de base', 'Opciones de extensión horaria'],
+    columnas: ['Taller', 'Horario de base', 'Opciones de extensión horaria'],
     filas: [
       ['Taller de 2', '08:30 a 12:30 hs.', 'Jornada Simple'],
       ['Taller de 3', '08:30 a 12:30 hs.', 'Opción de lunes a viernes hasta las 14:30 hs.'],

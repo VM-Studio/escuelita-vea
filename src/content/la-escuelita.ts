@@ -71,7 +71,7 @@ export const laEscuelita = {
     ejesTitulo: 'Proyectos educativos y ejes de acción de V.E.A.',
     ejes: [
       { etiqueta: 'Consolidación pedagógica', texto: 'Fortalecimiento continuo de la Educación por el Arte en el Nivel Inicial.' },
-      { etiqueta: 'Escuela Primaria', texto: 'Consolidación de la Primera Escuela Primaria de Educación a través del Arte. Fundada en 1997, se encuentra pronta a celebrar sus 30 años de crecimiento institucional.' },
+      { etiqueta: 'Escuela Primaria', texto: 'En 1997 se crea la Primera Escuela Primaria de Educación a través del Arte. Este espacio se fue consolidando en el tiempo.' },
       { etiqueta: 'Investigación y Comunidad', texto: 'Proyecto de creación de un Instituto Experimental de Formación Docente. El mismo está diseñado como un espacio abierto para investigar el proceso creador de la infancia.' },
       { etiqueta: 'Extensión Cultural', texto: 'Difusión intensa de la Educación por el Arte en ámbitos públicos y privados. Se realiza mediante exposiciones, mesas redondas, cursos, proyecciones y talleres para niños, adolescentes y adultos.' },
       { etiqueta: 'Transmisión institucional', texto: 'Garantía de vigencia y sustentabilidad a largo plazo del proyecto educativo.' },

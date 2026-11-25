@@ -1,0 +1,56 @@
+---
+// Foto de la portada a pantalla completa con dos encuadres (dirección de arte):
+//  · pantallas verticales (celulares, tablets paradas): versión vertical 1:2
+//  · resto: versión horizontal 16:10
+// Los archivos salen de `npm run fotos:portada` (src/assets/fotos-portada/). Si faltan, usa el master común.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Foto from './Foto.astro';
+
+interface Props { id: string; prioridad?: boolean; alt?: string }
+const { id, prioridad = false, alt = '' } = Astro.props;
+
+const MEDIA_VERTICAL = '(max-aspect-ratio: 3/4)';
+const versiones = import.meta.glob<{ default: ImageMetadata }>('../assets/fotos-portada/*.jpg', { eager: true });
+const esc = versiones[`../assets/fotos-portada/${id}-escritorio.jpg`]?.default;
+const cel = versiones[`../assets/fotos-portada/${id}-celular.jpg`]?.default;
+
+const juego = async (src: ImageMetadata, anchos: number[], format: 'avif' | 'webp' | 'jpg') => {
+  const w = anchos.filter((a) => a <= src.width);
+  const r = await getImage({ src, widths: w, format, quality: format === 'avif' ? 62 : 82 });
+  return r.srcSet.attribute;
+};
+let fuentes: { media?: string; type: string; srcset: string; sizes: string }[] = [];
+let respaldo = '';
+if (esc && cel) {
+  const AE = [960, 1280, 1600, 1920, 2560];
+  const AC = [600, 828, 1080, 1200];
+  fuentes = [
+    { media: MEDIA_VERTICAL, type: 'image/avif', srcset: await juego(cel, AC, 'avif'), sizes: '100vw' },
+    { media: MEDIA_VERTICAL, type: 'image/webp', srcset: await juego(cel, AC, 'webp'), sizes: '100vw' },
+    { media: MEDIA_VERTICAL, type: 'image/jpeg', srcset: await juego(cel, AC, 'jpg'), sizes: '100vw' },
+    { type: 'image/avif', srcset: await juego(esc, AE, 'avif'), sizes: '100vw' },
+    { type: 'image/webp', srcset: await juego(esc, AE, 'webp'), sizes: '100vw' },
+  ];
+  respaldo = (await getImage({ src: esc, width: 1920, format: 'jpg', quality: 82 })).src;
+}
+---
+{esc && cel ? (
+  <div class="foto foto-portada">
+    <picture>
+      {fuentes.map((s) => <source media={s.media} type={s.type} srcset={s.srcset} sizes={s.sizes} />)}
+      <img
+        src={respaldo}
+        alt={alt}
+        width={esc.width}
+        height={esc.height}
+        loading={prioridad ? 'eager' : 'lazy'}
+        decoding={prioridad ? 'sync' : 'async'}
+        fetchpriority={prioridad ? 'high' : 'auto'}
+        draggable="false"
+      />
+    </picture>
+  </div>
+) : (
+  <Foto id={id} sizes="100vw" prioridad={prioridad} alt={alt} />
+)}

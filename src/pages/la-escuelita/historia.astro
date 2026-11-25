@@ -11,7 +11,6 @@ import Boton from '../../components/Boton.astro';
 import Sello from '../../components/Sello.astro';
 import Desplegable from '../../components/Desplegable.astro';
 import Galeria from '../../components/Galeria.astro';
-import Dibujito from '../../components/Dibujito.astro';
 import { inicio } from '../../content/inicio';
 import { laEscuelita as e } from '../../content/la-escuelita';
 import { parrafos, enLinea, acento } from '../../lib/texto';
@@ -31,7 +30,6 @@ import { VIDEOS } from '../../config/sitio';
       <div class="h-hero__texto">
         <p class="t-volanta" data-hero-resto>La Escuelita</p>
         <h1 id="h-titulo" class="h-hero__titulo" data-hero-titular set:html={acento(e.historia.titulo)} />
-        <p class="h-hero__frase t-frase" data-hero-resto>{inicio.lineaDeTiempo.frase}</p>
         <p class="h-hero__bajada" data-hero-resto>{inicio.lineaDeTiempo.bajada}</p>
         <p class="h-hero__parrafo" data-hero-resto>{e.historia.texto}</p>
         <div class="h-hero__acciones" data-hero-resto>
@@ -93,7 +91,6 @@ import { VIDEOS } from '../../config/sitio';
 
   {/* ============ 2. V.E.A. ============ */}
   <section class="seccion seccion--papel-oscuro vea ancla" id="vea" aria-labelledby="vea-titulo">
-    <Dibujito nombre="cara-pelo-largo" lado="der" top="8%" ancho="6.5rem" rot={6} />
     <div class="contenedor">
       <div class="vea__grilla">
         <div class="vea__logo" data-revelar>

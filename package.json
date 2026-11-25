@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "fotos": "node scripts/preparar-fotos.mjs",
+    "fotos:portada": "node scripts/fotos-portada.mjs",
     "qa:capturas": "node scripts/qa-capturas.mjs",
     "qa:textos": "node scripts/qa-textos.mjs"
   },
