@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 // Prepara las fotos seleccionadas en src/data/fotos.mjs:
 //  1) master optimizado en src/assets/fotos/<id>.jpg (máx. 2400 px, sRGB, sin metadatos/EXIF/GPS)
 //  2) LQIP (miniatura desenfocada en base64) en src/data/fotos-lqip.json
@@ -28,7 +29,9 @@ const faltantes = [];
 for (const f of fotos) {
   if (ids.has(f.id)) throw new Error(`id duplicado: ${f.id}`);
   ids.add(f.id);
-  const origen = path.join(ORIG, f.archivo);
+  // Si la escuela entregó una versión mejorada (_material/fotos-mejoradas/<id>.jpg|png|…), se usa esa.
+  const mejorada = ['jpg', 'jpeg', 'png', 'webp', 'tif', 'tiff', 'JPG', 'JPEG', 'PNG'].map((e) => path.join(RAIZ, '_material/fotos-mejoradas', `${f.id}.${e}`)).find((a) => existsSync(a));
+  const origen = mejorada || path.join(ORIG, f.archivo);
   const destino = path.join(SALIDA, `${f.id}.jpg`);
   try { await fs.access(origen); } catch { faltantes.push(f); continue; }
   let rehacer = todo;
