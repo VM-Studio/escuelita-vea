@@ -414,9 +414,10 @@ function portadaTexto() {
   const act = () => {
     pendiente = false;
     const r = ref.getBoundingClientRect();
-    const limite = header.offsetHeight + 8;
-    const tramo = Math.max(90, window.innerHeight * 0.18);
-    const o = Math.min(1, Math.max(0, (r.top - limite) / tramo));
+    // Sólido siempre; solo se desvanece cuando el cartel ya llega al navbar (en los últimos 70 px)
+    const limite = header.offsetHeight;
+    const tramo = 70;
+    const o = (window.pageYOffset || 0) < 4 ? 1 : Math.min(1, Math.max(0, (r.top - limite + tramo * 0.3) / tramo));
     cont.style.opacity = o >= 1 ? '' : o.toFixed(3);
     cont.style.visibility = o <= 0 ? 'hidden' : '';
   };
