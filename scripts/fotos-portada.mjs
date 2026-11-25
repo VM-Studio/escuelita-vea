@@ -68,6 +68,22 @@ for (const f of deLaPortada) {
   const brillo = Math.min(1.22, Math.max(1.03, BRILLO_OBJETIVO / L));
 
   for (const [nombre, { w, h }] of Object.entries(FORMATOS)) {
+    // Versión ya preparada por la escuela para este formato (<id>-escritorio / <id>-celular en fotos-mejoradas):
+    // se usa tal cual (su propio encuadre y tamaño), solo con el brillo parejo.
+    const propia = EXT.map((e) => path.join(IA, `${id}-${nombre}.${e}`)).find((a) => existsSync(a));
+    if (propia) {
+      const sp = await sharp(propia).rotate().stats();
+      const [pr, pg, pb] = sp.channels;
+      const Lp = (0.2126 * pr.mean + 0.7152 * pg.mean + 0.0722 * pb.mean) / 255;
+      const bp = Math.min(1.12, Math.max(1, BRILLO_OBJETIVO / Lp));
+      const mp = await sharp(propia).rotate().metadata();
+      await sharp(propia).rotate().toColorspace('srgb').removeAlpha()
+        .modulate({ brightness: bp })
+        .jpeg({ quality: 92, mozjpeg: true, chromaSubsampling: '4:4:4' })
+        .toFile(path.join(SALIDA, `${id}-${nombre}.jpg`));
+      console.log(`✓ ${id}-${nombre}  versión propia ${path.basename(propia)} ${mp.width}×${mp.height}, brillo ×${bp.toFixed(2)}`);
+      continue;
+    }
     const [fx, fy] = pct(f.recorte[nombre]);
     const A = w / h;
     let cw = W, ch = H;

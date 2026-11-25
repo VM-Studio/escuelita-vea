@@ -16,7 +16,7 @@ const esc = versiones[`../assets/fotos-portada/${id}-escritorio.jpg`]?.default;
 const cel = versiones[`../assets/fotos-portada/${id}-celular.jpg`]?.default;
 
 const juego = async (src: ImageMetadata, anchos: number[], format: 'avif' | 'webp' | 'jpg') => {
-  const w = anchos.filter((a) => a <= src.width);
+  const w = anchos.filter((a) => a < src.width).concat(Math.min(src.width, anchos[anchos.length - 1]));
   const r = await getImage({ src, widths: w, format, quality: format === 'avif' ? 68 : 86 });
   return r.srcSet.attribute;
 };

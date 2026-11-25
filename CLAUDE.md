@@ -22,6 +22,8 @@ cálido, artesanal, humano. Nada corporativo, nada de plantilla de colegio, nada
 ## Fotos
 - Registro único: `src/data/fotos.mjs` → `npm run fotos` genera masters, LQIP y `_material/FOTOS-MANIFEST.md`.
 - Portada del Inicio: versiones horizontal y vertical con `npm run fotos:portada` (encuadres en `recorte`).
+  Si existen `_material/fotos-mejoradas/<id>-escritorio|celular.*` (versiones que entregó la escuela, rev.
+  25-11-2026, mejoradas con IA por decisión expresa de la escuela) se usan tal cual para compu y celular.
 - Mirar cada foto antes de usarla. Nunca por nombre de archivo ni al azar.
 - Jardín solo en contextos de Jardín; Primaria solo en Primaria. En Inicio, La Escuelita, Proyecto
   pedagógico y Comunidad pueden convivir con criterio. Ojo: `PRIMARIA-2DO-TEHUELCHES` está en la
