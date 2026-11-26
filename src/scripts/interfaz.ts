@@ -94,7 +94,17 @@ function menuMovil() {
       if (reducido()) cerrar(); else setTimeout(cerrar, 380);
     }
   };
-  boton.addEventListener('click', () => set(!abierto));
+  /* Desplegables de La Escuelita / Proyecto Pedagógico: arrancan plegados */
+  const subBotones = $$<HTMLButtonElement>('[data-menu-sub-boton]', menu);
+  const setSub = (b: HTMLButtonElement, v: boolean) => {
+    b.setAttribute('aria-expanded', String(v));
+    document.getElementById(b.getAttribute('aria-controls') || '')?.classList.toggle('is-abierto', v);
+  };
+  subBotones.forEach((b) => b.addEventListener('click', () => setSub(b, b.getAttribute('aria-expanded') !== 'true')));
+  boton.addEventListener('click', () => {
+    if (!abierto) subBotones.forEach((b) => setSub(b, false));
+    set(!abierto);
+  });
   document.addEventListener('keydown', (e) => {
     if (!abierto) return;
     if (e.key === 'Escape') { set(false); boton.focus(); }

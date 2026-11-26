@@ -252,3 +252,5 @@ reconocimiento".
 Fotos: el zip de fotos del 24-11 es idéntico al del 19-11 (mismos 38 archivos). Todas están ubicadas según su
 carpeta; además, **taller12** (carpeta JARDIN) ahora también aparece en Jardín (fotos que pasan de "El gesto
 espontáneo y sus materias").
+
+Menú del celular (26-11-2026): "La Escuelita" y "Proyecto Pedagógico" se despliegan con una flecha; las subopciones van una abajo de la otra. Microcopy nuevo (solo lectores de pantalla): "Ver opciones de La Escuelita" / "Ver opciones de Proyecto Pedagógico".
