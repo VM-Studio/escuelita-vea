@@ -25,7 +25,8 @@ export const proyecto = {
         'El niño es cuerpo. Es en el cuerpo todo —el movimiento, la voz, la mirada, las manos— donde se manifiesta el gesto espontáneo de las infancias. El juego y el arte son su lenguaje natural. Este lenguaje se vuelve propio cuando existe un ambiente que favorece su expresión y construcción interna.',
         'Buscamos albergar y dar lugar a la cultura de la infancia a través de los canales esenciales de comunicación y conocimiento. En este camino, el juego y el arte se definen como pilares fundamentales para un devenir persona con identidad propia.',
       ],
-      foto: 'juego-dramatico-capas',
+      foto: 'eje-concepcion-mesa-pintura',
+      foto2: 'eje-concepcion-lanas',
     },
     {
       id: 'educacion-por-el-arte',
@@ -34,6 +35,7 @@ export const proyecto = {
         'Nuestro eje está puesto en el proceso más que en el resultado, que adquiere así otro valor. Para las familias, esto se hace visible en nuestras muestras didácticas. Estas exposiciones ilustran el recorrido pedagógico de cada grupo para dar cuenta de su devenir, y muestran de forma transparente las estrategias y técnicas del equipo docente.',
       ],
       foto: 'jardin-rostros-muestra',
+      foto2: 'eje-arte-pintura-tinta',
     },
     {
       id: 'expresion-aprendizaje',
@@ -43,6 +45,7 @@ export const proyecto = {
         'En el día a día de la escuela, esto se manifiesta en el hacer concreto. Los chicos gozan del proceso de crear y construir. De esta manera logran un resultado esencialmente comunicativo que ilumina el mundo que los circunda y la cultura que los alberga.',
       ],
       foto: 'primaria-stop-motion',
+      foto2: 'eje-expresion-mesa-pintura',
     },
     {
       id: 'el-rol-del-docente',
@@ -51,6 +54,7 @@ export const proyecto = {
         'El maestro es el coordinador del grupo y el mediador eficaz que concreta cotidianamente el quehacer educativo. Trabaja en equipo junto a la Coordinación y los docentes de las distintas disciplinas (Música, Teatro, Educación Física, Cine y Fotografía).',
       ],
       foto: 'taller-maestra-plantando',
+      foto2: 'eje-docente-ronda-guitarra',
       apartados: [
         { etiqueta: 'Acompañamiento', texto: 'Su tarea principal es observar, mediar y generar confianza para respetar los procesos individuales. Crea un marco de contención afectiva fundado en pautas claras, donde chicos y chicas se mueven con creciente autonomía y libertad. Además, conoce las dinámicas grupales, las rutinas del taller y genera un clima de búsqueda afín a la curiosidad infantil.' },
         { etiqueta: 'Evaluación formativa', texto: 'Nuestros modos de evaluación se basan en la observación constante de procesos y producciones. Este camino se sostiene mediante la comunicación a las familias a través de informes y encuentros.' },

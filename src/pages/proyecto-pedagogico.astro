@@ -11,6 +11,13 @@ import lqipData from '../data/fotos-lqip.json';
 const fondoDe = (id: string) => (lqipData as Record<string, { lqip: string }>)[id]?.lqip;
 // Color de la notita de cada eje (tonos suaves de la paleta)
 const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
+// Segunda foto de cada eje (rev. 25-11-2026): una "copia" con marco de papel, según su orientación
+const orientacion = (id: string) => {
+  const d = (lqipData as Record<string, { w: number; h: number }>)[id];
+  if (!d) return 'vertical';
+  const r = d.w / d.h;
+  return r > 1.1 ? 'horizontal' : r < 0.9 ? 'vertical' : 'cuadrada';
+};
 ---
 <Base
   titulo="Proyecto pedagógico"
@@ -56,11 +63,16 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
 
   {p.ejes.map((e, i) => (
     <>
-      <article class:list={['capitulo', { 'capitulo--invertido': i % 2 === 1 }]} id={e.id} aria-labelledby={`${e.id}-titulo`}>
+      <article class:list={['capitulo', { 'capitulo--invertido': i % 2 === 1, 'capitulo--par': 'foto2' in e && e.foto2 }]} id={e.id} aria-labelledby={`${e.id}-titulo`}>
         <div class="contenedor capitulo__escena">
           <div class="capitulo__foto" data-revelar>
-            <Foto id={e.foto} ratio="4/3" sizes="(min-width: 56em) 60vw, 100vw" foco={e.foto === 'juego-dramatico-capas' ? '50% 60%' : undefined} />
+            <Foto id={e.foto} ratio="4/3" sizes="(min-width: 56em) 55vw, 100vw" />
           </div>
+          {'foto2' in e && e.foto2 && (
+            <div class={`capitulo__copia capitulo__copia--${orientacion(e.foto2)}`} data-revelar>
+              <Foto id={e.foto2} sizes="(min-width: 56em) 30vw, 70vw" />
+            </div>
+          )}
           <div class:list={['nota', `nota--${notas[i]}`, 'capitulo__nota']} data-revelar>
             <span class="capitulo__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <h2 id={`${e.id}-titulo`} class="capitulo__titulo" set:html={acento(e.titulo)} />
@@ -147,6 +159,14 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
   .capitulo { padding: 3rem 0 4.5rem; }
   .capitulo__escena { position: relative; }
   .capitulo__foto :global(.foto) { box-shadow: 0 30px 60px -40px rgba(35, 32, 28, 0.6); }
+  /* Segunda foto (rev. 25-11-2026): una copia impresa con marco de papel, apenas girada, al costado de la
+     principal y montada solo sobre su borde (no tapa lo importante). En el celular: debajo, corrida a un lado. */
+  .capitulo__copia { position: relative; z-index: 1; width: 62%; margin: -2.5rem 0.5rem 0 auto; padding: 0.45rem; background: #fffdf8; box-shadow: 0 22px 40px -22px rgba(35, 32, 28, 0.55), 0 2px 6px rgba(35, 32, 28, 0.08); -webkit-transform: rotate(2.5deg); transform: rotate(2.5deg); }
+  .capitulo__copia :global(.foto) { background: transparent; }
+  .capitulo__copia--vertical { width: 56%; }
+  .capitulo__copia--horizontal { width: 74%; }
+  .capitulo--invertido .capitulo__copia { margin-left: 0.5rem; margin-right: auto; -webkit-transform: rotate(-2.5deg); transform: rotate(-2.5deg); }
+  .capitulo--par .capitulo__nota { margin-top: 1.5rem; }
   .capitulo__nota { margin: -2rem 1rem 0; z-index: 2; }
   .capitulo__n { display: block; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--tinta-suave); }
   .capitulo__titulo { margin-top: 0.5rem; font-size: 1.6rem; font-size: clamp(1.6rem, 1.15rem + 1.2vw, 2.3rem); font-weight: 320; letter-spacing: -0.03em; line-height: 1.02; max-width: 14ch; }
@@ -159,6 +179,17 @@ const notas = ['arena', 'verde-claro', 'rosa', 'azul'] as const;
     .capitulo__nota { grid-column: 1 / 6; grid-row: 1; margin: 0 0 -3rem; }
     .capitulo--invertido .capitulo__foto { grid-column: 1 / 9; }
     .capitulo--invertido .capitulo__nota { grid-column: 8 / 13; }
+    /* Con dos fotos: principal al centro, notita de un lado y la copia del otro, montada sobre el borde */
+    .capitulo--par .capitulo__foto { grid-column: 4 / 11; }
+    .capitulo--par .capitulo__nota { grid-column: 1 / 5; margin: 0 0 -3rem; }
+    .capitulo--par .capitulo__copia { grid-column: 10 / 13; grid-row: 1; align-self: end; width: auto; margin: 0 -0.75rem -4.5rem 0; padding: 0.6rem; }
+    .capitulo--par .capitulo__copia--horizontal { grid-column: 9 / 13; }
+    .capitulo--par.capitulo--invertido .capitulo__foto { grid-column: 3 / 10; }
+    .capitulo--par.capitulo--invertido .capitulo__nota { grid-column: 9 / 13; }
+    .capitulo--par.capitulo--invertido .capitulo__copia { grid-column: 1 / 4; margin: 0 0 -4.5rem -0.75rem; }
+    .capitulo--par.capitulo--invertido .capitulo__copia--horizontal { grid-column: 1 / 5; }
+    .capitulo--par { padding-bottom: 8rem; }
+    .capitulo--par .apartados { margin-top: 7rem; }
   }
 
   /* ---------- Rol docente: acordeón ---------- */

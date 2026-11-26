@@ -1,7 +1,7 @@
 # Manifest de fotos — La Escuelita
 
 > Generado automáticamente por `npm run fotos` a partir de `src/data/fotos.mjs`. **No editar a mano.**
-> Fecha: 2026-11-25 · Fotos en uso: 144
+> Fecha: 2026-11-26 · Fotos en uso: 149
 
 Cómo revisarlo: cada fila es una foto original del Drive (ruta relativa a `_material/fotos/`).
 La columna **Dónde se usa** indica la página y el bloque. Para cambiar una foto, avisá qué fila y por cuál
@@ -44,7 +44,7 @@ alternativos ni en archivos; los originales nunca se publican (se generan versio
 | `jardin/PLÁSTICA/6-PLAST.jpeg` | Jardín | PLÁSTICA | Vista cenital de una mesa de taller: hojas secas en una bandeja y chicos que las dibujan con tinta. | La Escuelita · Nuestra identidad<br>Inicio · rastro de fotos en el hero (solo desktop, al mover el mouse) | Arte, naturaleza y observación: síntesis visual de la identidad. | — |
 | `jardin/PLÁSTICA/2-PLAST.png` | Jardín | PLÁSTICA | Primer plano de dos manos chiquitas que sostienen una vasija de arcilla sobre una tabla. | La Escuelita · interludio de cierre (frase de Marta Calvo) | Las manos que hacen: “una fuente de riqueza insondable para explorar”. | — |
 | `jardin/PLÁSTICA/12-PLAST.jpeg` | Jardín | PLÁSTICA | Sobre una mesa roja, una figura humana grande hecha con masa naranja; muchas manos de chicos alrededor. | Proyecto pedagógico · apertura<br>Inicio · carrusel circular (“El juego y el arte son su lenguaje natural.”) | Muchas manos haciendo una misma figura: lo individual y lo grupal. | — |
-| `jardin/JUEGO DRAMÁTICO/4-JUEG-DRAM.png` | Jardín | JUEGO DRAMÁTICO | Dos chicos envueltos en telas verdes, con capucha, gesticulan con la boca abierta; jugando a ser personajes. | Proyecto pedagógico · eje “La concepción del niño”<br>Inicio · rastro de fotos en el hero (solo desktop, al mover el mouse) | “El niño es cuerpo”: gesto, voz y mirada en juego. | — |
+| `jardin/JUEGO DRAMÁTICO/4-JUEG-DRAM.png` | Jardín | JUEGO DRAMÁTICO | Dos chicos envueltos en telas verdes, con capucha, gesticulan con la boca abierta; jugando a ser personajes. | Inicio · rastro de fotos en el hero (solo desktop, al mover el mouse) | “El niño es cuerpo”: gesto, voz y mirada en juego. | — |
 | `jardin/PATIO/4-PATIO.jpeg` | Jardín | PATIO | Un nene riega con una regadera el cantero de plantas nativas, acompañado por una maestra y una compañera. | Proyecto pedagógico · interludio (“Mirar la educación desde la sensibilidad del arte es mirarla como un despertar.”) | Cuidado, naturaleza y acompañamiento adulto: un despertar. | — |
 | `jardin/TALLER DE 5/14-T5.jpeg` | Jardín | TALLER DE 5 | Grupo de chicos sentados con sus retratos en témpera; detrás, una muestra de “Rostros” en tinta colgada. | Proyecto pedagógico · eje “Educación por el Arte” (muestras didácticas) | Hace visible el proceso: una muestra didáctica del taller. | — |
 | `primaria/STOP MOTION 4°/IMG_20260930_152215.jpg` | Primaria | STOP MOTION 4° | Chicas de 4° preparan una escena de stop motion con una cámara en trípode sobre una maqueta. | Proyecto pedagógico · eje “Expresión / Aprendizaje”<br>Primaria · Artes Visuales<br>Inicio · rastro de fotos en el hero (solo desktop, al mover el mouse) | El hacer concreto: crear y construir para comunicar. | — |
@@ -160,6 +160,11 @@ alternativos ni en archivos; los originales nunca se publican (se generan versio
 | `revision-19-11/marta-calvo/17-HISTORICAS.jpeg` | Jardín | EQUIPO | El equipo docente posa en grupo delante de un gran mural de retratos pintados por los chicos. | Nuestro equipo · foto del equipo | Enviada en la carpeta MARTA CALVO; es una foto del equipo, por eso acompaña la página del equipo. | — |
 | `revision-19-11/comunidad/terraza3.jpeg` | Primaria | COMUNIDAD | Vista desde arriba de una gran ronda de familias, chicos y docentes en el patio de arena; una nena en el centro. | Comunidad · introducción (fotos) | Indicada por la escuela para Comunidad. | — |
 | `revision-19-11/comunidad/fondo13.jpeg` | Primaria | COMUNIDAD | Vista desde arriba del fondo de la escuela: una ronda enorme de familias y chicos alrededor de la arena, entre árboles. | Comunidad · introducción (fotos) | Enviada por la escuela en la carpeta COMUNIDAD. | — |
+| `jardin/PROYECTO-EJES/concepcion-1.png` | Jardín | PROYECTO-EJES | Vista desde arriba: chicos y chicas alrededor de una mesa roja pintan con témpera amarilla y azul sobre un papel blanco. | Proyecto pedagógico · eje “La concepción del niño” (foto principal) | Enviada por la escuela para este eje. | — |
+| `jardin/PROYECTO-EJES/concepcion-2.png` | Jardín | PROYECTO-EJES | Chicos y chicas en el piso arman formas con lanas de colores sobre una tela negra larga. | Proyecto pedagógico · eje “La concepción del niño” (segunda foto) | Enviada por la escuela para este eje. | — |
+| `jardin/PROYECTO-EJES/educacion-por-el-arte.png` | Jardín | PROYECTO-EJES | Chicas pintan con pincel y tinta un dibujo grande sobre una mesa, con frascos de tinta. | Proyecto pedagógico · eje “Educación por el Arte” (segunda foto) | Enviada por la escuela para este eje. | — |
+| `jardin/PROYECTO-EJES/expresion-y-aprendizaje.png` | Jardín | PROYECTO-EJES | Vista desde arriba: chicos y chicas alrededor de una mesa roja pintan con témpera amarilla y azul. | Proyecto pedagógico · eje “Expresión / Aprendizaje” (segunda foto) | Enviada por la escuela para este eje. | Es la misma escena que eje-concepcion-mesa-pintura (otra toma). |
+| `jardin/PROYECTO-EJES/rol-del-docente.png` | Jardín | PROYECTO-EJES | Una maestra con guitarra frente a una ronda de chicos sentados en el piso; en la pared, dibujos colgados. | Proyecto pedagógico · eje “El Rol del Docente” (segunda foto) | Enviada por la escuela para este eje. | — |
 
 ## Fotos revisadas que no se usan (por ahora)
 

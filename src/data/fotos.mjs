@@ -254,7 +254,7 @@ export const fotos = [
     id: 'juego-dramatico-capas', nivel: 'jardin', carpeta: 'JUEGO DRAMÁTICO', archivo: 'jardin/JUEGO DRAMÁTICO/4-JUEG-DRAM.png',
     ve: 'Dos chicos envueltos en telas verdes, con capucha, gesticulan con la boca abierta; jugando a ser personajes.',
     alt: 'Dos chicos envueltos en telas verdes juegan a ser personajes con gestos expresivos.',
-    usos: ['Proyecto pedagógico · eje “La concepción del niño”', 'Inicio · rastro de fotos en el hero (solo desktop, al mover el mouse)'],
+    usos: ['Inicio · rastro de fotos en el hero (solo desktop, al mover el mouse)'],
     porque: '“El niño es cuerpo”: gesto, voz y mirada en juego.',
     foco: '50% 55%',
   },
@@ -948,6 +948,37 @@ export const fotos = [
     ve: 'Vista desde arriba del fondo de la escuela: una ronda enorme de familias y chicos alrededor de la arena, entre árboles.',
     alt: 'Ronda enorme de familias y chicos alrededor de la arena en el fondo de la escuela, entre árboles.',
     usos: ['Comunidad · introducción (fotos)'], porque: 'Enviada por la escuela en la carpeta COMUNIDAD.', foco: '50% 55%',
+  },
+  // Rev. 25-11-2026: segunda foto de cada eje del Proyecto pedagógico (enviadas por la escuela con el nombre del eje)
+  {
+    id: 'eje-concepcion-mesa-pintura', nivel: 'jardin', carpeta: 'PROYECTO-EJES', archivo: 'jardin/PROYECTO-EJES/concepcion-1.png',
+    ve: 'Vista desde arriba: chicos y chicas alrededor de una mesa roja pintan con témpera amarilla y azul sobre un papel blanco.',
+    alt: 'Chicos y chicas alrededor de una mesa pintan con témpera amarilla y azul sobre un gran papel blanco.',
+    usos: ['Proyecto pedagógico · eje “La concepción del niño” (foto principal)'], porque: 'Enviada por la escuela para este eje.', foco: '50% 50%',
+  },
+  {
+    id: 'eje-concepcion-lanas', nivel: 'jardin', carpeta: 'PROYECTO-EJES', archivo: 'jardin/PROYECTO-EJES/concepcion-2.png',
+    ve: 'Chicos y chicas en el piso arman formas con lanas de colores sobre una tela negra larga.',
+    alt: 'Chicos y chicas, sentados en el piso, arman formas con lanas de colores sobre una tela negra.',
+    usos: ['Proyecto pedagógico · eje “La concepción del niño” (segunda foto)'], porque: 'Enviada por la escuela para este eje.', foco: '50% 50%',
+  },
+  {
+    id: 'eje-arte-pintura-tinta', nivel: 'jardin', carpeta: 'PROYECTO-EJES', archivo: 'jardin/PROYECTO-EJES/educacion-por-el-arte.png',
+    ve: 'Chicas pintan con pincel y tinta un dibujo grande sobre una mesa, con frascos de tinta.',
+    alt: 'Chicas pintan con pincel y tinta un dibujo grande sobre una mesa.',
+    usos: ['Proyecto pedagógico · eje “Educación por el Arte” (segunda foto)'], porque: 'Enviada por la escuela para este eje.', foco: '50% 50%',
+  },
+  {
+    id: 'eje-expresion-mesa-pintura', nivel: 'jardin', carpeta: 'PROYECTO-EJES', archivo: 'jardin/PROYECTO-EJES/expresion-y-aprendizaje.png',
+    ve: 'Vista desde arriba: chicos y chicas alrededor de una mesa roja pintan con témpera amarilla y azul.',
+    alt: 'Chicos y chicas pintan juntos con témpera amarilla y azul alrededor de una mesa roja.',
+    usos: ['Proyecto pedagógico · eje “Expresión / Aprendizaje” (segunda foto)'], porque: 'Enviada por la escuela para este eje.', obs: 'Es la misma escena que eje-concepcion-mesa-pintura (otra toma).', foco: '50% 50%',
+  },
+  {
+    id: 'eje-docente-ronda-guitarra', nivel: 'jardin', carpeta: 'PROYECTO-EJES', archivo: 'jardin/PROYECTO-EJES/rol-del-docente.png',
+    ve: 'Una maestra con guitarra frente a una ronda de chicos sentados en el piso; en la pared, dibujos colgados.',
+    alt: 'Una maestra toca la guitarra frente a una ronda de chicos y chicas sentados en el piso, con dibujos colgados en la pared.',
+    usos: ['Proyecto pedagógico · eje “El Rol del Docente” (segunda foto)'], porque: 'Enviada por la escuela para este eje.', foco: '50% 50%',
   },
 ].filter((f) => f.usos.length > 0);
 
